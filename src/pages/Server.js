@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,37 +35,40 @@ export default function Server() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
+                <Button variant="contained" color="primary">
+                   ایجاد سرور +
+                </Button>
                 <Grid>
-                    <p>سرورهای شما</p>
+                   سرور های شما
                 </Grid>
-
+            </Paper>
+            <Paper className={classes.paper}>
                 <Grid container spacing={3}>
-
 
                     <Grid item>
                         <ButtonBase className={classes.image}>
                             <img className={classes.img} alt="complex" src="./images/3.jpg" />
                         </ButtonBase>
+                        <Grid item xs={12} sm container>
+                            <Grid item xs container direction="column" spacing={12}>
+                                <Grid item >
+                                    <Typography variant="body2" gutterBottom>
+                                        به نظر میرسد در حال حاضر هیچ سروری ندارید.
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        به سادگی اولین سرور خود را ایجاد نمایید
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
                         <Grid item>
-                            <button>ایجاد سرور</button>
+                            <Button variant="contained" color="primary">
+                                ایجاد سرور
+                            </Button>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                <Typography variant="body2" gutterBottom>
-                                   به نظر میرسد در حال حاضر هیچ سروری ندارید.
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    به سادگی اولین سرور خود را ایجاد نمایید
-                                </Typography>
-                            </Grid>
-                            <Grid item>
 
-                            </Grid>
-                        </Grid>
-
-                    </Grid>
                 </Grid>
             </Paper>
         </div>
