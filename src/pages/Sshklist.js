@@ -9,10 +9,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,10 +20,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {withStyles, Theme, createStyles, makeStyles} from '@material-ui/core/styles';
-import Menu, {MenuProps} from '@material-ui/core/Menu';
+import { withStyles,Theme, createStyles, makeStyles} from '@material-ui/core/styles';
+
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SendIcon from '@material-ui/icons/Send';
+
+
 
 
 
@@ -66,15 +70,57 @@ const useStyles = makeStyles({
 });
 
 
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})(props => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles(theme => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
+
+
 
 
 export default function Sshklist() {
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
 
         <div>
+
+
 
             <Grid item xs={12} container
                   direction="row"
@@ -122,7 +168,47 @@ export default function Sshklist() {
     <TableBody>
         {rows.map(row => (
             <StyledTableRow key={row.name}>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
+                <StyledTableCell align="right">
+                    {row.calories}
+
+                    <Button
+                        aria-controls="customized-menu"
+                        aria-haspopup="true"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleClick}
+                    >
+                        Open Menu
+                    </Button>
+                    <StyledMenu
+                        id="customized-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <StyledMenuItem>
+                            <ListItemIcon>
+                                <SendIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Sent mail" />
+                        </StyledMenuItem>
+                        <StyledMenuItem>
+                            <ListItemIcon>
+                                <DraftsIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Drafts" />
+                        </StyledMenuItem>
+                        <StyledMenuItem>
+                            <ListItemIcon>
+                                <InboxIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Inbox" />
+                        </StyledMenuItem>
+                    </StyledMenu>
+
+
+                </StyledTableCell>
                 <StyledTableCell align="right">{row.fat}</StyledTableCell>
 
                 <StyledTableCell component="th" scope="row">
