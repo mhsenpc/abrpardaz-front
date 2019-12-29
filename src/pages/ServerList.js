@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/AddBox';
+import CloudIcon from '@material-ui/icons/Cloud';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,14 +31,15 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function Server() {
+export default function ServerList() {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <Button variant="contained" color="primary">
-                   ایجاد سرور +
+                   ایجاد سرور
+                    <AddIcon>+</AddIcon>
                 </Button>
                 <Grid>
                    سرور های شما
@@ -47,6 +50,7 @@ export default function Server() {
 
                     <Grid item>
                         <ButtonBase className={classes.image}>
+                            <CloudIcon className={classes.img}/>
                             <img className={classes.img} alt="complex" src="./images/3.jpg" />
                         </ButtonBase>
                         <Grid item xs={12} sm container>
@@ -61,11 +65,6 @@ export default function Server() {
                                 </Grid>
                             </Grid>
 
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color="primary">
-                                ایجاد سرور
-                            </Button>
                         </Grid>
                     </Grid>
 

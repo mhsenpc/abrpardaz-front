@@ -9,62 +9,46 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Divider from "@material-ui/core/Divider";
 
 export const mainListItems = (
     <div>
-        <ListItem button>
+        <ListItem button component="a" href="/">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="داشبورد" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component="a" href="/servers">
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
-            <ListItemText primary="Orders" />
+            <ListItemText primary="سرورهای من" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component="a" href="/sshKeys">
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Customers" />
+            <ListItemText primary="کلیدهای امنیتی" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component="a" href="/payment">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText primary="پرداخت" />
         </ListItem>
-        <ListItem button>
+        <Divider/>
+        <ListItem button component="a" href="/faq">
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
-            <ListItemText primary="Integrations" />
+            <ListItemText primary="پرسش و پاسخ" />
         </ListItem>
-    </div>
-);
-
-export const secondaryListItems = (
-    <div>
-        <ListSubheader inset>Saved reports</ListSubheader>
-        <ListItem button>
+        <ListItem button component="a" href="/tickets">
             <ListItemIcon>
-                <AssignmentIcon />
+                <LayersIcon />
             </ListItemIcon>
-            <ListItemText primary="Current month" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Last quarter" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
+            <ListItemText primary="پشتیبانی" />
         </ListItem>
     </div>
 );

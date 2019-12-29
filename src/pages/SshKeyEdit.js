@@ -59,7 +59,7 @@ Fade.propTypes = {
     onExited: PropTypes.func,
 };
 
-export default function Sshkadd() {
+export default function SshKeyEdit() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -83,7 +83,7 @@ export default function Sshkadd() {
                       alignItems="center">
                     <Paper>
                         <Button type="button" variant="contained" color="primary" onClick={handleOpen}>
-                            برای اضافه کردن SSHK ضربه بزنید
+                            برای ویرایش کلید SSHK ضربه بزنید
                         </Button>
                         <Fab color="primary" aria-label="add">
                             <AddIcon />
@@ -103,18 +103,18 @@ export default function Sshkadd() {
                             <Fade in={open}>
                                 <div className={classes.paper}>
 
-                                    <FormLabel>کلید SSH جدید</FormLabel>
+                                    <FormLabel>ویرایش کلید SSHK</FormLabel>
 
                                     <hr/>
                                     <TextField
-                                        placeholder="کلید SSH جدید"
+                                        placeholder="ویرایش کلید SSHK"
                                         multiline={true}
                                         rows={29}
                                         rowsMax={7}
                                     />
                                     <Grid item>
                                         <Button variant="contained" color="primary" disableElevation>
-                                            اضافه کردن کلید SSHK جدید
+                                            ویرایش کلید SSHK جدید
                                         </Button>
                                     </Grid>
 

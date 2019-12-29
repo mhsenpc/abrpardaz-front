@@ -3,8 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Layout from "./pages/Layout";
+import FAQ from "./pages/FAQ";
+import {Switch} from "@material-ui/core";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import Notfound from "./pages/Notfound";
+import Dashboard from "./pages/Dashboard";
+import ServerList from "./pages/ServerList";
+import Sshkeylist from "./pages/Sshkeylist";
+import PaymentList from "./pages/Payment";
+
+const routing = (
+    <Router>
+        <div>
+            <Layout>
+                <Route exact path="/" component={Dashboard}/>
+                <Route path="/faq" component={FAQ}/>
+                <Route path="/servers" component={ServerList}/>
+                <Route path="/sshkeys" component={Sshkeylist}/>
+                <Route path="/payment" component={PaymentList}/>
+                <Route path="/404" component={Notfound} />
+            </Layout>
+        </div>
+    </Router>
+);
+ReactDOM.render(routing, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
