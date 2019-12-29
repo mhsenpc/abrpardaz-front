@@ -1,81 +1,137 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import SendIcon from '@material-ui/icons/Send';
-import ListItemText from '@material-ui/core/ListItemText';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
 
-const currencies = [
+const columns = [
+    { id: 'name', label: 'عنوان', minWidth: 170 },
+    { id: 'code', label: 'تاریخ', minWidth: 100 },
     {
-        value: 'USD',
-        label: '10.000',
+        id: 'population',
+        label: 'درگاه پرداخت',
+        minWidth: 170,
+        align: 'right',
+        format: value => value.toLocaleString(),
     },
     {
-        value: 'EUR',
-        label: '20.000',
+        id: 'size',
+        label: 'نوع عملیات',
+        minWidth: 170,
+        align: 'right',
+        format: value => value.toLocaleString(),
     },
     {
-        value: 'BTC',
-        label: '30.000',
+        id: 'density',
+        label: 'وضعیت',
+        minWidth: 170,
+        align: 'right',
+        format: value => value.toFixed(2),
     },
     {
-        value: 'JPY',
-        label: '40.000',
+        id: 'density',
+        label: 'مبلغ (تومان)',
+        minWidth: 170,
+        align: 'right',
+        format: value => value.toFixed(2),
     },
 ];
 
+function createData(name, code, population, size) {
+    const density = population / size;
+    return { name, code, population, size, density };
+}
 
+const rows = [
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+    createData('افزایش موجودی حساب', '2019-12-25 7:28', 'پاسارگاد', 'واریز'),
+];
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     root: {
-        padding: theme.spacing(3, 2),
+        width: '100%',
     },
-}));
+    container: {
+        maxHeight: 440,
+    },
+});
 
-
-export default function Payment() {
+export default function StickyHeadTable() {
     const classes = useStyles();
-    const [currency, setCurrency] = React.useState('EUR');
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = event => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     return (
         <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
-                پرداخت
-            </Typography>
-        <br/>
-
-            <div>
-                <ul>
-                    <li>پرداخت های شما یک طرفه است و امکان بازگشت وجود ندارد.مبالغ برحسب تومان می باشد.</li>
-                    <br/>
-                    <li>به مبلغ وارد شده 9 درصد هزینه مالیات برارزش افزوده اضافه می گردد.</li>
-
-                </ul>
-
-
-            </div>
-
-            <Typography component="p">
-                <TextField
-                    id="standard-select-currency"
-                    select
-                    label="مبلغ(تومان)"
-                    value={currency}
-                >
-                    {currencies.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-
-            </Typography>
-            <br/>
-            <Button variant="contained">پرداخت</Button>
+            <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            {columns.map(column => (
+                                <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
+                                >
+                                    {column.label}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                            return (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    {columns.map(column => {
+                                        const value = row[column.id];
+                                        return (
+                                            <TableCell key={column.id} align={column.align}>
+                                                {column.format && typeof value === 'number' ? column.format(value) : value}
+                                            </TableCell>
+                                        );
+                                    })}
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
         </Paper>
     );
 }
