@@ -16,6 +16,9 @@ import PaymentList from "./pages/Payment";
 import Createmachine from "./pages/Createmachine";
 import Snapshots from "./pages/Snapshots";
 import Snapshotlist from "./pages/Snapshotlist";
+import ListDatacenters from "./pages/ListDatacenters";
+import MachineOptions from "./pages/MachineOptions";
+import Ticket from "./pages/Ticket";
 
 const routing = (
     <Router>
@@ -27,8 +30,11 @@ const routing = (
                 <Route path="/sshkeys" component={Sshkeylist}/>
                 <Route path="/payment" component={PaymentList}/>
                 <Route path="/Createmachine" component={Createmachine}/>
+                <Route path="/ListDatacenters" component={ListDatacenters}/>
+                <Route path="/MachineOptions" component={MachineOptions}/>
                 <Route path="/404" component={Notfound} />
                 <Route path="/Snapshotlist" component={Snapshotlist} />
+                <Route path="/Ticket" component={Ticket} />
             </Layout>
         </div>
     </Router>
