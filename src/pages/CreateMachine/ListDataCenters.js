@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 
 
-export default function ListDatacenters() {
+export default function ListDataCenters() {
 
 
     const classes = useStyles();
@@ -102,26 +102,13 @@ export default function ListDatacenters() {
 
 
 
-                                     <Button variant="outlined" color="primary">
-                                         انتخاب نوع سیستم عامل
-                                     </Button>
 
 
 
                                  </Card>
 
-
-
-
-
-
-
-
                              </Paper>
                          </Grid>
-
-
-
 
                      </Grid>
 

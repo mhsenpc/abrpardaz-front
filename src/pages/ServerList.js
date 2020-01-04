@@ -3,7 +3,6 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddBox';
 import CloudIcon from '@material-ui/icons/Cloud';
@@ -37,7 +36,7 @@ export default function ServerList() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" a href={"/createMachine"}>
                    ایجاد سرور
                     <AddIcon>+</AddIcon>
                 </Button>
@@ -49,10 +48,7 @@ export default function ServerList() {
                 <Grid container spacing={3}>
 
                     <Grid item>
-                        <ButtonBase className={classes.image}>
-                            <CloudIcon className={classes.img}/>
-                            <img className={classes.img} alt="complex" src="./images/3.jpg" />
-                        </ButtonBase>
+                        <CloudIcon className={classes.img}/>
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={12}>
                                 <Grid item >

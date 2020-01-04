@@ -13,15 +13,13 @@ import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
 import Sshkeylist from "./pages/Sshkeylist";
 import PaymentList from "./pages/Payment";
-import Createmachine from "./pages/Createmachine";
-import Snapshots from "./pages/Snapshots";
+import SelectOS from "./pages/CreateMachine/SelectOS";
 import Snapshotlist from "./pages/Snapshotlist";
-import ListDatacenters from "./pages/ListDatacenters";
-import MachineOptions from "./pages/MachineOptions";
+import ListDataCenters from "./pages/CreateMachine/ListDataCenters";
+import MachineOptions from "./pages/CreateMachine/MachineOptions";
 import Ticket from "./pages/Ticket";
-import MachineConfirm from "./pages/MachineConfirm";
-import test from "./pages/Snapshotlist";
-
+import Confirm from "./pages/CreateMachine/Confirm";
+import Wizard from "./pages/CreateMachine/Wizard";
 
 const routing = (
     <Router>
@@ -33,14 +31,12 @@ const routing = (
                 <Route path="/servers" component={ServerList}/>
                 <Route path="/Sshkeylist" component={Sshkeylist}/>
                 <Route path="/payment" component={PaymentList}/>
-                <Route path="/Createmachine" component={Createmachine}/>
-                <Route path="/ListDatacenters" component={ListDatacenters}/>
+                <Route path="/createmachine" component={Wizard}/>
+                <Route path="/ListDatacenters" component={ListDataCenters}/>
                 <Route path="/MachineOptions" component={MachineOptions}/>
                 <Route path="/404" component={Notfound} />
                 <Route path="/Snapshotlist" component={Snapshotlist} />
-                <Route path="/test" component={test} />
-                <Route path="/Ticket" component={Ticket} />
-                <Route path="/MachineConfirm" component={MachineConfirm}/>
+                <Route path="/Tickets" component={Ticket} />
 
             </Layout>
         </div>

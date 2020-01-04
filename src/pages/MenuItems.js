@@ -25,7 +25,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="سرورهای من" />
         </ListItem>
-        <ListItem button component="a" href="/sshKeys">
+        <ListItem button component="a" href="/Sshkeylist">
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>

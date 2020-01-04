@@ -86,9 +86,7 @@ const cardpic = makeStyles(theme => ({
 
 }));
 
-export default function Createmachine() {
-
-
+export default function SelectOS() {
     const classes = useStyles();
     const Simple_Paper = SimplePaper();
 
@@ -262,15 +260,6 @@ export default function Createmachine() {
                  <Snapshots />
 
           </TabPanel>
-
-
-                      <Button variant="contained">مشخصات سرورها</Button>
-
-                      <Button variant="contained" color="primary">
-                          لیست مراکز داده
-                      </Button>
-
-
 
 
                   </Paper>
