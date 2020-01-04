@@ -11,8 +11,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
-
 const GreenCheckbox = withStyles({
     root: {
         color: green[400],
@@ -23,10 +21,7 @@ const GreenCheckbox = withStyles({
     checked: {},
 })(props => <Checkbox color="default" {...props} />);
 
-
-
 export default function MachineOptions() {
-
 
     const [state, setState] = React.useState({
         checkedA: true,
@@ -42,7 +37,6 @@ export default function MachineOptions() {
         return (
 
             <div>
-
 
                 <Grid item xs={12} container
                       direction="row"
@@ -62,11 +56,9 @@ export default function MachineOptions() {
                                    flexWrap="wrap"
                                    alignContent="flex-end" m={5} border={1}  borderRadius="borderRadius" borderColor="grey.500">
 
-
                                 <formlabel>
                                     انتخاب کلید SSH
                                 </formlabel>
-
 
                                 <FormControlLabel
                                     control={
@@ -128,24 +120,12 @@ export default function MachineOptions() {
                                         variant="filled"
                                     />
 
-
-
-
-
-
                                 </Box>
-
                             </Box>
-
-
-
-
-
 
                         </Paper>
                     </Grid>
                 </Grid>
-
 
             </div>
 

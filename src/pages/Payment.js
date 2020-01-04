@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,8 +10,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-    { id: 'name', label: 'عنوان', minWidth: 170 },
-    { id: 'code', label: 'تاریخ', minWidth: 100 },
+    {id: 'name', label: 'عنوان', minWidth: 170},
+    {id: 'code', label: 'تاریخ', minWidth: 100},
     {
         id: 'population',
         label: 'درگاه پرداخت',
@@ -44,7 +44,8 @@ const columns = [
 
 function createData(name, code, population, size) {
     const density = population / size;
-    return { name, code, population, size, density };
+    return {name, code, population, size, density};
+
 }
 
 const rows = [
@@ -90,6 +91,7 @@ export default function PaymentList() {
 
     return (
         <Paper className={classes.root}>
+            <p style={{direction: "rtl", marginRight: 20}}>تاریخچه پرداخت شما</p>
             <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -98,7 +100,7 @@ export default function PaymentList() {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    style={{minWidth: column.minWidth}}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -134,4 +136,5 @@ export default function PaymentList() {
             />
         </Paper>
     );
+
 }
