@@ -102,7 +102,7 @@ export default class Sshkeylist extends Component {
     };
 
     componentDidMount() {
-        axios.get(api_base + '/' + sshKeysList)
+        axios.get(api_base + sshKeysList)
             .then(res => {
                 const items = res.data.data.list;
 

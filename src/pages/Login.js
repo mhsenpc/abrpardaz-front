@@ -12,19 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import Copyright from "./CopyRight";
+import {api_base, login} from "../Api";
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -57,6 +47,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+function sendLoginRequest(event) {
+    event.preventDefault();
+    axios.post(api_base + login , {
+        firstName: 'Fred',
+        lastName: 'Flintstone'
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
 export default function Login() {
     const classes = useStyles();
 
@@ -70,7 +74,7 @@ export default function Login() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        ورود کاربران
                     </Typography>
                     <form className={classes.form} noValidate>
                         <TextField
@@ -79,7 +83,7 @@ export default function Login() {
                             required
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            label="ایمیل"
                             name="email"
                             autoComplete="email"
                             autoFocus
@@ -90,14 +94,14 @@ export default function Login() {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
+                            label="رمز عبور"
                             type="password"
                             id="password"
                             autoComplete="current-password"
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                            label="مرا به خاطر بسپار"
                         />
                         <Button
                             type="submit"
@@ -105,18 +109,19 @@ export default function Login() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            onClick={event => sendLoginRequest()}
                         >
-                            Sign In
+                            ورود
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
+                                <Link href="/forgetPassword" variant="body2">
+                                    فراموشی رمز عبور
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="/register" variant="body2">
+                                    {"حساب کاربری ندارید؟ ثبت نام"}
                                 </Link>
                             </Grid>
                         </Grid>

@@ -11,37 +11,42 @@ import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
-import Sshkeylist from "./pages/ssh_keys/Sshkeylist";
+import SshKeyList from "./pages/ssh_keys/Sshkeylist";
 import PaymentList from "./pages/Payment";
 import Snapshotlist from "./pages/Snapshotlist";
-import ListDataCenters from "./pages/CreateMachine/ListDataCenters";
-import MachineOptions from "./pages/CreateMachine/MachineOptions";
 import Ticket from "./pages/Ticket";
 import Wizard from "./pages/CreateMachine/Wizard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import SshKeyAdd from "./pages/ssh_keys/SshKeyAdd";
-import Changepassword from "./pages/Changepassword";
+import ChangePassword from "./pages/Changepassword";
 import Profile from "./pages/Profile";
+
+const DefaultLayout = ({component: Component, ...rest}) => {
+    return (
+        <Route {...rest} render={matchProps => (
+            <Layout>
+                <Component {...matchProps} />
+            </Layout>
+        )} />
+    )
+};
 
 const routing = (
     <Router>
         <div>
-            <Layout>
-                <Route exact path="/" component={Dashboard}/>
+                <DefaultLayout exact path="/" component={Dashboard}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
-                <Route path="/faq" component={FAQ}/>
-                <Route path="/servers" component={ServerList}/>
-                <Route path="/Sshkeylist" component={Sshkeylist}/>
-                <Route path="/payment" component={PaymentList}/>
-                <Route path="/createmachine" component={Wizard}/>
-                <Route path="/404" component={Notfound} />
-                <Route path="/Snapshotlist" component={Snapshotlist} />
-                <Route path="/Tickets" component={Ticket} />
-                <Route path="/changepassword" component={Changepassword} />
-                <Route path="/profile" component={Profile} />
-            </Layout>
+                <DefaultLayout  path="/faq" component={FAQ}/>
+                <DefaultLayout  path="/servers" component={ServerList}/>
+                <DefaultLayout  path="/SshKeyList" component={SshKeyList}/>
+                <DefaultLayout  path="/payment" component={PaymentList}/>
+                <DefaultLayout  path="/createMachine" component={Wizard}/>
+                <DefaultLayout  path="/404" component={Notfound} />
+                <DefaultLayout  path="/snapshotList" component={Snapshotlist} />
+                <DefaultLayout  path="/Tickets" component={Ticket} />
+                <DefaultLayout  path="/changePassword" component={ChangePassword} />
+                <DefaultLayout  path="/profile" component={Profile} />
         </div>
     </Router>
 );

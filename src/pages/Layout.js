@@ -24,19 +24,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MailIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://abrpardaz.com/">
-                Abr pardaz
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import Copyright from "./CopyRight";
 
 const drawerWidth = 240;
 
@@ -322,7 +310,7 @@ export default function Layout(props) {
                         {props.children}
                     </Grid>
                     <Box pt={4}>
-                        <Copyright/>
+                        <Copyright />
                     </Box>
                 </Container>
             </main>
