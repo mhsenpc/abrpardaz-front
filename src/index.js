@@ -11,29 +11,28 @@ import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
-import Sshkeylist from "./pages/Sshkeylist";
+import Sshkeylist from "./pages/ssh_keys/Sshkeylist";
 import PaymentList from "./pages/Payment";
-import SelectOS from "./pages/CreateMachine/SelectOS";
 import Snapshotlist from "./pages/Snapshotlist";
 import ListDataCenters from "./pages/CreateMachine/ListDataCenters";
 import MachineOptions from "./pages/CreateMachine/MachineOptions";
 import Ticket from "./pages/Ticket";
-import Confirm from "./pages/CreateMachine/Confirm";
 import Wizard from "./pages/CreateMachine/Wizard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const routing = (
     <Router>
         <div>
             <Layout>
-
                 <Route exact path="/" component={Dashboard}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/register" component={Register}/>
                 <Route path="/faq" component={FAQ}/>
                 <Route path="/servers" component={ServerList}/>
                 <Route path="/Sshkeylist" component={Sshkeylist}/>
                 <Route path="/payment" component={PaymentList}/>
                 <Route path="/createmachine" component={Wizard}/>
-                <Route path="/ListDatacenters" component={ListDataCenters}/>
-                <Route path="/MachineOptions" component={MachineOptions}/>
                 <Route path="/404" component={Notfound} />
                 <Route path="/Snapshotlist" component={Snapshotlist} />
                 <Route path="/Tickets" component={Ticket} />
