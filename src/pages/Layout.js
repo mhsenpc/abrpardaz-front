@@ -218,9 +218,10 @@ export default function Layout(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
+            <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
+            <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem onClick={handleMenuClose}>خروج</MenuItem>
+            <MenuItem component="a" href="/logout" onClick={handleMenuClose}>خروج</MenuItem>
         </Menu>
     );
 
@@ -244,6 +245,7 @@ export default function Layout(props) {
                 <p>اعلان ها</p>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
+            <MenuItem onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
             <MenuItem onClick={handleMenuClose}>خروج</MenuItem>
         </Menu>

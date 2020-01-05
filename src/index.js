@@ -20,6 +20,9 @@ import Ticket from "./pages/Ticket";
 import Wizard from "./pages/CreateMachine/Wizard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import SshKeyAdd from "./pages/ssh_keys/SshKeyAdd";
+import Changepassword from "./pages/Changepassword";
+import Profile from "./pages/Profile";
 
 const routing = (
     <Router>
@@ -36,7 +39,8 @@ const routing = (
                 <Route path="/404" component={Notfound} />
                 <Route path="/Snapshotlist" component={Snapshotlist} />
                 <Route path="/Tickets" component={Ticket} />
-
+                <Route path="/changepassword" component={Changepassword} />
+                <Route path="/profile" component={Profile} />
             </Layout>
         </div>
     </Router>

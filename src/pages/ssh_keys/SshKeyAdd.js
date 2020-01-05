@@ -63,11 +63,11 @@ export default function SshKeyAdd() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
-    const handleOpen = () => {
+    const handleAddOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleAddClose = () => {
         setOpen(false);
     };
 
@@ -82,7 +82,7 @@ export default function SshKeyAdd() {
                       justify="center"
                       alignItems="center">
                     <Paper>
-                        <Button type="button" variant="contained" color="primary" onClick={handleOpen}>
+                        <Button type="button" variant="contained" color="primary" onClick={handleAddOpen}>
                             برای اضافه کردن SSHK ضربه بزنید
                         </Button>
                         <Fab color="primary" aria-label="add">
@@ -93,7 +93,7 @@ export default function SshKeyAdd() {
                             aria-describedby="spring-modal-description"
                             className={classes.modal}
                             open={open}
-                            onClose={handleClose}
+                            onClose={handleAddClose}
                             closeAfterTransition
                             BackdropComponent={Backdrop}
                             BackdropProps={{

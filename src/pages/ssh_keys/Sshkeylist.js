@@ -1,18 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,7 +20,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import SendIcon from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import axios from 'axios';
+import {api_base, sshKeysList} from "../../Api";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -52,15 +45,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
     }),
 )(TableRow);
 
-
-function createData(name: string, calories: number, fat: number, carbs: number) {
-    return {name, calories, fat, carbs};
-}
-
-const rows = [
-    createData('mhmdx07@yahoo.com', 159, 'd:50,c::60d:50,c::60d:50,c::60d:50,c::60d:50,c::60', 1,),
-    createData('@mhmdx07', 237, 'd:50,c::60d:50,c::60d:50,c::60d:50,c::60d:50,c::60', 2,)
-];
 
 const useStyles = makeStyles({
     table: {
@@ -101,127 +85,136 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 
-export default function Sshkeylist() {
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
+export default class Sshkeylist extends Component {
+    state = {
+        items: [],
+        anchorEl: null,
+        open: false
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
+
+    handleClick = event => {
+        this.setState({anchorEl: event.currentTarget});
     };
 
-    return (
+    handleClose = event => {
+        this.setState({anchorEl: null})
+    };
 
-        <div>
+    componentDidMount() {
+        axios.get(api_base + '/' + sshKeysList)
+            .then(res => {
+                const items = res.data.data.list;
 
+                this.setState({items});
+            })
+    }
 
-            <Grid item xs={12} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
-                <Grid item xs={6}>
-                    <Paper>
-                        <FormLabel>کلیدهای SSH</FormLabel>
-                    </Paper>
-                </Grid>
+    render() {
+        return (
 
-                <Grid item xs={6}>
-                    <Paper>
-                        <Button variant="contained" color="primary">
-                            <AddIcon/>
-                            اضافه کردن کلید SSH
-                        </Button>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} container
-                      direction="row"
-                      justify="center"
-                      alignItems="center">
-
-                    <paper>
-
-                        <Grid>
+            <div>
+                <Paper>
+                    <Grid item xs={12} container
+                          direction="row"
+                          justify="center"
+                          alignItems="center">
+                        <Grid item xs={6}>
                             <Paper>
-
-                                <TableContainer component={Paper}>
-                                    <Table aria-label="customized table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <StyledTableCell align="right">گزینه ها</StyledTableCell>
-
-                                                <StyledTableCell align="right">Finger Point&nbsp;</StyledTableCell>
-                                                <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
-                                                <StyledTableCell align="right">#&nbsp;</StyledTableCell>
-
-
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {rows.map(row => (
-                                                <StyledTableRow key={row.name}>
-                                                    <StyledTableCell align="right">
-                                                        <IconButton
-                                                            aria-label="more"
-                                                            aria-controls="long-menu"
-                                                            aria-haspopup="true"
-                                                            onClick={handleClick}
-                                                        >
-                                                            <MoreVertIcon/>
-                                                        </IconButton>
-                                                        <StyledMenu
-                                                            id="customized-menu"
-                                                            anchorEl={anchorEl}
-                                                            keepMounted
-                                                            open={Boolean(anchorEl)}
-                                                            onClose={handleClose}
-                                                        >
-                                                            <StyledMenuItem>
-                                                                <ListItemIcon>
-                                                                    <SendIcon fontSize="small"/>
-                                                                </ListItemIcon>
-                                                                <ListItemText primary="ویرایش"/>
-                                                            </StyledMenuItem>
-                                                            <StyledMenuItem>
-                                                                <ListItemIcon>
-                                                                    <DraftsIcon fontSize="small"/>
-                                                                </ListItemIcon>
-                                                                <ListItemText primary="حذف"/>
-                                                            </StyledMenuItem>
-                                                        </StyledMenu>
-
-
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
-
-                                                    <StyledTableCell component="th" scope="row">
-                                                        {row.name}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                                                </StyledTableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-
+                                <FormLabel>کلیدهای SSH</FormLabel>
                             </Paper>
                         </Grid>
 
+                        <Grid item xs={6}>
+                            <Paper>
+                                <Button variant="contained" color="primary">
+                                    <AddIcon/>
+                                    اضافه کردن کلید SSH
+                                </Button>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} container
+                              direction="row"
+                              justify="center"
+                              alignItems="center">
 
-                    </paper>
 
-                </Grid>
+                            <Grid>
+                                <Paper>
+
+                                    <TableContainer component={Paper}>
+                                        <Table aria-label="customized table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <StyledTableCell align="right">گزینه ها</StyledTableCell>
+
+                                                    <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
+                                                    <StyledTableCell align="right">#&nbsp;</StyledTableCell>
 
 
-            </Grid>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {this.state.items.map(row => (
+                                                    <StyledTableRow key={row.id}>
+                                                        <StyledTableCell align="right">
+                                                            <IconButton
+                                                                aria-label="more"
+                                                                aria-controls="long-menu"
+                                                                aria-haspopup="true"
+                                                                onClick={this.handleClick}
+                                                            >
+                                                                <MoreVertIcon/>
+                                                            </IconButton>
+                                                            <StyledMenu
+                                                                id="customized-menu"
+                                                                anchorEl={this.state.anchorEl}
+                                                                keepMounted
+                                                                open={Boolean(this.state.anchorEl)}
+                                                                onClose={this.handleClose}
+                                                            >
+                                                                <StyledMenuItem>
+                                                                    <ListItemIcon>
+                                                                        <SendIcon fontSize="small"/>
+                                                                    </ListItemIcon>
+                                                                    <ListItemText primary="ویرایش"/>
+                                                                </StyledMenuItem>
+                                                                <StyledMenuItem>
+                                                                    <ListItemIcon>
+                                                                        <DraftsIcon fontSize="small"/>
+                                                                    </ListItemIcon>
+                                                                    <ListItemText primary="حذف"/>
+                                                                </StyledMenuItem>
+                                                            </StyledMenu>
 
 
-        </div>
+                                                        </StyledTableCell>
 
-    )
-        ;
+                                                        <StyledTableCell component="th" scope="row">
+                                                            {row.name}
+                                                        </StyledTableCell>
+                                                        <StyledTableCell align="right">{row.id}</StyledTableCell>
+                                                    </StyledTableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+
+                                </Paper>
+                            </Grid>
+
+
+                        </Grid>
+
+
+                    </Grid>
+
+                </Paper>
+            </div>
+
+        )
+    }
+    ;
 
 }
 

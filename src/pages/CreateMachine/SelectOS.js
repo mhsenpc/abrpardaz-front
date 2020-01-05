@@ -112,10 +112,6 @@ export default function SelectOS() {
 
       <div>
 
-
-
-
-
           <Grid item xs={12} container
                 direction="row"
                 justify="center"

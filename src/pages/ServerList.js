@@ -60,7 +60,6 @@ export default function ServerList() {
                                     </Typography>
                                 </Grid>
                             </Grid>
-
                         </Grid>
                     </Grid>
 

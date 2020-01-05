@@ -1,4 +1,4 @@
-export const api_base = '';
+export const api_base = 'http://192.168.43.45/api/v1';
 export const register = 'auth/register';
 export const login = 'auth/login';
 export const forgetPassword = 'auth/forgetPassword';
