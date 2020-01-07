@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -86,27 +86,44 @@ const cardpic = makeStyles(theme => ({
 
 }));
 
-export default function SelectOS() {
-    const classes = useStyles();
-    const Simple_Paper = SimplePaper();
 
-    const card = cardpic();
 
-    const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+
+export default class SelectOS extends Component{
+
+    state = {
+        value:0,
+        setValue:0,
+        anchorEl:null,
+        setAnchorEl:null
+
     };
 
+
+     card = cardpic();
+
+    /*const [value, setValue] = React.useState(0);*/
+
+    handleChange = (event, newValue) => {
+        this.state.setValue(newValue);
+    };
+
+/*
     const [anchorEl, setAnchorEl] = React.useState(null);
+*/
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
+     handleClick = event => {
+         this.setState({anchorEl: event.currentTarget});
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
+     handleClose = () => {
+         this.setState({anchorEl: null})
     };
+
+     render(){
+
+
 
     return (
 
@@ -129,8 +146,8 @@ export default function SelectOS() {
 
           <AppBar position="static" color="default">
               <Tabs
-                  value={value}
-                  onChange={handleChange}
+                  value={this.state.value}
+                  onChange={this.handleChange}
                   variant="scrollable"
                   scrollButtons="on"
                   indicatorColor="primary"
@@ -145,7 +162,7 @@ export default function SelectOS() {
           </AppBar>
 
 
-          <TabPanel value={value} index={2}>
+          <TabPanel value={this.state.value} index={2}>
 
               <Box component="span" m={1} height="auto" width="auto" display="inline-block" >
 
@@ -157,7 +174,7 @@ export default function SelectOS() {
 
 
                           <CardMedia
-                              className={card.cover}
+                              className={this.card.cover}
                               image="./images/live-from-space.jpg"
                               title="Live from space album cover"
                           />
@@ -167,21 +184,21 @@ export default function SelectOS() {
                           <Paper>
 
                               <h3>Ubuntu 18.04</h3>
-                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
                                   نسخه
                               </Button>
 
 
                               <Menu
                                   id="simple-menu"
-                                  anchorEl={anchorEl}
+                                  anchorEl={this.state.anchorEl}
                                   keepMounted
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
+                                  open={Boolean(this.state.anchorEl)}
+                                  onClose={this.handleClose}
                               >
-                                  <MenuItem onClick={handleClose}>18.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>19.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>17.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>18.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>19.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>17.04 x64</MenuItem>
                               </Menu>
 
 
@@ -205,7 +222,7 @@ export default function SelectOS() {
 
 
                           <CardMedia
-                              className={card.cover}
+                              className={this.card.cover}
                               image="./images/live-from-space.jpg"
                               title="Live from space album cover"
                           />
@@ -215,21 +232,21 @@ export default function SelectOS() {
                           <Paper>
 
                               <h3>Ubuntu 18.04</h3>
-                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
                                   نسخه
                               </Button>
 
 
                               <Menu
                                   id="simple-menu"
-                                  anchorEl={anchorEl}
+                                  anchorEl={this.state.anchorEl}
                                   keepMounted
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
+                                  open={Boolean(this.state.anchorEl)}
+                                  onClose={this.handleClose}
                               >
-                                  <MenuItem onClick={handleClose}>18.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>19.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>17.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>18.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>19.04 x64</MenuItem>
+                                  <MenuItem onClick={this.handleClose}>17.04 x64</MenuItem>
                               </Menu>
 
 
@@ -246,12 +263,12 @@ export default function SelectOS() {
 
 
            </TabPanel>
-          <TabPanel value={value} index={0}>
+          <TabPanel value={this.state.value} index={0}>
 
                 <Applications />
 
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={this.state.value} index={1}>
 
                  <Snapshots />
 
@@ -268,6 +285,8 @@ export default function SelectOS() {
 
       </div>
     );
+
+    }
 
 }
 
