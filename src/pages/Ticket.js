@@ -63,6 +63,9 @@ const useStyles = makeStyles({
     orange: {
         backgroundColor: deepOrange[500],
     },
+    border_color: {
+        borderColor: '#f1f1f1'
+    }
 });
 
 function Ticket() {
@@ -91,14 +94,15 @@ function Ticket() {
             >
                 <Paper>
 
-                    <Box p={2} width={700}>
+                    <Box  p={2} width={700}>
 
                         <Box bgcolor="info.main" p={2}>
                             این تیکت بسته شده.شما میتوانید به سادگی با پاسخ دادن این تیکت را به جریان بیاندازید
                         </Box>
 
-                              <Box width={200}>
-                              <Card  className={classes.card} variant="outlined">
+
+                              <Box width={200}  >
+                              <Card className={classes.card} variant="outlined">
                                   <CardContent>
                                       <Typography className={classes.title} color="textSecondary" gutterBottom>
                                           موضوع 1
@@ -127,17 +131,19 @@ function Ticket() {
                               </Box>
 
 
-                              <Box width={600} mt={2}>
+                              <Box  width={600} mt={2}>
 
                                   <Card  className={classes.card} variant="outlined">
 
-                                      <Box border={1} borderRadius="borderRadius">
+                                      <Box border={1} className={classes.border_color} borderRadius="borderRadius">
                                       <CardContent >
 
 
+                                          <div align="right">
                                           <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
                                               M
                                           </Avatar>
+
 
                                           <Typography className={classes.title} variant="h5" component="h2">
                                               Mohammad
@@ -146,16 +152,19 @@ function Ticket() {
                                           <p>
                                               سرورم روشن نمیشه
                                           </p>
-
+                                          </div>
 
                                           <Typography className={classes.title} className={classes.pos} color="textSecondary">
                                              47:78-c-47:78-c25.22.3725.22.37
                                           </Typography>
+
                                       </CardContent>
                                       </Box>
 
                                       <Box border={1} mt={2}  borderRadius="borderRadius">
                                       <CardContent>
+
+                                          <div align="right">
                                           <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
                                               M
                                           </Avatar>
@@ -166,6 +175,7 @@ function Ticket() {
                                           <p>
                                               سرورم روشن نمیشه
                                           </p>
+                                          </div>
 
                                           <Typography className={classes.title} className={classes.pos} color="textSecondary">
                                               47:78-c-47:78-c25.22.3725.22.37
@@ -178,9 +188,9 @@ function Ticket() {
 
                           </Box>
 
-                        <Box>
+                        <Box m={2}>
 
-                            <TextareaAutosize  rows={2}
+                            <TextareaAutosize rows={2}
                                                rowsMax={4} aria-label="minimum height" rowsMin={3} placeholder="Minimum 3 rows" />
 
                             <div>

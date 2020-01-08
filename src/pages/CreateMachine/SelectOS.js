@@ -103,7 +103,6 @@ export default function SelectOS() {
                 const list = res.data.data.list;
 
                 setItems(list);
-                console.log(res.data);
             })
     }, [items]);
 
