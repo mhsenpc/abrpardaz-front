@@ -25,6 +25,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { sizing } from '@material-ui/system';
 import Snapshots from "./Snapshots";
 import Applications from "./Applications";
+import axios from "axios";
+import {api_base, imagesList, sshKeysList} from "../../Api";
 
 
 function TabPanel(props) {
@@ -93,6 +95,18 @@ export default function SelectOS() {
     const card = cardpic();
 
     const [value, setValue] = React.useState(0);
+    const [items,setItems] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + imagesList)
+            .then(res => {
+                const list = res.data.data.list;
+
+                setItems(list);
+                console.log(res.data);
+            })
+    }, [items]);
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -146,7 +160,7 @@ export default function SelectOS() {
 
 
           <TabPanel value={value} index={2}>
-
+              {items.map(row => (
               <Box component="span" m={1} height="auto" width="auto" display="inline-block" >
 
                   <div>
@@ -166,7 +180,7 @@ export default function SelectOS() {
 
                           <Paper>
 
-                              <h3>Ubuntu 18.04</h3>
+                              <h3>{row.name }{row.version}</h3>
                               <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                   نسخه
                               </Button>
@@ -194,54 +208,7 @@ export default function SelectOS() {
                   </div>
 
               </Box>
-
-              <Box component="span" m={1} height="auto" width="auto" display="inline-block" >
-
-                  <div>
-
-
-                      <Paper variant="outlined" square >
-
-
-
-                          <CardMedia
-                              className={card.cover}
-                              image="./images/live-from-space.jpg"
-                              title="Live from space album cover"
-                          />
-
-
-
-                          <Paper>
-
-                              <h3>Ubuntu 18.04</h3>
-                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                  نسخه
-                              </Button>
-
-
-                              <Menu
-                                  id="simple-menu"
-                                  anchorEl={anchorEl}
-                                  keepMounted
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                              >
-                                  <MenuItem onClick={handleClose}>18.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>19.04 x64</MenuItem>
-                                  <MenuItem onClick={handleClose}>17.04 x64</MenuItem>
-                              </Menu>
-
-
-
-                          </Paper>
-
-                      </Paper>
-
-
-                  </div>
-
-              </Box>
+                  ))};
 
 
 
