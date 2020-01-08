@@ -15,6 +15,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import axios from "axios";
+import {api_base, imagesList, snapshotsList} from "../../Api";
 
 
 const snapshott = makeStyles(theme => ({
@@ -38,20 +40,36 @@ export default function Snapshots() {
 
     const snap = snapshott();
 
+    const [items,setItems] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + snapshotsList)
+            .then(res => {
+                const list = res.data.data.list;
+
+                setItems(list);
+            })
+    }, [items]);
+
+
     return (
 
         <div>
 
             <div className={snap.root}>
                 <List >
+                    {items.map(row => (
                     <ListItem>
                         <ListItemAvatar>
+
                             <Avatar>
                                 <BeachAccessIcon />
                             </Avatar>
+
                         </ListItemAvatar>
-                        <ListItemText primary="Vacation" secondary="July 20, 2014" />
+                        <ListItemText primary={row.name} secondary="July 20, 2014" />
                     </ListItem>
+                    ))};
                 </List>
 
             </div>
