@@ -6,7 +6,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
-import {api_base, machinesList, sshKeysList} from "../Api";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import {api_base, machinesList, snapshotsList, sshKeysList} from "../Api";
+
+
 const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
@@ -17,10 +26,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const useStyles1 = makeStyles({
+    table: {
+        minWidth: 650,
+    },
+});
+
+function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+}
+
 
 export default function Snapshotlist() {
-    const classes = useStyles();
-    const [state, setState] = React.useState({
+    const classes1 = useStyles1();
+    const [state1, setState1] = React.useState({
         age: '',
         name: 'hai',
     });
@@ -32,13 +51,16 @@ export default function Snapshotlist() {
     }, []);
 
     const handleChange = name => event => {
-        setState({
-            ...state,
+        setState1({
+            ...state1,
             [name]: event.target.value,
         });
     };
+    const classes_1 = useStyles1();
+
 
     const [machineItems,setMachineItems] = React.useState([]);
+    const [snapShotItems,setSnapShotItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + machinesList)
@@ -47,7 +69,12 @@ export default function Snapshotlist() {
 
                 setMachineItems(list);
             })
-    }, [machineItems]);
+    }, axios.get(api_base + snapshotsList)
+        .then(res => {
+            const list = res.data.data.list;
+
+            setSnapShotItems(list);
+        }) [snapShotItems]);
 
 
     return (
@@ -66,13 +93,13 @@ export default function Snapshotlist() {
                     <br/>
                     لطفاقبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
                 </p>
-                <FormControl variant="outlined" className={classes.formControl}>
+                <FormControl variant="outlined" className={classes_1.formControl}>
                     <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
                         Age
                     </InputLabel>
                     <Select
                         native
-                        value={state.age}
+                        value={state1.age}
                         onChange={handleChange('age')}
                         labelWidth={labelWidth}
                         inputProps={{
@@ -118,17 +145,46 @@ export default function Snapshotlist() {
                 <br/>
                 تاکنون تصویر آنی ساخته نشده است.
 
-            <table>
-                <tr>
-                    <td>لوگو</td>
 
-                    <td>نام تصویر آنی</td>
+                <TableContainer component={Paper}>
+                    <Table className={classes_1.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>نام</TableCell>
+                                <TableCell align="right">لوگو</TableCell>
+                                <TableCell align="right">نام کاربری</TableCell>
+                                <TableCell align="right">تاریخ ساخت</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {snapShotItems.map(row => (
+                                <TableRow key={row.name}>
 
-                    <td>تاریخ ایجاد</td>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.remote_id}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.created_at}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        <h5>خالی</h5>
+                                    </TableCell>
 
-                    <td>وضعیت</td>
-                </tr>
-            </table>
+                                </TableRow>
+
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+
+
+
+
             </p>
             </Box>
         </div>
