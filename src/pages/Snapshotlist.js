@@ -5,6 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from "axios";
+import {api_base, machinesList, sshKeysList} from "../Api";
 const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
@@ -35,6 +37,18 @@ export default function Snapshotlist() {
             [name]: event.target.value,
         });
     };
+
+    const [machineItems,setMachineItems] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + machinesList)
+            .then(res => {
+                const list = res.data.data.list;
+
+                setMachineItems(list);
+            })
+    }, [machineItems]);
+
 
     return (
 
@@ -67,9 +81,12 @@ export default function Snapshotlist() {
                         }}
                     >
                         <option value="" />
-                        <option value={10}>Ten</option>
-                        <option value={20}>Twenty</option>
-                        <option value={30}>Thirty</option>
+                        {machineItems.map(row => (
+
+                        <option value={row.id}>{row.name}</option>
+
+                            ))}
+
                     </Select>
                 </FormControl>
                 <p style={{border: "solid 1px red",direction:"rtl"}}>
