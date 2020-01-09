@@ -25,6 +25,14 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="سرورهای من" />
         </ListItem>
+
+        <ListItem button component="a" href="/snapshotList">
+            <ListItemIcon>
+                <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="تصاویر آنی" />
+        </ListItem>
+
         <ListItem button component="a" href="/Sshkeylist">
             <ListItemIcon>
                 <PeopleIcon />
