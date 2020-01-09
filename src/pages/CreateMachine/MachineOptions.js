@@ -10,6 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from "axios";
+import {api_base, machinesList, sshKeysList} from "../../Api";
+
 
 const GreenCheckbox = withStyles({
     root: {
@@ -33,6 +36,20 @@ export default function MachineOptions() {
     const handleChange = name => event => {
         setState({ ...state, [name]: event.target.checked });
     };
+
+
+    const [items,setItems] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + sshKeysList)
+            .then(res => {
+                const list = res.data.data.list;
+
+                setItems(list);
+            })
+    }, [items]);
+
+
 
         return (
 
@@ -60,6 +77,7 @@ export default function MachineOptions() {
                                     انتخاب کلید SSH
                                 </formlabel>
 
+                                {items.map(row => (
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -69,20 +87,11 @@ export default function MachineOptions() {
                                             color="primary"
                                         />
                                     }
-                                    label="mohammad_jadid"
+                                    label={row.name}
                                 />
+                                ))}
 
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={state.checkedB}
-                                            onChange={handleChange('checkedB')}
-                                            value="checkedB"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="mhmdx07@yahoo.com"
-                                />
+
 
                                 <Box m={5}  width={600}  >
 
