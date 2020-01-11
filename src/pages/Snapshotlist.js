@@ -14,6 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {api_base, machinesList, snapshotsList, sshKeysList} from "../Api";
+import ListItem from "./CreateMachine/Snapshots";
 
 
 const useStyles = makeStyles(theme => ({
@@ -69,13 +70,29 @@ export default function Snapshotlist() {
 
                 setMachineItems(list);
             })
-    }, axios.get(api_base + snapshotsList)
+    }, [machineItems]);
+
+    React.useEffect(() => {
+
+    axios.get(api_base + snapshotsList)
         .then(res => {
             const list = res.data.data.list;
 
             setSnapShotItems(list);
-        }) [snapShotItems]);
+        })
+    }, [snapShotItems]);
 
+
+
+    function removeSnapshots(id){
+        axios.delete(api_base + 'snapshots/'+ id +'/remove'
+        )
+            .then(res => {
+                const msg = res.data.data.message;
+
+                alert(msg)
+            })
+    }
 
     return (
 
@@ -172,6 +189,10 @@ export default function Snapshotlist() {
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <h5>خالی</h5>
+                                    </TableCell>
+
+                                    <TableCell component="th" scope="row">
+                                        <a onClick={()=> removeSnapshots(row.id)}>حذف تصویر آنی</a>
                                     </TableCell>
 
                                 </TableRow>
