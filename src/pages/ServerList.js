@@ -18,6 +18,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
+
 const cardserverlist = makeStyles(theme => ({
     card: {
         display: 'flex',
@@ -72,6 +73,16 @@ export default function ServerList() {
     const cardlist = cardserverlist();
     const theme = useTheme();
 
+    function removeMachine(id){
+        axios.delete(api_base + 'machines/'+ id +'/remove'
+    )
+            .then(res => {
+                const msg = res.data.data.message;
+
+                alert(msg)
+            })
+    }
+
 
     const [items,setItems] = React.useState([]);
 
@@ -109,6 +120,7 @@ export default function ServerList() {
                     image="./images/live-from-space.jpg"
                     title="Live from space album cover"
                 />
+                <a onClick={()=> removeMachine(row.id)}>حذف ماشین</a>
             </Card>
             ))}
 
