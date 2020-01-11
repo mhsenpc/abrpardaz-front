@@ -19,6 +19,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { deepOrange } from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import axios from "axios";
+import {api_base, machinesList, ticketsList} from "../Api";
 
 const cardticket = makeStyles(theme => ({
     card: {
@@ -68,6 +70,10 @@ const useStyles = makeStyles({
     }
 });
 
+
+
+
+
 function Ticket() {
 
     const classes = useStyles();
@@ -82,6 +88,19 @@ function Ticket() {
 
 
     const bull = <span className={classes.bullet}>•</span>;
+
+
+    const [items,setItems] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + ticketsList)
+            .then(res => {
+                const list = res.data.data.list;
+
+                setItems(list);
+            })
+    }, [items]);
+
 
     return (
 
@@ -102,30 +121,25 @@ function Ticket() {
 
 
                               <Box width={200}  >
-                              <Card className={classes.card} variant="outlined">
-                                  <CardContent>
-                                      <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                          موضوع 1
-                                      </Typography>
-                                      <Typography className={classes.title} variant="h5" component="h2">
-                                          Mohammad
-                                      </Typography>
-                                      <Typography className={classes.title} className={classes.pos} color="textSecondary">
-                                          59 روز پیش
-                                      </Typography>
-                                  </CardContent>
 
+
+                                  <Card className={classes.card} variant="outlined">
+
+
+                                      {items.map(row => (
                                   <CardContent>
                                       <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                          موضوع 1
+                                          {row.title}
                                       </Typography>
                                       <Typography className={classes.title} variant="h5" component="h2">
-                                          Nik
+                                          {row.status}
                                       </Typography>
                                       <Typography className={classes.title} className={classes.pos} color="textSecondary">
-                                          59 روز پیش
+                                          {row.created_at}
                                       </Typography>
                                   </CardContent>
+                                      ))}
+
 
                               </Card>
                               </Box>
