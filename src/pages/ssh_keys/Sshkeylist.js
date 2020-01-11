@@ -22,6 +22,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import {api_base, sshKeysList} from "../../Api";
+import Card from "../ServerList";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -110,6 +111,16 @@ export default class Sshkeylist extends Component {
             })
     }
 
+    removeSshKey = id => {
+        axios.delete(api_base + 'sshKeys/remove?id=' + id
+        )
+            .then(res => {
+                const msg = res.data.data.message;
+
+                alert(msg)
+            })
+    }
+
     render() {
         return (
 
@@ -184,16 +195,23 @@ export default class Sshkeylist extends Component {
                                                                         <DraftsIcon fontSize="small"/>
                                                                     </ListItemIcon>
                                                                     <ListItemText primary="حذف"/>
+
+
                                                                 </StyledMenuItem>
                                                             </StyledMenu>
 
+                                                            <a onClick={()=> this.removeSshKey(row.id)}>حذف ماشین</a>
 
                                                         </StyledTableCell>
 
                                                         <StyledTableCell component="th" scope="row">
                                                             {row.name}
                                                         </StyledTableCell>
-                                                        <StyledTableCell align="right">{row.id}</StyledTableCell>
+                                                        <StyledTableCell align="right">{row.id}
+
+
+                                                        </StyledTableCell>
+
                                                     </StyledTableRow>
                                                 ))}
                                             </TableBody>
