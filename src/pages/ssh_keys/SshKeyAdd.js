@@ -16,12 +16,11 @@ import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base, sshKeysAdd} from "../../Api";
 
-let name = null;
-let content = null;
 
-function AddKey() {
-    return;
-    axios.post(api_base + sshKeysAdd, {name: name.current.value, content: content.current.value})
+function AddKey(event) {
+    event.preventDefault();
+    const { name, content } = event.currentTarget.elements;
+    axios.post(api_base + sshKeysAdd, {name: name.value, content: content.value})
         .then(res => {
             const msg = res.data.data.message;
 
@@ -42,24 +41,24 @@ function SshKeyAdd() {
                 <Paper>
 
                     <Box p={2} width={700}>
-
-                        <TextField id="filled-basic" label="نام" variant="filled"
-                                   ref={(input) => { name = input; }}
+<form onSubmit={AddKey}>
+                        <TextField
+                            name="name"
+                            label="نام" variant="filled"
                         />
                         <TextField
-                            id="filled-multiline-static"
+                            name="content"
                             label="نظر"
                             multiline
                             rows="4"
                             variant="filled"
-                            ref={(input) => { content = input; }}
                         />
 
-                        <Button onClick={() => AddKey()} type="button" variant="contained" color="primary">
+                        <Button type="submit" variant="contained" color="primary">
                             ذخیره
                         </Button>
 
-
+</form>
                     </Box>
 
                 </Paper>

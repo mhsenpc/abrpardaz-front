@@ -138,7 +138,7 @@ export default class Sshkeylist extends Component {
 
                         <Grid item xs={6}>
                             <Paper>
-                                <Button variant="contained" color="primary">
+                                <Button a href={'/SshKeyAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     اضافه کردن کلید SSH
                                 </Button>
@@ -190,17 +190,16 @@ export default class Sshkeylist extends Component {
                                                                     </ListItemIcon>
                                                                     <ListItemText primary="ویرایش"/>
                                                                 </StyledMenuItem>
-                                                                <StyledMenuItem>
+                                                                <StyledMenuItem onClick={()=> this.removeSshKey(row.id)}>
                                                                     <ListItemIcon>
                                                                         <DraftsIcon fontSize="small"/>
                                                                     </ListItemIcon>
-                                                                    <ListItemText primary="حذف"/>
+                                                                    <ListItemText  primary="حذف"/>
 
 
                                                                 </StyledMenuItem>
                                                             </StyledMenu>
 
-                                                            <a onClick={()=> this.removeSshKey(row.id)}>حذف ماشین</a>
 
                                                         </StyledTableCell>
 
