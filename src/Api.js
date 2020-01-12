@@ -28,3 +28,7 @@ export const sshKeysList = 'sshKeys/list';
 export const sshKeysAdd = 'sshKeys/add';
 export const sshKeysEdit = 'sshKeys/edit';
 export const sshKeysRemove = 'sshKeys/remove';
+export const ticketsList = 'tickets/list';
+
+
+
