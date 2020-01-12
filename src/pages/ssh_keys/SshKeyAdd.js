@@ -1,75 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import {makeStyles} from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
-import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import {useSpring, animated} from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FormLabel from '@material-ui/core/FormLabel';
-import TextField from '@material-ui/core/TextField';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import axios from "axios";
+import {api_base, sshKeysAdd} from "../../Api";
 
-const useStyles = makeStyles(theme => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
+let name = null;
+let content = null;
 
-const Fade = React.forwardRef(function Fade(props, ref) {
-    const { in: open, children, onEnter, onExited, ...other } = props;
-    const style = useSpring({
-        from: { opacity: 0 },
-        to: { opacity: open ? 1 : 0 },
-        onStart: () => {
-            if (open && onEnter) {
-                onEnter();
-            }
-        },
-        onRest: () => {
-            if (!open && onExited) {
-                onExited();
-            }
-        },
-    });
+function AddKey() {
+    return;
+    axios.post(api_base + sshKeysAdd, {name: name.current.value, content: content.current.value})
+        .then(res => {
+            const msg = res.data.data.message;
 
-    return (
-        <animated.div ref={ref} style={style} {...other}>
-            {children}
-        </animated.div>
-    );
-});
+            alert(msg)
+        })
+}
 
-Fade.propTypes = {
-    children: PropTypes.element,
-    in: PropTypes.bool.isRequired,
-    onEnter: PropTypes.func,
-    onExited: PropTypes.func,
-};
+function SshKeyAdd() {
 
-export default function SshKeyAdd() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-    const handleAddOpen = () => {
-        setOpen(true);
-    };
-
-    const handleAddClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div>
@@ -77,55 +38,36 @@ export default function SshKeyAdd() {
                   direction="row"
                   justify="center"
                   alignItems="center">
-                <Grid item xs={6} container
-                      direction="row"
-                      justify="center"
-                      alignItems="center">
-                    <Paper>
-                        <Button type="button" variant="contained" color="primary" onClick={handleAddOpen}>
-                            برای اضافه کردن SSHK ضربه بزنید
+
+                <Paper>
+
+                    <Box p={2} width={700}>
+
+                        <TextField id="filled-basic" label="نام" variant="filled"
+                                   ref={(input) => { name = input; }}
+                        />
+                        <TextField
+                            id="filled-multiline-static"
+                            label="نظر"
+                            multiline
+                            rows="4"
+                            variant="filled"
+                            ref={(input) => { content = input; }}
+                        />
+
+                        <Button onClick={() => AddKey()} type="button" variant="contained" color="primary">
+                            ذخیره
                         </Button>
-                        <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab>
-                        <Modal
-                            aria-labelledby="spring-modal-title"
-                            aria-describedby="spring-modal-description"
-                            className={classes.modal}
-                            open={open}
-                            onClose={handleAddClose}
-                            closeAfterTransition
-                            BackdropComponent={Backdrop}
-                            BackdropProps={{
-                                timeout: 500,
-                            }}
-                        >
-                            <Fade in={open}>
-                                <div className={classes.paper}>
 
-                                    <FormLabel>کلید SSH جدید</FormLabel>
 
-                                    <hr/>
-                                    <TextField
-                                        placeholder="کلید SSH جدید"
-                                        multiline={true}
-                                        rows={29}
-                                        rowsMax={7}
-                                    />
-                                    <Grid item>
-                                        <Button variant="contained" color="primary" disableElevation>
-                                            اضافه کردن کلید SSHK جدید
-                                        </Button>
-                                    </Grid>
+                    </Box>
 
-                                </div>
-                            </Fade>
-                        </Modal>
+                </Paper>
 
-                    </Paper>
-                </Grid>
             </Grid>
 
         </div>
     );
 }
+
+export default SshKeyAdd;
