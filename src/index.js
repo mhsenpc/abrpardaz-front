@@ -21,6 +21,7 @@ import Register from "./pages/Register";
 import ChangePassword from "./pages/Changepassword";
 import Profile from "./pages/Profile";
 import SshKeyAdd from "./pages/ssh_keys/SshKeyAdd";
+import NewTicket from "./pages/NewTicket";
 
 const DefaultLayout = ({component: Component, ...rest}) => {
     return (
@@ -49,6 +50,7 @@ const routing = (
                 <DefaultLayout  path="/changePassword" component={ChangePassword} />
                 <DefaultLayout  path="/profile" component={Profile} />
                 <DefaultLayout  path="/SshKeyAdd" component={SshKeyAdd} />
+                <DefaultLayout  path="/NewTicket" component={NewTicket} />
 
         </div>
     </Router>

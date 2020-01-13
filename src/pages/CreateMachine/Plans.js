@@ -45,7 +45,7 @@ function Plans() {
 
                 setItems(list);
             })
-    }, [items]);
+    }, []);
 
     return (
         <div>
