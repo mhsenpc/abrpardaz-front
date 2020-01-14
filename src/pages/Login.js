@@ -11,10 +11,11 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Copyright from "./CopyRight";
-import {api_base, login} from "../Api";
+import {api_base, login, newTicket} from "../Api";
 import axios from 'axios';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 
 function sendLoginRequest(event) {
     event.preventDefault();
-    axios.post(api_base + login , {
+    axios.post(api_base + login, {
         firstName: 'Fred',
         lastName: 'Flintstone'
     })
@@ -61,23 +62,44 @@ function sendLoginRequest(event) {
         });
 }
 
+
+function sendUser(event) {
+    event.preventDefault();
+    const {email, password} = event.currentTarget.elements;
+    axios.post(api_base + login, {email: email.value, password: password.value})
+        .then(res => {
+
+            if (res.data.success == true) {
+                const token = res.data.data.access_token;
+                localStorage.setItem("token", token);
+                alert('ورود با موفقیت انجام شد')
+            } else {
+                alert('نام کاربری یا رمز عبور اشتباه می باشد')
+            }
+        })
+}
+
+
 export default function Login() {
+
+
     const classes = useStyles();
 
     return (
         <Grid container component="main" className={classes.root}>
-            <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <CssBaseline/>
+            <Grid item xs={false} sm={4} md={7} className={classes.image}/>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         ورود کاربران
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form onSubmit={sendUser} className={classes.form} noValidate>
                         <TextField
+
                             variant="outlined"
                             margin="normal"
                             required
@@ -100,7 +122,7 @@ export default function Login() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="primary"/>}
                             label="مرا به خاطر بسپار"
                         />
                         <Button
@@ -109,7 +131,6 @@ export default function Login() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={event => sendLoginRequest()}
                         >
                             ورود
                         </Button>
@@ -126,7 +147,7 @@ export default function Login() {
                             </Grid>
                         </Grid>
                         <Box mt={5}>
-                            <Copyright />
+                            <Copyright/>
                         </Box>
                     </form>
                 </div>
