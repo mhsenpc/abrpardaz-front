@@ -10,7 +10,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {api_base, plansList, ticketsList} from "../../Api";
-import Ticket from "../Ticket";
 
 
 const useStyles = makeStyles({

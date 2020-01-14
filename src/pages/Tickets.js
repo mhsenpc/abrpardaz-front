@@ -22,6 +22,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
 import {api_base, machinesList, ticketsList} from "../Api";
 
+
 const cardticket = makeStyles(theme => ({
     card: {
         maxWidth: 345,
@@ -74,7 +75,7 @@ const useStyles = makeStyles({
 
 
 
-function Ticket() {
+function Tickets() {
 
     const classes = useStyles();
     const card_ticket = cardticket();
@@ -136,6 +137,9 @@ function Ticket() {
                                       </Typography>
                                       <Typography className={classes.title} className={classes.pos} color="textSecondary">
                                           {row.created_at}
+                                      </Typography>
+                                      <Typography className={classes.title} className={classes.pos} color="textSecondary">
+                                          <a href='/TicketDetails'>جزئیات</a>
                                       </Typography>
                                   </CardContent>
                                       ))}
@@ -239,4 +243,4 @@ function Ticket() {
     );
 }
 
-export default Ticket;
+export default Tickets;

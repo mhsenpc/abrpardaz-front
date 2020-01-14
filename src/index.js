@@ -14,7 +14,7 @@ import ServerList from "./pages/ServerList";
 import SshKeyList from "./pages/ssh_keys/Sshkeylist";
 import PaymentList from "./pages/Payment";
 import Snapshotlist from "./pages/Snapshotlist";
-import Ticket from "./pages/Ticket";
+import Tickets from "./pages/Tickets";
 import Wizard from "./pages/CreateMachine/Wizard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -22,6 +22,7 @@ import ChangePassword from "./pages/Changepassword";
 import Profile from "./pages/Profile";
 import SshKeyAdd from "./pages/ssh_keys/SshKeyAdd";
 import NewTicket from "./pages/NewTicket";
+import TicketDetails from "./pages/TicketDetails";
 
 const DefaultLayout = ({component: Component, ...rest}) => {
     return (
@@ -46,11 +47,13 @@ const routing = (
                 <DefaultLayout  path="/createMachine" component={Wizard}/>
                 <DefaultLayout  path="/404" component={Notfound} />
                 <DefaultLayout  path="/snapshotList" component={Snapshotlist} />
-                <DefaultLayout  path="/Tickets" component={Ticket} />
+                <DefaultLayout  path="/Tickets" component={Tickets} />
                 <DefaultLayout  path="/changePassword" component={ChangePassword} />
                 <DefaultLayout  path="/profile" component={Profile} />
                 <DefaultLayout  path="/SshKeyAdd" component={SshKeyAdd} />
                 <DefaultLayout  path="/NewTicket" component={NewTicket} />
+                <DefaultLayout  path="/TicketDetails" component={TicketDetails} />
+
 
         </div>
     </Router>
