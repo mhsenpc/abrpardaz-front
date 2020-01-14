@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme,useTheme  } from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -8,15 +8,9 @@ import AddIcon from '@material-ui/icons/AddBox';
 import CloudIcon from '@material-ui/icons/Cloud';
 import axios from "axios";
 import {api_base, machinesList} from "../Api";
-import List from "./CreateMachine/Snapshots";
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 const cardserverlist = makeStyles(theme => ({
@@ -73,9 +67,8 @@ export default function ServerList() {
     const cardlist = cardserverlist();
     const theme = useTheme();
 
-    function removeMachine(id){
-        axios.delete(api_base + 'machines/'+ id +'/remove'
-    )
+    function removeMachine(id) {
+        axios.delete(api_base + 'machines/' + id + '/remove')
             .then(res => {
                 const msg = res.data.data.message;
 
@@ -84,7 +77,7 @@ export default function ServerList() {
     }
 
 
-    const [items,setItems] = React.useState([]);
+    const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + machinesList)
@@ -93,76 +86,78 @@ export default function ServerList() {
 
                 setItems(list);
             })
-    }, [items]);
+    }, []);
 
+    function Machines(props) {
+        return (
+            <div className={classes.root}>
+                {items.map(row => (
+                    <Card className={cardlist.card}>
+                        <div className={cardlist.details}>
+                            <CardContent className={cardlist.content}>
+                                <Typography component="h5" variant="h5">
+                                    {row.name}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary">
+                                    {row.image.version}
+                                </Typography>
+                            </CardContent>
 
-    return (
-        <div className={classes.root}>
+                        </div>
+                        <CardMedia
+                            className={cardlist.cover}
+                            image="./images/live-from-space.jpg"
+                            title="Live from space album cover"
+                        />
+                        <a onClick={() => removeMachine(row.id)}>حذف ماشین</a>
+                    </Card>
+                ))}
+            </div>
+        )
+    }
 
+    function EmptyMachine(props){
+        return (
+            <div className={classes.root}>
+                <Paper className={classes.paper}>
+                    <Button variant="contained" color="primary" a href={"/createMachine"}>
+                        ایجاد سرور
+                        <AddIcon>+</AddIcon>
+                    </Button>
+                    <Grid>
+                        سرور های شما
+                    </Grid>
+                </Paper>
+                <Paper className={classes.paper}>
+                    <Grid container spacing={3}>
 
-
-
-            {items.map(row => (
-            <Card className={cardlist.card}>
-                <div className={cardlist.details}>
-                    <CardContent className={cardlist.content}>
-                        <Typography component="h5" variant="h5">
-                            {row.name}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                            {row.image.version}
-                        </Typography>
-                    </CardContent>
-
-                </div>
-                <CardMedia
-                    className={cardlist.cover}
-                    image="./images/live-from-space.jpg"
-                    title="Live from space album cover"
-                />
-                <a onClick={()=> removeMachine(row.id)}>حذف ماشین</a>
-            </Card>
-            ))}
-
-
-            <Paper className={classes.paper}>
-                <Button variant="contained" color="primary" a href={"/createMachine"}>
-                   ایجاد سرور
-                    <AddIcon>+</AddIcon>
-                </Button>
-                <Grid>
-                   سرور های شما
-                </Grid>
-            </Paper>
-            <Paper className={classes.paper}>
-                <Grid container spacing={3}>
-
-                    <Grid item>
-                        <CloudIcon className={classes.img} />
-
-
-
-
-
-
-
-
-                        <Grid item xs={12} sm container>
-                            <Grid item xs container direction="column" spacing={12}>
-                                <Grid item >
-                                    <Typography variant="body2" gutterBottom>
-                                        به نظر میرسد در حال حاضر هیچ سروری ندارید.
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        به سادگی اولین سرور خود را ایجاد نمایید
-                                    </Typography>
+                        <Grid item>
+                            <CloudIcon className={classes.img}/>
+                            <Grid item xs={3} sm container>
+                                <Grid item xs container direction="column" spacing={3}>
+                                    <Grid item>
+                                        <Typography variant="body2" gutterBottom>
+                                            به نظر میرسد در حال حاضر هیچ سروری ندارید.
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            به سادگی اولین سرور خود را ایجاد نمایید
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
 
-                </Grid>
-            </Paper>
-        </div>
-    );
+                    </Grid>
+                </Paper>
+            </div>
+        )
+    }
+
+    if (items === undefined || items.length == 0){
+        return <EmptyMachine />
+    }
+    else{
+        return <Machines />
+    }
+
 }

@@ -52,7 +52,7 @@ const routing = (
                 <DefaultLayout  path="/profile" component={Profile} />
                 <DefaultLayout  path="/SshKeyAdd" component={SshKeyAdd} />
                 <DefaultLayout  path="/NewTicket" component={NewTicket} />
-                <DefaultLayout  path="/TicketDetails" component={TicketDetails} />
+                <DefaultLayout  path="/TicketDetails/:id" component={TicketDetails} />
 
 
         </div>

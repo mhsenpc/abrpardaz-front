@@ -5,24 +5,23 @@ import FormLabel from '@material-ui/core/FormLabel';
 import AddIcon from '@material-ui/icons/Add';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {withStyles, Theme, createStyles, makeStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme, withStyles} from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import SendIcon from '@material-ui/icons/Send';
+import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import {api_base, sshKeysList} from "../../Api";
-import Card from "../ServerList";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -112,7 +111,7 @@ export default class Sshkeylist extends Component {
     }
 
     removeSshKey = id => {
-        axios.delete(api_base + 'sshKeys/remove?id=' + id
+        axios.delete(api_base + 'sshKeys/' + id.toString() +'/remove'
         )
             .then(res => {
                 const msg = res.data.data.message;
@@ -186,17 +185,15 @@ export default class Sshkeylist extends Component {
                                                             >
                                                                 <StyledMenuItem>
                                                                     <ListItemIcon>
-                                                                        <SendIcon fontSize="small"/>
+                                                                        <EditIcon fontSize="small"/>
                                                                     </ListItemIcon>
                                                                     <ListItemText primary="ویرایش"/>
                                                                 </StyledMenuItem>
-                                                                <StyledMenuItem onClick={()=> this.removeSshKey(row.id)}>
+                                                                <StyledMenuItem onClick={() => this.removeSshKey(row.id)}>
                                                                     <ListItemIcon>
-                                                                        <DraftsIcon fontSize="small"/>
+                                                                        <DeleteIcon fontSize="small"/>
                                                                     </ListItemIcon>
-                                                                    <ListItemText  primary="حذف"/>
-
-
+                                                                    <ListItemText primary="حذف"/>
                                                                 </StyledMenuItem>
                                                             </StyledMenu>
 
@@ -234,12 +231,3 @@ export default class Sshkeylist extends Component {
     ;
 
 }
-
-
-
-
-
-
-
-
-

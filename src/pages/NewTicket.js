@@ -76,8 +76,6 @@ function ticketPost(event) {
 
 
 function NewTicket() {
-
-
     const classes = useStyles();
     const [machine, setMachine] = React.useState('');
     const [category, setCategory] = React.useState('');

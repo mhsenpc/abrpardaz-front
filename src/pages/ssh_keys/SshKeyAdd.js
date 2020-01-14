@@ -1,16 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import Backdrop from '@material-ui/core/Backdrop';
-import {useSpring, animated} from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import FormLabel from '@material-ui/core/FormLabel';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import CancelIcon from '@material-ui/icons/Cancel';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
@@ -19,12 +10,13 @@ import {api_base, sshKeysAdd} from "../../Api";
 
 function AddKey(event) {
     event.preventDefault();
-    const { name, content } = event.currentTarget.elements;
+    const {name, content} = event.currentTarget.elements;
     axios.post(api_base + sshKeysAdd, {name: name.value, content: content.value})
         .then(res => {
             const msg = res.data.data.message;
 
             alert(msg)
+            window.location.href= '/Sshkeylist';
         })
 }
 
@@ -41,24 +33,24 @@ function SshKeyAdd() {
                 <Paper>
 
                     <Box p={2} width={700}>
-<form onSubmit={AddKey}>
-                        <TextField
-                            name="name"
-                            label="نام" variant="filled"
-                        />
-                        <TextField
-                            name="content"
-                            label="نظر"
-                            multiline
-                            rows="4"
-                            variant="filled"
-                        />
+                        <form onSubmit={AddKey}>
+                            <TextField
+                                name="name"
+                                label="نام" variant="filled"
+                            />
+                            <TextField
+                                name="content"
+                                label="نظر"
+                                multiline
+                                rows="4"
+                                variant="filled"
+                            />
 
-                        <Button type="submit" variant="contained" color="primary">
-                            ذخیره
-                        </Button>
+                            <Button type="submit" variant="contained" color="primary">
+                                ذخیره
+                            </Button>
 
-</form>
+                        </form>
                     </Box>
 
                 </Paper>

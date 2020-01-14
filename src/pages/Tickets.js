@@ -100,7 +100,7 @@ function Tickets() {
 
                 setItems(list);
             })
-    }, [items]);
+    }, []);
 
 
     return (
@@ -139,7 +139,7 @@ function Tickets() {
                                           {row.created_at}
                                       </Typography>
                                       <Typography className={classes.title} className={classes.pos} color="textSecondary">
-                                          <a href='/TicketDetails'>جزئیات</a>
+                                          <a href={'/TicketDetails/' + row.id.toString() } >جزئیات</a>
                                       </Typography>
                                   </CardContent>
                                       ))}

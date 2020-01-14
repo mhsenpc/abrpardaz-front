@@ -68,7 +68,7 @@ const useStyles = makeStyles({
 
 
 
-function TicketDetails() {
+function TicketDetails(props) {
 
     const classes = useStyles();
 
@@ -76,7 +76,8 @@ function TicketDetails() {
     const [ticket,setItems] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get(api_base + 'tickets/1/show')
+        let id = props.match.params.id;
+        axios.get(api_base + 'tickets/' + id.toString() +'/show')
             .then(res => {
                 const ticket = res.data.data.ticket;
 
