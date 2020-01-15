@@ -73,7 +73,7 @@ function TicketDetails(props) {
     const classes = useStyles();
 
 
-    const [ticket,setItems] = React.useState([]);
+    const [ticket,setItems] = React.useState({replies:[]});
 
     React.useEffect(() => {
         let id = props.match.params.id;
@@ -83,7 +83,7 @@ function TicketDetails(props) {
 
                 setItems(ticket);
             })
-    }, [ticket]);
+    }, []);
 
         return (
 
@@ -121,10 +121,42 @@ function TicketDetails(props) {
                                         {ticket.message}
                                 </Typography>
 
+
+
+                                    {ticket.replies.map(row => (
+
+                                    <CardContent>
+
+
+                                        <div align="right">
+
+                                            <p>پاسخ</p>
+
+
+                                            <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
+                                                M
+                                            </Avatar>
+
+                                            <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
+                                                {row.ticket_id}
+                                            </Typography>
+                                            <Typography className={classes.title} variant="h5" component="h2">
+                                                {row.comment}
+                                            </Typography>
+
+                                        </div>
+
+
+                                    </CardContent>
+
+                                    ))}
+
+
                                 </div>
 
 
                             </CardContent>
+
 
 
                             </Card>
