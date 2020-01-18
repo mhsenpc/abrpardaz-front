@@ -31,3 +31,5 @@ export const sshKeysRemove = 'sshKeys/remove';
 export const ticketsList = 'tickets/list';
 export const newTicket = 'tickets/newTicket';
 export const ticketCategories = 'tickets/categories';
+export const changePassword = 'auth/changePassword';
+
