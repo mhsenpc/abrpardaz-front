@@ -25,6 +25,9 @@ import NewTicket from "./pages/NewTicket";
 import TicketDetails from "./pages/TicketDetails";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Verify from "./pages/Verify";
+
+
 
 const DefaultLayout = ({component: Component, ...rest}) => {
     return (
@@ -57,7 +60,7 @@ const routing = (
                 <DefaultLayout  path="/ResetPassword" component={ResetPassword} />
                 <DefaultLayout  path="/TicketDetails/:id" component={TicketDetails} />
                 <DefaultLayout  path="/ForgetPassword" component={ForgetPassword} />
-
+                <DefaultLayout  path="/Verify" component={Verify} />
 
         </div>
     </Router>
