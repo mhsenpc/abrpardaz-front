@@ -13,7 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, snapshotsList} from "../Api";
+import {api_base, machinesList, machineSnapshotsList, snapshotsList} from "../Api";
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,39 +32,21 @@ const useStyles1 = makeStyles({
     },
 });
 
-export default function Snapshotlist() {
-    const classes = useStyles1();
-    const [machine, setMachine] = React.useState('');
-
-    const [labelWidth, setLabelWidth] = React.useState(0);
-
-    const handleChange = name => event => {
-        setMachine(event.target.value);
-        alert(event.target.value);
-    };
-
-    const [machineItems, setMachineItems] = React.useState([]);
+export default function MachineSnapshotsList(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
+    const classes = useStyles1();
 
     React.useEffect(() => {
-        axios.get(api_base + machinesList)
+        let id = props.match.params.id;
+        axios.get(api_base + machineSnapshotsList + '?machine_id=' + id.toString() )
+
             .then(res => {
-                const list = res.data.data.list;
-
-                setMachineItems(list);
-            })
-    }, []);
-
-    React.useEffect(() => {
-
-        axios.get(api_base + snapshotsList)
-            .then(res => {
+                console.log(res.data)
                 const list = res.data.data.list;
 
                 setSnapShotItems(list);
             })
     }, []);
-
 
     function removeSnapshots(id) {
         axios.delete(api_base + 'snapshots/' + id + '/remove'
@@ -76,67 +58,11 @@ export default function Snapshotlist() {
             })
     }
 
+
     return (
 
         <div>
-            <Box width={700} p={1} my={0.5} borderRadius="borderRadius">
-                <Button variant="contained">ایجاد سرور + </Button>
-                <p style={{direction: "rtl"}}>تصاویر آنی شما </p>
-            </Box>
-            <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
 
-                <p style={{direction: "rtl"}}>
-                    ساخت تصویرآنی
-
-                    <br/>
-                    <br/>
-                    لطفاقبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
-                </p>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <Select
-                        native
-                        value={machine}
-                        onChange={handleChange}
-                        labelWidth={labelWidth}
-                        inputProps={{
-                            name: 'age',
-                            id: 'outlined-age-native-simple',
-                        }}
-                    >
-                        {machineItems.map(row => (
-
-                            <option value={row.id}>{row.name}</option>
-
-                        ))}
-
-                    </Select>
-                </FormControl>
-                <p style={{border: "solid 1px red", direction: "rtl"}}>
-                    هم اکنون سروری برای حساب کاربری شما وجود ندارد.
-                </p>
-                <Button variant="contained"> ساخت تصویرآنی
-                </Button>
-                <hr/>
-                <div style={{color: "red", direction: "rtl"}}>
-                    قوانین نامگذاری تصویر آنی:
-                    <ul>
-                        <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
-                        </li>
-                        <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
-                        </li>
-                        <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
-                        </li>
-                        <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
-                        </li>
-
-                    </ul>
-
-                </div>
-            </Box>
             <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
                 <div style={{direction: "rtl"}}>
                     تصاویر آنی

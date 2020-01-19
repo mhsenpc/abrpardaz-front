@@ -26,6 +26,8 @@ import TicketDetails from "./pages/TicketDetails";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Verify from "./pages/Verify";
+import MachineSnapshotsList from "./pages/MachineSnapshotsList";
+
 
 
 
@@ -61,6 +63,8 @@ const routing = (
                 <DefaultLayout  path="/TicketDetails/:id" component={TicketDetails} />
                 <DefaultLayout  path="/ForgetPassword" component={ForgetPassword} />
                 <DefaultLayout  path="/Verify" component={Verify} />
+                <DefaultLayout  path="/test" component={App} />
+                <DefaultLayout  path="/MachineSnapshotList/:id" component={MachineSnapshotsList} />
 
         </div>
     </Router>
