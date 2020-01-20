@@ -20,7 +20,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { deepOrange } from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
-import {api_base, machinesList, ticketsList} from "../Api";
+import {api_base, ticketsList} from "../Api";
 
 
 const cardticket = makeStyles(theme => ({
@@ -148,63 +148,6 @@ function Tickets() {
                               </Card>
                               </Box>
 
-
-                              <Box  width={600} mt={2}>
-
-                                  <Card  className={classes.card} variant="outlined">
-
-                                      <Box border={1} className={classes.border_color} borderRadius="borderRadius">
-                                      <CardContent >
-
-
-                                          <div align="right">
-                                          <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
-                                              M
-                                          </Avatar>
-
-
-                                          <Typography className={classes.title} variant="h5" component="h2">
-                                              Mohammad
-                                          </Typography>
-
-                                          <p>
-                                              سرورم روشن نمیشه
-                                          </p>
-                                          </div>
-
-                                          <Typography className={classes.title} className={classes.pos} color="textSecondary">
-                                             47:78-c-47:78-c25.22.3725.22.37
-                                          </Typography>
-
-                                      </CardContent>
-                                      </Box>
-
-                                      <Box border={1} mt={2}  borderRadius="borderRadius">
-                                      <CardContent>
-
-                                          <div align="right">
-                                          <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
-                                              M
-                                          </Avatar>
-
-                                          <Typography className={classes.title} variant="h5" component="h2">
-                                              Mohammad
-                                          </Typography>
-                                          <p>
-                                              سرورم روشن نمیشه
-                                          </p>
-                                          </div>
-
-                                          <Typography className={classes.title} className={classes.pos} color="textSecondary">
-                                              47:78-c-47:78-c25.22.3725.22.37
-                                          </Typography>
-                                      </CardContent>
-                                      </Box>
-
-                                  </Card>
-
-
-                          </Box>
 
                         <Box m={2}>
 
