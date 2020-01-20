@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 
-function Plans() {
+function Plans(props) {
 
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
@@ -55,7 +55,7 @@ function Plans() {
 
                     <Box component="span" m={1} height="auto" width="auto" display="inline-block">
                         {items.map(row => (
-                        <Button >
+                        <Button onClick={() => props.setPlanId(row.id)} >
                         <Card className={classes.card}>
 
 
