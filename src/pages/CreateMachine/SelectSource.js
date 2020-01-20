@@ -77,7 +77,7 @@ const cardpic = makeStyles(theme => ({
 
 }));
 
-export default function SelectSource() {
+export default function SelectSource(props) {
     const classes = useStyles();
     const Simple_Paper = SimplePaper();
 
@@ -100,15 +100,10 @@ export default function SelectSource() {
         setValue(newValue);
     };
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
+    const handleClick = id => {
+        props.setImageId(id)
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     return (
 
@@ -149,7 +144,7 @@ export default function SelectSource() {
 
                         <TabPanel value={value} index={0}>
                             {items.map(row => (
-                                <Button onClick={handleClick}>
+                                <Button onClick={() => handleClick(row.id)}>
                                     <Box component="span" m={1} height="auto" width="auto" display="inline-block">
 
                                         <div>
@@ -175,12 +170,8 @@ export default function SelectSource() {
                         </TabPanel>
 
                         <TabPanel value={value} index={1}>
-
                             <Snapshots/>
-
                         </TabPanel>
-
-
                     </Paper>
                 </Grid>
 

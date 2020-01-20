@@ -14,27 +14,13 @@ import axios from "axios";
 import {api_base, machinesList, sshKeysList} from "../../Api";
 
 
-const GreenCheckbox = withStyles({
-    root: {
-        color: green[400],
-        '&$checked': {
-            color: green[600],
-        },
-    },
-    checked: {},
-})(props => <Checkbox color="default" {...props} />);
+export default function MachineOptions(props) {
+    const handleChange =  id => {
+        props.setSshId(id)
+    };
 
-export default function MachineOptions() {
-
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-    });
-
-    const handleChange = name => event => {
-        setState({ ...state, [name]: event.target.checked });
+    const handleChangeName = event => {
+        props.setMachineName(event.target.value);
     };
 
 
@@ -81,9 +67,7 @@ export default function MachineOptions() {
                                 <FormControlLabel
                                     control={
                                         <Checkbox
-                                            checked={state.checkedA}
-                                            onChange={handleChange('checkedA')}
-                                            value="checkedA"
+                                            onChange={handleChange(row.id)}
                                             color="primary"
                                         />
                                     }
@@ -105,6 +89,7 @@ export default function MachineOptions() {
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
+                                        onChange={handleChangeName}
                                         variant="filled"
                                     />
 

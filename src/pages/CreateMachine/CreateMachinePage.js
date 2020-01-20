@@ -1,10 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import SelectSource from "./SelectSource";
 import Plans from "./Plans";
 import MachineOptions from "./MachineOptions";
@@ -25,18 +21,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function CreateMachinePage() {
     const classes = useStyles();
+    const [imageId, setImageId] = React.useState(null);
+    const [planId, setPlanId] = React.useState(null);
+    const [sshId, setSshId] = React.useState(null);
+    const [machineName, setMachineName] = React.useState(null);
 
-    function createMachineRequest(){
+
+    function createMachineRequest() {
+        alert(machineName)
         alert('create a machine')
     }
 
     return (
         <div className={classes.root}>
-            <SelectSource/>
-            <Plans/>
-            <MachineOptions/>
-
-            <Button  variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
+            <SelectSource setImageId={setImageId}/>
+            <Plans setPlanId={setPlanId}/>
+            <MachineOptions setSshId={setSshId} setMachineName={setMachineName}/>
+            <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
         </div>
     );
 }
