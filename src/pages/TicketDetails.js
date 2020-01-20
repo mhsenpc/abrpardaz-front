@@ -19,7 +19,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { deepOrange } from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
-import {api_base} from "../Api";
+import {api_base, newReply} from "../Api";
 import Button from "@material-ui/core/Button";
 
 
@@ -86,6 +86,38 @@ function TicketDetails(props) {
 
             })
     }, []);
+
+
+    function sendFormReply(event){
+
+        event.preventDefault();
+        const {comment} = event.currentTarget.elements;
+        let id = props.match.params.id;
+        axios.post(api_base + 'tickets/' + id.toString() +'/newReply', {comment: comment.value })
+            .then(res => {
+                console.log(res.data)
+                const msg = res.data.data.message;
+
+                alert(msg)
+
+            })
+    }
+
+
+
+    function closeTicket() {
+
+        let id = props.match.params.id;
+        axios.put(api_base + 'tickets/' + id.toString() +'/close')
+            .then(res => {
+                console.log(res.data)
+                const msg = res.data.data.message;
+
+                alert(msg)
+
+            })
+
+    }
 
         return (
 
@@ -172,18 +204,21 @@ function TicketDetails(props) {
 
                                     <Box m={2}>
 
-                                        <TextareaAutosize rows={2}
+                                        <form onSubmit={sendFormReply}>
+
+                                        <TextareaAutosize name='comment' rows={2}
                                                           rowsMax={4} aria-label="minimum height" rowsMin={3} placeholder="Minimum 3 rows" />
 
                                         <div>
 
-                                            <Button variant="contained">پاسخ</Button>
-                                            <Button variant="contained" color="secondary">
+                                            <Button type="submit" variant="contained">پاسخ</Button>
+                                            <Button onClick={closeTicket} variant="contained" color="secondary">
                                                 بستن
                                             </Button>
 
 
                                         </div>
+                                        </form>
 
                                     </Box>
 
