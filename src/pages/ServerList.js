@@ -76,6 +76,10 @@ export default function ServerList() {
             })
     }
 
+    function showDetails(machine_id){
+        window.location.href = '/server/' + machine_id.toString();
+    }
+
 
     const [items, setItems] = React.useState([]);
 
@@ -92,22 +96,22 @@ export default function ServerList() {
         return (
             <div className={classes.root}>
                 {items.map(row => (
-                    <Card className={cardlist.card}>
-                        <div className={cardlist.details}>
+                    <Card className={cardlist.card} >
+                        <div className={cardlist.details} onClick={() => showDetails(row.id)}>
                             <CardContent className={cardlist.content}>
                                 <Typography component="h5" variant="h5">
                                     {row.name}
                                 </Typography>
                                 <Typography variant="subtitle1" color="textSecondary">
-                                    {row.image.version}
+                                    {row.image.name}{row.image.version}
                                 </Typography>
                             </CardContent>
 
                         </div>
                         <CardMedia
                             className={cardlist.cover}
-                            image="./images/live-from-space.jpg"
-                            title="Live from space album cover"
+                            image="./images/vps.png"
+                            onClick={() => showDetails(row.id)}
                         />
                         <a onClick={() => removeMachine(row.id)}>حذف ماشین</a>
                     </Card>

@@ -13,7 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, machineSnapshotsList, snapshotsList} from "../Api";
+import {api_base, machinesList, machineSnapshotsList, snapshotsList} from "../../Api";
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,19 +26,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const useStyles1 = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
 
-export default function MachineSnapshotsList(props) {
+export default function ServerSnapshotsList(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
-    const classes = useStyles1();
+    const classes = useStyles();
 
     React.useEffect(() => {
-        let id = props.match.params.id;
-        axios.get(api_base + machineSnapshotsList + '?machine_id=' + id.toString() )
+        axios.get(api_base + machineSnapshotsList + '?machine_id=' + props.id.toString() )
 
             .then(res => {
                 console.log(res.data)

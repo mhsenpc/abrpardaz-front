@@ -51,10 +51,11 @@ export default function ResetPassword() {
                                   {getEmail()}
                               </span>
                             <br/>
-                            <FormLabel>پسورد:</FormLabel>
+                            <br/>
+                            <FormLabel>رمز عبور:</FormLabel>
                             <TextField name="password" id="current-password" type="email"/>
                             <br/>
-                            <FormLabel>پسورد:</FormLabel>
+                            <FormLabel>تکرار رمز عبور:</FormLabel>
                             <TextField name="password_confirmation" id="current-password" type="email"/>
                             <br/>
                             <Button type="submit" variant="contained" color="primary">
