@@ -6,49 +6,42 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./pages/Navbar";
 import axios from "axios";
-import {api_base, machinesList, sshKeysAdd, sshKeysList} from "./Api";
 import {Button} from "@material-ui/core";
+import AddIcon from "./pages/ServerList";
+import {api_base, imagesList, machinesList} from "./Api";
 
-export default class App extends Component {
-    state = {
-        rows: []
-    };
 
-    createkey(){
-      axios.post(api_base + sshKeysAdd, {
-        name: 'mhmdx',
-        content: 'Flintstone'
-      })
-          .then(res => {
-            if(res.data.success === true){
-              alert(res.data.data.message);
-            }
-            else{
-              console.log(res.data.data.message)
-            }
-          })
-    }
+export default function App() {
+    const [machines, setMachines] = React.useState([]);
 
-    componentDidMount() {
-        axios.get(api_base + sshKeysList)
+    React.useEffect(() => {
+        loadMachines()
+    }, []);
+
+    function loadMachines() {
+        axios.get(api_base + machinesList )
             .then(res => {
-                const list = res.data.data.list;
-
-                this.setState({'rows': list});
+                setMachines(res.data.data.list)
             })
     }
 
-    render() {
-        return (
-            <div>
-                <ul>
-                    {this.state.rows.map(row => (
-                        <li>{row.name} date {row.created_at}</li>
-                    ))}
-                </ul>
+    return (
+        <div>
 
-                <Button onClick={this.createkey}>create</Button>
-            </div>
-        );
-    }
+            {machines.map(row => (
+                <div>
+                    <p>
+                        {row.name}
+                    </p>
+
+                    <p>
+                        {row.created_at}
+                    </p>
+                </div>
+            ))};
+
+
+        </div>
+
+    )
 }

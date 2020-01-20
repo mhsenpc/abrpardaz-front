@@ -73,6 +73,7 @@ export default function ServerList() {
                 const msg = res.data.data.message;
 
                 alert(msg)
+
             })
     }
 

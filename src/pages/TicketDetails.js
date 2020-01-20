@@ -110,7 +110,6 @@ function TicketDetails(props) {
         let id = props.match.params.id;
         axios.put(api_base + 'tickets/' + id.toString() +'/close')
             .then(res => {
-                console.log(res.data)
                 const msg = res.data.data.message;
 
                 alert(msg)

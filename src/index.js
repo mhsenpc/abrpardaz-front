@@ -25,7 +25,12 @@ import TicketDetails from "./pages/TicketDetails";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Verify from "./pages/Verify";
+import ValidationWizard from "./pages/ProfileValidation/ValidationWizard";
+
+
 import ServerDetailsMenu from "./pages/machineDetails/DetailsMenu";
+import ServerSnapshotsList from "./pages/machineDetails/ServerSnapshotsList";
+import MachineRemove from "./pages/machineDetails/MachineRemove";
 
 
 const DefaultLayout = ({component: Component, ...rest}) => {
@@ -41,27 +46,29 @@ const DefaultLayout = ({component: Component, ...rest}) => {
 const routing = (
     <Router>
         <div>
-            <DefaultLayout exact path="/" component={Dashboard}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
-            <DefaultLayout path="/faq" component={FAQ}/>
-            <DefaultLayout path="/servers" component={ServerList}/>
-            <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
-            <DefaultLayout path="/payment" component={PaymentList}/>
-            <DefaultLayout path="/createMachine" component={Wizard}/>
-            <DefaultLayout path="/404" component={Notfound}/>
-            <DefaultLayout path="/snapshotList" component={Snapshotlist}/>
-            <DefaultLayout path="/Tickets" component={Tickets}/>
-            <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
-            <DefaultLayout path="/profile" component={Profile}/>
-            <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
-            <DefaultLayout path="/NewTicket" component={NewTicket}/>
-            <DefaultLayout path="/ResetPassword" component={ResetPassword}/>
-            <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
-            <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
-            <DefaultLayout path="/Verify" component={Verify}/>
-            <DefaultLayout path="/test" component={App}/>
-            <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
+                <DefaultLayout exact path="/" component={Dashboard}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/register" component={Register}/>
+                <DefaultLayout  path="/faq" component={FAQ}/>
+                <DefaultLayout  path="/servers" component={ServerList}/>
+                <DefaultLayout  path="/SshKeyList" component={SshKeyList}/>
+                <DefaultLayout  path="/payment" component={PaymentList}/>
+                <DefaultLayout  path="/createMachine" component={Wizard}/>
+                <DefaultLayout  path="/404" component={Notfound} />
+                <DefaultLayout  path="/snapshotList" component={Snapshotlist} />
+                <DefaultLayout  path="/Tickets" component={Tickets} />
+                <DefaultLayout  path="/ChangePassword" component={ChangePassword} />
+                <DefaultLayout  path="/profile" component={Profile} />
+                <DefaultLayout  path="/SshKeyAdd" component={SshKeyAdd} />
+                <DefaultLayout  path="/NewTicket" component={NewTicket} />
+                <DefaultLayout  path="/ResetPassword" component={ResetPassword} />
+                <DefaultLayout  path="/TicketDetails/:id" component={TicketDetails} />
+                <DefaultLayout  path="/ForgetPassword" component={ForgetPassword} />
+                <DefaultLayout  path="/Verify" component={Verify} />
+                <DefaultLayout  path="/test" component={App} />
+                <DefaultLayout  path="/MachineSnapshotList/:id" component={ServerSnapshotsList} />
+                <DefaultLayout  path="/ProfileValidation" component={ValidationWizard} />
+                <DefaultLayout  path="/server/:id" component={ServerDetailsMenu} />
         </div>
     </Router>
 );
