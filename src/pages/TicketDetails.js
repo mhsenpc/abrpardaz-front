@@ -20,6 +20,7 @@ import { deepOrange } from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
 import {api_base} from "../Api";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = makeStyles({
@@ -82,6 +83,7 @@ function TicketDetails(props) {
                 const ticket = res.data.data.ticket;
 
                 setItems(ticket);
+
             })
     }, []);
 
@@ -144,18 +146,53 @@ function TicketDetails(props) {
                                                 {row.comment}
                                             </Typography>
 
+
+
+
+
+
+
+
+
                                         </div>
+
+
+
+
+
 
 
                                     </CardContent>
 
+
+
                                     ))}
 
+
+
+                                    <Box m={2}>
+
+                                        <TextareaAutosize rows={2}
+                                                          rowsMax={4} aria-label="minimum height" rowsMin={3} placeholder="Minimum 3 rows" />
+
+                                        <div>
+
+                                            <Button variant="contained">پاسخ</Button>
+                                            <Button variant="contained" color="secondary">
+                                                بستن
+                                            </Button>
+
+
+                                        </div>
+
+                                    </Box>
 
                                 </div>
 
 
+
                             </CardContent>
+
 
 
 
