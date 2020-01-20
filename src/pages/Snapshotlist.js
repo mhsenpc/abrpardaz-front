@@ -53,9 +53,6 @@ export default function Snapshotlist() {
 
                 setMachineItems(list);
             })
-    }, []);
-
-    React.useEffect(() => {
 
         axios.get(api_base + snapshotsList)
             .then(res => {
@@ -63,9 +60,8 @@ export default function Snapshotlist() {
 
                 setSnapShotItems(list);
             })
-    }, []);
-
-
+    });
+    
     function removeSnapshots(id) {
         axios.delete(api_base + 'snapshots/' + id + '/remove'
         )

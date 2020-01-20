@@ -104,7 +104,7 @@ export default function SelectOS() {
 
                 setItems(list);
             })
-    }, [items]);
+    });
 
 
     const handleChange = (event, newValue) => {

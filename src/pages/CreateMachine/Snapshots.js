@@ -49,7 +49,7 @@ export default function Snapshots() {
 
                 setItems(list);
             })
-    }, [items]);
+    });
 
 
     return (

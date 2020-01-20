@@ -47,7 +47,7 @@ export default function MachineOptions() {
 
                 setItems(list);
             })
-    }, [items]);
+    });
 
 
 
