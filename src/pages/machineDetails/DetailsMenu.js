@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import ServerSnapshotsList from "./ServerSnapshotsList";
 import Overview from "./Overview";
 import MachineRemove from "./MachineRemove";
+import UpgradeMachine from "./UpgradeMachine";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -88,7 +89,7 @@ export default function DetailsMenu(props) {
                 <Overview />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Item Three
@@ -102,8 +103,14 @@ export default function DetailsMenu(props) {
             <TabPanel value={value} index={5}>
                 Item Six
             </TabPanel>
-            <TabPanel value={value} index={6}>
+            <TabPanel value={value} index={7}>
+            Item Seven
+        </TabPanel>
+            <TabPanel value={value} index={8}>
                 Item Seven
+            </TabPanel>
+            <TabPanel value={value} index={9}>
+               <UpgradeMachine/>
             </TabPanel>
             <TabPanel value={value} index={11}>
                 <MachineRemove id={id} />
