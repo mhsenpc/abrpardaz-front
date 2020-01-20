@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import FolderIcon from '@material-ui/icons/Folder';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
+import Description from '@material-ui/icons/Description';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -17,6 +17,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import axios from "axios";
 import {api_base, imagesList, snapshotsList} from "../../Api";
+import Button from "@material-ui/core/Button";
 
 
 const snapshott = makeStyles(theme => ({
@@ -59,17 +60,19 @@ export default function Snapshots() {
             <div className={snap.root}>
                 <List >
                     {items.map(row => (
+                        <Button >
                     <ListItem>
                         <ListItemAvatar>
 
                             <Avatar>
-                                <BeachAccessIcon />
+                                <Description />
                             </Avatar>
 
                         </ListItemAvatar>
-                        <ListItemText primary={row.name} secondary="July 20, 2014" />
+                        <ListItemText primary={row.name} secondary={row.created_at} />
                     </ListItem>
-                    ))};
+                        </Button>
+                    ))}
                 </List>
 
             </div>

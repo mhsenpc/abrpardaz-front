@@ -96,6 +96,10 @@ export default function ServerList() {
     function Machines(props) {
         return (
             <div className={classes.root}>
+                <Button variant="contained" color="primary" a href={"/createMachine"}>
+                    ایجاد سرور
+                    <AddIcon>+</AddIcon>
+                </Button>
                 {items.map(row => (
                     <Card className={cardlist.card} >
                         <div className={cardlist.details} onClick={() => showDetails(row.id)}>

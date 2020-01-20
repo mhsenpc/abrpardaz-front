@@ -14,7 +14,7 @@ import SshKeyList from "./pages/ssh_keys/Sshkeylist";
 import PaymentList from "./pages/Payment";
 import Snapshotlist from "./pages/Snapshotlist";
 import Tickets from "./pages/Tickets";
-import Wizard from "./pages/CreateMachine/Wizard";
+import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ChangePassword from "./pages/ChangePassword";
@@ -53,7 +53,7 @@ const routing = (
                 <DefaultLayout  path="/servers" component={ServerList}/>
                 <DefaultLayout  path="/SshKeyList" component={SshKeyList}/>
                 <DefaultLayout  path="/payment" component={PaymentList}/>
-                <DefaultLayout  path="/createMachine" component={Wizard}/>
+                <DefaultLayout  path="/createMachine" component={CreateMachinePage}/>
                 <DefaultLayout  path="/404" component={Notfound} />
                 <DefaultLayout  path="/snapshotList" component={Snapshotlist} />
                 <DefaultLayout  path="/Tickets" component={Tickets} />

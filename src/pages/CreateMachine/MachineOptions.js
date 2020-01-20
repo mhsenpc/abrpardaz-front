@@ -95,32 +95,11 @@ export default function MachineOptions() {
 
                                 <Box m={5}  width={600}  >
 
-                                    <label>
-                                            نام سرور
-                                    </label>
-
                                     <TextField
                                         id="filled-full-width"
-                                        label="Label"
+                                        label="نام سرور"
                                         style={{ margin: 8 }}
-                                        placeholder="Placeholder"
-                                        fullWidth
-                                        margin="normal"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        variant="filled"
-                                    />
-
-                                    <label>
-                                        تعداد ماشین ها
-                                    </label>
-
-                                    <TextField
-                                        id="filled-full-width"
-                                        label="Label"
-                                        style={{ margin: 8 }}
-                                        placeholder="Placeholder"
+                                        placeholder="Server1"
                                         fullWidth
                                         margin="normal"
                                         InputLabelProps={{
