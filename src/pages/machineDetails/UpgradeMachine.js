@@ -32,14 +32,12 @@ const useStyles = makeStyles({
 function UpgradeMachine() {
 
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-
     const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + plansList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setItems(list);
             })
@@ -86,6 +84,8 @@ function UpgradeMachine() {
                                 </Card>
                             </Button>
                         ))}
+
+                        <Button>ارتقاء</Button>
 
                     </Box>
 

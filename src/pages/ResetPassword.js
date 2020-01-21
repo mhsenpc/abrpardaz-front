@@ -20,7 +20,7 @@ function ResetPasswordSend(event) {
     axios.post(api_base + resetPassword, {email: email,token:token,password:password.value,password_confirmation:password_confirmation.value })
         .then(res => {
             console.log(res.data)
-            const msg = res.data.data.message;
+            const msg = res.data.message;
 
             alert(msg)
 

@@ -1,18 +1,18 @@
 import React from 'react';
 
-import {api_base, machinesList, resetPassword, verify} from "../Api";
+import {api_base, verify} from "../Api";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-
+import MessageBox from "./MessageBox";
 
 
 export default function Verify() {
     const [message, setMessage] = React.useState('');
-    const [showloading, setShowloading] = React.useState(true);
+    const [showLoading, setShowLoading] = React.useState(true);
+    const [response, setResponse] = React.useState([]);
 
     function VerifyRequest(event) {
         let search = window.location.search;
@@ -22,12 +22,15 @@ export default function Verify() {
 
         axios.post(api_base + verify, {email: email, token: token})
             .then(res => {
-                console.log(res.data)
-                const msg = res.data.error.message;
+                if (res.data.success) {
+                    const msg = res.data.error.message;
 
-                setShowloading(false);
-                setMessage(msg);
-
+                    setShowLoading(false);
+                    setMessage(msg);
+                }
+                else{
+                    setResponse(res.data)
+                }
             })
     }
 
@@ -36,7 +39,7 @@ export default function Verify() {
 
     }, []);
 
-    if (showloading == true) {
+    if (showLoading) {
         return (
 
             <div>
@@ -57,12 +60,14 @@ export default function Verify() {
                     </Paper>
                 </Grid>
 
+                <MessageBox response={response} />
+
             </div>
 
         )
     } else {
         return (
-            <spna>{message}</spna>
+            <span>{message}</span>
         )
     }
 }

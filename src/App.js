@@ -1,14 +1,7 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Navbar from "./pages/Navbar";
 import axios from "axios";
-import {Button} from "@material-ui/core";
-import AddIcon from "./pages/ServerList";
-import {api_base, imagesList, machinesList} from "./Api";
+import {api_base, machinesList} from "./Api";
 
 
 export default function App() {
@@ -19,9 +12,9 @@ export default function App() {
     }, []);
 
     function loadMachines() {
-        axios.get(api_base + machinesList )
+        axios.get(api_base + machinesList)
             .then(res => {
-                setMachines(res.data.data.list)
+                setMachines(res.data.list)
             })
     }
 

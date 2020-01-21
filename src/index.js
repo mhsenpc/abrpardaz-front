@@ -10,9 +10,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
-import SshKeyList from "./pages/ssh_keys/Sshkeylist";
+import SshKeyList from "./pages/ssh_keys/SshkeyList";
 import PaymentList from "./pages/Payment";
-import Snapshotlist from "./pages/Snapshotlist";
+import SnapshotList from "./pages/SnapshotList";
 import Tickets from "./pages/Tickets";
 import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
 import Login from "./pages/Login";
@@ -55,7 +55,7 @@ const routing = (
                 <DefaultLayout  path="/payment" component={PaymentList}/>
                 <DefaultLayout  path="/createMachine" component={CreateMachinePage}/>
                 <DefaultLayout  path="/404" component={Notfound} />
-                <DefaultLayout  path="/snapshotList" component={Snapshotlist} />
+                <DefaultLayout  path="/snapshotList" component={SnapshotList} />
                 <DefaultLayout  path="/Tickets" component={Tickets} />
                 <DefaultLayout  path="/ChangePassword" component={ChangePassword} />
                 <DefaultLayout  path="/profile" component={Profile} />

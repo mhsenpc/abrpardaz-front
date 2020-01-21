@@ -19,6 +19,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import MessageBox from "./MessageBox";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -64,37 +65,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login() {
     const classes = useStyles();
-    const [message, setMessage] = React.useState('');
-    const [severity, setSeverity] = React.useState('');
-    const [showMessage, setShowMessage] = React.useState(false);
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setShowMessage(false);
-    };
+    const [response, setResponse] = React.useState([]);
 
     function sendUser(event) {
         event.preventDefault();
         const {email, password} = event.currentTarget.elements;
         axios.post(api_base + login, {email: email.value, password: password.value})
             .then(res => {
-
-                if (res.data.success == true) {
-                    const token = res.data.data.access_token;
-                    localStorage.setItem("token", token);
-
-                    setMessage('ورود با موفقیت انجام شد');
-                    setSeverity('success');
-                    setShowMessage(true)
-                    //alert('ورود با موفقیت انجام شد')
-                } else {
-                    setMessage(res.data.error.message);
-                    setSeverity('warning');
-                    setShowMessage(true)
-                }
+                setResponse(res.data)
+                if(res.data.success)
+                    window.location.href = '/';
             })
     }
 
@@ -164,23 +144,7 @@ export default function Login() {
                         </Box>
                     </form>
                 </div>
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    open={showMessage}
-                    autoHideDuration={2000}
-                    onClose={handleClose}
-                    message={message}
-                    action={
-                        <React.Fragment>
-                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                                <CloseIcon fontSize="small" />
-                            </IconButton>
-                        </React.Fragment>
-                    }
-                />
+                <MessageBox response={response} />
             </Grid>
         </Grid>
     );

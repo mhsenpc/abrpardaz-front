@@ -1,22 +1,16 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
-import { green, pink } from '@material-ui/core/colors';
+import {green, pink} from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
-import FolderIcon from '@material-ui/icons/Folder';
-import PageviewIcon from '@material-ui/icons/Pageview';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import Description from '@material-ui/icons/Description';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import axios from "axios";
-import {api_base, imagesList, snapshotsList} from "../../Api";
+import {api_base, snapshotsList} from "../../Api";
 import Button from "@material-ui/core/Button";
 
 
@@ -41,16 +35,16 @@ export default function Snapshots() {
 
     const snap = snapshott();
 
-    const [items,setItems] = React.useState([]);
+    const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + snapshotsList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setItems(list);
             })
-    });
+    },[]);
 
 
     return (
@@ -58,19 +52,19 @@ export default function Snapshots() {
         <div>
 
             <div className={snap.root}>
-                <List >
+                <List>
                     {items.map(row => (
-                        <Button >
-                    <ListItem>
-                        <ListItemAvatar>
+                        <Button key={row.id}>
+                            <ListItem>
+                                <ListItemAvatar>
 
-                            <Avatar>
-                                <Description />
-                            </Avatar>
+                                    <Avatar>
+                                        <Description/>
+                                    </Avatar>
 
-                        </ListItemAvatar>
-                        <ListItemText primary={row.name} secondary={row.created_at} />
-                    </ListItem>
+                                </ListItemAvatar>
+                                <ListItemText primary={row.name} secondary={row.created_at}/>
+                            </ListItem>
                         </Button>
                     ))}
                 </List>

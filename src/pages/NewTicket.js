@@ -57,24 +57,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function ticketPost(event) {
-    event.preventDefault();
-    const {machine, category, message, title, priority} = event.currentTarget.elements;
-    axios.post(api_base + newTicket, {
-        machine: machine.value,
-        category: category.value,
-        title: title.value,
-        message: message.value,
-        priority: priority.value
-    })
-        .then(res => {
-            const msg = res.data.data.message;
-
-            alert(msg)
-        })
-}
-
-
 function NewTicket() {
     const classes = useStyles();
     const [machine, setMachine] = React.useState('');
@@ -97,20 +79,37 @@ function NewTicket() {
     React.useEffect(() => {
         axios.get(api_base + machinesList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
                 console.log(list);
                 setItemsMachine(list);
             });
 
         axios.get(api_base + ticketCategories)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
                 console.log(list);
                 setItemsTicketsCat(list);
             })
 
     }, []);
 
+
+    function requestNewTicket(event) {
+        event.preventDefault();
+        const {machine, category, message, title, priority} = event.currentTarget.elements;
+        axios.post(api_base + newTicket, {
+            machine: machine.value,
+            category: category.value,
+            title: title.value,
+            message: message.value,
+            priority: priority.value
+        })
+            .then(res => {
+                const msg = res.data.message;
+
+                alert(msg)
+            })
+    }
 
     return (
 
@@ -127,7 +126,7 @@ function NewTicket() {
 
                         <label>ماشین:</label>
 
-                        <form onSubmit={ticketPost}>
+                        <form onSubmit={requestNewTicket}>
 
 
                             <FormControl className={classes.margin}>

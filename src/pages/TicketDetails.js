@@ -2,25 +2,17 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { deepOrange } from '@material-ui/core/colors';
+import {deepOrange, red} from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
-import {api_base, newReply} from "../Api";
+import {api_base} from "../Api";
 import Button from "@material-ui/core/Button";
+import MessageBox from "./MessageBox";
 
 
 const useStyles = makeStyles({
@@ -35,7 +27,7 @@ const useStyles = makeStyles({
     },
     title: {
         fontSize: 14,
-        textAlign:'right'
+        textAlign: 'right'
     },
     pos: {
         marginBottom: 12,
@@ -67,72 +59,60 @@ const useStyles = makeStyles({
 });
 
 
-
-
 function TicketDetails(props) {
 
     const classes = useStyles();
-
-
-    const [ticket,setItems] = React.useState({replies:[]});
+    const [ticket, setTicket] = React.useState({replies: []});
+    const [response, setResponse] = React.useState([]);
 
     React.useEffect(() => {
         let id = props.match.params.id;
-        axios.get(api_base + 'tickets/' + id.toString() +'/show')
+        axios.get(api_base + 'tickets/' + id.toString() + '/show')
             .then(res => {
-                const ticket = res.data.data.ticket;
+                const ticket = res.data.ticket;
 
-                setItems(ticket);
+                setTicket(ticket);
 
             })
     }, []);
 
 
-    function sendFormReply(event){
+    function requestSendReply(event) {
 
         event.preventDefault();
         const {comment} = event.currentTarget.elements;
         let id = props.match.params.id;
-        axios.post(api_base + 'tickets/' + id.toString() +'/newReply', {comment: comment.value })
+        axios.post(api_base + 'tickets/' + id.toString() + '/newReply', {comment: comment.value})
             .then(res => {
-                console.log(res.data)
-                const msg = res.data.data.message;
-
-                alert(msg)
-
+                setResponse(res.data)
             })
     }
 
 
-
-    function closeTicket() {
+    function requestCloseTicket() {
 
         let id = props.match.params.id;
-        axios.put(api_base + 'tickets/' + id.toString() +'/close')
+        axios.put(api_base + 'tickets/' + id.toString() + '/close')
             .then(res => {
-                const msg = res.data.data.message;
-
-                alert(msg)
-
+                setResponse(res.data)
             })
 
     }
 
-        return (
+    return (
 
-            <div>
+        <div>
 
-                <Grid item xs={12} container
-                      direction="row"
-                      alignItems="center"
-                >
-                    <Paper>
+            <Grid item xs={12} container
+                  direction="row"
+                  alignItems="center"
+            >
+                <Paper>
 
-                        <Box  p={2} width={700}>
+                    <Box p={2} width={700}>
 
 
-                            <Card className={classes.card} variant="outlined">
-
+                        <Card className={classes.card} variant="outlined">
 
 
                             <CardContent>
@@ -143,80 +123,70 @@ function TicketDetails(props) {
                                     <p>جزئیات تیکت شما</p>
 
 
-                                    <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
-                                           M
+                                    <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
+                                        M
                                     </Avatar>
 
-                                <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
+                                    <Typography variant="h5" className={classes.title} color="textSecondary"
+                                                gutterBottom>
                                         {ticket.title}
-                                </Typography>
-                                <Typography className={classes.title} variant="h5" component="h2">
+                                    </Typography>
+                                    <Typography className={classes.title} variant="h5" component="h2">
                                         {ticket.message}
-                                </Typography>
-
+                                    </Typography>
 
 
                                     {ticket.replies.map(row => (
 
-                                    <CardContent>
+                                        <CardContent key={row.id}>
 
 
-                                        <div align="right">
+                                            <div align="right">
 
-                                            <p>پاسخ</p>
-
-
-                                            <Avatar  alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
-                                                M
-                                            </Avatar>
-
-                                            <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                                                {row.ticket_id}
-                                            </Typography>
-                                            <Typography className={classes.title} variant="h5" component="h2">
-                                                {row.comment}
-                                            </Typography>
+                                                <p>پاسخ</p>
 
 
+                                                <Avatar alt="Remy Sharp" src="/broken-image.jpg"
+                                                        className={classes.orange}>
+                                                    M
+                                                </Avatar>
+
+                                                <Typography variant="h5" className={classes.title} color="textSecondary"
+                                                            gutterBottom>
+                                                    {row.ticket_id}
+                                                </Typography>
+                                                <Typography className={classes.title} variant="h5" component="h2">
+                                                    {row.comment}
+                                                </Typography>
 
 
+                                            </div>
 
 
-
-
-
-                                        </div>
-
-
-
-
-
-
-
-                                    </CardContent>
-
+                                        </CardContent>
 
 
                                     ))}
 
 
-
                                     <Box m={2}>
 
-                                        <form onSubmit={sendFormReply}>
+                                        <form onSubmit={requestSendReply}>
 
-                                        <TextareaAutosize name='comment' rows={2}
-                                                          rowsMax={4} aria-label="minimum height" rowsMin={3} placeholder="Minimum 3 rows" />
+                                            <TextareaAutosize name='comment' rows={2}
+                                                              rowsMax={4} aria-label="minimum height" rowsMin={3}
+                                                              placeholder="Minimum 3 rows"/>
 
-                                        <div>
+                                            <div>
 
-                                            <Button type="submit" variant="contained">پاسخ</Button>
-                                            <Button onClick={closeTicket} variant="contained" color="secondary">
-                                                بستن
-                                            </Button>
+                                                <Button type="submit" variant="contained">پاسخ</Button>
+                                                <Button onClick={requestCloseTicket} variant="contained"
+                                                        color="secondary">
+                                                    بستن
+                                                </Button>
 
 
-                                        </div>
+                                            </div>
                                         </form>
 
                                     </Box>
@@ -224,24 +194,23 @@ function TicketDetails(props) {
                                 </div>
 
 
-
                             </CardContent>
 
 
+                        </Card>
 
+                    </Box>
 
-                            </Card>
+                </Paper>
+            </Grid>
 
-                        </Box>
+            <MessageBox response={response}/>
+        </div>
 
-                    </Paper>
-                </Grid>
-
-            </div>
-
-        )
+    )
 
 }
+
 export default TicketDetails;
 
 

@@ -67,16 +67,6 @@ export default function ServerList() {
     const cardlist = cardserverlist();
     const theme = useTheme();
 
-    function removeMachine(id) {
-        axios.delete(api_base + 'machines/' + id + '/remove')
-            .then(res => {
-                const msg = res.data.data.message;
-
-                alert(msg)
-
-            })
-    }
-
     function showDetails(machine_id){
         window.location.href = '/server/' + machine_id.toString();
     }
@@ -87,7 +77,7 @@ export default function ServerList() {
     React.useEffect(() => {
         axios.get(api_base + machinesList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setItems(list);
             })
@@ -96,12 +86,12 @@ export default function ServerList() {
     function Machines(props) {
         return (
             <div className={classes.root}>
-                <Button variant="contained" color="primary" a href={"/createMachine"}>
+                <Button variant="contained" color="primary" href={"/createMachine"}>
                     ایجاد سرور
                     <AddIcon>+</AddIcon>
                 </Button>
                 {items.map(row => (
-                    <Card className={cardlist.card} >
+                    <Card key={row.id} className={cardlist.card} >
                         <div className={cardlist.details} onClick={() => showDetails(row.id)}>
                             <CardContent className={cardlist.content}>
                                 <Typography component="h5" variant="h5">
@@ -118,7 +108,6 @@ export default function ServerList() {
                             image="./images/vps.png"
                             onClick={() => showDetails(row.id)}
                         />
-                        <a onClick={() => removeMachine(row.id)}>حذف ماشین</a>
                     </Card>
                 ))}
             </div>
@@ -129,7 +118,7 @@ export default function ServerList() {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper}>
-                    <Button variant="contained" color="primary" a href={"/createMachine"}>
+                    <Button variant="contained" color="primary" href={"/createMachine"}>
                         ایجاد سرور
                         <AddIcon>+</AddIcon>
                     </Button>

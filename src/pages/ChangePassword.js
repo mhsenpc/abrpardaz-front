@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
 import {api_base, changePassword} from "../Api";
+import MessageBox from "./MessageBox";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -18,25 +19,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function ChangePasswords(event) {
-    event.preventDefault();
-    const {current_password, new_password,new_password_confirmation} = event.currentTarget.elements;
-    axios.post(api_base + changePassword, {current_password: current_password.value, new_password: new_password.value ,new_password_confirmation: new_password_confirmation.value })
-        .then(res => {
-            console.log(res.data)
-            const msg = res.data.data.message;
-
-
-            alert(msg)
-        })
-}
-
 export default function ChangePassword() {
     const classes = useStyles();
+    const [response, setResponse] = React.useState([]);
+
+    function RequestChangePassword(event) {
+        event.preventDefault();
+        const {current_password, new_password,new_password_confirmation} = event.currentTarget.elements;
+        axios.post(api_base + changePassword, {current_password: current_password.value, new_password: new_password.value ,new_password_confirmation: new_password_confirmation.value })
+            .then(res => {
+                setResponse(res.data)
+            })
+    }
 
     return (
         <Paper>
-            <form onSubmit={ChangePasswords} className={classes.root} noValidate autoComplete="off">
+            <form onSubmit={RequestChangePassword} className={classes.root} noValidate autoComplete="off">
                 <FormLabel>رمز عبور فعلی :</FormLabel>
                 <TextField name="current_password" id="current-password" type="password"/>
                 <br/>
@@ -50,6 +48,7 @@ export default function ChangePassword() {
                     تغییر رمز عبور
                 </Button>
             </form>
+            <MessageBox response={response} />
         </Paper>
     );
 }

@@ -8,18 +8,17 @@ import {api_base, forgetPassword} from "../Api";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import MessageBox from "./MessageBox";
 
 export default function ForgetPassword() {
-    function ForgetPassword(event) {
+    const [response, setResponse] = React.useState([]);
+
+    function RequestForgetPassword(event) {
         event.preventDefault();
         const {email} = event.currentTarget.elements;
         axios.post(api_base + forgetPassword, {email: email.value })
             .then(res => {
-                console.log(res.data)
-                const msg = res.data.data.message;
-
-
-                alert(msg)
+                setResponse(res.data)
             })
     }
 
@@ -32,7 +31,7 @@ export default function ForgetPassword() {
                 <Paper>
 
                     <Box  p={2} width={700}>
-                        <form onSubmit={ForgetPassword}  noValidate autoComplete="off">
+                        <form onSubmit={RequestForgetPassword}  noValidate autoComplete="off">
                             <FormLabel>پست الکترونیک :</FormLabel>
                             <TextField name="email" id="current-password" type="email"/>
                             <br/>
@@ -45,6 +44,8 @@ export default function ForgetPassword() {
                     </Box>
                 </Paper>
             </Grid>
+
+            <MessageBox response={response} />
         </div>
 
     )

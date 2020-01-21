@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import SelectSource from "./SelectSource";
 import Plans from "./Plans";
 import MachineOptions from "./MachineOptions";
+import MessageBox from "../MessageBox";
+import axios from "axios";
+import {api_base, createFromImage, forgetPassword} from "../../Api";
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,11 +28,15 @@ export default function CreateMachinePage() {
     const [planId, setPlanId] = React.useState(null);
     const [sshId, setSshId] = React.useState(null);
     const [machineName, setMachineName] = React.useState(null);
+    const [response, setResponse] = React.useState([]);
+
 
 
     function createMachineRequest() {
-        alert(machineName)
-        alert('create a machine')
+        axios.post(api_base + createFromImage, {name: machineName,plan_id:planId,image_id:imageId })
+            .then(res => {
+                setResponse(res.data)
+            })
     }
 
     return (
@@ -38,6 +45,7 @@ export default function CreateMachinePage() {
             <Plans setPlanId={setPlanId}/>
             <MachineOptions setSshId={setSshId} setMachineName={setMachineName}/>
             <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
+            <MessageBox response={response} />
         </div>
     );
 }

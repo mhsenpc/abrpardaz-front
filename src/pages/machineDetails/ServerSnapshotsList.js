@@ -36,7 +36,7 @@ export default function ServerSnapshotsList(props) {
 
             .then(res => {
                 console.log(res.data)
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setSnapShotItems(list);
             })
@@ -46,7 +46,7 @@ export default function ServerSnapshotsList(props) {
         axios.delete(api_base + 'snapshots/' + id + '/remove'
         )
             .then(res => {
-                const msg = res.data.data.message;
+                const msg = res.data.message;
 
                 alert(msg)
             })
@@ -60,8 +60,6 @@ export default function ServerSnapshotsList(props) {
             <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
                 <div style={{direction: "rtl"}}>
                     تصاویر آنی
-                    <br/>
-                    تاکنون تصویر آنی ساخته نشده است.
 
 
                     <TableContainer component={Paper}>

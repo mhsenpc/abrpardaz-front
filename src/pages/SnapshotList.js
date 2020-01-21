@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {makeStyles} from '@material-ui/core/styles';
@@ -14,29 +13,21 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {api_base, machinesList, snapshotsList} from "../Api";
+import {TextField} from "@material-ui/core";
+import MessageBox from "./MessageBox";
 
 
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
-
-const useStyles1 = makeStyles({
+const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
 });
 
-export default function Snapshotlist() {
-    const classes = useStyles1();
-    const [machine, setMachine] = React.useState('');
+export default function SnapshotList() {
+    const classes = useStyles();
+    const [machine_id, setMachine] = React.useState(null);
+    const [response, setResponse] = React.useState([]);
 
-    const [labelWidth, setLabelWidth] = React.useState(0);
 
     const handleChange = name => event => {
         setMachine(event.target.value);
@@ -49,26 +40,23 @@ export default function Snapshotlist() {
     React.useEffect(() => {
         axios.get(api_base + machinesList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setMachineItems(list);
             })
 
         axios.get(api_base + snapshotsList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setSnapShotItems(list);
             })
-    });
-    
-    function removeSnapshots(id) {
-        axios.delete(api_base + 'snapshots/' + id + '/remove'
-        )
-            .then(res => {
-                const msg = res.data.data.message;
+    }, []);
 
-                alert(msg)
+    function requestRemoveSnapshot(id) {
+        axios.delete(api_base + 'snapshots/' + id + '/remove')
+            .then(res => {
+                setResponse(res.data)
             })
     }
 
@@ -86,14 +74,13 @@ export default function Snapshotlist() {
 
                     <br/>
                     <br/>
-                    لطفاقبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
+                    لطفا قبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
                 </p>
                 <FormControl variant="outlined" className={classes.formControl}>
                     <Select
                         native
-                        value={machine}
+                        value={machine_id}
                         onChange={handleChange}
-                        labelWidth={labelWidth}
                         inputProps={{
                             name: 'age',
                             id: 'outlined-age-native-simple',
@@ -107,9 +94,16 @@ export default function Snapshotlist() {
 
                     </Select>
                 </FormControl>
-                <p style={{border: "solid 1px red", direction: "rtl"}}>
-                    هم اکنون سروری برای حساب کاربری شما وجود ندارد.
-                </p>
+
+
+                    {machinesList.length > 0 ? (
+                        <p>
+                            <TextField></TextField>
+                        </p>
+                    ) : (
+                        <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود ندارد.</p>
+                    )}
+
                 <Button variant="contained"> ساخت تصویرآنی
                 </Button>
                 <hr/>
@@ -169,7 +163,7 @@ export default function Snapshotlist() {
                                         </TableCell>
 
                                         <TableCell component="th" scope="row">
-                                            <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
+                                            <a onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر آنی</a>
                                         </TableCell>
 
                                     </TableRow>
@@ -182,6 +176,7 @@ export default function Snapshotlist() {
 
                 </div>
             </Box>
+            <MessageBox response={response} />
         </div>
     );
 

@@ -14,21 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 import {api_base, register} from "../Api";
+import Copyright from "./CopyRight";
+import MessageBox from "./MessageBox";
 
-
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -51,22 +39,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function reigsterUser(event) {
-    event.preventDefault();
-    const {email, password} = event.currentTarget.elements;
-    axios.post(api_base + register, {email: email.value, password: password.value})
-        .then(res => {
-            console.log(res.data);
-            const msg = res.data.data.message;
-
-            alert(msg)
-
-        })
-}
-
-
 export default function Register() {
     const classes = useStyles();
+    const [response, setResponse] = React.useState([]);
+
+    function registerUser(event) {
+        event.preventDefault();
+        const {email, password} = event.currentTarget.elements;
+        axios.post(api_base + register, {email: email.value, password: password.value})
+            .then(res => {
+                setResponse(res.data);
+            })
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -78,7 +62,7 @@ export default function Register() {
                 <Typography component="h1" variant="h5">
                     ثبت نام
                 </Typography>
-                <form onSubmit={reigsterUser} className={classes.form} noValidate>
+                <form onSubmit={registerUser} className={classes.form} noValidate>
                     <Grid container spacing={2}>
 
 
@@ -118,12 +102,12 @@ export default function Register() {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="/login" variant="body2">
-                                قبلا ثبت نام کرده اید؟ ورود
-                            </Link>
+                            <span>قبلا ثبت نام کرده اید؟ </span>
+                            <Link href="/login" variant="body2">ورود</Link>
                         </Grid>
                     </Grid>
                 </form>
+                <MessageBox response={response} />
             </div>
             <Box mt={5}>
                 <Copyright />

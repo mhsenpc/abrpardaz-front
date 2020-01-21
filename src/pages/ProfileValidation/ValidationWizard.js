@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-    return ['انتخاب دیتا سنتر', 'انتخاب سیستم عامل', 'انتخاب پلن','تنظیمات ماشین','بازبینی'];
+    return ['مشخصات اصلی', 'اطلاعات تماس', 'مدارک'];
 }
 
 function getStepContent(stepIndex) {

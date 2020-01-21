@@ -89,11 +89,11 @@ export default function SelectSource(props) {
     React.useEffect(() => {
         axios.get(api_base + imagesList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setItems(list);
             })
-    });
+    },[]);
 
 
     const handleChange = (event, newValue) => {
@@ -144,7 +144,7 @@ export default function SelectSource(props) {
 
                         <TabPanel value={value} index={0}>
                             {items.map(row => (
-                                <Button onClick={() => handleClick(row.id)}>
+                                <Button key={row.id} onClick={() => handleClick(row.id)}>
                                     <Box component="span" m={1} height="auto" width="auto" display="inline-block">
 
                                         <div>

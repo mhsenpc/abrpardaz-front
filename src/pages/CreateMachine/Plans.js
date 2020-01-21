@@ -39,7 +39,7 @@ function Plans(props) {
     React.useEffect(() => {
         axios.get(api_base + plansList)
             .then(res => {
-                const list = res.data.data.list;
+                const list = res.data.list;
 
                 setItems(list);
             })
@@ -55,36 +55,32 @@ function Plans(props) {
 
                     <Box component="span" m={1} height="auto" width="auto" display="inline-block">
                         {items.map(row => (
-                        <Button onClick={() => props.setPlanId(row.id)} >
-                        <Card className={classes.card}>
+                            <Button key={row.id} onClick={() => props.setPlanId(row.id)}>
+                                <Card className={classes.card}>
 
 
-                                <CardContent>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        <p>{row.name}</p>
-                                    </Typography>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        <p>vcpu: {row.vcpu}</p>
-                                    </Typography>
-                                    <Typography variant="h5" component="h2">
-                                        <p>
-                                            <p>Ram: {row.ram}GB</p>
-                                        </p>
-                                    </Typography>
-                                    <Typography className={classes.pos} color="textSecondary">
-                                        <p>Disk: {row.disk}GB</p>
-                                    </Typography>
-                                    <Typography variant="body2" component="p">
-                                        <p> ترافیک نا محدود </p>
-                                        <br/>
+                                    <CardContent>
+                                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                            {row.name}
+                                        </Typography>
+                                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                            vcpu: {row.vcpu}
+                                        </Typography>
+                                        <Typography variant="h5" component="h2">
+                                                Ram: {row.ram}GB
+                                        </Typography>
+                                        <Typography className={classes.pos} color="textSecondary">
+                                            Disk: {row.disk}GB
+                                        </Typography>
+                                        <Typography variant="body2" component="p">
+                                            ترافیک نا محدود
+                                        </Typography>
 
-                                    </Typography>
-
-                                </CardContent>
+                                    </CardContent>
 
 
-                        </Card>
-                        </Button>
+                                </Card>
+                            </Button>
                         ))}
 
                     </Box>
