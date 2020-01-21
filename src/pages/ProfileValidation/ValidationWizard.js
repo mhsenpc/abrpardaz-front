@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 import Page1 from '../ProfileValidation/Page1';
 import Page2 from '../ProfileValidation/Page2';
+import Page3 from '../ProfileValidation/Page3';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +35,8 @@ function getStepContent(stepIndex) {
             return <Page1 />;
         case 1:
             return <Page2 />;
+        case 2:
+            return <Page3 />;
         default:
             return 'Unknown stepIndex';
     }
