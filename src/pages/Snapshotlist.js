@@ -60,14 +60,13 @@ export default function Snapshotlist() {
 
                 setSnapShotItems(list);
             })
-    });
+    },[]);
     
     function removeSnapshots(id) {
         axios.delete(api_base + 'snapshots/' + id + '/remove'
         )
             .then(res => {
                 const msg = res.data.data.message;
-
                 alert(msg)
             })
     }
@@ -114,19 +113,19 @@ export default function Snapshotlist() {
                 </Button>
                 <hr/>
                 <div style={{color: "red", direction: "rtl"}}>
-                    قوانین نامگذاری تصویر آنی:
+                    قوانین نامگذاری تصاویر آنی:
                     <ul>
                         <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
+                            نام تصویر آنی باید به انگلیسی وارد گردد.
                         </li>
                         <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
+                            حداقل تعدادکاراکترهای نام تصویر آنی 4 عدد می باشد!
                         </li>
                         <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
+                            نام تصویر آنی باید فقط شامل حرف و عدد باشد، استفاده از کاراکتر خاص به جزخط فاصله مجاز نمی باشد!
                         </li>
                         <li>
-                            نام تصویر آنی باید انگلیسی وارد شود
+                           استفاده از فضای خالی
                         </li>
 
                     </ul>
