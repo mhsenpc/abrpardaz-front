@@ -31,6 +31,8 @@ import ValidationWizard from "./pages/ProfileValidation/ValidationWizard";
 import ServerDetailsMenu from "./pages/machineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/machineDetails/ServerSnapshotsList";
 import MachineRemove from "./pages/machineDetails/MachineRemove";
+import SshKeyEdit from "./pages/ssh_keys/SshKeyEdit";
+
 
 
 const DefaultLayout = ({component: Component, ...rest}) => {
@@ -66,9 +68,12 @@ const routing = (
                 <DefaultLayout  path="/ForgetPassword" component={ForgetPassword} />
                 <DefaultLayout  path="/Verify" component={Verify} />
                 <DefaultLayout  path="/test" component={App} />
+                <DefaultLayout  path="/SshKeyEdit/:id" component={SshKeyEdit} />
+                {/*<DefaultLayout  path="/arab" component={Example} />*/}
                 <DefaultLayout  path="/MachineSnapshotList/:id" component={ServerSnapshotsList} />
                 <DefaultLayout  path="/ProfileValidation" component={ValidationWizard} />
                 <DefaultLayout  path="/server/:id" component={ServerDetailsMenu} />
+
         </div>
     </Router>
 );

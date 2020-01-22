@@ -177,7 +177,8 @@ export default function SshkeyList() {
                                                             open={Boolean(anchorEl)}
                                                             onClose={handleClose}
                                                         >
-                                                            <StyledMenuItem>
+                                                            <StyledMenuItem
+                                                                onClick={() => window.location.href = '/SshKeyEdit/' + row.id}>
                                                                 <ListItemIcon>
                                                                     <EditIcon fontSize="small"/>
                                                                 </ListItemIcon>
@@ -218,7 +219,7 @@ export default function SshkeyList() {
                 </Grid>
 
             </Paper>
-            <MessageBox response={response} />
+            <MessageBox response={response}/>
         </div>
 
     )

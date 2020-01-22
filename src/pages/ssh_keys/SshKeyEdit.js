@@ -1,75 +1,43 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import FormLabel from '@material-ui/core/FormLabel';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import CancelIcon from '@material-ui/icons/Cancel';
+import axios from "axios";
+import {api_base, sshKeysAdd, sshKeysEdit, sshKeysList} from "../../Api";
+import MessageBox from "../MessageBox";
 
-const useStyles = makeStyles(theme => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
 
-const Fade = React.forwardRef(function Fade(props, ref) {
-    const { in: open, children, onEnter, onExited, ...other } = props;
-    const style = useSpring({
-        from: { opacity: 0 },
-        to: { opacity: open ? 1 : 0 },
-        onStart: () => {
-            if (open && onEnter) {
-                onEnter();
-            }
-        },
-        onRest: () => {
-            if (!open && onExited) {
-                onExited();
-            }
-        },
-    });
+function SshKeyEdit(props) {
+    const [response, setResponse] = React.useState([]);
+    const [item, setItem] = React.useState([]);
 
-    return (
-        <animated.div ref={ref} style={style} {...other}>
-            {children}
-        </animated.div>
-    );
-});
 
-Fade.propTypes = {
-    children: PropTypes.element,
-    in: PropTypes.bool.isRequired,
-    onEnter: PropTypes.func,
-    onExited: PropTypes.func,
-};
+    React.useEffect(() => {
+        let id = props.match.params.id;
+        axios.get(api_base + 'sshKeys/' + id.toString() + '/show')
+            .then(res => {
+                const sshkey = res.data.item;
 
-export default function SshKeyEdit() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+                setItem(sshkey);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+            })
+    }, [])
+
+    function requestEditKey(event) {
+        let id = props.match.params.id;
+        event.preventDefault();
+        const {name, content} = event.currentTarget.elements;
+        axios.post(api_base + 'sshKeys/' + id.toString() + '/edit', {name: name.value, content: content.value})
+            .then(res => {
+                setResponse(res.data)
+                if (res.data.success)
+                    window.location.href = '/Sshkeylist';
+            })
+    }
+
 
     return (
         <div>
@@ -77,55 +45,41 @@ export default function SshKeyEdit() {
                   direction="row"
                   justify="center"
                   alignItems="center">
-                <Grid item xs={6} container
-                      direction="row"
-                      justify="center"
-                      alignItems="center">
-                    <Paper>
-                        <Button type="button" variant="contained" color="primary" onClick={handleOpen}>
-                            برای ویرایش کلید SSHK ضربه بزنید
-                        </Button>
-                        <Fab color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab>
-                        <Modal
-                            aria-labelledby="spring-modal-title"
-                            aria-describedby="spring-modal-description"
-                            className={classes.modal}
-                            open={open}
-                            onClose={handleClose}
-                            closeAfterTransition
-                            BackdropComponent={Backdrop}
-                            BackdropProps={{
-                                timeout: 500,
-                            }}
-                        >
-                            <Fade in={open}>
-                                <div className={classes.paper}>
 
-                                    <FormLabel>ویرایش کلید SSHK</FormLabel>
+                <Paper>
 
-                                    <hr/>
-                                    <TextField
-                                        placeholder="ویرایش کلید SSHK"
-                                        multiline={true}
-                                        rows={29}
-                                        rowsMax={7}
-                                    />
-                                    <Grid item>
-                                        <Button variant="contained" color="primary" disableElevation>
-                                            ویرایش کلید SSHK جدید
-                                        </Button>
-                                    </Grid>
+                    <Box p={2} width={700}>
+                        <form onSubmit={requestEditKey}>
+                            <TextField
+                                name="name"
+                                label="نام" variant="filled"
+                                onChange={val => setItem({name: val.value})}
+                                value={item.name}
+                            />
+                            <TextField
+                                name="content"
+                                label="محتوا"
+                                multiline
+                                rows="4"
+                                variant="filled"
+                                value={item.content}
+                                onChange={val => setItem({content: val.value})}
+                            />
 
-                                </div>
-                            </Fade>
-                        </Modal>
+                            <Button type="submit" variant="contained" color="primary">
+                                ذخیره
+                            </Button>
 
-                    </Paper>
-                </Grid>
+                        </form>
+                    </Box>
+
+                </Paper>
+
             </Grid>
-
+            <MessageBox response={response}/>
         </div>
     );
+
 }
+
+export default SshKeyEdit;
