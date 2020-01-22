@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -80,8 +79,8 @@ export default function Page3() {
 
                     <Box  p={2} width={700}>
 
-                        <label p={2}>تصویر جلوی کارت ملی</label>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+
+                        <TextField id="outlined-basic" label="تصویر جلوی کارت ملی" variant="outlined" />
                         <Button
                             variant="contained"
                             component="label"
@@ -95,8 +94,8 @@ export default function Page3() {
                             />
                         </Button>
                         <br/><br/>
-                        <label p={2}>تصویر پشت کارت ملی</label>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+
+                        <TextField id="outlined-basic" label="تصویر پشت کارت ملی" variant="outlined" />
                         <Button
                             variant="contained"
                             component="label"
@@ -111,8 +110,8 @@ export default function Page3() {
                         </Button>
 
                         <br/><br/>
-                        <label p={2}>تصویر شناسنامه</label>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+
+                        <TextField id="outlined-basic" label="تصویر شناسنامه" variant="outlined" />
 
                         <Button
                             variant="contained"

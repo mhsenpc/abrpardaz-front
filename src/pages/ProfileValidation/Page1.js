@@ -22,14 +22,12 @@ export default function Page1() {
 
                         <Box  p={2} width={700}>
 
-                            <label p={2}>نام</label>
-                            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                            <TextField id="outlined-basic" label="نام" variant="outlined" />
                             <br/><br/>
-                            <label p={2}>نام خانوادگی</label>
-                            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                            <TextField id="outlined-basic" label="نام خانوادگی" variant="outlined" />
                             <br/><br/>
-                            <label p={2}>کد ملی</label>
-                            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+
+                            <TextField id="outlined-basic" label="کد ملی" variant="outlined" />
 
                         </Box>
 
