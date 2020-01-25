@@ -25,6 +25,9 @@ import MailIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Copyright from "./CopyRight";
+import axios from "axios";
+import {api_base} from "../Api";
+import MessageBox from "./MessageBox";
 
 const drawerWidth = 240;
 
@@ -189,6 +192,7 @@ export default function Layout(props) {
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
+        requestLogout();
     };
 
     const handleMobileMenuOpen = event => {
@@ -209,7 +213,7 @@ export default function Layout(props) {
             <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem component="a" href="/logout" onClick={handleMenuClose}>خروج</MenuItem>
+            <MenuItem component="a" onClick={handleMenuClose}>خروج</MenuItem>
         </Menu>
     );
 
@@ -239,6 +243,20 @@ export default function Layout(props) {
         </Menu>
     );
 
+    const [response, setResponse] = React.useState([]);
+
+    function requestLogout() {
+        axios.put(api_base + 'auth/logout' )
+            .then(res => {
+                setResponse(res.data)
+
+                setTimeout(function(){
+                    if (res.data.success)
+                        window.location.href = '/login';
+                }, 2000);
+            })
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline/>
@@ -251,6 +269,7 @@ export default function Layout(props) {
                         onClick={handleDrawerOpen}
                         className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                     >
+
                         <MenuIcon/>
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
@@ -314,6 +333,8 @@ export default function Layout(props) {
                     </Box>
                 </Container>
             </main>
+            <MessageBox response={response} />
+
         </div>
     );
 }
