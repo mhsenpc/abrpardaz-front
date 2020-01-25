@@ -106,7 +106,7 @@ export default function SshkeyList() {
 
                 setItems(items)
             })
-    })
+    },[])
 
     const removeSshKey = id => {
         axios.delete(api_base + 'SshKeys/' + id.toString() + '/remove'

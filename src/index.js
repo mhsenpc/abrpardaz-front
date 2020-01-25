@@ -18,14 +18,13 @@ import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import ChangePassword from "./pages/Auth/ChangePassword";
-import Profile from "./pages/Auth/Profile";
 import SshKeyAdd from "./pages/SshKeys/SshKeyAdd";
 import NewTicket from "./pages/Tickets/NewTicket";
 import TicketDetails from "./pages/Tickets/TicketDetails";
 import ForgetPassword from "./pages/Auth/ForgetPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import Verify from "./pages/Auth/Verify";
-import ValidationWizard from "./pages/ProfileValidation/ValidationWizard";
+import ProfileValidation from "./pages/ProfileValidation/ProfileValidation";
 import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
@@ -55,7 +54,7 @@ const routing = (
             <DefaultLayout path="/snapshotList" component={SnapshotList}/>
             <DefaultLayout path="/Tickets" component={TicketList}/>
             <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
-            <DefaultLayout path="/profile" component={Profile}/>
+            <DefaultLayout path="/profile" component={ProfileValidation}/>
             <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
             <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
             <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
@@ -67,7 +66,6 @@ const routing = (
             <DefaultLayout path="/test" component={App}/>
             {/*<DefaultLayout  path="/arab" component={Example} />*/}
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
-            <DefaultLayout path="/ProfileValidation" component={ValidationWizard}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
 
         </div>

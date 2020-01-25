@@ -11,12 +11,12 @@ import MessageBox from "../MessageBox";
 
 function SshKeyEdit(props) {
     const [response, setResponse] = React.useState([]);
-    const [item, setItem] = React.useState([]);
+    const [item, setItem] = React.useState({name:'',content:''});
 
 
     React.useEffect(() => {
         let id = props.match.params.id;
-        axios.get(api_base + 'SshKeys/' + id.toString() + '/show')
+        axios.get(api_base + 'sshKeys/' + id.toString() + '/show')
             .then(res => {
                 const sshkey = res.data.item;
 
@@ -30,7 +30,7 @@ function SshKeyEdit(props) {
         let id = props.match.params.id;
         event.preventDefault();
         const {name, content} = event.currentTarget.elements;
-        axios.post(api_base + 'SshKeys/' + id.toString() + '/edit', {name: name.value, content: content.value})
+        axios.post(api_base + 'sshKeys/' + id.toString() + '/edit', {name: name.value, content: content.value})
             .then(res => {
                 setResponse(res.data)
                 if (res.data.success)
