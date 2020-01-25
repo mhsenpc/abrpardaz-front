@@ -13,9 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
-import {api_base, register} from "../Api";
-import Copyright from "./CopyRight";
-import MessageBox from "./MessageBox";
+import {api_base, register} from "../../Api";
+import Copyright from "../CopyRight";
+import MessageBox from "../MessageBox";
 
 
 const useStyles = makeStyles(theme => ({

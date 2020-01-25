@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
-import {api_base, sshKeysAdd, sshKeysEdit, sshKeysList} from "../../Api";
+import {api_base} from "../../Api";
 import MessageBox from "../MessageBox";
 
 
@@ -16,7 +16,7 @@ function SshKeyEdit(props) {
 
     React.useEffect(() => {
         let id = props.match.params.id;
-        axios.get(api_base + 'sshKeys/' + id.toString() + '/show')
+        axios.get(api_base + 'SshKeys/' + id.toString() + '/show')
             .then(res => {
                 const sshkey = res.data.item;
 
@@ -30,7 +30,7 @@ function SshKeyEdit(props) {
         let id = props.match.params.id;
         event.preventDefault();
         const {name, content} = event.currentTarget.elements;
-        axios.post(api_base + 'sshKeys/' + id.toString() + '/edit', {name: name.value, content: content.value})
+        axios.post(api_base + 'SshKeys/' + id.toString() + '/edit', {name: name.value, content: content.value})
             .then(res => {
                 setResponse(res.data)
                 if (res.data.success)

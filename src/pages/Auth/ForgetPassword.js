@@ -4,11 +4,11 @@ import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import {api_base, forgetPassword} from "../Api";
+import {api_base, forgetPassword} from "../../Api";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import MessageBox from "./MessageBox";
+import MessageBox from "../MessageBox";
 
 export default function ForgetPassword() {
     const [response, setResponse] = React.useState([]);

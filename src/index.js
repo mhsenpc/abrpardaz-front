@@ -10,29 +10,25 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
-import SshKeyList from "./pages/ssh_keys/SshkeyList";
+import SshKeyList from "./pages/SshKeys/SshkeyList";
 import PaymentList from "./pages/Payment";
 import SnapshotList from "./pages/SnapshotList";
-import Tickets from "./pages/Tickets";
+import TicketList from "./pages/Tickets/TicketList";
 import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ChangePassword from "./pages/ChangePassword";
-import Profile from "./pages/Profile";
-import SshKeyAdd from "./pages/ssh_keys/SshKeyAdd";
-import NewTicket from "./pages/NewTicket";
-import TicketDetails from "./pages/TicketDetails";
-import ForgetPassword from "./pages/ForgetPassword";
-import ResetPassword from "./pages/ResetPassword";
-import Verify from "./pages/Verify";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import ChangePassword from "./pages/Auth/ChangePassword";
+import Profile from "./pages/Auth/Profile";
+import SshKeyAdd from "./pages/SshKeys/SshKeyAdd";
+import NewTicket from "./pages/Tickets/NewTicket";
+import TicketDetails from "./pages/Tickets/TicketDetails";
+import ForgetPassword from "./pages/Auth/ForgetPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import Verify from "./pages/Auth/Verify";
 import ValidationWizard from "./pages/ProfileValidation/ValidationWizard";
-
-
-import ServerDetailsMenu from "./pages/machineDetails/DetailsMenu";
-import ServerSnapshotsList from "./pages/machineDetails/ServerSnapshotsList";
-import MachineRemove from "./pages/machineDetails/MachineRemove";
-import SshKeyEdit from "./pages/ssh_keys/SshKeyEdit";
-
+import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
+import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
+import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
 
 
 const DefaultLayout = ({component: Component, ...rest}) => {
@@ -48,31 +44,31 @@ const DefaultLayout = ({component: Component, ...rest}) => {
 const routing = (
     <Router>
         <div>
-                <DefaultLayout exact path="/" component={Dashboard}/>
-                <Route path="/login" component={Login}/>
-                <Route path="/register" component={Register}/>
-                <DefaultLayout  path="/faq" component={FAQ}/>
-                <DefaultLayout  path="/servers" component={ServerList}/>
-                <DefaultLayout  path="/SshKeyList" component={SshKeyList}/>
-                <DefaultLayout  path="/payment" component={PaymentList}/>
-                <DefaultLayout  path="/createMachine" component={CreateMachinePage}/>
-                <DefaultLayout  path="/404" component={Notfound} />
-                <DefaultLayout  path="/snapshotList" component={SnapshotList} />
-                <DefaultLayout  path="/Tickets" component={Tickets} />
-                <DefaultLayout  path="/ChangePassword" component={ChangePassword} />
-                <DefaultLayout  path="/profile" component={Profile} />
-                <DefaultLayout  path="/SshKeyAdd" component={SshKeyAdd} />
-                <DefaultLayout  path="/NewTicket" component={NewTicket} />
-                <DefaultLayout  path="/ResetPassword" component={ResetPassword} />
-                <DefaultLayout  path="/TicketDetails/:id" component={TicketDetails} />
-                <DefaultLayout  path="/ForgetPassword" component={ForgetPassword} />
-                <DefaultLayout  path="/Verify" component={Verify} />
-                <DefaultLayout  path="/test" component={App} />
-                <DefaultLayout  path="/SshKeyEdit/:id" component={SshKeyEdit} />
-                {/*<DefaultLayout  path="/arab" component={Example} />*/}
-                <DefaultLayout  path="/MachineSnapshotList/:id" component={ServerSnapshotsList} />
-                <DefaultLayout  path="/ProfileValidation" component={ValidationWizard} />
-                <DefaultLayout  path="/server/:id" component={ServerDetailsMenu} />
+            <DefaultLayout exact path="/" component={Dashboard}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+            <DefaultLayout path="/faq" component={FAQ}/>
+            <DefaultLayout path="/servers" component={ServerList}/>
+            <DefaultLayout path="/payment" component={PaymentList}/>
+            <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
+            <DefaultLayout path="/404" component={Notfound}/>
+            <DefaultLayout path="/snapshotList" component={SnapshotList}/>
+            <DefaultLayout path="/Tickets" component={TicketList}/>
+            <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
+            <DefaultLayout path="/profile" component={Profile}/>
+            <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
+            <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
+            <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
+            <DefaultLayout path="/NewTicket" component={NewTicket}/>
+            <DefaultLayout path="/ResetPassword" component={ResetPassword}/>
+            <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
+            <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
+            <DefaultLayout path="/Verify" component={Verify}/>
+            <DefaultLayout path="/test" component={App}/>
+            {/*<DefaultLayout  path="/arab" component={Example} />*/}
+            <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
+            <DefaultLayout path="/ProfileValidation" component={ValidationWizard}/>
+            <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
 
         </div>
     </Router>

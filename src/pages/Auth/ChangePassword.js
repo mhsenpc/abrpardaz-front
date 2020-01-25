@@ -5,8 +5,8 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
-import {api_base, changePassword} from "../Api";
-import MessageBox from "./MessageBox";
+import {api_base, changePassword} from "../../Api";
+import MessageBox from "../MessageBox";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

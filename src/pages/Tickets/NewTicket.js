@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -8,11 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from "axios";
-import {api_base, machinesList, newTicket, sshKeysAdd, ticketCategories} from "../Api";
+import {api_base, machinesList, newTicket, ticketCategories} from "../../Api";
 
 
 const BootstrapInput = withStyles(theme => ({

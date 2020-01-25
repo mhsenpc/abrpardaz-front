@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -8,9 +7,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import {deepOrange, red} from '@material-ui/core/colors';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
-import {api_base, ticketsList} from "../Api";
+import {api_base, ticketsList} from "../../Api";
 
 
 const cardticket = makeStyles(theme => ({
@@ -62,7 +60,7 @@ const useStyles = makeStyles({
 });
 
 
-function Tickets() {
+function TicketList() {
 
     const classes = useStyles();
 
@@ -127,4 +125,4 @@ function Tickets() {
     );
 }
 
-export default Tickets;
+export default TicketList;

@@ -10,9 +10,9 @@ import Avatar from '@material-ui/core/Avatar';
 import {deepOrange, red} from '@material-ui/core/colors';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import axios from "axios";
-import {api_base} from "../Api";
+import {api_base} from "../../Api";
 import Button from "@material-ui/core/Button";
-import MessageBox from "./MessageBox";
+import MessageBox from "../MessageBox";
 
 
 const useStyles = makeStyles({
@@ -67,7 +67,7 @@ function TicketDetails(props) {
 
     React.useEffect(() => {
         let id = props.match.params.id;
-        axios.get(api_base + 'tickets/' + id.toString() + '/show')
+        axios.get(api_base + 'Tickets/' + id.toString() + '/show')
             .then(res => {
                 const ticket = res.data.ticket;
 
@@ -82,7 +82,7 @@ function TicketDetails(props) {
         event.preventDefault();
         const {comment} = event.currentTarget.elements;
         let id = props.match.params.id;
-        axios.post(api_base + 'tickets/' + id.toString() + '/newReply', {comment: comment.value})
+        axios.post(api_base + 'Tickets/' + id.toString() + '/newReply', {comment: comment.value})
             .then(res => {
                 setResponse(res.data)
             })
@@ -92,7 +92,7 @@ function TicketDetails(props) {
     function requestCloseTicket() {
 
         let id = props.match.params.id;
-        axios.put(api_base + 'tickets/' + id.toString() + '/close')
+        axios.put(api_base + 'Tickets/' + id.toString() + '/close')
             .then(res => {
                 setResponse(res.data)
             })

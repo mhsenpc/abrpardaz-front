@@ -12,14 +12,14 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import Copyright from "./CopyRight";
-import {api_base, login} from "../Api";
+import Copyright from "../CopyRight";
+import {api_base, login} from "../../Api";
 import axios from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import MessageBox from "./MessageBox";
+import MessageBox from "../MessageBox";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

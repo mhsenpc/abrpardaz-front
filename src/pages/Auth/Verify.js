@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {api_base, verify} from "../Api";
+import {api_base, verify} from "../../Api";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MessageBox from "./MessageBox";
+import MessageBox from "../MessageBox";
 
 
 export default function Verify() {
