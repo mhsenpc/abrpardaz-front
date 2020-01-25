@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
-import {api_base, requestSetMobile, requestSetPhone, setMobile, setPhone} from "../../Api";
+import {api_base, getUserInfo, requestSetMobile, requestSetPhone, setMobile, setPhone} from "../../Api";
 import MessageBox from "../MessageBox";
 
 
@@ -26,7 +26,7 @@ export default function Page2() {
                     setMobileNumber(mobile.value)
                     setMobileStep(1)
                 }
-                setResponse(res.data)
+                    setResponse(res.data)
             })
     }
 
@@ -68,6 +68,19 @@ export default function Page2() {
     }
 
 
+    const [item, setItem] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + getUserInfo)
+            .then(res => {
+                const list = res.data.user;
+
+
+                setItem(list);
+            })
+    }, []);
+
+
     return (
 
         <div>
@@ -80,19 +93,31 @@ export default function Page2() {
 
 
                     <Box width={700}>
-                        {mobileStep == 0 &&
+
+
+
+                        {(item.profile.mobile_verified_at == null && mobileStep == 0  ) &&
                         <FormMobile/>
                         }
 
-                        {mobileStep == 1 &&
-                        <FormMobileFinal/>
+                        {(item.profile.mobile_verified_at == null && mobileStep == 1  ) &&
+                            <FormMobileFinal/>
                         }
 
-                        {mobileStep == 2 &&
-                        <span>
+                        {(item.profile.mobile_verified_at == null && mobileStep == 2  ) &&
+                            <span>
                             شماره موبایل شما با موفقیت تایید شد
-                        </span>
+                            </span>
                         }
+
+
+                        {item.profile.mobile_verified_at &&
+
+                        <div>تایید شده</div>
+                        }
+
+
+
 
                         {phoneStep == 0 &&
                         <FormPhone/>
@@ -122,7 +147,7 @@ export default function Page2() {
         return (
             <div>
                 <form onSubmit={requestMobileRequest}>
-                    <TextField name='mobile' id="outlined-basic" label="تلفن همراه" variant="outlined"/>
+                    <TextField name='mobile' id="outlined-basic" label='موبایل' variant="outlined"/>
                     <Button type="submit" variant="contained">ارسال کد</Button>
                     <br/><br/>
                 </form>
