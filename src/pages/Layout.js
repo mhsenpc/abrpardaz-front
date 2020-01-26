@@ -192,7 +192,6 @@ export default function Layout(props) {
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
-        requestLogout();
     };
 
     const handleMobileMenuOpen = event => {
@@ -213,7 +212,7 @@ export default function Layout(props) {
             <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem component="a" onClick={handleMenuClose}>خروج</MenuItem>
+            <MenuItem component="a" onClick={()=>{requestLogout(); handleMenuClose();}}>خروج</MenuItem>
         </Menu>
     );
 
@@ -239,7 +238,7 @@ export default function Layout(props) {
             <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem onClick={handleMenuClose}>خروج</MenuItem>
+            <MenuItem onClick={()=>{requestLogout(); handleMenuClose();}}>خروج</MenuItem>
         </Menu>
     );
 

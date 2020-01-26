@@ -43,7 +43,7 @@ export default function MessageBox(props) {
                 setOpen(true);
             }
         }
-    },[props.response]);
+    }, [props.response]);
 
 
     const handleClose = (event, reason) => {
@@ -55,21 +55,19 @@ export default function MessageBox(props) {
     };
 
     return (
-        <div className={classes.root}>
-            <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                      anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'left',
-                      }}>
-                <Alert onClose={handleClose} severity={type}>
-                    {messages.map(message => (
-                        <p key={message}>{message}</p>
-                    ))}
-                </Alert>
-            </Snackbar>
-        </div>
+        <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+            }}>
+            <Alert onClose={handleClose} severity={type}>
+                {messages.map(message => (
+                    <p key={message}>{message}</p>
+                ))}
+            </Alert>
+        </Snackbar>
     );
 }

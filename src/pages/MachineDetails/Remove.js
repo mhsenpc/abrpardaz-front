@@ -16,7 +16,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 
 
-function MachineRemove(props) {
+function Remove(props) {
 
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
@@ -51,12 +51,20 @@ function MachineRemove(props) {
             <Grid item xs={12} container
                   direction="row"
                   alignItems="center"
+                  style={{direction:'rtl'}}
             >
                 <Paper>
 
                     <Box  p={2} width={700}>
+                        <h1>حذف سرور</h1>
                         <p>
-                            در صورت حذف ماشین ،اطلاعات آن نابود میگرددو این عملیات قابل برگشت نیست.
+                            حذف سرور باعث متوقف شدن تمام پردازش های سرور و نابودی سیستم عامل، دیسک و نسخه های پشتیبان آن می گردد.
+                        </p>
+                        <p>
+                            اطلاعاتی که با زدن این دکمه حذف می گردد غیر قابل بازیابی هستند.
+                        </p>
+                        <p>
+                            نکته: تصاویر آنی گرفته شده از سرور آسیبی نخواهند دید
                         </p>
 
                         <Dialog
@@ -101,7 +109,7 @@ function MachineRemove(props) {
 
 }
 
-export default MachineRemove;
+export default Remove;
 
 
 

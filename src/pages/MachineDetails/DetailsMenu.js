@@ -1,17 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ServerSnapshotsList from "./ServerSnapshotsList";
 import Overview from "./Overview";
-import MachineRemove from "./MachineRemove";
+import Remove from "./Remove";
 import UpgradeMachine from "./UpgradeMachine";
+import Backups from "./Backups";
+import Graphs from "./Graphs";
+import Volumes from "./Volumes";
+import Network from "./Network";
+import Rescue from "./Rescue";
+import Power from "./Power";
+import Rebuild from "./Rebuild";
+import IsoImages from "./IsoImages";
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
         <Typography
@@ -45,7 +53,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height:500
+        height: 500
 
     },
     tabs: {
@@ -63,6 +71,13 @@ export default function DetailsMenu(props) {
     const id = props.match.params.id;
 
     return (
+        <Box>
+        <Box width={700}>
+            <span>Centos-8gb-nbg1-dc3-1</span>
+            <span> <b>IPv4:</b>195.201.37.23</span>
+            <span> <b>IPv6:</b>2a01:4f8:1c0c:6b9f::/64</span>
+            <span> <b>Floating IPs:</b>78.46.229.42</span>
+        </Box>
         <div className={classes.root}>
             <Tabs
                 orientation="vertical"
@@ -73,48 +88,55 @@ export default function DetailsMenu(props) {
                 className={classes.tabs}
             >
                 <Tab label="نمای کلی" {...a11yProps(0)} />
-                <Tab label="گراف" {...a11yProps(1)} />
+                <Tab label="نمودار" {...a11yProps(1)} />
                 <Tab label="نسخه پشتیبان" {...a11yProps(2)} />
                 <Tab label="تصاویر آنی" {...a11yProps(3)} />
                 <Tab label="شبکه" {...a11yProps(4)} />
-                <Tab label="فضای اضافه" {...a11yProps(5)} />
+                <Tab label="دیسک اضافه" {...a11yProps(5)} />
                 <Tab label="برق" {...a11yProps(6)} />
-                <Tab label="دیسک نجات" {...a11yProps(7)} />
-                <Tab label="اتصال دیسک" {...a11yProps(8)} />
+                <Tab label="مرکز نجات" {...a11yProps(7)} />
+                <Tab label="اتصال دیسکت" {...a11yProps(8)} />
                 <Tab label="ارتقاء" {...a11yProps(9)} />
-                <Tab label="ساخت مجدد" {...a11yProps(10)} />
+                <Tab label="نصب مجدد" {...a11yProps(10)} />
                 <Tab label="حذف" {...a11yProps(11)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Overview />
+                <Overview/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-
+                <Graphs/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                <Backups/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <ServerSnapshotsList id={id} />
+                <ServerSnapshotsList id={id}/>
             </TabPanel>
             <TabPanel value={value} index={4}>
-                Item Five
+                <Network/>
             </TabPanel>
             <TabPanel value={value} index={5}>
-                Item Six
+                <Volumes/>
+            </TabPanel>
+            <TabPanel value={value} index={6}>
+                <Power/>
             </TabPanel>
             <TabPanel value={value} index={7}>
-            Item Seven
-        </TabPanel>
+                <Rescue/>
+            </TabPanel>
             <TabPanel value={value} index={8}>
-                Item Seven
+                <IsoImages/>
             </TabPanel>
             <TabPanel value={value} index={9}>
-               <UpgradeMachine/>
+                <UpgradeMachine/>
+            </TabPanel>
+            <TabPanel value={value} index={10}>
+                <Rebuild/>
             </TabPanel>
             <TabPanel value={value} index={11}>
-                <MachineRemove id={id} />
+                <Remove id={id}/>
             </TabPanel>
         </div>
+        </Box>
     );
 }

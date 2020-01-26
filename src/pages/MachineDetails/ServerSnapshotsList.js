@@ -1,9 +1,6 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import Table from '@material-ui/core/Table';
@@ -13,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, machineSnapshotsList, snapshotsList} from "../../Api";
+import {api_base, machineSnapshotsList} from "../../Api";
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +29,7 @@ export default function ServerSnapshotsList(props) {
     const classes = useStyles();
 
     React.useEffect(() => {
-        axios.get(api_base + machineSnapshotsList + '?machine_id=' + props.id.toString() )
+        axios.get(api_base + machineSnapshotsList + '?machine_id=' + props.id.toString())
 
             .then(res => {
                 console.log(res.data)
@@ -56,53 +53,68 @@ export default function ServerSnapshotsList(props) {
     return (
 
         <div>
+            <Box width={700}>
+                <Paper variant="outlined">
+                    <div style={{direction: "rtl"}}>
+                        <h1>تصاویر آنی</h1>
+                        <p>
+                            تصاویر آنی کپی لحظه ای از دیسک های سرور شماست.
+                        </p>
+                        <p>
+                            شما می توانید از تصویر آنی سرور جدیدی بسازید و حتی آن را به پروژه دیگری منتقل کنید
+                        </p>
+                        <p>
+                            ما پیشنهاد می کنیم که برای جلوگیری از تخریب اطلاعات روی دیسک، قبل از تهیه تصویر آنی، سرور
+                            خود را
+                            خاموش نمایید
+                        </p>
+                        <p>
+                            هزینه استفاده از تصویر آنی 100 تومان به ازای هر گیگابایت است
+                        </p>
+                        <Button>تهیه تصویر آنی</Button>
 
-            <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
-                <div style={{direction: "rtl"}}>
-                    تصاویر آنی
-
-
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>نام</TableCell>
-                                    <TableCell align="right">لوگو</TableCell>
-                                    <TableCell align="right">نام کاربری</TableCell>
-                                    <TableCell align="right">تاریخ ساخت</TableCell>
-                                    <TableCell align="right">وضعیت</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {snapShotItems.map(row => (
-                                    <TableRow key={row.name}>
-
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.remote_id}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.created_at}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            <h5>خالی</h5>
-                                        </TableCell>
-
-                                        <TableCell component="th" scope="row">
-                                            <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
-                                        </TableCell>
-
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>نام</TableCell>
+                                        <TableCell align="right">لوگو</TableCell>
+                                        <TableCell align="right">نام کاربری</TableCell>
+                                        <TableCell align="right">تاریخ ساخت</TableCell>
+                                        <TableCell align="right">وضعیت</TableCell>
                                     </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {snapShotItems.map(row => (
+                                        <TableRow key={row.name}>
 
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                            <TableCell component="th" scope="row">
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.remote_id}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.created_at}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                <h5>خالی</h5>
+                                            </TableCell>
+
+                                            <TableCell component="th" scope="row">
+                                                <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
+                                            </TableCell>
+
+                                        </TableRow>
+
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
 
 
-                </div>
+                    </div>
+                </Paper>
             </Box>
         </div>
     );
