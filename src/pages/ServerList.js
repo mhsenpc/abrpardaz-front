@@ -7,10 +7,12 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddBox';
 import CloudIcon from '@material-ui/icons/Cloud';
 import axios from "axios";
-import {api_base, machinesList} from "../Api";
+import {api_base, machinesList, sshKeysAdd} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import TextField from "@material-ui/core/TextField";
+import MessageBox from "./SshKeys/SshKeyAdd";
 
 
 const cardserverlist = makeStyles(theme => ({
@@ -66,8 +68,9 @@ export default function ServerList() {
     const classes = useStyles();
     const cardlist = cardserverlist();
     const theme = useTheme();
+    const [response, setResponse] = React.useState([]);
 
-    function showDetails(machine_id){
+    function showDetails(machine_id) {
         window.location.href = '/server/' + machine_id.toString();
     }
 
@@ -91,30 +94,70 @@ export default function ServerList() {
                     <AddIcon>+</AddIcon>
                 </Button>
                 {items.map(row => (
-                    <Card key={row.id} className={cardlist.card} >
-                        <div className={cardlist.details} onClick={() => showDetails(row.id)}>
-                            <CardContent className={cardlist.content}>
-                                <Typography component="h5" variant="h5">
-                                    {row.name}
-                                </Typography>
-                                <Typography variant="subtitle1" color="textSecondary">
-                                    {row.image.name}{row.image.version}
-                                </Typography>
-                            </CardContent>
-
-                        </div>
-                        <CardMedia
-                            className={cardlist.cover}
-                            image="./images/vps.png"
-                            onClick={() => showDetails(row.id)}
-                        />
-                    </Card>
+                    <ServerItem row={row}/>
                 ))}
             </div>
         )
     }
 
-    function EmptyMachine(props){
+    function ServerItem(props) {
+        const [editMode, setEditMode] = React.useState(false);
+        const [name, setName] = React.useState('');
+
+        function requestRenameMachine(id){
+            alert(name)
+            axios.post(api_base + "/machines/" + id.toString()  +"/rename", {name: name})
+                .then(res => {
+                    setResponse(res.data)
+                    setEditMode(false);
+                })
+        }
+
+        React.useEffect(() => {
+            setName(props.row.name)
+        }, []);
+
+        return (
+            <Card key={props.row.id} className={cardlist.card}>
+                <div className={cardlist.details} onClick={() => setEditMode(true)}>
+                    <CardContent className={cardlist.content}>
+                        {!editMode &&
+                        <Typography component="h5" variant="h5">
+                            {props.row.name}
+                        </Typography>
+                        }
+                        {editMode &&
+                        <div>
+                            <TextField
+                                id="outlined-full-width"
+                                name="name"
+                                label="نام جدید"
+                                placeholder=""
+                                variant="outlined"
+                                value={name}
+                                onChange={val => setName(val.value)}
+                            />
+                            <Button variant="contained" color="primary" onClick={()=> requestRenameMachine(props.row.id)}>
+                                تغییر نام
+                            </Button>
+                        </div>
+                        }
+                        <Typography variant="subtitle1" color="textSecondary">
+                            {props.row.image.name}{props.row.image.version}
+                        </Typography>
+                    </CardContent>
+
+                </div>
+                <CardMedia
+                    className={cardlist.cover}
+                    image="./images/vps.png"
+                    onClick={() => showDetails(props.row.id)}
+                />
+            </Card>
+        )
+    }
+
+    function EmptyMachine(props) {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper}>
@@ -147,15 +190,15 @@ export default function ServerList() {
 
                     </Grid>
                 </Paper>
+                <MessageBox response={response} />
             </div>
         )
     }
 
-    if (items === undefined || items.length == 0){
-        return <EmptyMachine />
-    }
-    else{
-        return <Machines />
+    if (items === undefined || items.length == 0) {
+        return <EmptyMachine/>
+    } else {
+        return <Machines/>
     }
 
 }
