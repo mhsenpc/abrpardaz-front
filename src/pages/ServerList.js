@@ -13,7 +13,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import TextField from "@material-ui/core/TextField";
 import MessageBox from "./SshKeys/SshKeyAdd";
-
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const cardserverlist = makeStyles(theme => ({
     card: {
@@ -105,8 +105,7 @@ export default function ServerList() {
         const [name, setName] = React.useState('');
 
         function requestRenameMachine(id){
-            alert(name)
-            axios.post(api_base + "/machines/" + id.toString()  +"/rename", {name: name})
+            axios.post(api_base + "machines/" + id.toString()  +"/rename", {name: name})
                 .then(res => {
                     setResponse(res.data)
                     setEditMode(false);
@@ -121,12 +120,12 @@ export default function ServerList() {
             <Card key={props.row.id} className={cardlist.card}>
                 <div className={cardlist.details} onClick={() => setEditMode(true)}>
                     <CardContent className={cardlist.content}>
-                        {!editMode &&
+                        {editMode === false &&
                         <Typography component="h5" variant="h5">
                             {props.row.name}
                         </Typography>
                         }
-                        {editMode &&
+                        {editMode === true &&
                         <div>
                             <TextField
                                 id="outlined-full-width"
@@ -135,11 +134,12 @@ export default function ServerList() {
                                 placeholder=""
                                 variant="outlined"
                                 value={name}
-                                onChange={val => setName(val.value)}
+                                onChange={event => setName(event.target.value)}
                             />
                             <Button variant="contained" color="primary" onClick={()=> requestRenameMachine(props.row.id)}>
                                 تغییر نام
                             </Button>
+                            <CancelIcon onClick={()=>setEditMode(false)} />
                         </div>
                         }
                         <Typography variant="subtitle1" color="textSecondary">
@@ -189,8 +189,8 @@ export default function ServerList() {
                         </Grid>
 
                     </Grid>
+                    <MessageBox response={response} />
                 </Paper>
-                <MessageBox response={response} />
             </div>
         )
     }
