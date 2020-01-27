@@ -12,7 +12,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, snapshotsList} from "../Api";
+import {api_base, machinesList, snapshotsList, sshKeysAdd} from "../Api";
 import {TextField} from "@material-ui/core";
 import MessageBox from "./MessageBox";
 
@@ -25,13 +25,12 @@ const useStyles = makeStyles({
 
 export default function SnapshotList() {
     const classes = useStyles();
-    const [machine_id, setMachine] = React.useState(null);
+    const [machineId, setMachineId] = React.useState(null);
     const [response, setResponse] = React.useState([]);
 
 
-    const handleChange = name => event => {
-        setMachine(event.target.value);
-        alert(event.target.value);
+    const handleChange = event => {
+        setMachineId(event.target.value);
     };
 
     const [machineItems, setMachineItems] = React.useState([]);
@@ -60,6 +59,18 @@ export default function SnapshotList() {
             })
     }
 
+
+    const [name, setName] = React.useState('');
+
+    function requestSnapShot() {
+        axios.post(api_base + 'machines/' + machineId.toString() + '/takeSnapshot',{name:name})
+            .then(res => {
+                setResponse(res.data)
+            })
+}
+
+
+
     return (
 
         <div>
@@ -68,6 +79,7 @@ export default function SnapshotList() {
                 <p style={{direction: "rtl"}}>تصاویر آنی شما </p>
             </Box>
             <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
+
 
                 <p style={{direction: "rtl"}}>
                     ساخت تصویرآنی
@@ -79,7 +91,7 @@ export default function SnapshotList() {
                 <FormControl variant="outlined" className={classes.formControl}>
                     <Select
                         native
-                        value={machine_id}
+                        value={machineId}
                         onChange={handleChange}
                         inputProps={{
                             name: 'age',
@@ -98,14 +110,16 @@ export default function SnapshotList() {
 
                     {machinesList.length > 0 ? (
                         <p>
-                            <TextField></TextField>
+                            <TextField name='name' onChange={event => setName(event.target.value)} />
                         </p>
                     ) : (
                         <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود ندارد.</p>
                     )}
 
-                <Button variant="contained"> ساخت تصویرآنی
+                <Button onClick={() => requestSnapShot()} variant="contained">
+                    ساخت تصویرآنی
                 </Button>
+
                 <hr/>
                 <div style={{color: "red", direction: "rtl"}}>
                     قوانین نامگذاری تصاویر آنی:
