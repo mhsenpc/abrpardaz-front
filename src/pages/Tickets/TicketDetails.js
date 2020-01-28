@@ -65,15 +65,17 @@ function TicketDetails(props) {
     const [ticket, setTicket] = React.useState({replies: []});
     const [response, setResponse] = React.useState([]);
 
-    React.useEffect(() => {
+    function loadTicket(){
         let id = props.match.params.id;
-        axios.get(api_base + 'Tickets/' + id.toString() + '/show')
+        axios.get(api_base + 'tickets/' + id.toString() + '/show')
             .then(res => {
                 const ticket = res.data.ticket;
-
                 setTicket(ticket);
-
             })
+    }
+
+    React.useEffect(() => {
+        loadTicket();
     }, []);
 
 
@@ -82,9 +84,11 @@ function TicketDetails(props) {
         event.preventDefault();
         const {comment} = event.currentTarget.elements;
         let id = props.match.params.id;
-        axios.post(api_base + 'Tickets/' + id.toString() + '/newReply', {comment: comment.value})
+        axios.post(api_base + 'tickets/' + id.toString() + '/newReply', {comment: comment.value})
             .then(res => {
-                setResponse(res.data)
+                setResponse(res.data);
+                comment.value = "";
+                loadTicket();
             })
     }
 
@@ -92,7 +96,7 @@ function TicketDetails(props) {
     function requestCloseTicket() {
 
         let id = props.match.params.id;
-        axios.put(api_base + 'Tickets/' + id.toString() + '/close')
+        axios.put(api_base + 'tickets/' + id.toString() + '/close')
             .then(res => {
                 setResponse(res.data)
             })
@@ -212,28 +216,3 @@ function TicketDetails(props) {
 }
 
 export default TicketDetails;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

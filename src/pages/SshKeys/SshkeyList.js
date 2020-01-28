@@ -1,7 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/AddBox';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -138,7 +138,7 @@ export default function SshkeyList() {
                         </Button>
 
 
-                        <TableContainer component={Paper}>
+                        <TableContainer component={Paper} style={(items.length == 0)?{display:'none'}:{display:'block'} }>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
@@ -200,6 +200,12 @@ export default function SshkeyList() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        {items.length == 0 &&
+                        <p>
+                            شما هنوز هیچ کلید امنیتی نساخته اید
+                        </p>
+
+                        }
                     </Box>
                 </Paper>
             </Grid>

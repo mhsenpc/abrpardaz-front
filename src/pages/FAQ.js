@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function FAQ(props) {
     const [searchTerm, setSearchTerm] = React.useState('');
-    const [currentAnswer, setCurrentAnswer] = React.useState('');
+    const [currentAnswer, setCurrentAnswer] = React.useState('پرسشی انتخاب کنید');
     const classes = useStyles();
 
     function search() {
@@ -47,7 +47,8 @@ export default function FAQ(props) {
                     shrink: true,
                 }}
                 variant="outlined"
-                onChange={event => setSearchTerm(event.target.value)}
+                onInput={() => setCurrentAnswer('')}
+                onChange={event =>setSearchTerm(event.target.value)}
             />
 
 
@@ -59,6 +60,9 @@ export default function FAQ(props) {
                                 <ListItemText inset primary={item.question}/>
                             </ListItem>
                         ))}
+                        {search(items).length == 0 &&
+                        <p>متاسفانه جستجوی شما نتیجه ای در بر نداشت</p>
+                        }
                     </List>
                 </Grid>
                 <Grid item xs={12} sm >

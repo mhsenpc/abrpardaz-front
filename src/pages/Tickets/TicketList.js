@@ -9,30 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import {deepOrange, red} from '@material-ui/core/colors';
 import axios from "axios";
 import {api_base, ticketsList} from "../../Api";
-
-
-const cardticket = makeStyles(theme => ({
-    card: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
-}));
+import Button from "@material-ui/core/Button";
+import AddIcon from '@material-ui/icons/AddBox';
 
 
 const useStyles = makeStyles({
@@ -79,8 +57,6 @@ function TicketList() {
     return (
 
         <div>
-
-
             <Grid item xs={12} container
                   direction="row"
                   alignItems="center"
@@ -91,10 +67,12 @@ function TicketList() {
 
                         <Box width={200}>
 
+                            <Button href={'/NewTicket'} variant="contained" color="primary">
+                                <AddIcon/>
+                                تیکت جدید
+                            </Button>
 
                             <Card className={classes.card} variant="outlined">
-
-
                                 {items.map(row => (
                                     <CardContent key={row.id}>
                                         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -109,7 +87,11 @@ function TicketList() {
                                     </CardContent>
                                 ))}
 
-
+                                {items.length == 0 &&
+                                    <p>
+                                        شما تاکنون تیکتی ایجاد نکرده اید
+                                    </p>
+                                }
                             </Card>
                         </Box>
                     </Box>
