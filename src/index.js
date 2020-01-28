@@ -28,7 +28,6 @@ import ProfileValidation from "./pages/ProfileValidation/ProfileValidation";
 import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
-import Hetsnerz from "./pages/Hetsnerz";
 import ProjectsList from "./pages/ProjectsList";
 
 
@@ -70,7 +69,6 @@ const routing = (
             {/*<DefaultLayout  path="/arab" component={Example} />*/}
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
-            <DefaultLayout path="/Hetsnerz" component={Hetsnerz}/>
         </div>
     </Router>
 );
