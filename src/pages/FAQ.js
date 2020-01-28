@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-import withWidth from '@material-ui/core/withWidth';
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import FAQList from "./FAQList";
-
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
+import Grid from '@material-ui/core/Grid';
+import {items} from './FAQList';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,22 +24,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function BreakpointOnly(props) {
+export default function FAQ(props) {
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [currentAnswer, setCurrentAnswer] = React.useState('');
     const classes = useStyles();
-    const {width} = props;
+
+    function search() {
+        return items.filter(data => data.question.includes(searchTerm) || data.answer.includes(searchTerm));
+    }
 
     return (
         <div className={classes.root}>
-            <br/>
-            <Button variant="contained" color="primary">
-                تیکت های من
-            </Button>
-            <br/>
-            <br/>
-            <h2> جست و جو برای یک مشکل</h2>
+            <h2>پرسش و پاسخ</h2>
             <TextField
                 id="outlined-full-width"
-                label="Label"
+                label="جستجو"
                 style={{margin: 8}}
                 placeholder="چطورمیتونم ...؟"
                 fullWidth
@@ -48,17 +47,26 @@ function BreakpointOnly(props) {
                     shrink: true,
                 }}
                 variant="outlined"
+                onChange={event => setSearchTerm(event.target.value)}
             />
-            <FAQList/>
 
 
+            <Grid container spacing={2}>
+                <Grid  item xs={12} sm >
+                    <List component="nav" className={classes.root} aria-label="contacts">
+                        {search(items).map(item => (
+                            <ListItem button onClick={() => setCurrentAnswer(item.answer)}>
+                                <ListItemText inset primary={item.question}/>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Grid>
+                <Grid item xs={12} sm >
+                    <p >
+                    {currentAnswer}
+                    </p>
+                </Grid>
+            </Grid>
         </div>
-
     );
 }
-
-BreakpointOnly.propTypes = {
-    width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
-
-export default withWidth()(BreakpointOnly);
