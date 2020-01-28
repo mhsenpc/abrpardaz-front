@@ -17,9 +17,16 @@ import Rescue from "./Rescue";
 import Power from "./Power";
 import Rebuild from "./Rebuild";
 import IsoImages from "./IsoImages";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import NotesIcon from '@material-ui/icons/Notes';
+
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
+
 
     return (
         <Typography
@@ -64,7 +71,13 @@ const useStyles = makeStyles(theme => ({
 export default function DetailsMenu(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-
+    const [state, setState] = React.useState({
+        checkedA: true,
+        checkedB: true,
+    });
+    const handleChangePower = name => event => {
+        setState({ ...state, [name]: event.target.checked });
+    };
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -77,6 +90,21 @@ export default function DetailsMenu(props) {
             <span> <b>IPv4:</b>195.201.37.23</span>
             <span> <b>IPv6:</b>2a01:4f8:1c0c:6b9f::/64</span>
             <span> <b>Floating IPs:</b>78.46.229.42</span>
+            <LockOpenIcon/>
+            <LoyaltyIcon/>
+            <NotesIcon/>
+            <FormControlLabel
+                control={
+                    <Switch
+                        checked={state.checkedB}
+                        onChange={handleChangePower('checkedB')}
+                        value="checkedB"
+                        color="primary"
+                    />
+                }
+                label="Primary"
+            />
+
         </Box>
         <div className={classes.root}>
             <Tabs
