@@ -27,3 +27,4 @@ export const resetPassword = 'auth/resetPassword';
 export const uploadNationalCardFront = 'profile/uploadNationalCardFront';
 export const uploadNationalCardBack = 'profile/uploadNationalCardBack';
 export const uploadBirthCertificate = 'profile/uploadBirthCertificate';
+export const ProjectsListPath = 'projects/list';
