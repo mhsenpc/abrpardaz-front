@@ -29,11 +29,12 @@ import axios from "axios";
 import {api_base} from "../Api";
 import MessageBox from "./MessageBox";
 
-const drawerWidth = 240;
+const drawerWidth = 0;
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+        direction:'rtl'
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -41,11 +42,12 @@ const useStyles = makeStyles(theme => ({
     toolbarIcon: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
     appBar: {
+        textAlign:'right',
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -72,7 +74,8 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         position: 'relative',
         whiteSpace: 'nowrap',
-        width: drawerWidth,
+        width: '150%',
+        textAlign:'right',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -80,6 +83,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaperClose: {
         overflowX: 'hidden',
+        textAlign:'right',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -163,6 +167,9 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(3),
 
     },
+    textAlignRight:{
+        textAlign:'right'
+    }
 }));
 
 export default function Layout(props) {
@@ -259,7 +266,7 @@ export default function Layout(props) {
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar  className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
@@ -271,37 +278,44 @@ export default function Layout(props) {
 
                         <MenuIcon/>
                     </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                    <Typography align='right' component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                          ابرپرداز
                     </Typography>
-                    <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon/>
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle/>
-                        </IconButton>
+
+                    <div >
+
+                        <div className={classes.sectionDesktop}>
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                <Badge badgeContent={17} color="secondary">
+                                    <NotificationsIcon/>
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle/>
+                            </IconButton>
+                        </div>
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+                            >
+                                <MoreIcon/>
+                            </IconButton>
+                        </div>
+
                     </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon/>
-                        </IconButton>
-                    </div>
+
+
 
                 </Toolbar>
             </AppBar>
@@ -321,6 +335,7 @@ export default function Layout(props) {
                 </div>
                 <List>{mainListItems}</List>
             </Drawer>
+
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
