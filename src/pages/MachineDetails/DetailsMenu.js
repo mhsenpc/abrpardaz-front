@@ -22,7 +22,11 @@ import Switch from '@material-ui/core/Switch';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import NotesIcon from '@material-ui/icons/Notes';
-
+import axios from "axios";
+import {api_base, sshKeysAdd} from "../../Api";
+import TextField from "@material-ui/core/TextField";
+import Button from '@material-ui/core/Button';
+import MessageBox from "../MessageBox";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -76,95 +80,136 @@ export default function DetailsMenu(props) {
         checkedB: true,
     });
     const handleChangePower = name => event => {
-        setState({ ...state, [name]: event.target.checked });
+        setState({...state, [name]: event.target.checked});
     };
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     const id = props.match.params.id;
+    const [item, setItem] = React.useState({name: ''});
+    const [editMode, setEditMode] = React.useState(false);
+    const [name, setName] = React.useState('');
+    const [response, setResponse] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(api_base + 'machines/' + id.toString() + '/details')
+            .then(res => {
+                const machine = res.data.machine;
+
+                setItem(machine);
+                setName(machine.name)
+            })
+    }, [])
+
+    function requestRenameMachine() {
+        axios.post(api_base + "machines/"+ id.toString() +"/rename" , {name: name})
+            .then(res => {
+                setResponse(res.data)
+                setEditMode(false)
+            })
+    }
 
     return (
         <Box>
-        <Box width={700}>
-            <span>Centos-8gb-nbg1-dc3-1</span>
-            <span> <b>IPv4:</b>195.201.37.23</span>
-            <span> <b>IPv6:</b>2a01:4f8:1c0c:6b9f::/64</span>
-            <span> <b>Floating IPs:</b>78.46.229.42</span>
-            <LockOpenIcon/>
-            <LoyaltyIcon/>
-            <NotesIcon/>
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={state.checkedB}
-                        onChange={handleChangePower('checkedB')}
-                        value="checkedB"
-                        color="primary"
+            <Box width={700}>
+                {editMode == true &&
+                <span>
+                    <TextField
+                        variant="outlined"
+                        required
+                        label="نام جدید"
+                        value={name}
+                        onChange={event => setName(event.target.value)}
                     />
-                }
-                label="Primary"
-            />
+                    <Button variant="contained" color="primary" onClick={requestRenameMachine}>
+                        ذخیره
+                    </Button>
+                </span>
 
-        </Box>
-        <div className={classes.root}>
-            <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs example"
-                className={classes.tabs}
-            >
-                <Tab label="نمای کلی" {...a11yProps(0)} />
-                <Tab label="نمودار" {...a11yProps(1)} />
-                <Tab label="نسخه پشتیبان" {...a11yProps(2)} />
-                <Tab label="تصاویر آنی" {...a11yProps(3)} />
-                <Tab label="شبکه" {...a11yProps(4)} />
-                <Tab label="دیسک اضافه" {...a11yProps(5)} />
-                <Tab label="برق" {...a11yProps(6)} />
-                <Tab label="مرکز نجات" {...a11yProps(7)} />
-                <Tab label="اتصال دیسکت" {...a11yProps(8)} />
-                <Tab label="ارتقاء" {...a11yProps(9)} />
-                <Tab label="نصب مجدد" {...a11yProps(10)} />
-                <Tab label="حذف" {...a11yProps(11)} />
-            </Tabs>
-            <TabPanel value={value} index={0}>
-                <Overview/>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <Graphs/>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <Backups/>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                <ServerSnapshotsList id={id}/>
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                <Network/>
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-                <Volumes/>
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-                <Power/>
-            </TabPanel>
-            <TabPanel value={value} index={7}>
-                <Rescue/>
-            </TabPanel>
-            <TabPanel value={value} index={8}>
-                <IsoImages/>
-            </TabPanel>
-            <TabPanel value={value} index={9}>
-                <UpgradeMachine/>
-            </TabPanel>
-            <TabPanel value={value} index={10}>
-                <Rebuild/>
-            </TabPanel>
-            <TabPanel value={value} index={11}>
-                <Remove id={id}/>
-            </TabPanel>
-        </div>
+                }
+
+                {editMode == false &&
+                <span onClick={()=> setEditMode(true)} >{name}</span>
+                }
+                <span> <b>IPv4:</b>195.201.37.23</span>
+                <span> <b>IPv6:</b>2a01:4f8:1c0c:6b9f::/64</span>
+                <span> <b>Floating IPs:</b>78.46.229.42</span>
+                <LockOpenIcon/>
+                <LoyaltyIcon/>
+                <NotesIcon/>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={state.checkedB}
+                            onChange={handleChangePower('checkedB')}
+                            value="checkedB"
+                            color="primary"
+                        />
+                    }
+                    label="Primary"
+                />
+
+            </Box>
+            <div className={classes.root}>
+                <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    className={classes.tabs}
+                >
+                    <Tab label="نمای کلی" {...a11yProps(0)} />
+                    <Tab label="نمودار" {...a11yProps(1)} />
+                    <Tab label="نسخه پشتیبان" {...a11yProps(2)} />
+                    <Tab label="تصاویر آنی" {...a11yProps(3)} />
+                    <Tab label="شبکه" {...a11yProps(4)} />
+                    <Tab label="دیسک اضافه" {...a11yProps(5)} />
+                    <Tab label="برق" {...a11yProps(6)} />
+                    <Tab label="مرکز نجات" {...a11yProps(7)} />
+                    <Tab label="اتصال دیسکت" {...a11yProps(8)} />
+                    <Tab label="ارتقاء" {...a11yProps(9)} />
+                    <Tab label="نصب مجدد" {...a11yProps(10)} />
+                    <Tab label="حذف" {...a11yProps(11)} />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    <Overview/>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <Graphs/>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <Backups/>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <ServerSnapshotsList id={id}/>
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                    <Network/>
+                </TabPanel>
+                <TabPanel value={value} index={5}>
+                    <Volumes/>
+                </TabPanel>
+                <TabPanel value={value} index={6}>
+                    <Power/>
+                </TabPanel>
+                <TabPanel value={value} index={7}>
+                    <Rescue/>
+                </TabPanel>
+                <TabPanel value={value} index={8}>
+                    <IsoImages/>
+                </TabPanel>
+                <TabPanel value={value} index={9}>
+                    <UpgradeMachine/>
+                </TabPanel>
+                <TabPanel value={value} index={10}>
+                    <Rebuild/>
+                </TabPanel>
+                <TabPanel value={value} index={11}>
+                    <Remove id={id}/>
+                </TabPanel>
+            </div>
+            <MessageBox response={response} />
         </Box>
     );
 }
