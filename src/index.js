@@ -66,7 +66,6 @@ const routing = (
             <DefaultLayout path="/Verify" component={Verify}/>
             <DefaultLayout path="/test" component={App}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
-            {/*<DefaultLayout  path="/arab" component={Example} />*/}
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
         </div>
