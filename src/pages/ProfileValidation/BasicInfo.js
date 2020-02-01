@@ -20,18 +20,18 @@ export default function BasicInfo(props) {
         setFirstName(props.userInfo.profile.first_name)
         setLastName(props.userInfo.profile.last_name)
         setNationalCode(props.userInfo.profile.national_code)
-        //todo: set postalcode && address
+        setPostalCode(props.userInfo.profile.postal_code)
+        setAddress(props.userInfo.profile.address)
     }, [props.userInfo]);
 
     function saveUserInfo(event) {
         event.preventDefault();
-        const {txtfirstname, txtlastname, txtnationalcode,txtpostalcode,txtaddress} = event.currentTarget.elements;
         axios.post(api_base + setUserInfo, {
-            first_name: txtfirstname.value,
-            last_name: txtlastname.value,
-            national_code: txtnationalcode.value,
-            postal_code:txtpostalcode.value,
-            address:txtaddress.value,
+            first_name: firsName,
+            last_name: lastName,
+            national_code: nationalCode,
+            postal_code:postalCode,
+            address:address,
         })
             .then(res => {
                 props.setResponse(res.data);
@@ -52,24 +52,24 @@ export default function BasicInfo(props) {
 
                         <form onSubmit={saveUserInfo}>
 
-                            <TextField id="outlined-basic" name="txtfirstname" onChange={val => setFirstName(val.value)}
+                            <TextField id="outlined-basic" onChange={event => setFirstName(event.target.value)}
                                        value={firsName} label="نام" variant="outlined"/>
 
                             <br/><br/>
-                            <TextField id="outlined-basic" name="txtlastname" onChange={val => setLastName(val.value)}
+                            <TextField id="outlined-basic" onChange={event => setLastName(event.target.value)}
                                        value={lastName} label="نام خانوادگی" variant="outlined"/>
                             <br/><br/>
 
-                            <TextField id="outlined-basic" name="txtnationalcode"
-                                       onChange={val => setNationalCode(val.value)} value={nationalCode} label="کد ملی"
+                            <TextField id="outlined-basic"
+                                       onChange={event => setNationalCode(event.target.value)} value={nationalCode} label="کد ملی"
                                        variant="outlined"/>
 
                             <br/><br/>
-                            <TextField id="outlined-basic" name="txtpostalcode" label="کد پستی" variant="outlined" onChange={val => setPostalCode(val.value)}
+                            <TextField id="outlined-basic" label="کد پستی" variant="outlined" onChange={event => setPostalCode(event.target.value)}
                                        value={postalCode}/>
 
                             <br/><br/>
-                            <TextField id="outlined-basic" name="txtaddress" label="آدرس" variant="outlined" multiline onChange={val => setAddress(val.value)}
+                            <TextField id="outlined-basic" label="آدرس" variant="outlined" multiline onChange={event => setAddress(event.target.value)}
                                        value={address}
                                        rows="5"
                             />

@@ -53,7 +53,7 @@ function SshKeyEdit(props) {
                             <TextField
                                 name="name"
                                 label="نام" variant="filled"
-                                onChange={val => setItem({name: val.value})}
+                                onChange={event => setItem({name: event.target.value})}
                                 value={item.name}
                             />
                             <TextField
@@ -63,7 +63,7 @@ function SshKeyEdit(props) {
                                 rows="4"
                                 variant="filled"
                                 value={item.content}
-                                onChange={val => setItem({content: val.value})}
+                                onChange={event => setItem({content: event.target.value})}
                             />
 
                             <Button type="submit" variant="contained" color="primary">
