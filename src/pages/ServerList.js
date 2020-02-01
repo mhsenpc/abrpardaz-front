@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddBox';
 import CloudIcon from '@material-ui/icons/Cloud';
 import axios from "axios";
-import {api_base, machinesList, machinesOfProject, sshKeysAdd} from "../Api";
+import {api_base, machinesOfProject} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -18,6 +18,10 @@ import CancelIcon from '@material-ui/icons/Cancel';
 const cardserverlist = makeStyles(theme => ({
     card: {
         display: 'flex',
+    },
+    cardwidth: {
+        width: '15%',
+        height: '253px'
     },
     details: {
         display: 'flex',
@@ -105,8 +109,8 @@ export default function ServerList(props) {
         const [editMode, setEditMode] = React.useState(false);
         const [name, setName] = React.useState('');
 
-        function requestRenameMachine(id){
-            axios.post(api_base + "machines/" + id.toString()  +"/rename", {name: name})
+        function requestRenameMachine(id) {
+            axios.post(api_base + "machines/" + id.toString() + "/rename", {name: name})
                 .then(res => {
                     setResponse(res.data)
                     setEditMode(false);
@@ -118,42 +122,52 @@ export default function ServerList(props) {
         }, []);
 
         return (
+
             <Card key={props.row.id} className={cardlist.card}>
-                <div className={cardlist.details} onClick={() => setEditMode(true)}>
-                    <CardContent className={cardlist.content}>
-                        {editMode === false &&
-                        <Typography component="h5" variant="h5">
-                            {props.row.name}
-                        </Typography>
-                        }
-                        {editMode === true &&
-                        <div>
-                            <TextField
-                                id="outlined-full-width"
-                                name="name"
-                                label="نام جدید"
-                                placeholder=""
-                                variant="outlined"
-                                value={name}
-                                onChange={event => setName(event.target.value)}
-                            />
-                            <Button variant="contained" color="primary" onClick={()=> requestRenameMachine(props.row.id)}>
-                                تغییر نام
-                            </Button>
-                            <CancelIcon onClick={()=>setEditMode(false)} />
-                        </div>
-                        }
-                        <Typography variant="subtitle1" color="textSecondary">
-                            {props.row.image.name}{props.row.image.version}
-                        </Typography>
-                    </CardContent>
+                <div className='itemList'>
+                    <div className={cardlist.details} className={cardlist.cardwidth} onClick={() => setEditMode(true)}>
+
+
+                        <CardContent alignItems="flex-end" className={cardlist.content}>
+
+                            {editMode === false &&
+                            <Typography component="h5" variant="h5">
+                                {props.row.name}
+                            </Typography>
+                            }
+                            {editMode === true &&
+                            <div>
+                                <TextField
+                                    id="outlined-full-width"
+                                    name="name"
+                                    label="نام جدید"
+                                    placeholder=""
+                                    variant="outlined"
+                                    value={name}
+                                    onChange={event => setName(event.target.value)}
+                                />
+                                <Button variant="contained" color="primary"
+                                        onClick={() => requestRenameMachine(props.row.id)}>
+                                    تغییر نام
+                                </Button>
+                                <CancelIcon onClick={() => setEditMode(false)}/>
+                            </div>
+                            }
+                            <Typography variant="subtitle1" color="textSecondary">
+                                {props.row.image.name}{props.row.image.version}
+                            </Typography>
+                        </CardContent>
+
+                    </div>
 
                 </div>
+
                 <CardMedia
                     className={cardlist.cover}
                     image="./images/vps.png"
                     onClick={() => showDetails(props.row.id)}
                 />
+
             </Card>
         )
     }
@@ -190,7 +204,7 @@ export default function ServerList(props) {
                         </Grid>
 
                     </Grid>
-                    <MessageBox response={response} />
+                    <MessageBox response={response}/>
                 </Paper>
             </div>
         )

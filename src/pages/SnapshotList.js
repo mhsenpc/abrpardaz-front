@@ -12,10 +12,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, snapshotsList} from "../Api";
+import {api_base, machinesList, snapshotsList, sshKeysAdd} from "../Api";
 import {TextField} from "@material-ui/core";
 import MessageBox from "./MessageBox";
-import CancelIcon from '@material-ui/icons/Cancel';
 
 
 const useStyles = makeStyles({
@@ -28,14 +27,14 @@ export default function SnapshotList() {
     const classes = useStyles();
     const [machineId, setMachineId] = React.useState(null);
     const [response, setResponse] = React.useState([]);
-    const [machineItems, setMachineItems] = React.useState([]);
-    const [snapShotItems, setSnapShotItems] = React.useState([]);
-    const [name, setName] = React.useState('');
 
 
     const handleChange = event => {
         setMachineId(event.target.value);
     };
+
+    const [machineItems, setMachineItems] = React.useState([]);
+    const [snapShotItems, setSnapShotItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + machinesList)
@@ -60,56 +59,17 @@ export default function SnapshotList() {
             })
     }
 
+
+    const [name, setName] = React.useState('');
+
     function requestSnapShot() {
-        axios.post(api_base + 'machines/' + machineId.toString() + '/takeSnapshot', {name: name})
+        axios.post(api_base + 'machines/' + machineId.toString() + '/takeSnapshot',{name:name})
             .then(res => {
                 setResponse(res.data)
             })
-    }
+}
 
-    function Snapshotname(props){
-        const [editMode, setEditMode] = React.useState(false);
-        const [snapshotName, setSnapshotName] = React.useState('');
 
-        React.useEffect(() => {
-            setSnapshotName(props.row.name)
-        }, []);
-
-        function requestRenameSnapshot(id){
-            axios.post(api_base + "snapshots/" + id.toString()  +"/rename", {name: snapshotName})
-                .then(res => {
-                    setResponse(res.data)
-                    setEditMode(false);
-                })
-        }
-
-        if(editMode){
-            return (
-                <div >
-                    <TextField
-                        id="outlined-full-width"
-                        name="name"
-                        label="نام جدید"
-                        placeholder=""
-                        variant="outlined"
-                        value={snapshotName}
-                        onChange={event => setSnapshotName(event.target.value)}
-                    />
-                    <Button variant="contained" color="primary" onClick={()=> requestRenameSnapshot(props.row.id)}>
-                        تغییر نام
-                    </Button>
-                    <CancelIcon onClick={()=>setEditMode(false)} />
-                </div>
-            )
-        }
-        else{
-            return (
-                <span onClick={()=> setEditMode(true)}>
-                    {snapshotName}
-                </span>
-            )
-        }
-    }
 
     return (
 
@@ -148,14 +108,13 @@ export default function SnapshotList() {
                 </FormControl>
 
 
-                {machinesList.length > 0 ? (
-                    <p>
-                        <TextField name='name' onChange={event => setName(event.target.value)}/>
-                    </p>
-                ) : (
-                    <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود
-                        ندارد.</p>
-                )}
+                    {machinesList.length > 0 ? (
+                        <p>
+                            <TextField name='name' onChange={event => setName(event.target.value)} />
+                        </p>
+                    ) : (
+                        <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود ندارد.</p>
+                    )}
 
                 <Button onClick={() => requestSnapShot()} variant="contained">
                     ساخت تصویرآنی
@@ -172,11 +131,10 @@ export default function SnapshotList() {
                             حداقل تعدادکاراکترهای نام تصویر آنی 4 عدد می باشد!
                         </li>
                         <li>
-                            نام تصویر آنی باید فقط شامل حرف و عدد باشد، استفاده از کاراکتر خاص به جزخط فاصله مجاز نمی
-                            باشد!
+                            نام تصویر آنی باید فقط شامل حرف و عدد باشد، استفاده از کاراکتر خاص به جزخط فاصله مجاز نمی باشد!
                         </li>
                         <li>
-                            استفاده از فضای خالی
+                           استفاده از فضای خالی
                         </li>
 
                     </ul>
@@ -204,8 +162,9 @@ export default function SnapshotList() {
                             <TableBody>
                                 {snapShotItems.map(row => (
                                     <TableRow key={row.name}>
+
                                         <TableCell component="th" scope="row">
-                                            <Snapshotname row={row} />
+                                            {row.name}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             {row.remote_id}
@@ -231,7 +190,7 @@ export default function SnapshotList() {
 
                 </div>
             </Box>
-            <MessageBox response={response}/>
+            <MessageBox response={response} />
         </div>
     );
 

@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.itemList{
+  transition: 0.2s;
+}
+.itemList:hover{
+  background-color: #61dafb;
+}
