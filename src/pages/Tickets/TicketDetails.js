@@ -147,7 +147,9 @@ function TicketDetails(props) {
 
                                             <div align="right">
 
-                                                <p>پاسخ</p>
+                                                <p>
+                                                    {row.user.profile.first_name} {row.user.profile.last_name}
+                                                </p>
 
 
                                                 <Avatar alt="Remy Sharp" src="/broken-image.jpg"
