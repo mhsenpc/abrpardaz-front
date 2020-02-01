@@ -10,6 +10,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Divider from "@material-ui/core/Divider";
+import ProjectsList from "./ProjectsList";
 
 export const mainListItems = (
     <div>
@@ -19,7 +20,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="داشبورد" />
         </ListItem>
-        <ListItem button component="a" href="/servers">
+        <ListItem button component="a" href="/ProjectsList">
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>

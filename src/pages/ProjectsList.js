@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import {api_base, ProjectsListPath} from "../Api";
+import Button from '@material-ui/core/Button';
 
 export default function ProjectsList() {
     const [machines, setMachines] = React.useState([]);
@@ -20,15 +21,13 @@ export default function ProjectsList() {
 
         <div>
             {machines.map(row => (<div>
-                    <p>
-                        {row.name}
-                    </p>
-
-                    <p>
-                        {row.created_at}
-                    </p>
+                    <Button href={"servers/" + row.id.toString()}>
+                        <p>
+                            {row.name}
+                        </p>
+                    </Button>
                 </div>
-            ))};
+            ))}
 
         </div>
     )

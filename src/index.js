@@ -86,7 +86,7 @@ const routing = (
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
             <DefaultLayout path="/faq" component={FAQ}/>
-            <DefaultLayout path="/servers" component={ServerList}/>
+            <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/payment" component={PaymentList}/>
             <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
             <DefaultLayout path="/404" component={Notfound}/>
@@ -105,6 +105,7 @@ const routing = (
             <DefaultLayout path="/test" component={App}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
+            <DefaultLayout path="/servers/:id" component={ServerList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
         </div>
     </Router>

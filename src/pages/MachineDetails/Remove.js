@@ -39,7 +39,7 @@ function Remove(props) {
 
                 alert(msg)
 
-                window.location.href = '/servers/';
+                window.location.href = '/ProjectsList/';
 
             })
     }

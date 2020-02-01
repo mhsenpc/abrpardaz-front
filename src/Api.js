@@ -6,6 +6,7 @@ export const verify = 'auth/verify';
 export const logout = 'auth/logout';
 export const imagesList = 'images/os';
 export const machinesList = 'machines/list';
+export const machinesOfProject = 'machines/ofProject/';
 export const createFromImage = 'machines/createFromImage';
 export const createFromSnapshot = 'machines/createFromSnapshot';
 export const plansList = 'plans/list';

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddBox';
 import CloudIcon from '@material-ui/icons/Cloud';
 import axios from "axios";
-import {api_base, machinesList, sshKeysAdd} from "../Api";
+import {api_base, machinesList, machinesOfProject, sshKeysAdd} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function ServerList() {
+export default function ServerList(props) {
     const classes = useStyles();
     const cardlist = cardserverlist();
     const theme = useTheme();
@@ -78,7 +78,8 @@ export default function ServerList() {
     const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get(api_base + machinesList)
+        let id = props.match.params.id;
+        axios.get(api_base + machinesOfProject + id.toString())
             .then(res => {
                 const list = res.data.list;
 
