@@ -15,16 +15,12 @@ import {makeStyles} from '@material-ui/core/styles';
 import Copyright from "../CopyRight";
 import {api_base, login} from "../../Api";
 import axios from 'axios';
-import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import MessageBox from "../MessageBox";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -59,13 +55,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-
-
-
 export default function Login() {
     const classes = useStyles();
     const [response, setResponse] = React.useState([]);
+    const [rememberMe, setRememberMe] = React.useState(false);
 
     function sendUser(event) {
         event.preventDefault();
@@ -73,8 +66,14 @@ export default function Login() {
         axios.post(api_base + login, {email: email.value, password: password.value})
             .then(res => {
                 setResponse(res.data)
-                if(res.data.success)
+                if (res.data.success) {
+                    const token = res.data.access_token;
+                    sessionStorage.setItem('token', btoa(token));
+                    if (rememberMe) {
+                        localStorage.setItem("token", btoa(token));
+                    }
                     window.location.href = '/';
+                }
             })
     }
 
@@ -115,7 +114,7 @@ export default function Login() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary"/>}
+                            control={<Checkbox value="remember" color="primary" onChange={event=>setRememberMe(event.target.checked)} />}
                             label="مرا به خاطر بسپار"
                         />
                         <Button
@@ -144,7 +143,7 @@ export default function Login() {
                         </Box>
                     </form>
                 </div>
-                <MessageBox response={response} />
+                <MessageBox response={response}/>
             </Grid>
         </Grid>
     );

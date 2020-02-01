@@ -8,20 +8,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import {mainListItems, secondaryListItems} from './MenuItems';
+import {mainListItems} from './MenuItems';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import MailIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Copyright from "./CopyRight";
@@ -34,7 +30,7 @@ const drawerWidth = 0;
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        direction:'rtl'
+        direction: 'rtl'
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -47,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         ...theme.mixins.toolbar,
     },
     appBar: {
-        textAlign:'right',
+        textAlign: 'right',
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -75,7 +71,7 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         whiteSpace: 'nowrap',
         width: '100%',
-        textAlign:'right',
+        textAlign: 'right',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -83,7 +79,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaperClose: {
         overflowX: 'hidden',
-        textAlign:'right',
+        textAlign: 'right',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -167,8 +163,8 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(3),
 
     },
-    textAlignRight:{
-        textAlign:'right'
+    textAlignRight: {
+        textAlign: 'right'
     }
 }));
 
@@ -219,7 +215,10 @@ export default function Layout(props) {
             <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem component="a" onClick={()=>{requestLogout(); handleMenuClose();}}>خروج</MenuItem>
+            <MenuItem component="a" onClick={() => {
+                requestLogout();
+                handleMenuClose();
+            }}>خروج</MenuItem>
         </Menu>
     );
 
@@ -245,20 +244,26 @@ export default function Layout(props) {
             <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
             <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
-            <MenuItem onClick={()=>{requestLogout(); handleMenuClose();}}>خروج</MenuItem>
+            <MenuItem onClick={() => {
+                requestLogout();
+                handleMenuClose();
+            }}>خروج</MenuItem>
         </Menu>
     );
 
     const [response, setResponse] = React.useState([]);
 
     function requestLogout() {
-        axios.put(api_base + 'auth/logout' )
+        axios.put(api_base + 'auth/logout')
             .then(res => {
                 setResponse(res.data)
 
-                setTimeout(function(){
-                    if (res.data.success)
+                setTimeout(function () {
+                    if (res.data.success) {
+                        localStorage.removeItem('token');
+                        sessionStorage.removeItem("token");
                         window.location.href = '/login';
+                    }
                 }, 2000);
             })
     }
@@ -266,7 +271,7 @@ export default function Layout(props) {
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppBar  className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <AppBar className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
@@ -278,11 +283,12 @@ export default function Layout(props) {
 
                         <MenuIcon/>
                     </IconButton>
-                    <Typography align='right' component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                         ابرپرداز
+                    <Typography align='right' component="h1" variant="h6" color="inherit" noWrap
+                                className={classes.title}>
+                        ابرپرداز
                     </Typography>
 
-                    <div >
+                    <div>
 
                         <div className={classes.sectionDesktop}>
                             <IconButton aria-label="show 17 new notifications" color="inherit">
@@ -316,7 +322,6 @@ export default function Layout(props) {
                     </div>
 
 
-
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
@@ -343,11 +348,11 @@ export default function Layout(props) {
                         {props.children}
                     </Grid>
                     <Box pt={4}>
-                        <Copyright />
+                        <Copyright/>
                     </Box>
                 </Container>
             </main>
-            <MessageBox response={response} />
+            <MessageBox response={response}/>
 
         </div>
     );

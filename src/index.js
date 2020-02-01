@@ -29,6 +29,44 @@ import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
 import ProjectsList from "./pages/ProjectsList";
+import axios from "axios";
+import swal from 'sweetalert';
+
+
+(function () {
+    const tokenOnLocalStorage = localStorage.getItem("token");
+    if (tokenOnLocalStorage)
+        sessionStorage.setItem('token', tokenOnLocalStorage);
+    let token = sessionStorage.getItem("token");
+    if (token) {
+        token = atob(token);
+        axios.defaults.headers.common['Accept'] = 'application/json';
+        axios.defaults.headers.post['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.get['Authorization'] = `Bearer ${token}`;
+    } else {
+        axios.defaults.headers.post['Authorization'] = null;
+        axios.defaults.headers.get['Authorization'] = null;
+        /*if setting null does not remove `Authorization` header then try
+          delete axios.defaults.headers.common['Authorization'];
+        */
+    }
+
+    axios.interceptors.response.use(function (response) {
+        return response;
+    }, function (error) {
+        if (401 === error.response.status) {
+            swal("توکن منقضی شده است", "شما نیاز به احراز هویت مجدد دارید!", "warning").then((value) => {
+                window.location.href = '/login';
+            });
+            return Promise.reject(error);
+        } else {
+            swal("خطا", "در پردازش درخواست شما مشکلی وجود دارد", "error");
+            return Promise.reject(error);
+        }
+    });
+
+
+})();
 
 
 const DefaultLayout = ({component: Component, ...rest}) => {

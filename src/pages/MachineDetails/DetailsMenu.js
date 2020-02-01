@@ -27,6 +27,7 @@ import {api_base, sshKeysAdd} from "../../Api";
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import MessageBox from "../MessageBox";
+import CancelIcon from '@material-ui/icons/Cancel';
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -124,6 +125,7 @@ export default function DetailsMenu(props) {
                     <Button variant="contained" color="primary" onClick={requestRenameMachine}>
                         ذخیره
                     </Button>
+                    <CancelIcon onClick={()=>setEditMode(false)} />
                 </span>
 
                 }

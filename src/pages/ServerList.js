@@ -12,7 +12,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import TextField from "@material-ui/core/TextField";
-import MessageBox from "./SshKeys/SshKeyAdd";
+import MessageBox from "./MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
 
 const cardserverlist = makeStyles(theme => ({
