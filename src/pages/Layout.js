@@ -24,8 +24,6 @@ import Copyright from "./CopyRight";
 import axios from "axios";
 import {api_base} from "../Api";
 import MessageBox from "./MessageBox";
-import {Notification, NotificationActions, NotificationContainer } from 'material-ui-notifications';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 
 const drawerWidth = 0;
@@ -290,26 +288,6 @@ export default function Layout(props) {
                                 className={classes.title}>
                         ابرپرداز
                     </Typography>
-                    <MuiThemeProvider>
-
-                        <div>
-                            <NotificationContainer />
-                            <button onClick={
-                                e => {
-                                    NotificationActions.addNotification(
-                                        {
-                                            headerLabel: "Mail",
-                                            secondaryHeaderLabel: "timohanisch@googlemail.com",
-                                            timestamp: "Now",
-                                            primaryColor: "#ff0000",
-                                            title: "Timo Hanisch",
-                                            text: "Yeah this seems like a pretty good idea!",
-                                        }
-                                    );
-                                }}
-                            />
-                        </div>
-                    </MuiThemeProvider>
 
                     <div>
 
