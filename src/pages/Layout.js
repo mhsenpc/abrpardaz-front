@@ -24,6 +24,7 @@ import Copyright from "./CopyRight";
 import axios from "axios";
 import {api_base} from "../Api";
 import MessageBox from "./MessageBox";
+import Echo from "laravel-echo"
 
 
 const drawerWidth = 0;
@@ -201,6 +202,21 @@ export default function Layout(props) {
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    let token = atob(sessionStorage.getItem("token"));
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '95c0537be9f255c6a252',
+        cluster: 'ap3',
+        forceTLS: true,
+        authEndpoint: 'http://localhost/broadcasting/auth',
+        auth: {
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+        },
+    });
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (

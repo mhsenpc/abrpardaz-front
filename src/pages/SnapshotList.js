@@ -12,7 +12,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machinesList, snapshotsList, sshKeysAdd} from "../Api";
+import {api_base, machinesList, snapshotsList} from "../Api";
 import {TextField} from "@material-ui/core";
 import MessageBox from "./MessageBox";
 
@@ -33,6 +33,14 @@ export default function SnapshotList() {
         setMachineId(event.target.value);
     };
 
+    let user_id;
+    if (sessionStorage.getItem('user_id'))
+        user_id = sessionStorage.getItem('user_id');
+    else if (localStorage.getItem('user_id'))
+        user_id = localStorage.getItem('user_id');
+
+
+
     const [machineItems, setMachineItems] = React.useState([]);
     const [snapShotItems, setSnapShotItems] = React.useState([]);
 
@@ -42,6 +50,7 @@ export default function SnapshotList() {
                 const list = res.data.list;
 
                 setMachineItems(list);
+                setMachineId(list[0].id); //TODO: what if there were no machines?!
             })
 
         axios.get(api_base + snapshotsList)
@@ -50,6 +59,14 @@ export default function SnapshotList() {
 
                 setSnapShotItems(list);
             })
+
+        if (user_id) {
+            var channel = window.Echo.channel('private-user-' + user_id);
+            channel.listen('.snapshot.created', function (data) {
+                alert(JSON.stringify(data));
+                //TODO: update snapshot which its creation process is completed
+            });
+        }
     }, []);
 
     function requestRemoveSnapshot(id) {
@@ -63,12 +80,11 @@ export default function SnapshotList() {
     const [name, setName] = React.useState('');
 
     function requestSnapShot() {
-        axios.post(api_base + 'machines/' + machineId.toString() + '/takeSnapshot',{name:name})
+        axios.post(api_base + 'machines/' + machineId.toString() + '/takeSnapshot', {name: name})
             .then(res => {
                 setResponse(res.data)
             })
-}
-
+    }
 
 
     return (
@@ -76,16 +92,15 @@ export default function SnapshotList() {
         <div>
             <Box width={700} p={1} my={0.5} borderRadius="borderRadius">
                 <Button variant="contained">ایجاد سرور + </Button>
-                <p style={{direction: "rtl"}}>تصاویر آنی شما </p>
+                <p>تصاویر آنی شما </p>
             </Box>
             <Box width={700} style={{border: "solid 1px gray"}} p={1} my={0.5} borderRadius="borderRadius">
 
-
-                <p style={{direction: "rtl"}}>
+                <p>
                     ساخت تصویرآنی
+                </p>
 
-                    <br/>
-                    <br/>
+                <p>
                     لطفا قبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
                 </p>
                 <FormControl variant="outlined" className={classes.formControl}>
@@ -100,7 +115,7 @@ export default function SnapshotList() {
                     >
                         {machineItems.map(row => (
 
-                            <option value={row.id}>{row.name}</option>
+                            <option key={row.id} value={row.id}>{row.name}</option>
 
                         ))}
 
@@ -108,13 +123,14 @@ export default function SnapshotList() {
                 </FormControl>
 
 
-                    {machinesList.length > 0 ? (
-                        <p>
-                            <TextField name='name' onChange={event => setName(event.target.value)} />
-                        </p>
-                    ) : (
-                        <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود ندارد.</p>
-                    )}
+                {machinesList.length > 0 ? (
+                    <p>
+                        <TextField name='name' onChange={event => setName(event.target.value)}/>
+                    </p>
+                ) : (
+                    <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما وجود
+                        ندارد.</p>
+                )}
 
                 <Button onClick={() => requestSnapShot()} variant="contained">
                     ساخت تصویرآنی
@@ -131,10 +147,11 @@ export default function SnapshotList() {
                             حداقل تعدادکاراکترهای نام تصویر آنی 4 عدد می باشد!
                         </li>
                         <li>
-                            نام تصویر آنی باید فقط شامل حرف و عدد باشد، استفاده از کاراکتر خاص به جزخط فاصله مجاز نمی باشد!
+                            نام تصویر آنی باید فقط شامل حرف و عدد باشد، استفاده از کاراکتر خاص به جزخط فاصله مجاز نمی
+                            باشد!
                         </li>
                         <li>
-                           استفاده از فضای خالی
+                            استفاده از فضای خالی
                         </li>
 
                     </ul>
@@ -161,7 +178,7 @@ export default function SnapshotList() {
                             </TableHead>
                             <TableBody>
                                 {snapShotItems.map(row => (
-                                    <TableRow key={row.name}>
+                                    <TableRow key={row.id}>
 
                                         <TableCell component="th" scope="row">
                                             {row.name}
@@ -190,7 +207,7 @@ export default function SnapshotList() {
 
                 </div>
             </Box>
-            <MessageBox response={response} />
+            <MessageBox response={response}/>
         </div>
     );
 

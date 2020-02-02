@@ -65,12 +65,14 @@ export default function Login() {
         const {email, password} = event.currentTarget.elements;
         axios.post(api_base + login, {email: email.value, password: password.value})
             .then(res => {
-                setResponse(res.data)
+                setResponse(res.data);
                 if (res.data.success) {
                     const token = res.data.access_token;
                     sessionStorage.setItem('token', btoa(token));
+                    sessionStorage.setItem('user_id', res.data.user_id);
                     if (rememberMe) {
                         localStorage.setItem("token", btoa(token));
+                        localStorage.setItem("user_id", res.data.user_id);
                     }
                     window.location.href = '/';
                 }

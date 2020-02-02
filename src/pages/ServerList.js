@@ -14,6 +14,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import TextField from "@material-ui/core/TextField";
 import MessageBox from "./MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
+import Pusher from "pusher-js"
 
 const cardserverlist = makeStyles(theme => ({
     card: {
@@ -78,7 +79,6 @@ export default function ServerList(props) {
         window.location.href = '/server/' + machine_id.toString();
     }
 
-
     const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
@@ -89,6 +89,12 @@ export default function ServerList(props) {
 
                 setItems(list);
             })
+
+        var channel = window.Echo.channel('private-project-' + id.toString());
+        channel.listen('.server.created', function(data) {
+            alert(JSON.stringify(data));
+            //TODO: update machine which its creation process is completed
+        });
     }, []);
 
     function Machines(props) {
