@@ -5,15 +5,18 @@ import Paper from '@material-ui/core/Paper';
 import FormLabel from '@material-ui/core/FormLabel';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
-import {api_base, sshKeysList} from "../../Api";
+import {api_base, ProjectsListPath, sshKeysList} from "../../Api";
+import Select from "@material-ui/core/Select";
 
 
 export default function MachineOptions(props) {
-    const handleChange = id => {
-        props.setSshId(id)
+    const handleChangeSshId = event => {
+        props.setSshId(event.target.value)
+    };
+
+    const handleChangeProjectId = event => {
+        props.setProjectId(event.target.value)
     };
 
     const handleChangeName = event => {
@@ -21,16 +24,25 @@ export default function MachineOptions(props) {
     };
 
 
-    const [items, setItems] = React.useState([]);
+    const [sshkeyItems, setSshkeyItems] = React.useState([]);
+    const [projectItems, setProjectItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + sshKeysList)
             .then(res => {
                 const list = res.data.list;
 
-                setItems(list);
+                setSshkeyItems(list);
             })
-    },[]);
+
+        axios.get(api_base + ProjectsListPath)
+            .then(res => {
+                const list = res.data.list;
+
+                setProjectItems(list);
+                props.setProjectId(list[0].id)
+            })
+    }, []);
 
 
     return (
@@ -60,19 +72,29 @@ export default function MachineOptions(props) {
                                 انتخاب کلید SSH
                             </FormLabel>
 
-                            {items.map(row => (
-                                <FormControlLabel
-                                    key={row.id}
-                                    control={
-                                        <Checkbox
-                                            onChange={handleChange(row.id)}
-                                            color="primary"
-                                        />
-                                    }
-                                    label={row.name}
-                                />
-                            ))}
+                            <Select
+                                onChange={handleChangeSshId}
+                                native>
+                                <option></option>
+                                {sshkeyItems.map(row => (
+                                    <option value={row.id}>{row.name}</option>
+                                ))}
+                            </Select>
 
+                            <br />
+                            <br />
+
+                            <FormLabel>
+                                انتخاب پروژه
+                            </FormLabel>
+
+                            <Select
+                                onChange={handleChangeProjectId}
+                                native>
+                                {projectItems.map(row => (
+                                    <option value={row.id}>{row.name}</option>
+                                ))}
+                            </Select>
 
                             <Box m={5} width={600}>
 

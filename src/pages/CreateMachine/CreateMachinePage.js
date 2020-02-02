@@ -27,15 +27,20 @@ export default function CreateMachinePage() {
     const [imageId, setImageId] = React.useState(null);
     const [planId, setPlanId] = React.useState(null);
     const [sshId, setSshId] = React.useState(null);
+    const [projectId, setProjectId] = React.useState(null);
     const [machineName, setMachineName] = React.useState(null);
     const [response, setResponse] = React.useState([]);
 
-
-
     function createMachineRequest() {
-        axios.post(api_base + createFromImage, {name: machineName,plan_id:planId,image_id:imageId })
+        axios.post(api_base + createFromImage, {name: machineName,plan_id:planId,image_id:imageId,project_id:projectId,ssh_key_id:sshId})
             .then(res => {
                 setResponse(res.data)
+
+                setTimeout(function () {
+                    if (res.data.success) {
+                        window.location.href = '/servers/' + projectId.toString();
+                    }
+                }, 2000);
             })
     }
 
@@ -43,7 +48,7 @@ export default function CreateMachinePage() {
         <div className={classes.root}>
             <SelectSource setImageId={setImageId}/>
             <Plans setPlanId={setPlanId}/>
-            <MachineOptions setSshId={setSshId} setMachineName={setMachineName}/>
+            <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}/>
             <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
             <MessageBox response={response} />
         </div>
