@@ -40,11 +40,11 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="کلیدهای امنیتی" />
         </ListItem>
-        <ListItem button component="a" href="/payment">
+        <ListItem button component="a" href="/Invoices">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="پرداخت" />
+            <ListItemText primary="امور مالی" />
         </ListItem>
         <Divider/>
         <ListItem button component="a" href="/faq">

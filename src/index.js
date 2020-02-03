@@ -11,7 +11,7 @@ import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
 import SshKeyList from "./pages/SshKeys/SshkeyList";
-import PaymentList from "./pages/Payment";
+import Transactions from "./pages/Transactions";
 import SnapshotList from "./pages/SnapshotList";
 import TicketList from "./pages/Tickets/TicketList";
 import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
@@ -31,6 +31,7 @@ import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
 import ProjectsList from "./pages/ProjectsList";
 import axios from "axios";
 import swal from 'sweetalert';
+import Invoices from "./pages/Invoices";
 
 
 (function () {
@@ -87,7 +88,8 @@ const routing = (
             <Route path="/register" component={Register}/>
             <DefaultLayout path="/faq" component={FAQ}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
-            <DefaultLayout path="/payment" component={PaymentList}/>
+            <DefaultLayout path="/Transactions" component={Transactions}/>
+            <DefaultLayout path="/Invoices" component={Invoices}/>
             <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
             <DefaultLayout path="/404" component={Notfound}/>
             <DefaultLayout path="/snapshotList" component={SnapshotList}/>
