@@ -10,23 +10,22 @@ import axios from "axios";
 import {api_base, machinesOfProject} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import TextField from "@material-ui/core/TextField";
 import MessageBox from "./MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
 import Pusher from "pusher-js"
+
 
 const cardserverlist = makeStyles(theme => ({
     card: {
         display: 'flex',
     },
     cardwidth: {
-        width: '15%',
-        height: '253px'
+        width: '100%'
     },
     details: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
     },
     content: {
         flex: '1 0 auto',
@@ -69,6 +68,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+
+
+
+
 export default function ServerList(props) {
     const classes = useStyles();
     const cardlist = cardserverlist();
@@ -97,6 +100,8 @@ export default function ServerList(props) {
         });
     }, []);
 
+
+
     function Machines(props) {
         return (
             <div className={classes.root}>
@@ -104,9 +109,20 @@ export default function ServerList(props) {
                     ایجاد سرور
                     <AddIcon>+</AddIcon>
                 </Button>
-                {items.map(row => (
+
+                <Grid
+                    container
+                    direction="row"
+                    justify="flex-start"
+                    spacing={1} >
+
+                    {items.map(row => (
                     <ServerItem row={row}/>
                 ))}
+
+                </Grid>
+
+
             </div>
         )
     }
@@ -129,12 +145,21 @@ export default function ServerList(props) {
 
         return (
 
-            <Card key={props.row.id} className={cardlist.card}>
-                <div className='itemList'>
-                    <div className={cardlist.details} className={cardlist.cardwidth} onClick={() => setEditMode(true)}>
 
 
-                        <CardContent alignItems="flex-end" className={cardlist.content}>
+
+                            <Grid item xs={3}>
+
+            <Card key={props.row.id}  >
+
+
+
+
+
+                    <div onClick={() => setEditMode(true)} className='itemList'>
+
+
+                        <CardContent >
 
                             {editMode === false &&
                             <Typography component="h5" variant="h5">
@@ -162,19 +187,22 @@ export default function ServerList(props) {
                             <Typography variant="subtitle1" color="textSecondary">
                                 {props.row.image.name}{props.row.image.version}
                             </Typography>
+
                         </CardContent>
+
+
 
                     </div>
 
-                </div>
-
-                <CardMedia
-                    className={cardlist.cover}
-                    image="./images/vps.png"
-                    onClick={() => showDetails(props.row.id)}
-                />
 
             </Card>
+
+                        </Grid>
+
+
+
+
+
         )
     }
 
@@ -191,25 +219,23 @@ export default function ServerList(props) {
                     </Grid>
                 </Paper>
                 <Paper className={classes.paper}>
-                    <Grid container spacing={3}>
 
-                        <Grid item>
+                        <Grid  container
+                               direction="row"
+                               justify="flex-end"
+                               alignItems="center">
+
                             <CloudIcon className={classes.img}/>
-                            <Grid item xs={3} sm container>
-                                <Grid item xs container direction="column" spacing={3}>
-                                    <Grid item>
+
                                         <Typography variant="body2" gutterBottom>
                                             به نظر میرسد در حال حاضر هیچ سروری ندارید.
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary">
                                             به سادگی اولین سرور خود را ایجاد نمایید
                                         </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
+
                         </Grid>
 
-                    </Grid>
                     <MessageBox response={response}/>
                 </Paper>
             </div>
