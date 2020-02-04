@@ -7,12 +7,40 @@ import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base, sshKeysAdd} from "../../Api";
 import MessageBox from "../MessageBox";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
+const paperStyle = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            maxWidth: 700,
+            marginTop: 12
 
+        },
+        image: {
+            width: 128,
+            height: 128,
+        },
+        img: {
+            margin: 'auto',
+            display: 'block',
+            maxWidth: '100%',
+            maxHeight: '100%',
+        },
+        alignText: {
+            textAlign: 'right'
+        }
+    }),
+);
 
 
 function SshKeyAdd() {
     const [response, setResponse] = React.useState([]);
+    const paper = paperStyle();
 
     function requestAddKey(event) {
         event.preventDefault();
@@ -27,35 +55,42 @@ function SshKeyAdd() {
 
     return (
         <div>
-            <Grid item xs={12} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
 
-                <Paper>
+            <Grid
+                container
+                direction="row"
+                alignItems="right"
+            >
 
-                    <Box p={2} width={700}>
+                <Grid item xs>
+
+                <Paper className={paper.paper}>
+
                         <form onSubmit={requestAddKey}>
                             <TextField
+                                className={paper.alignText}
                                 name="name"
                                 label="نام" variant="filled"
                             />
+                            <br/><br/>
                             <TextField
+                                className={paper.alignText}
                                 name="content"
                                 label="نظر"
                                 multiline
                                 rows="4"
                                 variant="filled"
                             />
-
+                            <br/><br/>
                             <Button type="submit" variant="contained" color="primary">
                                 ذخیره
                             </Button>
 
                         </form>
-                    </Box>
+
 
                 </Paper>
+                </Grid>
 
             </Grid>
             <MessageBox response={response} />

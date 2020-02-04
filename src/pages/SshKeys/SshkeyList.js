@@ -157,6 +157,14 @@ export default function SshkeyList() {
                                     {items.map(row => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell align="right">
+                                                {row.id}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell  align="right" component="th" scope="row">
+                                                {row.name}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right">
                                                 <IconButton
                                                     aria-label="more"
                                                     aria-controls="long-menu"
@@ -190,13 +198,7 @@ export default function SshkeyList() {
 
                                             </StyledTableCell>
 
-                                            <StyledTableCell component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
-                                            <StyledTableCell align="right">{row.id}
 
-
-                                            </StyledTableCell>
 
                                         </StyledTableRow>
                                     ))}

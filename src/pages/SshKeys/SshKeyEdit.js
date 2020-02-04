@@ -7,12 +7,42 @@ import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base} from "../../Api";
 import MessageBox from "../MessageBox";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
+
+
+const paperStyle = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            maxWidth: 700,
+            marginTop: 12
+
+        },
+        image: {
+            width: 128,
+            height: 128,
+        },
+        img: {
+            margin: 'auto',
+            display: 'block',
+            maxWidth: '100%',
+            maxHeight: '100%',
+        },
+        alignText: {
+            textAlign: 'right'
+        }
+    }),
+);
 
 
 function SshKeyEdit(props) {
     const [response, setResponse] = React.useState([]);
     const [item, setItem] = React.useState({name:'',content:''});
-
+    const paper = paperStyle();
 
     React.useEffect(() => {
         let id = props.match.params.id;
@@ -41,22 +71,28 @@ function SshKeyEdit(props) {
 
     return (
         <div>
-            <Grid item xs={12} container
+
+            <Grid container
                   direction="row"
                   justify="center"
                   alignItems="center">
 
-                <Paper>
+                <Grid item xs={12}>
 
-                    <Box p={2} width={700}>
+                <Paper className={paper.paper}>
+
+
                         <form onSubmit={requestEditKey}>
                             <TextField
+                                className={paper.alignText}
                                 name="name"
                                 label="نام" variant="filled"
                                 onChange={event => setItem({name: event.target.value})}
                                 value={item.name}
                             />
+                            <br/><br/>
                             <TextField
+                                className={paper.alignText}
                                 name="content"
                                 label="محتوا"
                                 multiline
@@ -65,15 +101,16 @@ function SshKeyEdit(props) {
                                 value={item.content}
                                 onChange={event => setItem({content: event.target.value})}
                             />
-
+                            <br/><br/>
                             <Button type="submit" variant="contained" color="primary">
                                 ذخیره
                             </Button>
 
                         </form>
-                    </Box>
+
 
                 </Paper>
+                </Grid>
 
             </Grid>
             <MessageBox response={response}/>
