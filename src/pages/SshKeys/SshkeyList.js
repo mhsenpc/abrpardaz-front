@@ -26,6 +26,9 @@ import {Box} from "@material-ui/core";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
+        margin:{
+          marginTop:25
+        },
         head: {
             backgroundColor: theme.palette.common.black,
             color: theme.palette.common.white,
@@ -123,6 +126,7 @@ export default function SshkeyList() {
                   direction="row"
                   justify="center"
                   alignItems="center">
+
                 <Paper>
                     <Box>
                         <h1>
@@ -142,10 +146,9 @@ export default function SshkeyList() {
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell align="right">گزینه ها</StyledTableCell>
-
-                                        <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
                                         <StyledTableCell align="right">#&nbsp;</StyledTableCell>
+                                        <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
+                                        <StyledTableCell align="right">گزینه ها</StyledTableCell>
 
 
                                     </TableRow>
