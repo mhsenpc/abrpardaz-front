@@ -29,6 +29,7 @@ import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
 import ProjectsList from "./pages/ProjectsList";
+import Notifications from "./pages/Notifications";
 import axios from "axios";
 import swal from 'sweetalert';
 import Invoices from "./pages/Invoices";
@@ -104,7 +105,7 @@ const routing = (
             <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
             <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
             <DefaultLayout path="/Verify" component={Verify}/>
-            <DefaultLayout path="/test" component={App}/>
+            <DefaultLayout path="/test" component={Notifications}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>

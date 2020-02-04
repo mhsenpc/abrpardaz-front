@@ -32,3 +32,4 @@ export const ProjectsListPath = 'projects/list';
 export const InvoicesListPath = 'invoices/list';
 export const TransactionsListPath = 'transactions/list';
 export const AddProject = 'projects/add';
+export const NotificationPath = 'notifications/list';
