@@ -10,6 +10,7 @@ import axios from "axios";
 import {api_base, machinesOfProject} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardMedia from '@material-ui/core/CardMedia';
 import TextField from "@material-ui/core/TextField";
 import MessageBox from "./MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -32,6 +33,7 @@ const cardserverlist = makeStyles(theme => ({
     },
     cover: {
         width: 151,
+        height:135
     },
     controls: {
         display: 'flex',
@@ -188,7 +190,15 @@ export default function ServerList(props) {
                                 {props.row.image.name}{props.row.image.version}
                             </Typography>
 
+
                         </CardContent>
+
+                        <CardMedia
+                            className={cardlist.cover}
+                            image="../images/live-from-space.jpg"
+                            title="Live from space album cover"
+                            onClick={() => showDetails(props.row.id)}
+                        />
 
 
 
