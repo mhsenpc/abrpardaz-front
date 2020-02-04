@@ -44,9 +44,11 @@ import Invoices from "./pages/Invoices";
         token = atob(token);
         axios.defaults.headers.common['Accept'] = 'application/json';
         axios.defaults.headers.post['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.put['Authorization'] = `Bearer ${token}`;
         axios.defaults.headers.get['Authorization'] = `Bearer ${token}`;
     } else {
         axios.defaults.headers.post['Authorization'] = null;
+        axios.defaults.headers.put['Authorization'] = null;
         axios.defaults.headers.get['Authorization'] = null;
         /*if setting null does not remove `Authorization` header then try
           delete axios.defaults.headers.common['Authorization'];

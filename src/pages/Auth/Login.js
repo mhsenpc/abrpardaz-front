@@ -70,9 +70,11 @@ export default function Login() {
                     const token = res.data.access_token;
                     sessionStorage.setItem('token', btoa(token));
                     sessionStorage.setItem('user_id', res.data.user_id);
+                    sessionStorage.setItem('permissions', res.data.permissions);
                     if (rememberMe) {
                         localStorage.setItem("token", btoa(token));
                         localStorage.setItem("user_id", res.data.user_id);
+                        localStorage.setItem("permissions", res.data.permissions);
                     }
                     window.location.href = '/';
                 }

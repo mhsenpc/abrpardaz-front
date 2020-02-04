@@ -59,5 +59,14 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="پشتیبانی" />
         </ListItem>
+
+        {sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&
+        <ListItem button component="a" href="/UsersList">
+            <ListItemIcon>
+                <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="مدیریت کاربران" />
+        </ListItem>
+        }
     </div>
 );
