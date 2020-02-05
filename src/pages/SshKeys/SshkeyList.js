@@ -23,11 +23,13 @@ import axios from 'axios';
 import {api_base, sshKeysList} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
+import swal from "sweetalert";
+import Alert from "@material-ui/lab/Alert/Alert";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
-        margin:{
-          marginTop:25
+        margin: {
+            marginTop: 25
         },
         head: {
             backgroundColor: theme.palette.common.black,
@@ -103,20 +105,33 @@ export default function SshkeyList() {
     };
 
     React.useEffect(() => {
+        loadKeys();
+    }, [])
+
+    function loadKeys() {
         axios.get(api_base + sshKeysList)
             .then(res => {
                 const items = res.data.list;
 
                 setItems(items)
             })
-    }, [])
+    }
 
     const removeSshKey = id => {
-        axios.delete(api_base + 'SshKeys/' + id.toString() + '/remove'
-        )
-            .then(res => {
-                setResponse(res.data)
-            })
+        swal("آیا از حذف این کلید امنیتی اطمینان دارید؟", {
+            dangerMode: true,
+            buttons: true,
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                axios.delete(api_base + 'sshKeys/' + id.toString() + '/remove')
+                    .then(res => {
+                        setResponse(res.data)
+                        loadKeys();
+                    })
+            }
+        });
+
+
     }
 
     return (
@@ -129,11 +144,12 @@ export default function SshkeyList() {
 
                 <Paper>
                     <Box>
-                        <h1>
+                        <h2>
                             کلیدهای امنیتی
-                        </h1>
+                        </h2>
                         <p>
-                            استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و آسان تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
+                            استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و آسان
+                            تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
                         </p>
 
                         <Button href={'/SshKeyAdd'} variant="contained" color="primary">
@@ -142,7 +158,8 @@ export default function SshkeyList() {
                         </Button>
 
 
-                        <TableContainer component={Paper} style={(items.length == 0)?{display:'none'}:{display:'block'} }>
+                        <TableContainer component={Paper}
+                                        style={(items.length == 0) ? {display: 'none'} : {display: 'block'}}>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
@@ -160,7 +177,7 @@ export default function SshkeyList() {
                                                 {row.id}
                                             </StyledTableCell>
 
-                                            <StyledTableCell  align="right" component="th" scope="row">
+                                            <StyledTableCell align="right" component="th" scope="row">
                                                 {row.name}
                                             </StyledTableCell>
 
@@ -199,17 +216,15 @@ export default function SshkeyList() {
                                             </StyledTableCell>
 
 
-
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>
                         {items.length == 0 &&
-                        <p>
+                        <Alert severity="warning">
                             شما هنوز هیچ کلید امنیتی نساخته اید
-                        </p>
-
+                        </Alert>
                         }
                     </Box>
                 </Paper>

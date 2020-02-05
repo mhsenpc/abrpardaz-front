@@ -11,6 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
 import {api_base, InvoicesListPath, plansList} from "../Api";
 import Button from '@material-ui/core/Button';
+import Alert from "@material-ui/lab/Alert/Alert";
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
@@ -45,8 +47,14 @@ export default function Invoices() {
 
     return (
         <Paper className={classes.root}>
-            <a href={"/Transactions"} >نمایش تراکنش ها</a>
-            <p style={{direction: "rtl", marginRight: 20}}>فاکتور های پرداخت</p>
+            <h2 style={{direction: "rtl", marginRight: 20}}>فاکتور های پرداخت</h2>
+            {items.length == 0 &&
+            <Alert severity="info">
+                در حال حاضر فاکتوری برای شما وجود ندارد
+            </Alert>
+            }
+
+            {items.length > 0 &&
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -94,6 +102,9 @@ export default function Invoices() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            }
+            <br />
+            <a href={"/Transactions"} >نمایش تراکنش های بانکی</a>
         </Paper>
     );
 

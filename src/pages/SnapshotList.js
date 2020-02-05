@@ -18,6 +18,7 @@ import MessageBox from "./MessageBox";
 import Alert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
+import swal from 'sweetalert';
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,7 +45,7 @@ const paperStyle = makeStyles((theme: Theme) =>
     }),
 );
 
-function SnapshotName(props){
+function SnapshotName(props) {
     const [editMode, setEditMode] = React.useState(false);
     const [snapshotName, setSnapshotName] = React.useState('');
 
@@ -52,17 +53,17 @@ function SnapshotName(props){
         setSnapshotName(props.row.name)
     }, []);
 
-    function requestRenameSnapshot(id){
-        axios.post(api_base + "snapshots/" + id.toString()  +"/rename", {name: snapshotName})
+    function requestRenameSnapshot(id) {
+        axios.post(api_base + "snapshots/" + id.toString() + "/rename", {name: snapshotName})
             .then(res => {
                 props.setResponse(res.data)
                 setEditMode(false);
             })
     }
 
-    if(editMode){
+    if (editMode) {
         return (
-            <div >
+            <div>
                 <TextField
                     id="outlined-full-width"
                     name="name"
@@ -72,16 +73,15 @@ function SnapshotName(props){
                     value={snapshotName}
                     onChange={event => setSnapshotName(event.target.value)}
                 />
-                <Button variant="contained" color="primary" onClick={()=> requestRenameSnapshot(props.row.id)}>
+                <Button variant="contained" color="primary" onClick={() => requestRenameSnapshot(props.row.id)}>
                     تغییر نام
                 </Button>
-                <CancelIcon onClick={()=>setEditMode(false)} />
+                <CancelIcon onClick={() => setEditMode(false)}/>
             </div>
         )
-    }
-    else{
+    } else {
         return (
-            <span onClick={()=> setEditMode(true)}>
+            <span onClick={() => setEditMode(true)}>
                     {snapshotName}
                 </span>
         )
@@ -93,6 +93,8 @@ export default function SnapshotList() {
     const classes = paperStyle();
     const [machineId, setMachineId] = React.useState(null);
     const [response, setResponse] = React.useState([]);
+    const JDate = require('jalali-date');
+
 
     const handleChange = event => {
         setMachineId(event.target.value);
@@ -118,12 +120,7 @@ export default function SnapshotList() {
                     setMachineId(list[0].id);
             })
 
-        axios.get(api_base + snapshotsList)
-            .then(res => {
-                const list = res.data.list;
-
-                setSnapShotItems(list);
-            })
+        loadSnapshots();
 
         if (user_id) {
             var channel = window.Echo.channel('private-user-' + user_id);
@@ -134,11 +131,28 @@ export default function SnapshotList() {
         }
     }, []);
 
-    function requestRemoveSnapshot(id) {
-        axios.delete(api_base + 'snapshots/' + id + '/remove')
+    function loadSnapshots(){
+        axios.get(api_base + snapshotsList)
             .then(res => {
-                setResponse(res.data)
+                const list = res.data.list;
+
+                setSnapShotItems(list);
             })
+    }
+
+    function requestRemoveSnapshot(id) {
+        swal("آیا از حذف تصویر آنی اطمینان دارید؟", {
+            dangerMode: true,
+            buttons: true,
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                axios.delete(api_base + 'snapshots/' + id + '/remove')
+                    .then(res => {
+                        setResponse(res.data)
+                        loadSnapshots();
+                    })
+            }
+        });
     }
 
     const [name, setName] = React.useState('');
@@ -173,7 +187,7 @@ export default function SnapshotList() {
                                 لطفا قبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
                             </p>
 
-                            <FormControl variant="outlined" >
+                            <FormControl variant="outlined">
                                 <Select
                                     native
                                     onChange={handleChange}
@@ -221,7 +235,8 @@ export default function SnapshotList() {
                                     باشد!
                                 </li>
                                 <li>
-                                    استفاده از فضای خالی بین کلمات مجاز نمی باشد. جهت جداسازی کلمات می توانید از خط فاصله کمک بگیرید!
+                                    استفاده از فضای خالی بین کلمات مجاز نمی باشد. جهت جداسازی کلمات می توانید از خط
+                                    فاصله کمک بگیرید!
                                 </li>
 
                             </ul>
@@ -232,7 +247,7 @@ export default function SnapshotList() {
                 </Grid>
 
 
-                <Grid item xs={4} >
+                <Grid item xs={4}>
 
 
                     <Paper className={classes.paper}>
@@ -247,7 +262,7 @@ export default function SnapshotList() {
 
                             {snapShotItems.length > 0 &&
                             <TableContainer component={Paper}>
-                                <Table  aria-label="simple table">
+                                <Table aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="right">نام</TableCell>
@@ -260,13 +275,14 @@ export default function SnapshotList() {
                                             <TableRow key={row.id}>
 
                                                 <TableCell component="th" scope="row">
-                                                    <SnapshotName setResponse={setResponse} row={row} />
+                                                    <SnapshotName setResponse={setResponse} row={row}/>
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
-                                                    {row.created_at}
+                                                    {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
-                                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر آنی</DeleteIcon>
+                                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر
+                                                        آنی</DeleteIcon>
                                                 </TableCell>
 
                                             </TableRow>

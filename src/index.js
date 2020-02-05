@@ -46,10 +46,12 @@ import Invoices from "./pages/Invoices";
         axios.defaults.headers.post['Authorization'] = `Bearer ${token}`;
         axios.defaults.headers.put['Authorization'] = `Bearer ${token}`;
         axios.defaults.headers.get['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.delete['Authorization'] = `Bearer ${token}`;
     } else {
         axios.defaults.headers.post['Authorization'] = null;
         axios.defaults.headers.put['Authorization'] = null;
         axios.defaults.headers.get['Authorization'] = null;
+        axios.defaults.headers.delete['Authorization'] = null;
         /*if setting null does not remove `Authorization` header then try
           delete axios.defaults.headers.common['Authorization'];
         */
