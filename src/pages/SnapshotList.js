@@ -15,13 +15,9 @@ import TableRow from '@material-ui/core/TableRow';
 import {api_base, machinesList, snapshotsList} from "../Api";
 import {TextField} from "@material-ui/core";
 import MessageBox from "./MessageBox";
-
-
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
+import Alert from '@material-ui/lab/Alert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,13 +44,55 @@ const paperStyle = makeStyles((theme: Theme) =>
     }),
 );
 
+function SnapshotName(props){
+    const [editMode, setEditMode] = React.useState(false);
+    const [snapshotName, setSnapshotName] = React.useState('');
+
+    React.useEffect(() => {
+        setSnapshotName(props.row.name)
+    }, []);
+
+    function requestRenameSnapshot(id){
+        axios.post(api_base + "snapshots/" + id.toString()  +"/rename", {name: snapshotName})
+            .then(res => {
+                props.setResponse(res.data)
+                setEditMode(false);
+            })
+    }
+
+    if(editMode){
+        return (
+            <div >
+                <TextField
+                    id="outlined-full-width"
+                    name="name"
+                    label="نام جدید"
+                    placeholder=""
+                    variant="outlined"
+                    value={snapshotName}
+                    onChange={event => setSnapshotName(event.target.value)}
+                />
+                <Button variant="contained" color="primary" onClick={()=> requestRenameSnapshot(props.row.id)}>
+                    تغییر نام
+                </Button>
+                <CancelIcon onClick={()=>setEditMode(false)} />
+            </div>
+        )
+    }
+    else{
+        return (
+            <span onClick={()=> setEditMode(true)}>
+                    {snapshotName}
+                </span>
+        )
+    }
+}
+
 
 export default function SnapshotList() {
-    const classes = useStyles();
-    const paper = paperStyle();
+    const classes = paperStyle();
     const [machineId, setMachineId] = React.useState(null);
     const [response, setResponse] = React.useState([]);
-
 
     const handleChange = event => {
         setMachineId(event.target.value);
@@ -103,7 +141,6 @@ export default function SnapshotList() {
             })
     }
 
-
     const [name, setName] = React.useState('');
 
     function requestSnapShot() {
@@ -121,59 +158,52 @@ export default function SnapshotList() {
 
             <Grid
                 container
-                direction="row"
-                alignItems="right"
             >
 
-                <Grid item xs={4}>
+                <Grid item xs={8}>
 
-                    <Paper className={paper.paper}>
-
-
-                        <Button variant="contained">ایجاد سرور + </Button>
-                        <p>تصاویر آنی شما </p>
-
-
-                        <p>
+                    <Paper className={classes.paper}>
+                        <h2>
                             ساخت تصویرآنی
-                        </p>
+                        </h2>
 
-                        <p>
-                            لطفا قبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
-                        </p>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <Select
-                                native
-                                value={machineId}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: 'age',
-                                    id: 'outlined-age-native-simple',
-                                }}
-                            >
-                                {machineItems.map(row => (
-
-                                    <option key={row.id} value={row.id}>{row.name}</option>
-
-                                ))}
-
-                            </Select>
-                        </FormControl>
-
-
-                        {machinesList.length > 0 ? (
+                        {machineItems.length > 0 &&
+                        <div>
                             <p>
-                                <TextField name='name' onChange={event => setName(event.target.value)}/>
+                                لطفا قبل از گرفتن تصویر آنی سرور خود را خاموش کنید!
                             </p>
-                        ) : (
-                            <p style={{border: "solid 1px red", direction: "rtl"}}>هم اکنون سروری برای حساب کاربری شما
-                                وجود
-                                ندارد.</p>
-                        )}
 
-                        <Button onClick={() => requestSnapShot()} variant="contained">
-                            ساخت تصویرآنی
-                        </Button>
+                            <FormControl variant="outlined" >
+                                <Select
+                                    native
+                                    onChange={handleChange}
+                                >
+                                    {machineItems.map(row => (
+                                        <option key={row.id} value={row.id}>{row.name}</option>
+                                    ))}
+
+                                </Select>
+                            </FormControl>
+
+                            <p>
+                                <TextField label={"نام تصویر آنی"} name='name'
+                                           onChange={event => setName(event.target.value)}/>
+                                &nbsp;
+                                <Button onClick={() => requestSnapShot()} variant="contained">
+                                    ساخت تصویرآنی
+                                </Button>
+                            </p>
+
+
+                        </div>
+                        }
+
+
+                        {machineItems.length == 0 &&
+                        <Alert severity="warning">
+                            هم اکنون سروری برای حساب کاربری شما وجود ندارد
+                        </Alert>
+                        }
 
                         <hr/>
                         <div style={{color: "red", direction: "rtl"}}>
@@ -191,7 +221,7 @@ export default function SnapshotList() {
                                     باشد!
                                 </li>
                                 <li>
-                                    استفاده از فضای خالی
+                                    استفاده از فضای خالی بین کلمات مجاز نمی باشد. جهت جداسازی کلمات می توانید از خط فاصله کمک بگیرید!
                                 </li>
 
                             </ul>
@@ -202,24 +232,27 @@ export default function SnapshotList() {
                 </Grid>
 
 
-                <Grid item xs={8}>
+                <Grid item xs={4} >
 
 
-                    <Paper className={paper.paper}>
+                    <Paper className={classes.paper}>
 
-                        <div style={{direction: "rtl"}}>
-                            تصاویر آنی
-                            <br/>
-                            تاکنون تصویر آنی ساخته نشده است.
+                        <div>
+                            <h2>تصاویر آنی</h2>
+
+                            {snapShotItems.length == 0 &&
+                            <Alert severity="warning">تاکنون هیچ تصویر آنی ساخته نشده است.</Alert>
+                            }
 
 
+                            {snapShotItems.length > 0 &&
                             <TableContainer component={Paper}>
-                                <Table className={classes.table} aria-label="simple table">
+                                <Table  aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-
+                                            <TableCell align="right">نام</TableCell>
                                             <TableCell align="right">تاریخ ساخت</TableCell>
-                                            <TableCell align="right">وضعیت</TableCell>
+                                            <TableCell align="right"></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -227,20 +260,13 @@ export default function SnapshotList() {
                                             <TableRow key={row.id}>
 
                                                 <TableCell component="th" scope="row">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell component="th" scope="row">
-                                                    {row.remote_id}
+                                                    <SnapshotName setResponse={setResponse} row={row} />
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
                                                     {row.created_at}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
-                                                    <h5>خالی</h5>
-                                                </TableCell>
-
-                                                <TableCell component="th" scope="row">
-                                                    <a onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر آنی</a>
+                                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر آنی</DeleteIcon>
                                                 </TableCell>
 
                                             </TableRow>
@@ -249,8 +275,7 @@ export default function SnapshotList() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-
-
+                            }
                         </div>
                     </Paper>
 
