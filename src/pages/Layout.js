@@ -22,7 +22,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Copyright from "./CopyRight";
 import axios from "axios";
-import {api_base} from "../Api";
+import {api_base, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
 import Echo from "laravel-echo"
 
@@ -179,6 +179,7 @@ export default function Layout(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const [unreadCount, setUnreadCount] = React.useState([]);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -251,8 +252,8 @@ export default function Layout(props) {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
+                <IconButton  color="inherit">
+                    <Badge badgeContent={unreadCount} color="secondary">
                         <NotificationsIcon/>
                     </Badge>
                 </IconButton>
@@ -269,6 +270,16 @@ export default function Layout(props) {
     );
 
     const [response, setResponse] = React.useState([]);
+
+
+    React.useEffect(() => {
+        axios.get(api_base + NotificationPath)
+            .then(res => {
+                setUnreadCount(res.data.unread_count)
+            })
+    }, []);
+
+
 
     function requestLogout() {
         axios.put(api_base + 'auth/logout')
@@ -308,8 +319,8 @@ export default function Layout(props) {
                     <div>
 
                         <div className={classes.sectionDesktop}>
-                            <IconButton aria-label="show 17 new notifications" color="inherit">
-                                <Badge badgeContent={17} color="secondary">
+                            <IconButton  color="inherit" href={"/Notifications"} >
+                                <Badge badgeContent={unreadCount} color="secondary">
                                     <NotificationsIcon/>
                                 </Badge>
                             </IconButton>
