@@ -17,3 +17,20 @@ code {
 .itemList:hover{
   background-color: #61dafb;
 }
+.Open{
+  background-color: #aff6b9;
+}
+.Closed{
+  background-color: #ff3845;
+}
+.titleTicket{
+  font-size: 19pt;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+
+
+
+
