@@ -94,7 +94,7 @@ export default function Invoices() {
                                         {numeral(row.total).format('0,0')}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')} -
+                                        {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
                                         {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
@@ -160,11 +160,11 @@ export default function Invoices() {
                                         {numeral(row.total).format('0,0')}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {(new JDate(new Date(row.start))).format('DD MM YYYY')} -
+                                        {(new JDate(new Date(row.start))).format('YYYY/MM/DD')}&nbsp;
                                         {new Date(row.start).toLocaleTimeString()}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {(new JDate(new Date(row.end))).format('DD MM YYYY')} -
+                                        {(new JDate(new Date(row.end))).format('YYYY/MM/DD')}&nbsp;
                                         {new Date(row.end).toLocaleTimeString()}
                                     </TableCell>
 

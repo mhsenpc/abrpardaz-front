@@ -1,21 +1,19 @@
 import React from 'react';
 import {createStyles, makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/AddBox';
-import CloudIcon from '@material-ui/icons/Cloud';
 import axios from "axios";
 import {api_base, machinesOfProject} from "../Api";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from '@material-ui/core/CardMedia';
 import TextField from "@material-ui/core/TextField";
-import MessageBox from "./MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
+import CardActions from "@material-ui/core/CardActions";
+import CloudIcon from '@material-ui/icons/Cloud';
 import Pusher from "pusher-js"
-
+import {Paper} from "@material-ui/core";
 
 const cardserverlist = makeStyles(theme => ({
     card: {
@@ -33,7 +31,7 @@ const cardserverlist = makeStyles(theme => ({
     },
     cover: {
         width: 151,
-        height:135
+        height: 135
     },
     controls: {
         display: 'flex',
@@ -71,9 +69,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-
-
-
 export default function ServerList(props) {
     const classes = useStyles();
     const cardlist = cardserverlist();
@@ -96,38 +91,11 @@ export default function ServerList(props) {
             })
 
         var channel = window.Echo.channel('private-project-' + id.toString());
-        channel.listen('.server.created', function(data) {
+        channel.listen('.server.created', function (data) {
             alert(JSON.stringify(data));
             //TODO: update machine which its creation process is completed
         });
     }, []);
-
-
-
-    function Machines(props) {
-        return (
-            <div className={classes.root}>
-                <Button variant="contained" color="primary" href={"/createMachine"}>
-                    ایجاد سرور
-                    <AddIcon>+</AddIcon>
-                </Button>
-
-                <Grid
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    spacing={1} >
-
-                    {items.map(row => (
-                    <ServerItem row={row}/>
-                ))}
-
-                </Grid>
-
-
-            </div>
-        )
-    }
 
     function ServerItem(props) {
         const [editMode, setEditMode] = React.useState(false);
@@ -145,24 +113,17 @@ export default function ServerList(props) {
             setName(props.row.name)
         }, []);
 
+        function cancelRename() {
+            setEditMode(false);
+            setResponse([]);
+        }
+
         return (
-
-
-
-
-                            <Grid item xs={3}>
-
-            <Card key={props.row.id}  >
-
-
-
-
-
+            <Grid item xs={3}>
+                <Card key={props.row.id} style={{textAlign: "center"}}>
                     <div onClick={() => setEditMode(true)} className='itemList'>
-
-
-                        <CardContent >
-
+                        <CardContent>
+                            <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
                             {editMode === false &&
                             <Typography component="h5" variant="h5">
                                 {props.row.name}
@@ -183,7 +144,7 @@ export default function ServerList(props) {
                                         onClick={() => requestRenameMachine(props.row.id)}>
                                     تغییر نام
                                 </Button>
-                                <CancelIcon onClick={() => setEditMode(false)}/>
+                                <CancelIcon onClick={cancelRename}/>
                             </div>
                             }
                             <Typography variant="subtitle1" color="textSecondary">
@@ -192,70 +153,39 @@ export default function ServerList(props) {
 
 
                         </CardContent>
-
-                        <CardMedia
-                            className={cardlist.cover}
-                            image="../images/live-from-space.jpg"
-                            title="Live from space album cover"
-                            onClick={() => showDetails(props.row.id)}
-                        />
-
-
-
                     </div>
+                </Card>
 
-
-            </Card>
-
-                        </Grid>
-
-
-
-
-
+            </Grid>
         )
     }
 
-    function EmptyMachine(props) {
-        return (
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
-                    <Button variant="contained" color="primary" href={"/createMachine"}>
-                        ایجاد سرور
-                        <AddIcon>+</AddIcon>
-                    </Button>
-                    <Grid>
-                        سرور های شما
-                    </Grid>
-                </Paper>
-                <Paper className={classes.paper}>
+    return (
+        <div className={classes.root}>
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                spacing={1}>
 
-                        <Grid  container
-                               direction="row"
-                               justify="flex-end"
-                               alignItems="center">
+                {items.map(row => (
+                    <ServerItem row={row}/>
+                ))}
 
-                            <CloudIcon className={classes.img}/>
+                <Grid item xs={3}>
+                    <Card className={"itemList"} style={{textAlign: "center"}} onClick={()=>window.location.href='/createMachine'}>
+                        <CardContent>
+                            <p>&nbsp;</p>
+                        <Typography className={classes.title} color="textSecondary"
+                                    >
+                            <AddIcon/>
+                        </Typography>
+                        </CardContent>
+                    </Card>
 
-                                        <Typography variant="body2" gutterBottom>
-                                            به نظر میرسد در حال حاضر هیچ سروری ندارید.
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary">
-                                            به سادگی اولین سرور خود را ایجاد نمایید
-                                        </Typography>
+                </Grid>
 
-                        </Grid>
-
-                    <MessageBox response={response}/>
-                </Paper>
-            </div>
-        )
-    }
-
-    if (items === undefined || items.length == 0) {
-        return <EmptyMachine/>
-    } else {
-        return <Machines/>
-    }
-
+            </Grid>
+        </div>
+    )
 }

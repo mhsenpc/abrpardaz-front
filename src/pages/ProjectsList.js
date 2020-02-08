@@ -12,6 +12,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 
 
 const useStyles = makeStyles({
@@ -88,52 +89,22 @@ export default function ProjectsList() {
 
         <div>
             <Paper className={classes.paper}>
-            <Grid
-                container
-                direction="row"
-                alignItems="right"
-                spacing={1}
-            >
+                <Grid
+                    container
+                    direction="row"
+                    alignItems="right"
+                    spacing={1}
+                >
 
-
-                            {machines.map(row => (
-
-
-                                <Grid item xs={3}>
-
-                                    <Button href={"servers/" + row.id.toString()}>
-                                        <Card className={classes.root}>
-                                            <div className='itemList'>
-                                                <CardContent>
-                                                    <Typography className={classes.title} color="textSecondary"
-                                                                gutterBottom>
-                                                        {row.name}
-                                                    </Typography>
-                                                </CardContent>
-
-                                                <CardActions>
-
-                                                    <p>
-
-                                                    </p>
-
-                                                </CardActions>
-                                            </div>
-                                        </Card>
-                                    </Button>
-
-                                </Grid>
-
-
-                            ))}
-
-                            <Button  onClick={ handleOpen} >
+                    {machines.map(row => (
+                        <Grid item xs={3}>
+                            <Button href={"servers/" + row.id.toString()}>
                                 <Card className={classes.root}>
                                     <div className='itemList'>
                                         <CardContent>
                                             <Typography className={classes.title} color="textSecondary"
                                                         gutterBottom>
-                                                +
+                                                {row.name}
                                             </Typography>
                                         </CardContent>
 
@@ -148,9 +119,33 @@ export default function ProjectsList() {
                                 </Card>
                             </Button>
 
+                        </Grid>
 
+                    ))}
 
-            </Grid>
+                    <Grid item xs={3}>
+                        <Button onClick={handleOpen}>
+                            <Card className={classes.root}>
+                                <div className='itemList'>
+                                    <CardContent>
+                                        <Typography className={classes.title} color="textSecondary"
+                                                    gutterBottom>
+                                            <AddIcon/>
+                                        </Typography>
+                                    </CardContent>
+
+                                    <CardActions>
+
+                                        <p>
+
+                                        </p>
+
+                                    </CardActions>
+                                </div>
+                            </Card>
+                        </Button>
+                    </Grid>
+                </Grid>
             </Paper>
 
 

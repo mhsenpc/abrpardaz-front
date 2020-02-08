@@ -13,6 +13,7 @@ code {
 }
 .itemList{
   transition: 0.2s;
+  min-height: 100%;
 }
 .itemList:hover{
   background-color: #61dafb;
