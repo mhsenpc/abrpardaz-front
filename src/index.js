@@ -109,8 +109,7 @@ const routing = (
             <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
             <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
             <DefaultLayout path="/Verify" component={Verify}/>
-            <DefaultLayout path="/test" component={Notifications}/>
-            <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
+            <DefaultLayout path="/Notifications" component={Notifications}/>
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
