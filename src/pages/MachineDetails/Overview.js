@@ -7,8 +7,25 @@ import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ComputerSharpIcon from '@material-ui/icons/ComputerSharp';
 import Divider from '@material-ui/core/Divider';
+import axios from "axios";
+import {api_base} from "../../Api";
+import TableCell from "../SnapshotList";
+import CheckIcon from '@material-ui/icons/Check';
 
-export default function Overview() {
+export default function Overview(props) {
+
+    const JDate = require('jalali-date');
+    const [items, setItems] = React.useState([]);
+
+    React.useEffect(() => {
+
+        axios.get(api_base + 'machines/' + props.id.toString() + '/activities')
+            .then(res => {
+                const activities = res.data.list;
+                setItems(activities);
+            })
+    }, [])
+
     return (
 
         <div>
@@ -21,10 +38,25 @@ export default function Overview() {
                     <br/>
                     <p>
 
-                        CX31  {/*<Divider style={} orientation="vertical"  />*/}    <ComputerSharpIcon/>2vcpu   <LoyaltyIcon/> 8GB RAM  <LocalOfferIcon/> DISK LOCAL <EuroIcon/> 8.90/mo PRICE
+                        CX31  {/*<Divider style={} orientation="vertical"  />*/}    <ComputerSharpIcon/>2vcpu  <LoyaltyIcon/> 8GB RAM  <LocalOfferIcon/> DISK LOCAL <EuroIcon/> 8.90/mo PRICE
 
                     </p>
                     <hr/>
+                    <h2>فعالیت های سرور</h2>
+                    {items.map(row => (
+                        <div>
+                            <p>
+                                <CheckIcon color={'primary'}/>
+                                {row.message}
+                            </p>
+
+                            <p>
+                                 {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
+                            </p>
+
+                        </div>
+                    ))}
+
                 </div>
             </Grid>
 

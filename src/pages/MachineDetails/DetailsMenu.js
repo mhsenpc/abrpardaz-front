@@ -175,7 +175,7 @@ export default function DetailsMenu(props) {
                     <Tab label="حذف" {...a11yProps(11)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <Overview/>
+                    <Overview id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Graphs/>
