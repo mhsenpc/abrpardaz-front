@@ -3,8 +3,23 @@ import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper/Paper";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import {api_base, NotificationPath} from "../../Api";
+import MessageBox from "../MessageBox";
 
-export default function Rescue() {
+export default function Rescue(props) {
+
+
+    const [response, setResponse] = React.useState([]);
+
+    function requestPassword() {
+        axios.put(api_base + 'machines/'+ props.id.toString()+'/resendInfo')
+            .then(res => {
+                setResponse(res.data)
+            })
+    }
+
+
     return (
         <div>
             <Grid item xs={12}
@@ -40,7 +55,19 @@ export default function Rescue() {
                         <Button>تنظیم مجدد رمز مدیر سیستم</Button>
                     </Box>
                 </Paper>
+
+                <Paper>
+                    <Box width={700}>
+                        <h1>فراموشی رمز سیستم عامل</h1>
+                        <p>
+                            درصورت نیاز به بازیابی رمز و دریافت از طریق صندوق پستی خود، کلیک کنید.
+                        </p>
+                        <Button onClick={requestPassword} variant="contained"
+                                       color="secondary">> بازیابی رمز </Button>
+                    </Box>
+                </Paper>
             </Grid>
+            <MessageBox response={response}/>
 
         </div>
     )

@@ -178,34 +178,34 @@ export default function DetailsMenu(props) {
                     <Overview id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Graphs/>
+                    <Graphs id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Backups/>
+                    <Backups id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
                     <ServerSnapshotsList id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    <Network/>
+                    <Network id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    <Volumes/>
+                    <Volumes id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
-                    <Power/>
+                    <Power id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={7}>
-                    <Rescue/>
+                    <Rescue id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={8}>
-                    <IsoImages/>
+                    <IsoImages id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={9}>
-                    <UpgradeMachine/>
+                    <UpgradeMachine id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={10}>
-                    <Rebuild/>
+                    <Rebuild id={id}/>
                 </TabPanel>
                 <TabPanel value={value} index={11}>
                     <Remove id={id}/>
