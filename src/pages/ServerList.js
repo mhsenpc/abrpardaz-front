@@ -121,11 +121,11 @@ export default function ServerList(props) {
         return (
             <Grid item xs={3}>
                 <Card key={props.row.id} style={{textAlign: "center"}}>
-                    <div onClick={() => setEditMode(true)} className='itemList'>
-                        <CardContent>
+                    <div className='itemList'>
+                        <CardContent  onClick={() => showDetails(props.row.id) }>
                             <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
                             {editMode === false &&
-                            <Typography component="h5" variant="h5">
+                            <Typography component="h5" variant="h5"  onClick={() => setEditMode(true)}>
                                 {props.row.name}
                             </Typography>
                             }
