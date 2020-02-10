@@ -188,40 +188,40 @@ export default function DetailsMenu(props) {
                     <Tab label="حذف" {...a11yProps(11)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <Overview id={id} machine={machine}/>
+                    <Overview id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Graphs id={id} machine={machine} />
+                    <Graphs id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Backups id={id} machine={machine} />
+                    <Backups id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <ServerSnapshotsList id={id} machine={machine}/>
+                    <ServerSnapshotsList id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    <Network id={id} machine={machine} />
+                    <Network id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    <Volumes id={id} machine={machine} />
+                    <Volumes id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={6}>
-                    <Power id={id} machine={machine} />
+                    <Power id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={7}>
-                    <Rescue id={id} machine={machine}/>
+                    <Rescue id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={8}>
-                    <IsoImages id={id} machine={machine}/>
+                    <IsoImages id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={9}>
-                    <UpgradeMachine id={id} machine={machine}/>
+                    <UpgradeMachine id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={10}>
-                    <Rebuild id={id} machine={machine}/>
+                    <Rebuild id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
                 <TabPanel value={value} index={11}>
-                    <Remove id={id} machine={machine}/>
+                    <Remove id={id} machine={machine} setResponse={setResponse} />
                 </TabPanel>
             </div>
             <MessageBox response={response}/>
