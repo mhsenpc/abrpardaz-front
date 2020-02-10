@@ -232,7 +232,6 @@ export default function Layout(props) {
         >
             <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
-            <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
             <MenuItem component="a" onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -261,7 +260,6 @@ export default function Layout(props) {
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
-            <MenuItem onClick={handleMenuClose}>تنظیمات</MenuItem>
             <MenuItem onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -292,7 +290,7 @@ export default function Layout(props) {
                         sessionStorage.removeItem("token");
                         window.location.href = '/login';
                     }
-                }, 2000);
+                }, 1000);
             })
     }
 

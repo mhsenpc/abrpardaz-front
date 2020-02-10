@@ -19,15 +19,17 @@ import Rebuild from "./Rebuild";
 import IsoImages from "./IsoImages";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
-import NotesIcon from '@material-ui/icons/Notes';
 import axios from "axios";
-import {api_base, sshKeysAdd} from "../../Api";
+import {api_base} from "../../Api";
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import MessageBox from "../MessageBox";
 import CancelIcon from '@material-ui/icons/Cancel';
+import Grid from '@material-ui/core/Grid';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import PowerIcon from '@material-ui/icons/Power';
+import DnsIcon from '@material-ui/icons/Dns';
+import CreateIcon from '@material-ui/icons/Create';
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -87,7 +89,7 @@ export default function DetailsMenu(props) {
         setValue(newValue);
     };
     const id = props.match.params.id;
-    const [item, setItem] = React.useState({name: ''});
+    const [machine, setMachine] = React.useState({name: '' , plan:[] });
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState('');
     const [response, setResponse] = React.useState([]);
@@ -97,13 +99,13 @@ export default function DetailsMenu(props) {
             .then(res => {
                 const machine = res.data.machine;
 
-                setItem(machine);
+                setMachine(machine);
                 setName(machine.name)
             })
-    }, [])
+    }, []);
 
     function requestRenameMachine() {
-        axios.post(api_base + "machines/"+ id.toString() +"/rename" , {name: name})
+        axios.post(api_base + "machines/" + id.toString() + "/rename", {name: name})
             .then(res => {
                 setResponse(res.data)
                 setEditMode(false)
@@ -111,10 +113,12 @@ export default function DetailsMenu(props) {
     }
 
     return (
-        <Box>
-            <Box width={700}>
-                {editMode == true &&
-                <span>
+        <Grid container>
+            <Grid container item xs={12}>
+                <Grid xs={3}>
+                    <CreateIcon />
+                    {editMode == true &&
+                    <span>
                     <TextField
                         variant="outlined"
                         required
@@ -123,35 +127,44 @@ export default function DetailsMenu(props) {
                         onChange={event => setName(event.target.value)}
                     />
                     <Button variant="contained" color="primary" onClick={requestRenameMachine}>
-                        ذخیره
+                        <CheckCircleOutlineIcon/>
                     </Button>
-                    <CancelIcon onClick={()=>setEditMode(false)} />
+                    <Button variant="contained" color="secondary">
+                        <CancelIcon onClick={() => setEditMode(false)}/>
+                    </Button>
                 </span>
 
-                }
-
-                {editMode == false &&
-                <span onClick={()=> setEditMode(true)} >{name}</span>
-                }
-                <span> <b>IPv4:</b>195.201.37.23</span>
-                <span> <b>IPv6:</b>2a01:4f8:1c0c:6b9f::/64</span>
-                <span> <b>Floating IPs:</b>78.46.229.42</span>
-                <LockOpenIcon/>
-                <LoyaltyIcon/>
-                <NotesIcon/>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={state.checkedB}
-                            onChange={handleChangePower('checkedB')}
-                            value="checkedB"
-                            color="primary"
-                        />
                     }
-                    label="Primary"
-                />
 
-            </Box>
+                    {editMode == false &&
+                    <span onClick={() => setEditMode(true)}>{name}</span>
+                    }
+                </Grid>
+                <Grid xs={3}>
+                    <div>
+                        <DnsIcon/>
+                        <span><b>IPv4:</b>{machine.public_ipv4}</span>
+                    </div>
+                </Grid>
+                <Grid xs={3}>
+
+                    <FormControlLabel
+                        control={
+                            <div>
+                                <PowerIcon/>
+                                <Switch
+                                    checked={state.checkedB}
+                                    onChange={handleChangePower('checkedB')}
+                                    value="checkedB"
+                                    color="primary"
+                                />
+                            </div>
+                        }
+                        label="روشن"
+                    />
+                </Grid>
+
+            </Grid>
             <div className={classes.root}>
                 <Tabs
                     orientation="vertical"
@@ -175,43 +188,43 @@ export default function DetailsMenu(props) {
                     <Tab label="حذف" {...a11yProps(11)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <Overview id={id}/>
+                    <Overview id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Graphs id={id}/>
+                    <Graphs id={id} machine={machine} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Backups id={id}/>
+                    <Backups id={id} machine={machine} />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <ServerSnapshotsList id={id}/>
+                    <ServerSnapshotsList id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    <Network id={id}/>
+                    <Network id={id} machine={machine} />
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    <Volumes id={id}/>
+                    <Volumes id={id} machine={machine} />
                 </TabPanel>
                 <TabPanel value={value} index={6}>
-                    <Power id={id}/>
+                    <Power id={id} machine={machine} />
                 </TabPanel>
                 <TabPanel value={value} index={7}>
-                    <Rescue id={id}/>
+                    <Rescue id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={8}>
-                    <IsoImages id={id}/>
+                    <IsoImages id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={9}>
-                    <UpgradeMachine id={id}/>
+                    <UpgradeMachine id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={10}>
-                    <Rebuild id={id}/>
+                    <Rebuild id={id} machine={machine}/>
                 </TabPanel>
                 <TabPanel value={value} index={11}>
-                    <Remove id={id}/>
+                    <Remove id={id} machine={machine}/>
                 </TabPanel>
             </div>
-            <MessageBox response={response} />
-        </Box>
+            <MessageBox response={response}/>
+        </Grid>
     );
 }

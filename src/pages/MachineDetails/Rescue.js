@@ -37,8 +37,9 @@ export default function Rescue(props) {
                             پس از فعال سازی حالت نجات، شما باید سرور خود را راه اندازی مجدد کنید تا بتوانید از آن استفاده کنید. با راه اندازی بعدی بعد از آن، سیستم عامل مطابق معمول  از روی دیسک پیش فرض بارگذاری می شود.
                         </p>
 
-                        <Button>فعال سازی حالت نجات</Button>
-                        <Button>فعال سازی حالت نجات و راه اندازی مجدد</Button>
+                        <Button variant="contained" color="primary">فعال سازی حالت نجات</Button>
+                        &nbsp;
+                        <Button variant="contained" color="secondary">فعال سازی حالت نجات و راه اندازی مجدد</Button>
                     </Box>
                 </Paper>
 
@@ -52,7 +53,7 @@ export default function Rescue(props) {
                             نکته: در صورتی که برنامه quemu-guest agent را از سیستم عامل خود حذف نمایید، این قابلیت از کار می افتد و عملیات با شکست مواجه می شود.
                         </p>
 
-                        <Button>تنظیم مجدد رمز مدیر سیستم</Button>
+                        <Button variant="contained" color="primary">تنظیم مجدد رمز مدیر سیستم</Button>
                     </Box>
                 </Paper>
 

@@ -32,8 +32,9 @@ export default function Backups() {
                             کند.
                         </p>
 
-                        <Button>اجرای دستی ساخت پشتیبان</Button>
-                        <Button>غیرفعال کردن پشتیبان گیری خودکار</Button>
+                        <Button variant="contained" color="primary">اجرای دستی ساخت پشتیبان</Button>
+                        &nbsp;
+                        <Button variant="contained" color="secondary">غیرفعال کردن پشتیبان گیری خودکار</Button>
                     </Box>
                 </Paper>
                 </Box>

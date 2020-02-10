@@ -26,8 +26,9 @@ export default function Power() {
                             لطفا توجه فرمایید که خاموش یا روشن بودن سرور، تاثیری در هزینه فاکتور شما ندارند.
                         </p>
 
-                        <Button>خاموش کردن نرم</Button>
-                        <Button>خاموش کردن سخت</Button>
+                        <Button variant="contained" color="primary">خاموش کردن نرم</Button>
+                        &nbsp;
+                        <Button variant="contained" color="secondary">خاموش کردن سخت</Button>
                     </Box>
                 </Paper>
 
@@ -38,7 +39,7 @@ export default function Power() {
                             زدن این دکمه باعث راه اندازی مجدد سرور شما می گردد. توجه کنید که این عملیات ممکن است باعث آسیب به اطلاعات سرور شما گردد.
                         </p>
 
-                        <Button>راه اندازی سخت</Button>
+                        <Button variant="contained" color="primary">راه اندازی سخت</Button>
                     </Box>
                 </Paper>
             </Grid>

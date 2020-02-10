@@ -95,16 +95,9 @@ function Remove(props) {
                     </Box>
 
                 </Paper>
-
-
-
-
             </Grid>
 
         </div>
-
-
-
     )
 
 }

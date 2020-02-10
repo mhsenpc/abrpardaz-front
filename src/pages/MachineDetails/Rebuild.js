@@ -31,8 +31,8 @@ export default function Rebuild() {
 
 
                             </Select>
-
-                            <Button>نصب مجدد</Button>
+                            <br/>
+                            <Button variant="contained" color="primary">نصب مجدد</Button>
                         </Box>
                     </Paper>
                 </Box>

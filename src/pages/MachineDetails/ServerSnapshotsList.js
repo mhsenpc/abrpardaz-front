@@ -111,8 +111,6 @@ export default function ServerSnapshotsList(props) {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-
-
                     </div>
                 </Paper>
             </Box>

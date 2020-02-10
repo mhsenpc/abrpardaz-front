@@ -12,7 +12,8 @@ export default function Graphs() {
             >
                 <Paper>
                     <Box width={700}>
-                        <h1>این صفحه در آینده راه اندازی می گردد</h1>
+                        <h1>نمودار</h1>
+                        <h3>این صفحه در آینده راه اندازی می گردد</h3>
                     </Box>
                 </Paper>
             </Grid>
