@@ -30,26 +30,30 @@ export default function Invoices() {
     const [open, setOpen] = React.useState(false);
     const [billingItems, setBillingItems] = React.useState([]);
     const JDate = require('jalali-date');
+    const [total, setTotal] = React.useState(0);
+    const [amount, setAmount] = React.useState(0);
+    const [vat, setVat] = React.useState(0);
 
 
     React.useEffect(() => {
         axios.get(api_base + InvoicesListPath)
             .then(res => {
                 const list = res.data.list;
-
                 setItems(list);
             })
     }, []);
 
-    function showDetails(data) {
+    function showDetails(data,amount,vat,total){
         setBillingItems(JSON.parse(data));
         setOpen(true);
+        setAmount(amount)
+        setTotal(total)
+        setVat(vat)
     }
 
     function pay(id) {
 
     }
-
 
     return (
         <Paper className={classes.root}>
@@ -98,7 +102,7 @@ export default function Invoices() {
                                         {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        <Button onClick={() => showDetails(row.data)}>نمایش جزئیات</Button>
+                                        <Button onClick={() => showDetails(row.data,row.amount,row.vat,row.total)}>نمایش جزئیات</Button>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Button onClick={() => pay(row.id)}>
@@ -173,6 +177,9 @@ export default function Invoices() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <p> قیمت خام{amount}</p>
+                <p>ارزش افزوده{vat}</p>
+                <p>جمع کل{total}</p>
             </SimpleModal>
         </Paper>
     );
