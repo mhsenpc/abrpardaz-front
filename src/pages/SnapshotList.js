@@ -155,6 +155,17 @@ export default function SnapshotList() {
         });
     }
 
+    function requestMakeSnapshot() {
+        swal("آیا ازساخت تصویر آنی اطمینان دارید؟", {
+            dangerMode: true,
+            buttons: true,
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                requestSnapShot()
+            }
+        });
+    }
+
     const [name, setName] = React.useState('');
 
     function requestSnapShot() {
@@ -203,7 +214,7 @@ export default function SnapshotList() {
                                 <TextField label={"نام تصویر آنی"} name='name'
                                            onChange={event => setName(event.target.value)}/>
                                 &nbsp;
-                                <Button onClick={() => requestSnapShot()} variant="contained">
+                                <Button onClick={() =>requestMakeSnapshot()}>
                                     ساخت تصویرآنی
                                 </Button>
                             </p>
@@ -259,7 +270,6 @@ export default function SnapshotList() {
                             <Alert severity="warning">تاکنون هیچ تصویر آنی ساخته نشده است.</Alert>
                             }
 
-
                             {snapShotItems.length > 0 &&
                             <TableContainer component={Paper}>
                                 <Table aria-label="simple table">
@@ -298,7 +308,6 @@ export default function SnapshotList() {
                 </Grid>
 
             </Grid>
-
 
             <MessageBox response={response}/>
         </div>

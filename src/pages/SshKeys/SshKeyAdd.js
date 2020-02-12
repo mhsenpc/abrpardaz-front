@@ -9,6 +9,8 @@ import {api_base, sshKeysAdd} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
+
+
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -17,7 +19,7 @@ const paperStyle = makeStyles((theme: Theme) =>
         paper: {
             padding: theme.spacing(2),
             margin: 'auto',
-            maxWidth: 700,
+            // maxWidth: 700,
             marginTop: 12
 
         },
@@ -38,9 +40,23 @@ const paperStyle = makeStyles((theme: Theme) =>
 );
 
 
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
+
+
 function SshKeyAdd() {
     const [response, setResponse] = React.useState([]);
     const paper = paperStyle();
+    const classes = useStyles();
 
     function requestAddKey(event) {
         event.preventDefault();
@@ -54,9 +70,11 @@ function SshKeyAdd() {
     }
 
     return (
-        <div>
+
+        <div className={classes.root}>
 
             <Grid
+                item xs={12}
                 container
                 direction="row"
                 alignItems="right"
@@ -87,7 +105,6 @@ function SshKeyAdd() {
                             </Button>
 
                         </form>
-
 
                 </Paper>
                 </Grid>
