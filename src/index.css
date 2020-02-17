@@ -11,19 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.itemList{
-  transition: 0.2s;
-  min-height: 100%;
-}
-.itemList:hover{
-  background-color: #61dafb;
-}
-.Open{
-  background-color: #aff6b9;
-}
-.Closed{
-  background-color: #ff3845;
-}
+
 .titleTicket{
   font-size: 19pt;
   font-weight: bold;
@@ -31,7 +19,6 @@ code {
   color: #000;
 }
 
-
-
-
-
+.Open{
+  background-color: #9be792;
+}
