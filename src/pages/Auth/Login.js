@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import Copyright from "../CopyRight";
 import {api_base, login} from "../../Api";
 import axios from 'axios';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -142,9 +141,6 @@ export default function Login() {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <Box mt={5}>
-                            <Copyright/>
-                        </Box>
                     </form>
                 </div>
                 <MessageBox response={response}/>

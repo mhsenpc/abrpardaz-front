@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 import {api_base, register} from "../../Api";
-import Copyright from "../CopyRight";
 import MessageBox from "../MessageBox";
 
 
@@ -109,9 +108,6 @@ export default function Register() {
                 </form>
                 <MessageBox response={response} />
             </div>
-            <Box mt={5}>
-                <Copyright />
-            </Box>
         </Container>
     );
 }

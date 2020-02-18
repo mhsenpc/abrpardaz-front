@@ -20,7 +20,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Copyright from "./CopyRight";
 import axios from "axios";
 import {api_base, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
@@ -370,12 +369,7 @@ export default function Layout(props) {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
                         {props.children}
-                    </Grid>
-                    <Box pt={4}>
-                        <Copyright/>
-                    </Box>
                 </Container>
             </main>
             <MessageBox response={response}/>

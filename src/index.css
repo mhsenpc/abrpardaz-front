@@ -1,24 +1,35 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.titleTicket{
-  font-size: 19pt;
-  font-weight: bold;
-  text-decoration: none;
-  color: #000;
+.titleTicket {
+    font-size: 19pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
 }
 
-.Open{
-  background-color: #9be792;
+.Open {
+    background-color: #9be792;
+}
+
+.projectItem {
+    text-align: center;
+    min-height: 10em;
+    padding-top: 4em;
+    cursor: pointer;
+}
+
+.projectItem:hover {
+    background-color: #ff5d47;
 }
