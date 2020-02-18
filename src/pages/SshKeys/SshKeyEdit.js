@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base} from "../../Api";
@@ -38,11 +37,23 @@ const paperStyle = makeStyles((theme: Theme) =>
     }),
 );
 
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
 
 function SshKeyEdit(props) {
     const [response, setResponse] = React.useState([]);
-    const [item, setItem] = React.useState({name:'',content:''});
+    const [item, setItem] = React.useState({name: '', content: ''});
     const paper = paperStyle();
+    const classes = useStyles();
 
     React.useEffect(() => {
         let id = props.match.params.id;
@@ -70,16 +81,16 @@ function SshKeyEdit(props) {
 
 
     return (
-        <div>
+        <div className={classes.root}>
 
             <Grid container
                   direction="row"
                   justify="center"
                   alignItems="center">
 
-                <Grid item xs={12}>
+                <Grid item xs>
 
-                <Paper className={paper.paper}>
+                    <Paper className={paper.paper}>
 
 
                         <form onSubmit={requestEditKey}>
@@ -108,8 +119,7 @@ function SshKeyEdit(props) {
 
                         </form>
 
-
-                </Paper>
+                    </Paper>
                 </Grid>
 
             </Grid>

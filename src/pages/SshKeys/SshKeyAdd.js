@@ -2,13 +2,11 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base, sshKeysAdd} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -19,7 +17,7 @@ const paperStyle = makeStyles((theme: Theme) =>
         paper: {
             padding: theme.spacing(2),
             margin: 'auto',
-            // maxWidth: 700,
+            maxWidth: 700,
             marginTop: 12
 
         },
@@ -73,12 +71,11 @@ function SshKeyAdd() {
 
         <div className={classes.root}>
 
-            <Grid
-                item xs={12}
-                container
+            <Grid container
                 direction="row"
-                alignItems="right"
-            >
+                justify="center"
+                alignItems="center">
+
 
                 <Grid item xs>
 
