@@ -32,6 +32,7 @@ import Notifications from "./pages/Notifications";
 import axios from "axios";
 import swal from 'sweetalert';
 import Invoices from "./pages/Invoices";
+import Limits from "./pages/Limits";
 
 
 (function () {
@@ -104,6 +105,7 @@ const routing = (
             <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
             <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
             <DefaultLayout path="/NewTicket" component={NewTicket}/>
+            <DefaultLayout path="/Limits" component={Limits}/>
             <DefaultLayout path="/ResetPassword" component={ResetPassword}/>
             <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
             <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
@@ -121,3 +123,4 @@ ReactDOM.render(routing, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+

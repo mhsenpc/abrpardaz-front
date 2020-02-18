@@ -231,6 +231,7 @@ export default function Layout(props) {
         >
             <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
             <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
+            <MenuItem component="a" href="/Limits" onClick={handleMenuClose}>محدودیت ها</MenuItem>
             <MenuItem component="a" onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -249,16 +250,9 @@ export default function Layout(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton  color="inherit">
-                    <Badge badgeContent={unreadCount} color="secondary">
-                        <NotificationsIcon/>
-                    </Badge>
-                </IconButton>
-                <p>اعلان ها</p>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>حساب کاربری</MenuItem>
-            <MenuItem onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
+            <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
+            <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
+            <MenuItem component="a" href="/Limits" onClick={handleMenuClose}>محدودیت ها</MenuItem>
             <MenuItem onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -333,6 +327,11 @@ export default function Layout(props) {
                             </IconButton>
                         </div>
                         <div className={classes.sectionMobile}>
+                            <IconButton  color="inherit" href={"/Notifications"} >
+                                <Badge badgeContent={unreadCount} color="secondary">
+                                    <NotificationsIcon/>
+                                </Badge>
+                            </IconButton>
                             <IconButton
                                 aria-label="show more"
                                 aria-controls={mobileMenuId}

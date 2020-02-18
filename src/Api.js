@@ -34,3 +34,5 @@ export const TransactionsListPath = 'transactions/list';
 export const AddProject = 'projects/add';
 export const NotificationPath = 'notifications/list';
 export const NotificationMarkAllRead = 'notifications/markAllRead';
+export const LimitList = 'limits/list';
+

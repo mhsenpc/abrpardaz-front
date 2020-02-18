@@ -40,7 +40,19 @@
   border-left: 6px solid green;
   height: 50px;
 }
+#myProgress {
 
+  background-color: white;
+  border: #282c34 1px solid;
+  text-align: center;
+}
+
+#myBar {
+  width: 20%;
+  height: 30px;
+  background-color: dodgerblue;
+
+}
 
 
 
