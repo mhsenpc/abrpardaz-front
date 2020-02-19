@@ -33,3 +33,17 @@ code {
 .projectItem:hover {
     background-color: #ff5d47;
 }
+
+#myProgress {
+
+    background-color: white;
+    border: #282c34 1px solid;
+    text-align: center;
+}
+
+#myBar {
+    width: 20%;
+    height: 30px;
+    background-color: dodgerblue;
+
+}

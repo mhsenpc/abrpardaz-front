@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import axios from "axios";
 import {api_base, LimitList} from "../Api";
 import Grid from '@material-ui/core/Grid';

@@ -33,6 +33,12 @@ import axios from "axios";
 import swal from 'sweetalert';
 import Invoices from "./pages/Invoices";
 import Limits from "./pages/Limits";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+    direction: 'rtl', // Both here and <body dir="rtl">
+});
 
 
 (function () {
@@ -70,17 +76,20 @@ import Limits from "./pages/Limits";
             return Promise.reject(error);
         }
     });
-
-
 })();
 
 
 const DefaultLayout = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
-            <Layout>
-                <Component {...matchProps} />
-            </Layout>
+            <ThemeProvider theme={theme}>
+                <div dir="rtl">
+                    <Layout>
+                        <Component {...matchProps} />
+                    </Layout>
+                </div>
+            </ThemeProvider>
+
         )}/>
     )
 };

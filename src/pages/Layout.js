@@ -1,151 +1,69 @@
 import React from 'react';
-import clsx from 'clsx';
-import {fade, makeStyles} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import {mainListItems} from './MenuItems';
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import axios from "axios";
 import {api_base, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
 import Echo from "laravel-echo"
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import {mainListItems, secondaryListItems} from "./MenuItems";
+import Grid from "@material-ui/core/Grid";
 
 
-const drawerWidth = 0;
+
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        direction: 'rtl'
     },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
+    drawer: {
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
     },
     appBar: {
-        textAlign: 'right',
         zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
+        [theme.breakpoints.up('sm')]: {
+           /* width: `calc(100% - ${drawerWidth}px)`,*/
+            marginLeft: drawerWidth,
+        },
     },
     menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: '100%',
-        textAlign: 'right',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        textAlign: 'right',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
+        marginRight: theme.spacing(2),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
+            display: 'none',
         },
     },
-    appBarSpacer: theme.mixins.toolbar,
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+        width: drawerWidth,
+    },
     content: {
         flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
-    fixedHeight: {
-        height: 240,
-    },
-    grow: {
-        flexGrow: 1,
-    },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        width: theme.spacing(7),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: 200,
-        },
+        padding: theme.spacing(3),
     },
     sectionDesktop: {
         display: 'none',
@@ -159,25 +77,19 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
-    navLink: {
-        color: 'white',
-        marginLeft: theme.spacing(3),
 
-    },
-    textAlignRight: {
-        textAlign: 'right'
-    }
 }));
 
-export default function Layout(props) {
+function Layout(props) {
+    const { container } = props;
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-    const handleDrawerOpen = () => {
-        setOpen(true);
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
     };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+
     const [unreadCount, setUnreadCount] = React.useState([]);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -229,9 +141,10 @@ export default function Layout(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
-            <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
-            <MenuItem component="a" href="/Limits" onClick={handleMenuClose}>محدودیت ها</MenuItem>
+            {secondaryListItems.map(row=>(
+                <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
+            ))}
+
             <MenuItem component="a" onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -250,9 +163,10 @@ export default function Layout(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem component="a" href="/profile" onClick={handleMenuClose}>حساب کاربری</MenuItem>
-            <MenuItem component="a" href="/changePassword" onClick={handleMenuClose}>تغییر رمز عبور</MenuItem>
-            <MenuItem component="a" href="/Limits" onClick={handleMenuClose}>محدودیت ها</MenuItem>
+            {secondaryListItems.map(row=>(
+                <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
+            ))}
+
             <MenuItem onClick={() => {
                 requestLogout();
                 handleMenuClose();
@@ -287,28 +201,39 @@ export default function Layout(props) {
             })
     }
 
+
+    const drawer = (
+        <div>
+            <div className={classes.toolbar} />
+            <Divider />
+            <List>{mainListItems}</List>
+
+        </div>
+    );
+
     return (
-        <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
+        <div dir={"rtl"} className={classes.root}>
+            <CssBaseline />
+            <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar>
+                    <Grid item xs={11}>
 
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography align='right' component="h1" variant="h6" color="inherit" noWrap
-                                className={classes.title}>
-                        ابرپرداز
+                    <Typography variant="h6" noWrap>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={handleDrawerToggle}
+                            className={classes.menuButton}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        ابر پرداز
                     </Typography>
+                    </Grid>
 
-                    <div>
 
+                    <Grid item xs={2}  md={1}>
                         <div className={classes.sectionDesktop}>
                             <IconButton  color="inherit" href={"/Notifications"} >
                                 <Badge badgeContent={unreadCount} color="secondary">
@@ -343,36 +268,52 @@ export default function Layout(props) {
                             </IconButton>
                         </div>
 
-                    </div>
+                    </Grid>
 
 
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon/>
-                    </IconButton>
-                </div>
-                <List>{mainListItems}</List>
-            </Drawer>
 
+            <nav className={classes.drawer} aria-label="mailbox folders">
+                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                <Hidden smUp implementation="css">
+                    <Drawer
+                        container={container}
+                        variant="temporary"
+                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                    >
+                        {drawer}
+                    </Drawer>
+                </Hidden>
+                <Hidden xsDown implementation="css">
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                    >
+                        {drawer}
+                    </Drawer>
+                </Hidden>
+            </nav>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer}/>
-                <Container maxWidth="lg" className={classes.container}>
-                        {props.children}
-                </Container>
+                <div className={classes.toolbar} />
+                {props.children}
             </main>
             <MessageBox response={response}/>
-
         </div>
     );
 }
+
+export default Layout;
