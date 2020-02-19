@@ -50,7 +50,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 function SshKeyAdd() {
     const [response, setResponse] = React.useState([]);
     const paper = paperStyle();
@@ -62,8 +61,8 @@ function SshKeyAdd() {
         axios.post(api_base + sshKeysAdd, {name: name.value, content: content.value})
             .then(res => {
                 setResponse(res.data)
-                if(res.data.success)
-                    window.location.href= '/Sshkeylist';
+                if (res.data.success)
+                    window.location.href = '/Sshkeylist';
             })
     }
 
@@ -71,29 +70,25 @@ function SshKeyAdd() {
 
         <div className={classes.root}>
 
-            <Grid container
-                direction="row"
-                justify="center"
-                alignItems="center">
-
-
+            <Grid container>
                 <Grid item xs>
-
-                <Paper className={paper.paper}>
+                    <Paper className={paper.paper}>
+                        <h2>افزودن کلید امنیتی</h2>
 
                         <form onSubmit={requestAddKey}>
                             <TextField
                                 className={paper.alignText}
                                 name="name"
-                                label="نام" variant="filled"
+                                label="نام"
+                                variant="filled"
                             />
                             <br/><br/>
                             <TextField
-                                className={paper.alignText}
                                 name="content"
-                                label="نظر"
+                                label="محتوا"
                                 multiline
                                 rows="4"
+                                cols="5"
                                 variant="filled"
                             />
                             <br/><br/>
@@ -103,11 +98,11 @@ function SshKeyAdd() {
 
                         </form>
 
-                </Paper>
+                    </Paper>
                 </Grid>
 
             </Grid>
-            <MessageBox response={response} />
+            <MessageBox response={response}/>
         </div>
     );
 }

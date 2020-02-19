@@ -52,13 +52,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
 )(TableRow);
 
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 700,
-    },
-});
-
-
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -135,39 +128,40 @@ export default function SshkeyList() {
     }
 
     return (
-        <div>
+        <div >
 
-            <Grid item xs={12} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
+            <Grid item xs={12} container>
 
-                <Paper>
+                <Paper  style={{padding: 10}}>
                     <Box>
-                        <h2>
-                            کلیدهای امنیتی
-                        </h2>
+                        <Grid container>
+                            <Grid item xs={8} md={10} >
+                                <h2>
+                                    کلیدهای امنیتی
+                                </h2>
+                            </Grid>
+                            <Grid item xs={4} md={2}>
+                                <Button href={'/SshKeyAdd'} variant="contained" color="primary">
+                                    <AddIcon/>
+                                    افزودن کلید
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+
                         <p>
                             استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و آسان
                             تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
                         </p>
-
-                        <Button href={'/SshKeyAdd'} variant="contained" color="primary">
-                            <AddIcon/>
-                            افزودن کلید
-                        </Button>
-
 
                         <TableContainer component={Paper}
                                         style={(items.length == 0) ? {display: 'none'} : {display: 'block'}}>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell align="right">#&nbsp;</StyledTableCell>
+                                        <StyledTableCell align="right">#</StyledTableCell>
                                         <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
-                                        <StyledTableCell align="right">گزینه ها</StyledTableCell>
-
-
+                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -211,11 +205,7 @@ export default function SshkeyList() {
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
                                                 </StyledMenu>
-
-
                                             </StyledTableCell>
-
-
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

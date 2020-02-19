@@ -90,7 +90,7 @@ export default function ProjectsList() {
         <Grid container spacing={1}>
             {machines.map(row => (
                 <Grid item xs={12} sm={4}>
-                    <Paper className={"projectItem"}  onClick={()=>window.location.href="servers/" + row.id.toString()}>
+                    <Paper className={"boxItem projectItem"}  onClick={()=>window.location.href="servers/" + row.id.toString()}>
                         <Typography color="textSecondary">
                             {row.name}
                         </Typography>
@@ -99,7 +99,7 @@ export default function ProjectsList() {
             ))}
 
             <Grid item xs={12} sm={4}>
-                <Paper className={"projectItem"} onClick={handleOpen}>
+                <Paper className={"boxItem addItem"} onClick={handleOpen}>
                     <Typography color="textSecondary">
                         <AddIcon/>
                     </Typography>

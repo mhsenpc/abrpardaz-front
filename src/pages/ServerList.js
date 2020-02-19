@@ -119,73 +119,37 @@ export default function ServerList(props) {
         }
 
         return (
-            <Grid item xs={3}>
-                <Card key={props.row.id} style={{textAlign: "center"}}>
-                    <div className='itemList'>
-                        <CardContent  onClick={() => showDetails(props.row.id) }>
-                            <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
-                            {editMode === false &&
-                            <Typography component="h5" variant="h5"  onClick={() => setEditMode(true)}>
-                                {props.row.name}
-                            </Typography>
-                            }
-                            {editMode === true &&
-                            <div>
-                                <TextField
-                                    id="outlined-full-width"
-                                    name="name"
-                                    label="نام جدید"
-                                    placeholder=""
-                                    variant="outlined"
-                                    value={name}
-                                    onChange={event => setName(event.target.value)}
-                                />
-                                <Button variant="contained" color="primary"
-                                        onClick={() => requestRenameMachine(props.row.id)}>
-                                    تغییر نام
-                                </Button>
-                                <CancelIcon onClick={cancelRename}/>
-                            </div>
-                            }
-                            <Typography variant="subtitle1" color="textSecondary">
-                                {props.row.image.name}{props.row.image.version}
-                            </Typography>
+            <Grid item xs={12} sm={4}>
+                <Paper className={"boxItem serverItem"} onClick={() => showDetails(props.row.id)}>
+                    <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
+                    <Typography  onClick={() => setEditMode(true)}>
+                        {props.row.name}
+                    </Typography>
+
+                    <Typography variant="subtitle1" color="textSecondary">
+                        {props.row.image.name}{props.row.image.version}
+                    </Typography>
 
 
-                        </CardContent>
-                    </div>
-                </Card>
-
+                </Paper>
             </Grid>
         )
     }
 
     return (
-        <div className={classes.root}>
-            <Grid
-                container
-                direction="row"
-                justify="flex-start"
-                spacing={1}>
+        <Grid container spacing={1}>
+            {items.map(row => (
+                <ServerItem row={row}/>
+            ))}
 
-                {items.map(row => (
-                    <ServerItem row={row}/>
-                ))}
-
-                <Grid item xs={3}>
-                    <Card className={"itemList"} style={{textAlign: "center"}} onClick={()=>window.location.href='/createMachine'}>
-                        <CardContent>
-                            <p>&nbsp;</p>
-                        <Typography className={classes.title} color="textSecondary"
-                                    >
-                            <AddIcon/>
-                        </Typography>
-                        </CardContent>
-                    </Card>
-
-                </Grid>
-
+            <Grid item xs={12} sm={4}>
+                <Paper className={"boxItem addItem"} onClick={() => window.location.href = '/createMachine'}>
+                    <Typography color="textSecondary">
+                        <AddIcon/>
+                    </Typography>
+                </Paper>
             </Grid>
-        </div>
+        </Grid>
+
     )
 }

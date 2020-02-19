@@ -13,7 +13,11 @@ import axios from "axios";
 import {api_base} from "../../Api";
 import Button from "@material-ui/core/Button";
 import MessageBox from "../MessageBox";
-
+import TableCell from "@material-ui/core/TableCell";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
     card: {
@@ -64,8 +68,9 @@ function TicketDetails(props) {
     const classes = useStyles();
     const [ticket, setTicket] = React.useState({replies: []});
     const [response, setResponse] = React.useState([]);
+    const JDate = require('jalali-date');
 
-    function loadTicket(){
+    function loadTicket() {
         let id = props.match.params.id;
         axios.get(api_base + 'tickets/' + id.toString() + '/show')
             .then(res => {
@@ -104,110 +109,89 @@ function TicketDetails(props) {
     }
 
     return (
-
         <div>
 
-            <Grid item xs={12} container
-                  direction="row"
-                  alignItems="center"
-            >
-                <Paper>
-
-                    <Box p={2} width={700}>
-
-
-                        <Card className={classes.card} variant="outlined">
+            <Grid container>
+                <Grid item xs={12}>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link color="inherit" href="/tickets">
+                            پشتیبانی
+                        </Link>
+                        <Typography color="textPrimary">{ticket.ticket_id}</Typography>
+                    </Breadcrumbs>
 
 
-                            <CardContent>
+                    <Paper style={{padding: 10}}>
+
+                        <h2>
+                            {ticket.title}
+                        </h2>
+
+                        <Typography className={classes.title} variant="h5" component="h2">
+                            {ticket.message}
+                        </Typography>
+
+                        <Typography color={"textSecondary"} variant={"caption"}>
+                            نوشته شده در:
+                            {(new JDate(new Date(ticket.created_at))).format('YYYY/MM/DD')}&nbsp;
+                            {new Date(ticket.created_at).toLocaleTimeString()}
+                        </Typography>
+                        <br/>
+                        <br/>
+                        <Grid container>
+                            {ticket.replies.map(row => (
+                                <Grid item xs={12}>
+                                    <Paper variant={"outlined"} style={{padding: 10}}>
+                                        <Typography variant="h5" className={classes.title} color="textSecondary"
+                                                    gutterBottom>
+                                            {(row.user.profile.first_name || row.user.profile.last_name) &&
+                                            row.user.profile.first_name + ' ' + row.user.profile.last_name
+                                            }
+                                            {(!(row.user.profile.first_name || row.user.profile.last_name)) &&
+                                            row.user.email
+                                            }
+                                        </Typography>
+                                        <Typography className={classes.title} variant="h5" component="h2">
+                                            {row.comment}
+                                        </Typography>
+                                        <Typography color={"textSecondary"} variant={"caption"}>
+                                            نوشته شده در:
+                                            {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                            {new Date(row.created_at).toLocaleTimeString()}
+                                        </Typography>
 
 
-                                <div align="right">
+                                        <br/>
+                                    </Paper>
+                                </Grid>
 
-                                    <p>جزئیات تیکت شما</p>
+                            ))}
+                        </Grid>
 
+                        <br/>
+                        <form onSubmit={requestSendReply}>
+                            <p>پرسش دیگری دارید؟</p>
+                            <Grid item xs={12}>
+                                <TextField name="comment" variant="outlined" multiline
+                                />
+                            </Grid>
 
-                                    <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.orange}>
-                                        M
-                                    </Avatar>
+                            <div>
 
-                                    <Typography variant="h5" className={classes.title} color="textSecondary"
-                                                gutterBottom>
-                                        {ticket.title}
-                                    </Typography>
-                                    <Typography className={classes.title} variant="h5" component="h2">
-                                        {ticket.message}
-                                    </Typography>
-
-
-                                    {ticket.replies.map(row => (
-
-                                        <CardContent key={row.id}>
-
-
-                                            <div align="right">
-
-                                                <p>
-                                                    {row.user.profile.first_name} {row.user.profile.last_name}
-                                                </p>
+                                <Button type="submit" variant="contained" color={"primary"}>پاسخ</Button>
+                                &nbsp;
+                                <Button onClick={requestCloseTicket} variant="contained"
+                                        color="secondary">
+                                    بستن
+                                </Button>
 
 
-                                                <Avatar alt="Remy Sharp" src="/broken-image.jpg"
-                                                        className={classes.orange}>
-                                                    M
-                                                </Avatar>
-
-                                                <Typography variant="h5" className={classes.title} color="textSecondary"
-                                                            gutterBottom>
-                                                    {row.ticket_id}
-                                                </Typography>
-                                                <Typography className={classes.title} variant="h5" component="h2">
-                                                    {row.comment}
-                                                </Typography>
+                            </div>
+                        </form>
 
 
-                                            </div>
-
-
-                                        </CardContent>
-
-
-                                    ))}
-
-
-                                    <Box m={2}>
-
-                                        <form onSubmit={requestSendReply}>
-
-                                            <TextareaAutosize name='comment' rows={2}
-                                                              rowsMax={4} aria-label="minimum height" rowsMin={3}
-                                                              placeholder="Minimum 3 rows"/>
-
-                                            <div>
-
-                                                <Button type="submit" variant="contained">پاسخ</Button>
-                                                <Button onClick={requestCloseTicket} variant="contained"
-                                                        color="secondary">
-                                                    بستن
-                                                </Button>
-
-
-                                            </div>
-                                        </form>
-
-                                    </Box>
-
-                                </div>
-
-
-                            </CardContent>
-
-
-                        </Card>
-
-                    </Box>
-
-                </Paper>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <MessageBox response={response}/>

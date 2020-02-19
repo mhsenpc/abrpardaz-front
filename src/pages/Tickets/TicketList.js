@@ -45,25 +45,33 @@ function TicketList() {
 
         <Grid container spacing={3}>
             <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <Button href={'/NewTicket'} variant="contained" color="primary">
-                        <AddBoxIcon/>
-                        تیکت جدید
-                    </Button>
+                <Paper className={classes.paper} style={{padding:10}}>
+                    <Grid container>
+                        <Grid item xs={8} md={10} >
+                            <h2>
+                                پشتیبانی
+                            </h2>
+                        </Grid>
+                        <Grid item xs={4} md={2}>
+                            <Button href={'/NewTicket'} variant="contained" color="primary">
+                                <AddBoxIcon/>
+                                تیکت جدید
+                            </Button>
+                        </Grid>
+                    </Grid>
 
 
                     {items.map(row => (
-                        <Grid item xs={10}>
+                        <Grid item xs={12}>
                             <Card variant={"outlined"} className={classes.ticketItem}>
                                 <CardContent key={row.id}>
                                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                                         <Grid container>
-                                            <Grid item xs={3}>
-                                                <a className='titleTicket'>
+                                            <Grid item xs={8}>
+                                                <h3>
                                                     {row.title}
-                                                </a>
+                                                </h3>
                                             </Grid>
-                                            <Grid item xs={5}></Grid>
                                             <Grid item xs={4}>
                                                 <Typography className={classes.title} color="textSecondary">
                                                     ایجاد شده در

@@ -56,7 +56,7 @@ export default function Invoices() {
     }
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} style={{padding:10}}>
             <h2 style={{direction: "rtl", marginRight: 20}}>فاکتور های پرداخت</h2>
             {items.length == 0 &&
             <Alert severity="info">
@@ -69,6 +69,7 @@ export default function Invoices() {
                 <Alert severity="info">
                     تمامی مبالغ به تومان می باشد
                 </Alert>
+
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
@@ -86,7 +87,7 @@ export default function Invoices() {
                             {items.map(row => (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
-                                        {row.id}
+                                        {row.invoice_id}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         {numeral(row.amount).format('0,0')}
@@ -105,7 +106,7 @@ export default function Invoices() {
                                         <Button onClick={() => showDetails(row.data,row.amount,row.vat,row.total)}>نمایش جزئیات</Button>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        <Button onClick={() => pay(row.id)}>
+                                        <Button variant={"outlined"} color={"primary"} onClick={() => pay(row.id)}>
                                             پرداخت
                                         </Button>
                                     </TableCell>
@@ -120,6 +121,8 @@ export default function Invoices() {
             }
             <br/>
             <a href={"/Transactions"}>نمایش تراکنش های بانکی</a>
+            <br />
+            <br />
 
             <SimpleModal open={open} setOpen={setOpen}>
                 <TableContainer component={Paper}>
