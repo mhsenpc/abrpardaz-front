@@ -13,9 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
-import Snapshots from "./Snapshots";
 import axios from "axios";
-import {api_base, imagesList} from "../../Api";
+import {api_base, imagesList, snapshotsList} from "../../Api";
 
 
 function TabPanel(props) {
@@ -48,52 +47,25 @@ function a11yProps(index) {
     };
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    },
-}));
-
-
-const SimplePaper = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        '& > *': {
-            margin: theme.spacing(1),
-            width: theme.spacing(16),
-            height: theme.spacing(16),
-        },
-    },
-}));
-
-
-const cardpic = makeStyles(theme => ({
-    cover: {
-        width: 151,
-        height: 151
-    }
-
-}));
-
 export default function SelectSource(props) {
-    const classes = useStyles();
-    const Simple_Paper = SimplePaper();
-
-    const card = cardpic();
-
     const [value, setValue] = React.useState(0);
-    const [items, setItems] = React.useState([]);
+    const [osItems, setOsItems] = React.useState([]);
+    const [snapshotItems, setSnapshotItems] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + imagesList)
             .then(res => {
                 const list = res.data.list;
+                setOsItems(list);
+            });
 
-                setItems(list);
+        axios.get(api_base + snapshotsList)
+            .then(res => {
+                const list = res.data.list;
+
+                setSnapshotItems(list);
             })
-    },[]);
+    }, []);
 
 
     const handleChange = (event, newValue) => {
@@ -106,108 +78,53 @@ export default function SelectSource(props) {
 
 
     return (
-
-        <div>
-
-            <Grid item xs={12} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
-                <Grid item xs={6} container
-                      direction="row"
-                      justify="center"
-                      alignItems="center">
-                    <Paper>
-
-                        <Box textAlign="right" m={5}>
-                            <FormLabel>لطفا سیستم عامل مورد نظر خود را انتخاب نمایید</FormLabel>
-                        </Box>
+        <Grid item xs={12}>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                variant="fullWidth"
+                indicatorColor="secondary"
+                textColor="secondary"
+                aria-label="icon label tabs example"
+            >
+                <Tab label="سیستم عامل" icon={<Description/>} {...a11yProps(0)} />
+                <Tab label="تصاویر آنی" icon={<Storage/>} {...a11yProps(1)} />
+            </Tabs>
 
 
-                        <AppBar position="static" color="default">
-                            <Tabs
-                                value={value}
-                                onChange={handleChange}
-                                variant="scrollable"
-                                scrollButtons="on"
-                                indicatorColor="primary"
-                                textColor="primary"
-                                aria-label="scrollable force tabs example"
-                            >
-
-                                <Tab label="سیستم عامل" icon={<Description/>} {...a11yProps(0)} />
-                                <Tab label="تصاویر آنی" icon={<Storage/>} {...a11yProps(1)} />
-
-                            </Tabs>
-                        </AppBar>
-
-
-                        <TabPanel value={value} index={0}>
-                            {items.map(row => (
-                                <Button key={row.id} onClick={() => handleClick(row.id)}>
-                                    <Box component="span" m={1} height="auto" width="auto" display="inline-block">
-
-                                        <div>
-                                            <Paper variant="outlined" square>
-                                                <Save/>
-
-                                                <Paper>
-
-                                                    <h3>{row.name}{row.version}</h3>
-                                                    {row.version}
-                                                </Paper>
-
-                                            </Paper>
-
-
-                                        </div>
-
-                                    </Box>
-                                </Button>
-                            ))}
-
-
-                        </TabPanel>
-
-                        <TabPanel value={value} index={1}>
-                            <Snapshots/>
-                        </TabPanel>
-                    </Paper>
+            <TabPanel value={value} index={0}>
+                <p>
+                    لطفا سیستم عامل مورد نظر خود را انتخاب نمایید
+                </p>
+                <Grid container>
+                    {osItems.map(row => (
+                        <Grid item xs={12} md={4} style={{padding: 2}}>
+                            <Paper className={"boxItem osItem"} key={row.id} onClick={() => handleClick(row.id)}>
+                                <Save/>
+                                <h3>{row.name}{row.version}</h3>
+                            </Paper>
+                        </Grid>
+                    ))}
                 </Grid>
+            </TabPanel>
 
+            <TabPanel value={value} index={1}>
+                <p>
+                    لطفا تصویر آنی مورد نظر خود را انتخاب نمایید
+                </p>
+                <Grid container>
+                    {snapshotItems.map(row => (
+                        <Grid item xs={12} md={4} style={{padding: 2}}>
+                            <Paper className={"boxItem snapshotItem"} key={row.id} onClick={() => handleClick(row.id)}>
+                                <Save/>
+                                <h3>{row.name}</h3>
+                            </Paper>
+                        </Grid>
+                    ))}
+                </Grid>
+            </TabPanel>
 
-            </Grid>
+        </Grid>
 
-        </div>
     )
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

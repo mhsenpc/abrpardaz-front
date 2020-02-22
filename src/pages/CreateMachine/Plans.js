@@ -32,7 +32,6 @@ const useStyles = makeStyles({
 function Plans(props) {
 
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     const [items, setItems] = React.useState([]);
 
@@ -46,48 +45,30 @@ function Plans(props) {
     }, []);
 
     return (
-        <div>
-            <Grid item xs={12} container
-                  direction="row"
-                  alignItems="center"
-            >
-                <Paper>
+        <Grid item xs={12} container spacing={2}>
+            {items.map(row => (
+                <Grid item xs={12} sm={6} md={3}>
+                    <Paper className={"boxItem planItem"} key={row.id} onClick={() => props.setPlanId(row.id)}>
 
-                    <Box component="span" m={1} height="auto" width="auto" display="inline-block">
-                        {items.map(row => (
-                            <Button key={row.id} onClick={() => props.setPlanId(row.id)}>
-                                <Card className={classes.card}>
-
-
-                                    <CardContent>
-                                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                            {row.name}
-                                        </Typography>
-                                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                            vcpu: {row.vcpu}
-                                        </Typography>
-                                        <Typography variant="h5" component="h2">
-                                                Ram: {row.ram}GB
-                                        </Typography>
-                                        <Typography className={classes.pos} color="textSecondary">
-                                            Disk: {row.disk}GB
-                                        </Typography>
-                                        <Typography variant="body2" component="p">
-                                            ترافیک نا محدود
-                                        </Typography>
-
-                                    </CardContent>
-
-
-                                </Card>
-                            </Button>
-                        ))}
-
-                    </Box>
-
-                </Paper>
-            </Grid>
-        </div>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            {row.name}
+                        </Typography>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            vcpu: {row.vcpu}
+                        </Typography>
+                        <Typography variant="h5" component="h2">
+                            Ram: {row.ram}GB
+                        </Typography>
+                        <Typography className={classes.pos} color="textSecondary">
+                            Disk: {row.disk}GB
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                            ترافیک نا محدود
+                        </Typography>
+                    </Paper>
+                </Grid>
+            ))}
+        </Grid>
     );
 }
 

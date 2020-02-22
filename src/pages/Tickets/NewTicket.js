@@ -12,7 +12,8 @@ import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import axios from "axios";
 import {api_base, machinesList, newTicket, ticketCategories} from "../../Api";
-
+import swal from 'sweetalert';
+import MessageBox from "../MessageBox";
 
 const BootstrapInput = withStyles(theme => ({
     root: {
@@ -60,7 +61,8 @@ function NewTicket() {
     const classes = useStyles();
     const [machine, setMachine] = React.useState('');
     const [category, setCategory] = React.useState('');
-    const [priority, setPriority] = React.useState('');
+    const [priority, setPriority] = React.useState('متوسط');
+    const [response, setResponse] = React.useState('');
 
     const handleChangeMachine = event => {
         setMachine(event.target.value);
@@ -79,15 +81,17 @@ function NewTicket() {
         axios.get(api_base + machinesList)
             .then(res => {
                 const list = res.data.list;
-                console.log(list);
                 setItemsMachine(list);
+                if (list.length > 0)
+                    setMachine(list[0].id);
             });
 
         axios.get(api_base + ticketCategories)
             .then(res => {
                 const list = res.data.list;
-                console.log(list);
                 setItemsTicketsCat(list);
+                if (list.length > 0)
+                    setCategory(list[0].id);
             })
 
     }, []);
@@ -95,6 +99,7 @@ function NewTicket() {
 
     function requestNewTicket(event) {
         event.preventDefault();
+
         const {machine, category, message, title, priority} = event.currentTarget.elements;
         axios.post(api_base + newTicket, {
             machine: machine.value,
@@ -105,132 +110,117 @@ function NewTicket() {
         })
             .then(res => {
                 const msg = res.data.message;
+                if (res.data.success) {
 
-                alert(msg)
+                    swal(msg, '', 'success').then((result)=>{
+                        window.location.href = '/tickets'
+                    })
+
+                }
+                else{
+                    setResponse(res.data)
+                }
             })
     }
 
     return (
+        <Grid item xs={12} container
+              direction="row"
+              alignItems="center"
+        >
+            <Paper>
 
-        <div>
+                <Box p={2} width={700}>
+                    <form onSubmit={requestNewTicket}>
+                        <h2>درخواست پشتیبانی</h2>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={4}>
+                                <FormControl className={classes.margin}>
+                                    <InputLabel id="demo-customized-select-label">ماشین</InputLabel>
+                                    <Select
+                                        name="machine"
+                                        labelId="demo-customized-select-label"
+                                        id="demo-customized-select"
+                                        value={machine}
+                                        onChange={handleChangeMachine}
+                                        input={<BootstrapInput/>}
+                                    >
 
+                                        {itemsMachine.map(row => (
+                                            <MenuItem value={row.id}>{row.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <FormControl className={classes.margin}>
+                                    <InputLabel id="demo-customized-select-label">دسته بندی</InputLabel>
+                                    <Select
+                                        name="category"
+                                        labelId="demo-customized-select-label"
+                                        id="demo-customized-select"
+                                        value={category}
+                                        onChange={handleChangeCat}
+                                        input={<BootstrapInput/>}
+                                    >
+                                        {itemsTicketsCat.map(row => (
+                                            <MenuItem value={row.id}>{row.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <FormControl className={classes.margin}>
+                                    <InputLabel id="demo-customized-select-label">اولویت</InputLabel>
+                                    <Select
+                                        name="priority"
+                                        labelId="demo-customized-select-label"
+                                        id="demo-customized-select"
+                                        value={priority}
+                                        onChange={handleChangePriority}
+                                        input={<BootstrapInput/>}
+                                    >
+                                        <MenuItem value='کم'>کم</MenuItem>
+                                        <MenuItem value='متوسط'>متوسط</MenuItem>
+                                        <MenuItem value='زیاد'>زیاد</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <TextField
+                            name="title"
+                            id="filled-multiline-static"
+                            label="عنوان تیکت را وارد کنید"
+                            variant="filled"
+                            required
+                        />
+                        <br/>
+                        <br/>
 
-            <Grid item xs={12} container
-                  direction="row"
-                  alignItems="center"
-            >
-                <Paper>
+                        <TextField
+                            name="message"
+                            id="filled-multiline-static"
+                            label="متن سوال را وارد کنید"
+                            multiline
+                            rows="4"
+                            variant="filled"
+                            required
+                        />
+                        <br/>
+                        <br/>
+                        <Button type="submit" variant="contained" color="primary">
+                            ثبت تیکت
+                        </Button>
 
-                    <Box p={2} width={700}>
+                    </form>
 
-                        <label>ماشین:</label>
+                </Box>
 
-                        <form onSubmit={requestNewTicket}>
-
-
-                            <FormControl className={classes.margin}>
-                                <InputLabel id="demo-customized-select-label">Age</InputLabel>
-                                <Select
-                                    name="machine"
-                                    labelId="demo-customized-select-label"
-                                    id="demo-customized-select"
-                                    value={machine}
-                                    onChange={handleChangeMachine}
-                                    input={<BootstrapInput/>}
-                                >
-
-                                    {itemsMachine.map(row => (
-                                        <MenuItem value={row.id}>{row.name}</MenuItem>
-
-                                    ))}
-                                </Select>
-                            </FormControl>
-
-                            <br/>
-                            <label>دسته بندی:</label>
-                            <FormControl className={classes.margin}>
-                                <InputLabel id="demo-customized-select-label">Age</InputLabel>
-                                <Select
-                                    name="category"
-                                    labelId="demo-customized-select-label"
-                                    id="demo-customized-select"
-                                    value={category}
-                                    onChange={handleChangeCat}
-                                    input={<BootstrapInput/>}
-                                >
-                                    {itemsTicketsCat.map(row => (
-                                        <MenuItem value={row.id}>{row.name}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <br/>
-
-                            <label>اولویت:</label>
-                            <FormControl className={classes.margin}>
-                                <InputLabel id="demo-customized-select-label">Age</InputLabel>
-                                <Select
-                                    name="priority"
-                                    labelId="demo-customized-select-label"
-                                    id="demo-customized-select"
-                                    value={priority}
-                                    onChange={handleChangePriority}
-                                    input={<BootstrapInput/>}
-                                >
-                                    <MenuItem value='کم'>کم</MenuItem>
-                                    <MenuItem value='متوسط'>متوسط</MenuItem>
-                                    <MenuItem value='زیاد'>زیاد</MenuItem>
-                                </Select>
-                            </FormControl>
-
-                            <br/>
-                            <label>عنوان</label>
-                            <TextField
-                                name="title"
-                                id="filled-multiline-static"
-                                label="عنوان خود را وارد کنید"
-                                rows="4"
-                                variant="filled"
-                            />
-                            <br/>
-
-                            <label>متن</label>
-                            <TextField
-                                name="message"
-                                id="filled-multiline-static"
-                                label="متن خود را وارد کنید"
-                                multiline
-                                rows="4"
-                                variant="filled"
-                            />
-                            <Button type="submit" variant="contained" color="primary">
-                                ارسال
-                            </Button>
-
-                        </form>
-
-                    </Box>
-
-                </Paper>
-            </Grid>
-        </div>
+            </Paper>
+            <MessageBox response={response}/>
+        </Grid>
 
     )
 }
 
 export default NewTicket;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

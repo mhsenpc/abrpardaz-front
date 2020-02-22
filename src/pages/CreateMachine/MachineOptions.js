@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base, ProjectsListPath, sshKeysList} from "../../Api";
 import Select from "@material-ui/core/Select";
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 export default function MachineOptions(props) {
@@ -40,116 +41,51 @@ export default function MachineOptions(props) {
                 const list = res.data.list;
 
                 setProjectItems(list);
-                props.setProjectId(list[0].id)
+                if (list.length > 0)
+                    props.setProjectId(list[0].id)
             })
     }, []);
 
 
     return (
+        <Grid container>
+            <Grid xs={6}>
+                <FormLabel>
+                    انتخاب کلید SSH
+                </FormLabel>
 
-        <div>
+                <Select
+                    onChange={handleChangeSshId}>
+                    <MenuItem value={null}>هیچ</MenuItem>
+                    {sshkeyItems.map(row => (
+                        <MenuItem value={row.id}>{row.name}</MenuItem>
+                    ))}
+                </Select>
+            </Grid>
+            <Grid xs={6}>
 
-            <Grid item xs={12} container
-                  direction="row"
-                  justify="center"
-                  alignItems="center">
-                <Grid item xs={6} container
-                      direction="row"
-                      justify="center"
-                      alignItems="center">
-                    <Paper>
+                <FormLabel>
+                    انتخاب پروژه
+                </FormLabel>
 
-                        <Box textAlign="right" m={5} width={600}>
-                            <FormLabel>لطفا گزینه های مورد نظر خود را انتخاب نمایید</FormLabel>
-                        </Box>
-
-                        <Box display="flex"
-                             flexWrap="wrap"
-                             alignContent="flex-end" m={5} border={1} borderRadius="borderRadius"
-                             borderColor="grey.500">
-
-                            <FormLabel>
-                                انتخاب کلید SSH
-                            </FormLabel>
-
-                            <Select
-                                onChange={handleChangeSshId}
-                                native>
-                                <option></option>
-                                {sshkeyItems.map(row => (
-                                    <option value={row.id}>{row.name}</option>
-                                ))}
-                            </Select>
-
-                            <br />
-                            <br />
-
-                            <FormLabel>
-                                انتخاب پروژه
-                            </FormLabel>
-
-                            <Select
-                                onChange={handleChangeProjectId}
-                                native>
-                                {projectItems.map(row => (
-                                    <option value={row.id}>{row.name}</option>
-                                ))}
-                            </Select>
-
-                            <Box m={5} width={600}>
-
-                                <TextField
-                                    id="filled-full-width"
-                                    label="نام سرور"
-                                    style={{margin: 8}}
-                                    placeholder="Server1"
-                                    fullWidth
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    onChange={handleChangeName}
-                                    variant="filled"
-                                />
-
-                            </Box>
-                        </Box>
-
-                    </Paper>
-                </Grid>
+                <Select
+                    onChange={handleChangeProjectId}
+                    value={props.projectId}>
+                    {projectItems.map(row => (
+                        <MenuItem value={row.id}>{row.name}</MenuItem>
+                    ))}
+                </Select>
             </Grid>
 
-        </div>
 
+            <Grid item xs={12}>
+                <TextField
+                    id="filled-full-width"
+                    label="نام سرور"
+                    placeholder="Server1"
+                    onChange={handleChangeName}
+                />
+            </Grid>
+        </Grid>
     );
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

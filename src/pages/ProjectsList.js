@@ -111,7 +111,8 @@ export default function ProjectsList() {
                 <h2 id="simple-modal-title">نام پروژه را وارد نمایید</h2>
                 <TextField id="outlined-search" type="search" variant="outlined"
                            onChange={event => setName(event.target.value)}/>
-                <Button onClick={() => requestModal()} variant="contained">
+                           &nbsp;
+                <Button color={"primary"}  onClick={() => requestModal()} variant="contained">
                     ثبت
                 </Button>
             </SimpleModal>

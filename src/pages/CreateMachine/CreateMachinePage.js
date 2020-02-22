@@ -7,7 +7,9 @@ import MachineOptions from "./MachineOptions";
 import MessageBox from "../MessageBox";
 import axios from "axios";
 import {api_base, createFromImage, forgetPassword} from "../../Api";
-
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,7 +34,13 @@ export default function CreateMachinePage() {
     const [response, setResponse] = React.useState([]);
 
     function createMachineRequest() {
-        axios.post(api_base + createFromImage, {name: machineName,plan_id:planId,image_id:imageId,project_id:projectId,ssh_key_id:sshId})
+        axios.post(api_base + createFromImage, {
+            name: machineName,
+            plan_id: planId,
+            image_id: imageId,
+            project_id: projectId,
+            ssh_key_id: sshId
+        })
             .then(res => {
                 setResponse(res.data)
 
@@ -45,12 +53,22 @@ export default function CreateMachinePage() {
     }
 
     return (
-        <div className={classes.root}>
-            <SelectSource setImageId={setImageId}/>
-            <Plans setPlanId={setPlanId}/>
-            <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}/>
-            <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
-            <MessageBox response={response} />
-        </div>
+        <Grid container item xs={12}>
+            <Grid item xs={12}>
+                <SelectSource setImageId={setImageId}/>
+            </Grid>
+            <Grid item xs={12}>
+                <Plans setPlanId={setPlanId}/>
+            </Grid>
+            <Grid item xs={12}>
+                <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}
+                                prjectId={projectId}/>
+            </Grid>
+            <Grid item xs={12}>
+                <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
+            </Grid>
+
+            <MessageBox response={response}/>
+        </Grid>
     );
 }

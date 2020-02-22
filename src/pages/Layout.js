@@ -47,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         [theme.breakpoints.up('sm')]: {
-           /* width: `calc(100% - ${drawerWidth}px)`,*/
-            marginLeft: drawerWidth,
+           // width: `calc(100% - ${drawerWidth}px)`,
+            //marginLeft: drawerWidth,
         },
     },
     menuButton: {
@@ -58,12 +58,9 @@ const useStyles = makeStyles(theme => ({
         },
     },
     toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        width: drawerWidth,
-    },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
     },
     sectionDesktop: {
         display: 'none',
@@ -276,7 +273,7 @@ function Layout(props) {
             {renderMobileMenu}
             {renderMenu}
 
-            <nav className={classes.drawer} aria-label="mailbox folders">
+            <nav className={classes.drawer}>
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                 <Hidden smUp implementation="css">
                     <Drawer
@@ -285,9 +282,6 @@ function Layout(props) {
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={mobileOpen}
                         onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
                         ModalProps={{
                             keepMounted: true, // Better open performance on mobile.
                         }}
@@ -297,9 +291,6 @@ function Layout(props) {
                 </Hidden>
                 <Hidden xsDown implementation="css">
                     <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
                         variant="permanent"
                         open
                     >

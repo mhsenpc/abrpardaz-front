@@ -103,7 +103,7 @@ export default function Invoices() {
                                         {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        <Button onClick={() => showDetails(row.data,row.amount,row.vat,row.total)}>نمایش جزئیات</Button>
+                                        <Button variant={"outlined"} color={"primary"} onClick={() => showDetails(row.data,row.amount,row.vat,row.total)}>نمایش جزئیات</Button>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Button variant={"outlined"} color={"primary"} onClick={() => pay(row.id)}>
