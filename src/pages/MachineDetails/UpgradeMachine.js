@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import {api_base, NotificationMarkAllRead, plansList} from "../../Api";
 import Button from "@material-ui/core/Button";
 import {Checkbox} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles({
@@ -46,7 +47,7 @@ function UpgradeMachine(props) {
     }, []);
 
     function requestUpgrade() {
-        axios.post(api_base + 'machines/' + props.id.toString() + '/rescale',{plan_id:planId})
+        axios.post(api_base + 'machines/' + props.id.toString() + '/rescale', {plan_id: planId})
             .then(res => {
                 props.setResponse(res.data)
             })
@@ -54,13 +55,10 @@ function UpgradeMachine(props) {
 
     return (
         <div>
-            <Box item xs={12}
-                 direction="row"
-                 alignItems="center"
-            >
+            <Grid item xs={12}>
                 <Paper>
-                    <Box width={700}>
-                        <h1>ارتقاء سرور</h1>
+                    <Box width={700} p={1}>
+                        <h2>ارتقاء سرور</h2>
                         <p>
                             نیاز به افزایش قدرت سرور دارید؟ کافیست سرور را به پلن قدرتمندتری ارتقاء دهید
                         </p>
@@ -82,7 +80,7 @@ function UpgradeMachine(props) {
 
 
                         {items.map(row => (
-                            <Button onClick={()=>setPlanId(row.id)}>
+                            <Button onClick={() => setPlanId(row.id)}>
                                 <Card className={classes.card}>
                                     <CardContent>
                                         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -95,7 +93,7 @@ function UpgradeMachine(props) {
                                             Ram: {row.ram}GB
                                         </Typography>
                                         <Typography variant="h5" component="h2">
-                                             ساعتی {row.hourly_price} تومان
+                                            ساعتی {row.hourly_price} تومان
                                         </Typography>
                                         <Typography className={classes.pos} color="textSecondary">
                                             Disk: {row.disk}GB
@@ -109,13 +107,13 @@ function UpgradeMachine(props) {
                             </Button>
                         ))}
 
-                        <br />
-                        <br />
-                        <Button variant="contained" color="primary" onClick={() => requestUpgrade()} >ارتقاء</Button>
+                        <br/>
+                        <br/>
+                        <Button variant="contained" color="primary" onClick={() => requestUpgrade()}>ارتقاء</Button>
 
                     </Box>
                 </Paper>
-            </Box>
+            </Grid>
         </div>
     );
 }

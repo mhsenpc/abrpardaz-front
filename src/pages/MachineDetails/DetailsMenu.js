@@ -114,7 +114,7 @@ export default function DetailsMenu(props) {
     }
 
     return (
-        <Grid container>
+        <div>
             <Grid container item xs={12}>
                 <Grid xs={3}>
                     <CreateIcon />
@@ -226,6 +226,6 @@ export default function DetailsMenu(props) {
                 </TabPanel>
             </div>
             <MessageBox response={response}/>
-        </Grid>
+        </div>
     );
 }

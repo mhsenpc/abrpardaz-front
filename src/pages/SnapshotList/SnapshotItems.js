@@ -8,64 +8,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {api_base, machinesList, snapshotsList} from "../../Api";
+import {api_base, snapshotsList} from "../../Api";
 import DeleteIcon from '@material-ui/icons/Delete';
 import swal from "sweetalert";
-import Button from "@material-ui/core/Button";
-import {TextField} from "@material-ui/core";
-import CancelIcon from '@material-ui/icons/Cancel';
+import SnapshotName from "./SnapshotName";
 
 
-function SnapshotName(props) {
-    const [editMode, setEditMode] = React.useState(false);
-    const [snapshotName, setSnapshotName] = React.useState('');
-
-    React.useEffect(() => {
-        setSnapshotName(props.row.name)
-    }, []);
-
-    function requestRenameSnapshot(id) {
-        axios.post(api_base + "snapshots/" + id.toString() + "/rename", {name: snapshotName})
-            .then(res => {
-                props.setResponse(res.data)
-                setEditMode(false);
-            })
-    }
-
-    if (editMode) {
-        return (
-            <div>
-                <TextField
-                    id="outlined-full-width"
-                    name="name"
-                    label="نام جدید"
-                    placeholder=""
-                    variant="outlined"
-                    value={snapshotName}
-                    onChange={event => setSnapshotName(event.target.value)}
-                />
-                <Button variant="contained" color="primary" onClick={() => requestRenameSnapshot(props.row.id)}>
-                    تغییر نام
-                </Button>
-                <CancelIcon onClick={() => setEditMode(false)}/>
-            </div>
-        )
-    } else {
-        return (
-            <span onClick={() => setEditMode(true)}>
-                    {snapshotName}
-                </span>
-        )
-    }
-}
-
-
-
-export default function SnapshotItems() {
+export default function SnapshotItems(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
-    const [machineItems, setMachineItems] = React.useState([]);
-    const [machineId, setMachineId] = React.useState(null);
-    const [response, setResponse] = React.useState([]);
     const JDate = require('jalali-date');
 
     let user_id;
@@ -76,15 +26,6 @@ export default function SnapshotItems() {
 
 
     React.useEffect(() => {
-        axios.get(api_base + machinesList)
-            .then(res => {
-                const list = res.data.list;
-
-                setMachineItems(list);
-                if (list.length > 0)
-                    setMachineId(list[0].id);
-            })
-
         loadSnapshots();
 
         if (user_id) {
@@ -92,6 +33,7 @@ export default function SnapshotItems() {
             channel.listen('.snapshot.created', function (data) {
                 alert(JSON.stringify(data));
                 //TODO: update snapshot which its creation process is completed
+                loadSnapshots();
             });
         }
     }, []);
@@ -113,7 +55,7 @@ export default function SnapshotItems() {
             if (isConfirm) {
                 axios.delete(api_base + 'snapshots/' + id + '/remove')
                     .then(res => {
-                        setResponse(res.data)
+                        props.setResponse(res.data)
                         loadSnapshots();
                     })
             }
@@ -143,10 +85,10 @@ export default function SnapshotItems() {
                             <TableRow key={row.id}>
 
                                 <TableCell component="th" scope="row">
-                                    <SnapshotName setResponse={setResponse} row={row}/>
+                                    <SnapshotName setResponse={props.setResponse} row={row}/>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
+                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}
                                 </TableCell>
                                 <TableCell component="th" scope="row">
                                     <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر

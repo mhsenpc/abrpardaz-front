@@ -49,72 +49,66 @@ export default function ServerSnapshotsList(props) {
             })
     }
 
-
     return (
+        <Paper>
+            <Box width={700} p={1}>
+                <h2>تصاویر آنی</h2>
+                <p>
+                    تصاویر آنی کپی لحظه ای از دیسک های سرور شماست.
+                </p>
+                <p>
+                    شما می توانید از تصویر آنی سرور جدیدی بسازید و حتی آن را به پروژه دیگری منتقل کنید
+                </p>
+                <p>
+                    ما پیشنهاد می کنیم که برای جلوگیری از تخریب اطلاعات روی دیسک، قبل از تهیه تصویر آنی، سرور
+                    خود را
+                    خاموش نمایید
+                </p>
+                <p>
+                    هزینه استفاده از تصویر آنی 100 تومان به ازای هر گیگابایت است
+                </p>
+                <Button>تهیه تصویر آنی</Button>
 
-        <div>
-            <Box width={700}>
-                <Paper variant="outlined">
-                    <div style={{direction: "rtl"}}>
-                        <h1>تصاویر آنی</h1>
-                        <p>
-                            تصاویر آنی کپی لحظه ای از دیسک های سرور شماست.
-                        </p>
-                        <p>
-                            شما می توانید از تصویر آنی سرور جدیدی بسازید و حتی آن را به پروژه دیگری منتقل کنید
-                        </p>
-                        <p>
-                            ما پیشنهاد می کنیم که برای جلوگیری از تخریب اطلاعات روی دیسک، قبل از تهیه تصویر آنی، سرور
-                            خود را
-                            خاموش نمایید
-                        </p>
-                        <p>
-                            هزینه استفاده از تصویر آنی 100 تومان به ازای هر گیگابایت است
-                        </p>
-                        <Button>تهیه تصویر آنی</Button>
+                <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>نام</TableCell>
+                                <TableCell align="right">لوگو</TableCell>
+                                <TableCell align="right">نام کاربری</TableCell>
+                                <TableCell align="right">تاریخ ساخت</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {snapShotItems.map(row => (
+                                <TableRow key={row.name}>
 
-                        <TableContainer component={Paper}>
-                            <Table className={classes.table} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>نام</TableCell>
-                                        <TableCell align="right">لوگو</TableCell>
-                                        <TableCell align="right">نام کاربری</TableCell>
-                                        <TableCell align="right">تاریخ ساخت</TableCell>
-                                        <TableCell align="right">وضعیت</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {snapShotItems.map(row => (
-                                        <TableRow key={row.name}>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.remote_id}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.created_at}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        <h5>خالی</h5>
+                                    </TableCell>
 
-                                            <TableCell component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row.remote_id}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row.created_at}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                <h5>خالی</h5>
-                                            </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
+                                    </TableCell>
 
-                                            <TableCell component="th" scope="row">
-                                                <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
-                                            </TableCell>
+                                </TableRow>
 
-                                        </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
-                </Paper>
             </Box>
-        </div>
+        </Paper>
     );
-
 }

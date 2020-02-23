@@ -5,7 +5,7 @@ import React from 'react';
 export default function SnapshotRules() {
 
     return(
-        <div style={{color: "red", direction: "rtl"}}>
+        <div style={{color: "red", }}>
             قوانین نامگذاری تصاویر آنی:
             <ul>
                 <li>

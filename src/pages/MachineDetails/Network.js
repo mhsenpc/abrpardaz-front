@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Paper from "@material-ui/core/Paper/Paper";
+import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
 import {makeStyles, Table} from "@material-ui/core";
 import TableHead from "@material-ui/core/TableHead";
@@ -10,18 +10,19 @@ import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
 const useStyles = makeStyles({
-
+    table: {
+        minWidth: 650,
+    },
 });
 
 export default function Network() {
     const classes = useStyles();
 
     return (
-        <div>
             <Grid item xs={12}>
                 <Paper>
-                    <Box>
-                        <h1>شبکه</h1>
+                    <Box width={700} p={1}>
+                        <h2>شبکه</h2>
                         <Table>
                             <TableContainer component={Paper}>
                                 <Table className={classes.table} aria-label="simple table">
@@ -58,6 +59,5 @@ export default function Network() {
                 </Paper>
             </Grid>
 
-        </div>
     )
 }

@@ -1,21 +1,17 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Paper from "@material-ui/core/Paper/Paper";
+import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
 export default function Backups() {
     return (
         <div>
-            <Grid item xs={12}
-                  direction="row"
-                  alignItems="center"
-                  style={{direction: "rtl"}}
-            >
+            <Grid item xs={12}>
                 <Box>
-                <Paper variant="outlined" >
-                    <Box width={700}>
-                        <h1>نسخه های پشتیبان</h1>
+                <Paper>
+                    <Box width={700} p={1}>
+                        <h2>نسخه های پشتیبان</h2>
                         <p>
                             نسخه پشتیبان یک کپی از دیسک سرور شماست که بصورت اتوماتیک تهیه می گردد. به ازای هر سرور 7
                             جایگاه نسخه پشتیبان وجود دارد.

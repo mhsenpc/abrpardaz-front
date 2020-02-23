@@ -1,20 +1,16 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Paper from "@material-ui/core/Paper/Paper";
+import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
 export default function Power() {
     return (
         <div>
-            <Grid item xs={12}
-                  direction="row"
-                  alignItems="center"
-                  style={{direction: "rtl"}}
-            >
-                <Paper variant="outlined">
-                    <Box width={700}>
-                        <h1>برق</h1>
+            <Grid item xs={12} >
+                <Paper>
+                    <Box p={1} width={700}>
+                        <h2>برق</h2>
                         <p>
                             "خاموش کردن نرم" به سیستم عامل و نرم افزارهای سرور شما اجازه می دهد که به شکل استاندارد فرآیند بسته شدن و ذخیره اطلاعات نهایی روی دیسک را انجام دهند.
                         </p>
@@ -32,9 +28,9 @@ export default function Power() {
                     </Box>
                 </Paper>
 
-                <Paper variant="outlined">
-                    <Box width={700}>
-                        <h1>راه اندازی سخت</h1>
+                <Paper>
+                    <Box width={700} p={1}>
+                        <h2>راه اندازی سخت</h2>
                         <p>
                             زدن این دکمه باعث راه اندازی مجدد سرور شما می گردد. توجه کنید که این عملیات ممکن است باعث آسیب به اطلاعات سرور شما گردد.
                         </p>

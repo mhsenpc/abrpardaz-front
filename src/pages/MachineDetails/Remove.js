@@ -35,15 +35,10 @@ function Remove(props) {
 
     return (
         <div>
-            <Grid item xs={12} container
-                  direction="row"
-                  alignItems="center"
-                  style={{direction: 'rtl'}}
-            >
+            <Grid item xs={12}>
                 <Paper>
-
-                    <Box p={2} width={700}>
-                        <h1>حذف سرور</h1>
+                    <Box p={1} width={700}>
+                        <h2>حذف سرور</h2>
                         <p>
                             حذف سرور باعث متوقف شدن تمام پردازش های سرور و نابودی سیستم عامل، دیسک و نسخه های پشتیبان آن
                             می گردد.

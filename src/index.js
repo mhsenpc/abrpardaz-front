@@ -11,7 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
 import SshKeyList from "./pages/SshKeys/SshkeyList";
 import Transactions from "./pages/Transactions";
-import SnapshotList from "./pages/SnapshotList";
+import SnapshotList from "./pages/SnapshotList/SnapshotList";
 import TicketList from "./pages/Tickets/TicketList";
 import CreateMachinePage from "./pages/CreateMachine/CreateMachinePage";
 import Login from "./pages/Auth/Login";
