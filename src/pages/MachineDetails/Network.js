@@ -10,9 +10,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
+
 });
 
 export default function Network() {
@@ -20,13 +18,9 @@ export default function Network() {
 
     return (
         <div>
-            <Grid item xs={12}
-                  direction="row"
-                  alignItems="center"
-                  style={{direction: "rtl"}}
-            >
+            <Grid item xs={12}>
                 <Paper>
-                    <Box width={700}>
+                    <Box>
                         <h1>شبکه</h1>
                         <Table>
                             <TableContainer component={Paper}>

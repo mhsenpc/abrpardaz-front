@@ -83,7 +83,7 @@ const DefaultLayout = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
             <ThemeProvider theme={theme}>
-                <div dir="rtl">
+                <div>
                     <Layout>
                         <Component {...matchProps} />
                     </Layout>

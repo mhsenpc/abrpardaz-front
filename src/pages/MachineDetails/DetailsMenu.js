@@ -95,6 +95,7 @@ export default function DetailsMenu(props) {
     const [response, setResponse] = React.useState([]);
 
     React.useEffect(() => {
+        props.setDrawerFullWidth(false)
         axios.get(api_base + 'machines/' + id.toString() + '/details')
             .then(res => {
                 const machine = res.data.machine;

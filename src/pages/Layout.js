@@ -15,7 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import axios from "axios";
 import {api_base, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
@@ -28,11 +28,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {mainListItems, secondaryListItems} from "./MenuItems";
 import Grid from "@material-ui/core/Grid";
+import clsx from 'clsx';
 
 
-
-
-const drawerWidth = 240;
+let drawerWidth = 150;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -40,16 +39,42 @@ const useStyles = makeStyles(theme => ({
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
+            whiteSpace: 'nowrap',
             width: drawerWidth,
-            flexShrink: 0,
+            flexShrink: 0
+        },
+    },
+    drawerOpen: {
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9) + 1,
         },
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         [theme.breakpoints.up('sm')]: {
-           // width: `calc(100% - ${drawerWidth}px)`,
+            //width: `calc(100% - ${drawerWidth}px)`,
             //marginLeft: drawerWidth,
         },
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -57,7 +82,13 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: {
+        display: 'flex',
+        alignItems: 'right',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        ...theme.mixins.toolbar,
+    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(1),
@@ -78,7 +109,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Layout(props) {
-    const { container } = props;
+    const {container} = props;
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -86,6 +117,7 @@ function Layout(props) {
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+    const [drawerFullWidth, setDrawerFullWidth] = React.useState(true);
 
     const [unreadCount, setUnreadCount] = React.useState([]);
 
@@ -138,7 +170,7 @@ function Layout(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {secondaryListItems.map(row=>(
+            {secondaryListItems.map(row => (
                 <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
             ))}
 
@@ -160,7 +192,7 @@ function Layout(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            {secondaryListItems.map(row=>(
+            {secondaryListItems.map(row => (
                 <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
             ))}
 
@@ -182,7 +214,6 @@ function Layout(props) {
     }, []);
 
 
-
     function requestLogout() {
         axios.put(api_base + 'auth/logout')
             .then(res => {
@@ -201,8 +232,8 @@ function Layout(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar} />
-            <Divider />
+            <div className={classes.toolbar}/>
+            <Divider/>
             <List>{mainListItems}</List>
 
         </div>
@@ -210,29 +241,32 @@ function Layout(props) {
 
     return (
         <div dir={"rtl"} className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
+            <CssBaseline/>
+            <AppBar position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: drawerFullWidth,
+                    })}>
                 <Toolbar>
                     <Grid item xs={11}>
 
-                    <Typography variant="h6" noWrap>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        ابر پرداز
-                    </Typography>
+                        <Typography variant="h6" noWrap>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                edge="start"
+                                onClick={handleDrawerToggle}
+                                className={classes.menuButton}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                            ابر پرداز
+                        </Typography>
                     </Grid>
 
 
-                    <Grid item xs={2}  md={1}>
+                    <Grid item xs={2} md={1}>
                         <div className={classes.sectionDesktop}>
-                            <IconButton  color="inherit" href={"/Notifications"} >
+                            <IconButton color="inherit" href={"/Notifications"}>
                                 <Badge badgeContent={unreadCount} color="secondary">
                                     <NotificationsIcon/>
                                 </Badge>
@@ -249,7 +283,7 @@ function Layout(props) {
                             </IconButton>
                         </div>
                         <div className={classes.sectionMobile}>
-                            <IconButton  color="inherit" href={"/Notifications"} >
+                            <IconButton color="inherit" href={"/Notifications"}>
                                 <Badge badgeContent={unreadCount} color="secondary">
                                     <NotificationsIcon/>
                                 </Badge>
@@ -273,8 +307,7 @@ function Layout(props) {
             {renderMobileMenu}
             {renderMenu}
 
-            <nav className={classes.drawer}>
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+            <nav>
                 <Hidden smUp implementation="css">
                     <Drawer
                         container={container}
@@ -292,15 +325,24 @@ function Layout(props) {
                 <Hidden xsDown implementation="css">
                     <Drawer
                         variant="permanent"
-                        open
+                        className={clsx(classes.drawer, {
+                            [classes.drawerOpen]: drawerFullWidth,
+                            [classes.drawerClose]: !drawerFullWidth,
+                        })}
+                        classes={{
+                            paper: clsx({
+                                [classes.drawerOpen]: drawerFullWidth,
+                                [classes.drawerClose]: !drawerFullWidth,
+                            }),
+                        }}
                     >
                         {drawer}
                     </Drawer>
                 </Hidden>
             </nav>
             <main className={classes.content}>
-                <div className={classes.toolbar} />
-                {props.children}
+                <div className={classes.toolbar}/>
+                {React.cloneElement(props.children, {setDrawerFullWidth: setDrawerFullWidth})}
             </main>
             <MessageBox response={response}/>
         </div>
