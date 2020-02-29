@@ -11,6 +11,9 @@ import Button from "@material-ui/core/Button";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,9 +48,9 @@ function TicketList() {
 
         <Grid container spacing={3}>
             <Grid item xs={12}>
-                <Paper className={classes.paper} style={{padding:10}}>
+                <Paper className={classes.paper} style={{padding: 10}}>
                     <Grid container>
-                        <Grid item xs={8} md={10} >
+                        <Grid item xs={8} md={10}>
                             <h2>
                                 پشتیبانی
                             </h2>
@@ -60,9 +63,29 @@ function TicketList() {
                         </Grid>
                     </Grid>
 
+                    <Grid item xs={12}>
+                        <Select>
+                            <MenuItem>همه</MenuItem>
+                            <MenuItem>بدون پاسخ</MenuItem>
+                            <MenuItem>پاسخ مشتری</MenuItem>
+                            <MenuItem>باز</MenuItem>
+                            <MenuItem>بسته شده</MenuItem>
+                            <MenuItem>پاسخ اپراتور</MenuItem>
+                        </Select>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Select>
+                            <MenuItem>جدیدترین تیکت</MenuItem>
+                            <MenuItem>جدیدترین پاسخ</MenuItem>
+                            <MenuItem>قدیمی ترین تیکت</MenuItem>
+                            <MenuItem>قدیمی ترین پاسخ</MenuItem>
+                        </Select>
+                    </Grid>
 
                     {items.map(row => (
                         <Grid item xs={12}>
+
                             <Card variant={"outlined"} className={classes.ticketItem}>
                                 <CardContent key={row.id}>
                                     <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -75,7 +98,7 @@ function TicketList() {
                                             <Grid item xs={4}>
                                                 <Typography className={classes.title} color="textSecondary">
                                                     ایجاد شده در
-                                                    {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}&nbsp;
+                                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
                                                     {new Date(row.created_at).toLocaleTimeString()}
                                                 </Typography>
                                             </Grid>

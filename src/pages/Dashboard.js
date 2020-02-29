@@ -3,8 +3,33 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Alert from "@material-ui/lab/Alert/Alert";
+import axios from "axios";
+import {api_base, machinesList, ProjectsListPath, snapshotsList} from "../Api";
 
 export default function Dashboard() {
+    const [machinesCount, setMachinesCount] = React.useState(0);
+    const [snapshotsCount, setSnapshotsCount] = React.useState(0);
+    const [projectsCount, setProjectsCount] = React.useState(0);
+
+    React.useEffect(() => {
+        axios.get(api_base + ProjectsListPath)
+            .then(res => {
+                setProjectsCount(res.data.list.length)
+            })
+
+        axios.get(api_base + machinesList)
+            .then(res => {
+                setMachinesCount(res.data.list.length)
+            })
+
+        axios.get(api_base + snapshotsList)
+            .then(res => {
+                setSnapshotsCount(res.data.list.length)
+            })
+
+    }, []);
+
+
     return (
         <Paper>
             <Grid item xs={12}>
@@ -23,7 +48,7 @@ export default function Dashboard() {
                         <Paper variant={"outlined"}>
                             <Box p={2}>
                                 <p>تعداد ماشین</p>
-                                <p>5</p>
+                                <p>{machinesCount}</p>
                             </Box>
                         </Paper>
                     </Grid>
@@ -34,7 +59,7 @@ export default function Dashboard() {
                         <Paper variant={"outlined"}>
                             <Box p={2}>
                                 <p>تعداد تصاویر آنی</p>
-                                <p>5</p>
+                                <p>{snapshotsCount}</p>
                             </Box>
                         </Paper>
                     </Grid>
@@ -45,7 +70,7 @@ export default function Dashboard() {
                         <Paper variant={"outlined"}>
                             <Box p={2}>
                                 <p>تعداد پروژه ها</p>
-                                <p>5</p>
+                                <p>{projectsCount}</p>
                             </Box>
                         </Paper>
                     </Grid>

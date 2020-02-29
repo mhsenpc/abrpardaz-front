@@ -57,8 +57,6 @@ export default function ProjectsList() {
     const [name, setName] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
-    const paper = paperStyle();
-    const bull = <span className={classes.bullet}>•</span>;
 
 
     React.useEffect(() => {
