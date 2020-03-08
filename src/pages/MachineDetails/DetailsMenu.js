@@ -30,6 +30,8 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import PowerIcon from '@material-ui/icons/Power';
 import DnsIcon from '@material-ui/icons/Dns';
 import CreateIcon from '@material-ui/icons/Create';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -73,26 +75,56 @@ const useStyles = makeStyles(theme => ({
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
     },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
 }));
 
 export default function DetailsMenu(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-    });
-    const handleChangePower = name => event => {
-        setState({...state, [name]: event.target.checked});
-    };
+    const [powerState, setPowerState] = React.useState(0);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     const id = props.match.params.id;
-    const [machine, setMachine] = React.useState({name: '' , plan:[] });
+    const [machine, setMachine] = React.useState({name: '', plan: []});
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState('');
     const [response, setResponse] = React.useState([]);
+    const [backDropOpen, setBackDropOpen] = React.useState(true);
+
+    function handleChangePower() {
+        if (powerState) {
+            requestPowerOff()
+            setPowerState(!powerState);
+        }
+        else{
+            requestPowerOn();
+        }
+
+        setPowerState(!powerState);
+    }
+
+    function requestPowerOn() {
+        axios.put(api_base + 'machines/' + id.toString() + '/powerOn')
+            .then(res => {
+                setResponse(res.data);
+                if (res.data.success)
+                    setPowerState(true);
+            })
+    }
+
+    function requestPowerOff() {
+        axios.put(api_base + 'machines/' + id.toString() + '/powerOff')
+            .then(res => {
+                setResponse(res.data);
+                if (res.data.success)
+                    setPowerState(false);
+            })
+    }
 
     React.useEffect(() => {
         props.setDrawerFullWidth(false)
@@ -102,6 +134,12 @@ export default function DetailsMenu(props) {
 
                 setMachine(machine);
                 setName(machine.name)
+                if(machine.status == 'SHUTOFF')
+                    setPowerState(0);
+                else
+                    setPowerState(1);
+
+                setBackDropOpen(false)
             })
     }, []);
 
@@ -113,11 +151,16 @@ export default function DetailsMenu(props) {
             })
     }
 
+    const handleBackdropClose = () => {
+        setBackDropOpen(false);
+    };
+
+
     return (
         <div>
             <Grid container item xs={12}>
                 <Grid xs={3}>
-                    <CreateIcon />
+                    <CreateIcon/>
                     {editMode == true &&
                     <span>
                     <TextField
@@ -154,14 +197,14 @@ export default function DetailsMenu(props) {
                             <div>
                                 <PowerIcon/>
                                 <Switch
-                                    checked={state.checkedB}
-                                    onChange={handleChangePower('checkedB')}
-                                    value="checkedB"
+                                    checked={powerState}
+                                    onChange={handleChangePower}
+                                    value={powerState}
                                     color="primary"
                                 />
                             </div>
                         }
-                        label="روشن"
+                        label={(powerState == 1 ? 'روشن' : 'خاموش')}
                     />
                 </Grid>
 
@@ -192,22 +235,22 @@ export default function DetailsMenu(props) {
                     <Overview id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Graphs id={id} machine={machine} setResponse={setResponse} />
+                    <Graphs id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Backups id={id} machine={machine} setResponse={setResponse} />
+                    <Backups id={id} machine={machine} setMachine={setMachine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
                     <ServerSnapshotsList id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    <Network id={id} machine={machine} setResponse={setResponse} />
+                    <Network id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    <Volumes id={id} machine={machine} setResponse={setResponse} />
+                    <Volumes id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={6}>
-                    <Power id={id} machine={machine} setResponse={setResponse} />
+                    <Power id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={7}>
                     <Rescue id={id} machine={machine} setResponse={setResponse}/>
@@ -216,16 +259,19 @@ export default function DetailsMenu(props) {
                     <IsoImages id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={9}>
-                    <UpgradeMachine id={id} machine={machine} setResponse={setResponse} />
+                    <UpgradeMachine id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={10}>
-                    <Rebuild id={id} machine={machine} setResponse={setResponse} />
+                    <Rebuild id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
                 <TabPanel value={value} index={11}>
-                    <Remove id={id} machine={machine} setResponse={setResponse} />
+                    <Remove id={id} machine={machine} setResponse={setResponse}/>
                 </TabPanel>
             </div>
             <MessageBox response={response}/>
+            <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     );
 }

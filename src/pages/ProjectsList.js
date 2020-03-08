@@ -14,42 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import Box from "@material-ui/core/Box";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from "@material-ui/core/Backdrop";
 
-
-const useStyles = makeStyles({
-    root: {
-        minWidth: 235,
+const useStyles = makeStyles(theme => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
     },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
-
-const paperStyle = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            margin: 'auto',
-            maxWidth: 700,
-
-        },
-        alignText: {
-            textAlign: 'right'
-        }
-    }),
-);
-
+}));
 
 export default function ProjectsList() {
     const [machines, setMachines] = React.useState([]);
@@ -57,7 +30,11 @@ export default function ProjectsList() {
     const [name, setName] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
+    const [backDropOpen, setBackDropOpen] = React.useState(true);
 
+    const handleBackdropClose = () => {
+        setBackDropOpen(false);
+    };
 
     React.useEffect(() => {
         loadProjects()
@@ -65,9 +42,11 @@ export default function ProjectsList() {
 
 
     function loadProjects() {
+        setBackDropOpen(true)
         axios.get(api_base + ProjectsListPath)
             .then(res => {
                 setMachines(res.data.list)
+                setBackDropOpen(false)
             })
     }
 
@@ -116,6 +95,9 @@ export default function ProjectsList() {
             </SimpleModal>
 
             <MessageBox response={response}/>
+            <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Grid>
     )
 }

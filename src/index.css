@@ -60,3 +60,7 @@ code {
 .snapshotItem{
     padding-top: 2em;
 }
+
+.menuItem{
+    text-align: right;
+}

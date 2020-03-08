@@ -14,46 +14,46 @@ import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 
 export const mainListItems = (
     <div>
-        <ListItem button component="a" href="/">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/">
             <ListItemIcon>
                 <DashboardIcon/>
             </ListItemIcon>
             <ListItemText primary="داشبورد"/>
         </ListItem>
-        <ListItem button component="a" href="/ProjectsList">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/ProjectsList">
             <ListItemIcon>
                 <DnsIcon/>
             </ListItemIcon>
             <ListItemText primary="سرورهای من"/>
         </ListItem>
 
-        <ListItem button component="a" href="/snapshotList">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/snapshotList">
             <ListItemIcon>
                 <BackupIcon/>
             </ListItemIcon>
             <ListItemText primary="تصاویر آنی"/>
         </ListItem>
 
-        <ListItem button component="a" href="/Sshkeylist">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/Sshkeylist">
             <ListItemIcon>
                 <VpnKeyIcon/>
             </ListItemIcon>
             <ListItemText primary="کلیدهای امنیتی"/>
         </ListItem>
-        <ListItem button component="a" href="/Invoices">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/Invoices">
             <ListItemIcon>
                 <AttachMoneyIcon/>
             </ListItemIcon>
             <ListItemText primary="امور مالی"/>
         </ListItem>
         <Divider/>
-        <ListItem button component="a" href="/faq">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/faq">
             <ListItemIcon>
                 <HelpIcon/>
             </ListItemIcon>
             <ListItemText primary="پرسش و پاسخ"/>
         </ListItem>
-        <ListItem button component="a" href="/tickets">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/tickets">
             <ListItemIcon>
                 <HeadsetMicIcon/>
             </ListItemIcon>
@@ -61,7 +61,7 @@ export const mainListItems = (
         </ListItem>
 
         {sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&
-        <ListItem button component="a" href="/UsersList">
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/UsersList">
             <ListItemIcon>
                 <LayersIcon/>
             </ListItemIcon>

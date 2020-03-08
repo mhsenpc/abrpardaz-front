@@ -22,11 +22,15 @@ function Remove(props) {
                 let id = props.id.toString();
                 axios.delete(api_base + 'machines/' + id + '/remove')
                     .then(res => {
-                        const msg = res.data.data.message;
+                        const msg = res.data.message;
 
-                        alert(msg)
-
-                        window.location.href = '/ProjectsList/';
+                        if (res.data.success) {
+                            swal(msg, '', 'success').then(function(){
+                                window.location.href = '/ProjectsList';
+                            });
+                        } else {
+                            swal(msg, '', 'error');
+                        }
                     })
             }
         });
