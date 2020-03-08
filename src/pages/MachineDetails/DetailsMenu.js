@@ -90,7 +90,7 @@ export default function DetailsMenu(props) {
         setValue(newValue);
     };
     const id = props.match.params.id;
-    const [machine, setMachine] = React.useState({name: '', plan: []});
+    const [machine, setMachine] = React.useState({name: '', plan: {hourly_price:0}});
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState('');
     const [response, setResponse] = React.useState([]);

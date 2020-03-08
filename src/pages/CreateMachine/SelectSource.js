@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Storage from '@material-ui/icons/Storage';
@@ -11,8 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {api_base, imagesList, snapshotsList} from "../../Api";
 
@@ -57,6 +53,9 @@ export default function SelectSource(props) {
             .then(res => {
                 const list = res.data.list;
                 setOsItems(list);
+                if (list.length > 0) {
+                    props.setImageId(list[0].id)
+                }
             });
 
         axios.get(api_base + snapshotsList)
@@ -67,15 +66,40 @@ export default function SelectSource(props) {
             })
     }, []);
 
+    function isImageActive(id) {
+        if (id == props.imageId) {
+            return 'active';
+        } else {
+            return '';
+        }
+    }
+
+    function isSnapshotActive(id) {
+        if (id == props.snapshotId) {
+            return 'active';
+        } else {
+            return '';
+        }
+    }
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        if(newValue == 0){
+            props.setSnapshotId(null);
+        }
+        else if(newValue == 1){
+            props.setImageId(null);
+        }
     };
 
-    const handleClick = id => {
+    const selectImage = id => {
         props.setImageId(id)
     };
 
+    const selectSnapshot = id => {
+        props.setSnapshotId(id)
+    };
 
     return (
         <Grid item xs={12}>
@@ -85,7 +109,6 @@ export default function SelectSource(props) {
                 variant="fullWidth"
                 indicatorColor="secondary"
                 textColor="secondary"
-                aria-label="icon label tabs example"
             >
                 <Tab label="سیستم عامل" icon={<Description/>} {...a11yProps(0)} />
                 <Tab label="تصاویر آنی" icon={<Storage/>} {...a11yProps(1)} />
@@ -99,9 +122,12 @@ export default function SelectSource(props) {
                 <Grid container>
                     {osItems.map(row => (
                         <Grid item xs={12} md={4} style={{padding: 2}}>
-                            <Paper className={"boxItem osItem"} key={row.id} onClick={() => handleClick(row.id)}>
-                                <Save/>
-                                <h3>{row.name}{row.version}</h3>
+                            <Paper>
+                                <Box className={"boxItem osItem " + isImageActive(row.id)} key={row.id}
+                                     onClick={() => selectImage(row.id)}>
+                                    <Save/>
+                                    <h3>{row.name}{row.version}</h3>
+                                </Box>
                             </Paper>
                         </Grid>
                     ))}
@@ -115,9 +141,11 @@ export default function SelectSource(props) {
                 <Grid container>
                     {snapshotItems.map(row => (
                         <Grid item xs={12} md={4} style={{padding: 2}}>
-                            <Paper className={"boxItem snapshotItem"} key={row.id} onClick={() => handleClick(row.id)}>
-                                <Save/>
-                                <h3>{row.name}</h3>
+                            <Paper>
+                                <Box className={"boxItem snapshotItem " + isSnapshotActive(row.id)} key={row.id} onClick={() => selectSnapshot(row.id)}>
+                                    <Save/>
+                                    <h3>{row.name}</h3>
+                                </Box>
                             </Paper>
                         </Grid>
                     ))}

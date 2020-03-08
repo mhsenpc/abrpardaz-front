@@ -51,6 +51,7 @@ export default function SnapshotItems(props) {
         swal("آیا از حذف تصویر آنی اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
+            icon: "warning",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 axios.delete(api_base + 'snapshots/' + id + '/remove')

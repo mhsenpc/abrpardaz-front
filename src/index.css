@@ -17,6 +17,7 @@ code {
 }
 
 .boxItem {
+    transition: background-color 200ms linear;
     text-align: center;
     min-height: 10em;
     cursor: pointer;
@@ -63,4 +64,8 @@ code {
 
 .menuItem{
     text-align: right;
+}
+
+.active{
+    background-color: #ff3d32 !important;
 }

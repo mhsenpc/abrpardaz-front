@@ -66,7 +66,7 @@ export default function ProjectsList() {
     return (
         <Grid container spacing={1}>
             {machines.map(row => (
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={4} key={row.id}>
                     <Paper className={"boxItem projectItem"}  onClick={()=>window.location.href="servers/" + row.id.toString()}>
                         <Typography color="textSecondary">
                             {row.name}

@@ -31,7 +31,7 @@ import Grid from "@material-ui/core/Grid";
 import clsx from 'clsx';
 
 
-let drawerWidth = 150;
+let drawerWidth = 151;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -171,7 +171,7 @@ function Layout(props) {
             onClose={handleMenuClose}
         >
             {secondaryListItems.map(row => (
-                <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
+                <MenuItem key={row.url} component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
             ))}
 
             <MenuItem component="a" onClick={() => {
@@ -193,7 +193,7 @@ function Layout(props) {
             onClose={handleMobileMenuClose}
         >
             {secondaryListItems.map(row => (
-                <MenuItem component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
+                <MenuItem key={row.url} component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
             ))}
 
             <MenuItem onClick={() => {

@@ -11,6 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {api_base, machineSnapshotsList} from "../../Api";
+import swal from "sweetalert";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,26 +29,36 @@ const useStyles = makeStyles(theme => ({
 export default function ServerSnapshotsList(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
     const classes = useStyles();
+    const JDate = require('jalali-date');
 
     React.useEffect(() => {
+        loadSnapshots();
+    }, []);
+
+    function loadSnapshots() {
         axios.get(api_base + machineSnapshotsList + '?machine_id=' + props.id.toString())
 
             .then(res => {
-                console.log(res.data)
                 const list = res.data.list;
 
                 setSnapShotItems(list);
             })
-    }, []);
+    }
 
-    function removeSnapshots(id) {
-        axios.delete(api_base + 'snapshots/' + id + '/remove'
-        )
-            .then(res => {
-                const msg = res.data.message;
-
-                alert(msg)
-            })
+    function requestRemoveSnapshot(id) {
+        swal("آیا از حذف تصویر آنی اطمینان دارید؟", {
+            dangerMode: true,
+            buttons: true,
+            icon: "warning",
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                axios.delete(api_base + 'snapshots/' + id + '/remove')
+                    .then(res => {
+                        props.setResponse(res.data)
+                        loadSnapshots();
+                    })
+            }
+        });
     }
 
     return (
@@ -67,17 +79,13 @@ export default function ServerSnapshotsList(props) {
                 <p>
                     هزینه استفاده از تصویر آنی 100 تومان به ازای هر گیگابایت است
                 </p>
-                <Button>تهیه تصویر آنی</Button>
 
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>نام</TableCell>
-                                <TableCell align="right">لوگو</TableCell>
-                                <TableCell align="right">نام کاربری</TableCell>
-                                <TableCell align="right">تاریخ ساخت</TableCell>
-                                <TableCell align="right">وضعیت</TableCell>
+                                <TableCell >تاریخ ساخت</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -88,17 +96,13 @@ export default function ServerSnapshotsList(props) {
                                         {row.name}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {row.remote_id}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {row.created_at}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        <h5>خالی</h5>
+                                        {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                        {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
 
                                     <TableCell component="th" scope="row">
-                                        <a onClick={() => removeSnapshots(row.id)}>حذف تصویر آنی</a>
+                                        <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر
+                                            آنی</DeleteIcon>
                                     </TableCell>
 
                                 </TableRow>
