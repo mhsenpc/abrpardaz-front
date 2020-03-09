@@ -10,8 +10,6 @@ deploy:
     - npm install
     - CI=false
     - npm run build
-    - rm -rf public
-    - mv build public
     - apt-get update -qq && apt-get install -y -qq lftp
     - lftp -c "set ftp:ssl-allow no; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5 --exclude-glob .git* --exclude .git/"
   artifacts:
