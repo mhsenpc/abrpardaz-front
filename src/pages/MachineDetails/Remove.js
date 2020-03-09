@@ -17,6 +17,7 @@ function Remove(props) {
         swal("در صورت حذف ماشین ،اطلاعات آن نابود میگرددو این عملیات قابل برگشت نیست. آیا از حذف اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
+            icon: "warning",
         }).then(function (isConfirm) {
             if (isConfirm) {
                 let id = props.id.toString();

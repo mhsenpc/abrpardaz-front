@@ -32,6 +32,7 @@ import DnsIcon from '@material-ui/icons/Dns';
 import CreateIcon from '@material-ui/icons/Create';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import swal from 'sweetalert';
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -140,6 +141,10 @@ export default function DetailsMenu(props) {
                     setPowerState(1);
 
                 setBackDropOpen(false)
+
+                if(machine.status == 'ERROR'){
+                    swal('متاسفانه این سرور ساخته نشده است','ساخت این سرور به دلیل مشکلات فنی انجام نشده است. برای اطلاعات بیشتر لطفا با پشتیبانی تماس حاصل فرمایید','error');
+                }
             })
     }, []);
 

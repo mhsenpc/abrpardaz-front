@@ -1,9 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import EuroIcon from '@material-ui/icons/Euro';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import ComputerSharpIcon from '@material-ui/icons/ComputerSharp';
 import axios from "axios";
 import {api_base} from "../../Api";
 import CheckIcon from '@material-ui/icons/Check';
@@ -42,19 +40,22 @@ export default function Overview(props) {
 
                         <hr/>
                         <h3>فعالیت های سرور</h3>
-                        {items.map(row => (
-                            <div>
-                                <p>
-                                    <CheckIcon color={'primary'}/>
-                                    {row.message}
-                                </p>
+                        <div style={{    overflow: 'auto',
+                            maxHeight: 260,}}>
+                            {items.map(row => (
+                                <div>
+                                    <p>
+                                        <CheckIcon color={'primary'}/>
+                                        {row.message}
+                                    </p>
 
-                                <p>
-                                    {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
-                                </p>
+                                    <p>
+                                        {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
+                                    </p>
 
-                            </div>
-                        ))}
+                                </div>
+                            ))}
+                        </div>
                     </Box>
                 </Paper>
             </Grid>
