@@ -49,7 +49,7 @@ export default function CreateMachinePage() {
             </Grid>
             <Grid item xs={12}>
                 <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}
-                                prjectId={projectId}/>
+                                projectId={projectId}/>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>

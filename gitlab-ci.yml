@@ -1,0 +1,26 @@
+image: node:6.5.0 # can be upgraded, depending on your node version used
+
+pages:
+  cache:
+    paths:
+      - node_modules/
+
+
+variables:
+  HOST: "example.com"
+  USERNAME: "yourUserNameHere"
+  PASSWORD: "yourPasswordHere"
+
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - rm -rf public
+    - mv build public
+    - apt-get update -qq && apt-get install -y -qq lftp
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./ ./public_html --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+  artifacts:
+    paths:
+      - public # mandatory, other folder won't work
+  only:
+    - master # or dev, the branch you want to publish
