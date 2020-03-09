@@ -8,6 +8,7 @@ deploy:
   stage: deploy
   script:
     - npm install
+    - CI=false
     - npm run build
     - rm -rf public
     - mv build public
