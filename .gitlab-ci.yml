@@ -7,8 +7,8 @@ pages:
 
 
 variables:
-  HOST: "example.com"
-  USERNAME: "yourUserNameHere"
+  HOST: "abrpardaz.com"
+  USERNAME: "abrpardaz"
   PASSWORD: "yourPasswordHere"
 
   stage: deploy
