@@ -3,17 +3,18 @@ image: node:latest # can be upgraded, depending on your node version used
 cache:
   paths:
     - node_modules/
+before_script:
+  - npm ci --cache .npm --prefer-offline
 
 deploy:
   stage: deploy
   script:
     - npm install
     - CI=false
-    - echo $ftp_host
-    - echo $ftp_username
     - npm run build
 #    - apt-get update -qq && apt-get install -y -qq lftp
 #    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
+    - apt-get update -y
     - apt-get install -y -qq ncftp
     - ncftpput -R -v -u $ftp_username $ftp_host panel build/*
   artifacts:
