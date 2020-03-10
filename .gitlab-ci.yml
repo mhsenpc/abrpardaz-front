@@ -9,12 +9,12 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - npm install
+#    - npm install
     - CI=false
-    - npm run build
-    - apt-get update -qq && apt-get install -y -qq lftp
-#    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
+#    - npm run build
+    - apt-get update -qq && apt-get install -y -qq lftp telnet
     - telnet $ftp_host 21
+#    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
     - lftp -d -e "set ftp:ssl-allow 0;mirror -v -R build panel" -u $ftp_username,$ftp_password $ftp_host
   artifacts:
     paths:
