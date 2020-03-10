@@ -14,7 +14,7 @@ deploy:
     - npm run build
     - apt-get update -qq && apt-get install -y -qq lftp
 #    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
-    - lftp -e "mirror -R build panel" -u $ftp_username,$ftp_password $ftp_host
+    - lftp -e "mirror -v -R build panel" -u $ftp_username,$ftp_password $ftp_host
   artifacts:
     paths:
       - public # mandatory, other folder won't work
