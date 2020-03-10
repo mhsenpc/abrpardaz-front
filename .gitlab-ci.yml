@@ -12,8 +12,10 @@ deploy:
     - echo $ftp_host
     - echo $ftp_username
     - npm run build
-    - apt-get update -qq && apt-get install -y -qq lftp
-    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
+#    - apt-get update -qq && apt-get install -y -qq lftp
+#    - lftp -c "set ftp:ssl-allow false; open -u $ftp_username,$ftp_password $ftp_host; mirror -Rnev ./build/ ./panel --parallel=5"
+    - apt-get install -y -qq ncftp
+    - ncftpput -R -v -u $ftp_username $ftp_host panel build/*
   artifacts:
     paths:
       - public # mandatory, other folder won't work
