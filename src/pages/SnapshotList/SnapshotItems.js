@@ -67,7 +67,7 @@ export default function SnapshotItems(props) {
         <div>
             <h2>تصاویر آنی</h2>
 
-            {snapShotItems.length == 0 &&
+            {snapShotItems.length === 0 &&
             <Alert severity="warning">تاکنون هیچ تصویر آنی ساخته نشده است.</Alert>
             }
 

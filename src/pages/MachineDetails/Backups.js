@@ -35,7 +35,7 @@ export default function Backups(props) {
             <Grid item xs={12}>
                 <Box>
                     <Paper>
-                        <Box width={700} p={1}>
+                        <Box p={1}>
                             <h2>نسخه های پشتیبان</h2>
                             <p>
                                 نسخه پشتیبان یک کپی از دیسک سرور شماست که بصورت اتوماتیک تهیه می گردد. به ازای هر سرور 7
@@ -57,12 +57,12 @@ export default function Backups(props) {
 
                             <Button variant="contained" color="primary">اجرای دستی ساخت پشتیبان</Button>
                             &nbsp;
-                            {props.machine.backup == true &&
+                            {props.machine.backup === true &&
                             <Button onClick={() => requestDisableBackup()} variant="contained" color="secondary">غیرفعال
                                 سازی پشتیبان گیری خودکار</Button>
                             }
 
-                            {props.machine.backup == false &&
+                            {props.machine.backup === false &&
                             <Button onClick={() => requestEnableBackup()} variant="contained" color="primary">فعال سازی
                                 پشتیبان گیری خودکار</Button>
                             }

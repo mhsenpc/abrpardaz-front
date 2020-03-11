@@ -11,7 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {createStyles, makeStyles, Theme, withStyles} from '@material-ui/core/styles';
+import {createStyles, Theme, withStyles} from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -128,14 +128,14 @@ export default function SshkeyList() {
     }
 
     return (
-        <div >
+        <div>
 
             <Grid item xs={12} container>
 
-                <Paper  style={{padding: 10}}>
+                <Paper style={{padding: 10}}>
                     <Box>
                         <Grid container>
-                            <Grid item xs={8} md={10} >
+                            <Grid item xs={8} md={10}>
                                 <h2>
                                     کلیدهای امنیتی
                                 </h2>
@@ -155,7 +155,7 @@ export default function SshkeyList() {
                         </p>
 
                         <TableContainer component={Paper}
-                                        style={(items.length == 0) ? {display: 'none'} : {display: 'block'}}>
+                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
@@ -211,7 +211,7 @@ export default function SshkeyList() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        {items.length == 0 &&
+                        {items.length === 0 &&
                         <Alert severity="warning">
                             شما هنوز هیچ کلید امنیتی نساخته اید
                         </Alert>

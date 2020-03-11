@@ -7,13 +7,9 @@ import Button from '@material-ui/core/Button';
 import SimpleModal from "./SimpleModal";
 import TextField from '@material-ui/core/TextField';
 import MessageBox from "./MessageBox";
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import Box from "@material-ui/core/Box";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
 
@@ -67,7 +63,8 @@ export default function ProjectsList() {
         <Grid container spacing={1}>
             {machines.map(row => (
                 <Grid item xs={12} sm={4} key={row.id}>
-                    <Paper className={"boxItem projectItem"}  onClick={()=>window.location.href="servers/" + row.id.toString()}>
+                    <Paper className={"boxItem projectItem"}
+                           onClick={() => window.location.href = "servers/" + row.id.toString()}>
                         <Typography color="textSecondary">
                             {row.name}
                         </Typography>
@@ -88,15 +85,15 @@ export default function ProjectsList() {
                 <h2 id="simple-modal-title">نام پروژه را وارد نمایید</h2>
                 <TextField id="outlined-search" type="search" variant="outlined"
                            onChange={event => setName(event.target.value)}/>
-                           &nbsp;
-                <Button color={"primary"}  onClick={() => requestModal()} variant="contained">
+                &nbsp;
+                <Button color={"primary"} onClick={() => requestModal()} variant="contained">
                     ثبت
                 </Button>
             </SimpleModal>
 
             <MessageBox response={response}/>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
-                <CircularProgress color="inherit" />
+                <CircularProgress color="inherit"/>
             </Backdrop>
         </Grid>
     )

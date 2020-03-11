@@ -11,14 +11,6 @@ import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles({
-    card: {
-        minWidth: 275,
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
     title: {
         fontSize: 14,
     },
@@ -56,7 +48,7 @@ function UpgradeMachine(props) {
     }
 
     function isActive(id) {
-        if (id == planId) {
+        if (id === planId) {
             return 'active';
         } else {
             return '';
@@ -74,6 +66,8 @@ function UpgradeMachine(props) {
                         </p>
                         <p>
                             شما می توانید پردازنده و رم را ارتقا دهید و دیسک را تغییر ندهید یا دیسک را نیز گسترش دهید.
+                        </p>
+                        <p>
                             در صورتی می توانید به پلن انتخابی را تنزل بدهید که دیسک را تغییر نداده باشید. اگر اندازه
                             دیسک را تغییر داده باشید، تنزل پلن با دیسک کوچک تر ناممکن می گردد.
                         </p>

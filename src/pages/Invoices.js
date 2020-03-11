@@ -12,7 +12,6 @@ import {api_base, InvoicesListPath} from "../Api";
 import Button from '@material-ui/core/Button';
 import Alert from "@material-ui/lab/Alert/Alert";
 import SimpleModal from "./SimpleModal";
-import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles({
     root: {
@@ -43,7 +42,7 @@ export default function Invoices() {
             })
     }, []);
 
-    function showDetails(data,amount,vat,total){
+    function showDetails(data, amount, vat, total) {
         setBillingItems(JSON.parse(data));
         setOpen(true);
         setAmount(amount)
@@ -56,9 +55,9 @@ export default function Invoices() {
     }
 
     return (
-        <Paper className={classes.root} style={{padding:10}}>
+        <Paper className={classes.root} style={{padding: 10}}>
             <h2 style={{direction: "rtl", marginRight: 20}}>فاکتور های پرداخت</h2>
-            {items.length == 0 &&
+            {items.length === 0 &&
             <Alert severity="info">
                 در حال حاضر فاکتوری برای شما وجود ندارد
             </Alert>
@@ -103,7 +102,9 @@ export default function Invoices() {
                                         {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        <Button variant={"outlined"} color={"primary"} onClick={() => showDetails(row.data,row.amount,row.vat,row.total)}>نمایش جزئیات</Button>
+                                        <Button variant={"outlined"} color={"primary"}
+                                                onClick={() => showDetails(row.data, row.amount, row.vat, row.total)}>نمایش
+                                            جزئیات</Button>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Button variant={"outlined"} color={"primary"} onClick={() => pay(row.id)}>
@@ -121,8 +122,8 @@ export default function Invoices() {
             }
             <br/>
             <a href={"/Transactions"}>نمایش تراکنش های بانکی</a>
-            <br />
-            <br />
+            <br/>
+            <br/>
 
             <SimpleModal open={open} setOpen={setOpen}>
                 <TableContainer component={Paper}>
@@ -144,7 +145,7 @@ export default function Invoices() {
                             {billingItems.map(row => (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
-                                        {row.type == 'machine' &&
+                                        {row.type === 'machine' &&
                                         <span>سرور {row.machine.name}</span>
                                         }
                                     </TableCell>

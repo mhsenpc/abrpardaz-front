@@ -132,11 +132,11 @@ export default function ContactWays(props) {
         if (props.userInfo.profile.mobile_verified_at)
             return 'شماره تلفن همراه شما ' + props.userInfo.profile.mobile + ' تایید شده است';
         else {
-            if (mobileStep == 0)
+            if (mobileStep === 0)
                 return <FormMobile/>;
-            else if (mobileStep == 1)
+            else if (mobileStep === 1)
                 return <FormMobileFinal/>;
-            else if (mobileStep == 2)
+            else if (mobileStep === 2)
                 return (<span>
                 شماره موبایل شما با موفقیت تایید شد
                 </span>)
@@ -147,11 +147,11 @@ export default function ContactWays(props) {
         if (props.userInfo.profile.phone_verified_at)
             return 'تلفن ثابت شما ' + props.userInfo.profile.phone + ' تایید شده است';
         else {
-            if (phoneStep == 0)
+            if (phoneStep === 0)
                 return <FormPhone/>;
-            else if (phoneStep == 1)
+            else if (phoneStep === 1)
                 return <FormPhoneFinal/>;
-            else if (phoneStep == 2)
+            else if (phoneStep === 2)
                 return (<span>
                 تلفن ثابت شما با موفقیت تایید شد
                 </span>)

@@ -21,7 +21,7 @@ export default function Network() {
     return (
             <Grid item xs={12}>
                 <Paper>
-                    <Box width={700} p={1}>
+                    <Box p={1}>
                         <h2>شبکه</h2>
                         <Table>
                             <TableContainer component={Paper}>

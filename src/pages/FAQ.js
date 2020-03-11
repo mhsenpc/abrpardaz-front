@@ -60,7 +60,7 @@ export default function FAQ(props) {
                                 <ListItemText inset primary={item.question}/>
                             </ListItem>
                         ))}
-                        {search(items).length == 0 &&
+                        {search(items).length === 0 &&
                         <p>متاسفانه جستجوی شما نتیجه ای در بر نداشت</p>
                         }
                     </List>

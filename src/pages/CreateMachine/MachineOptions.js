@@ -1,9 +1,7 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import FormLabel from '@material-ui/core/FormLabel';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
 import {api_base, ProjectsListPath, sshKeysList} from "../../Api";

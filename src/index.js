@@ -42,22 +42,23 @@ const theme = createMuiTheme({
 
 
 (function () {
+    axios.defaults.headers.common['Accept'] = 'application/json';
     const tokenOnLocalStorage = localStorage.getItem("token");
-    if (tokenOnLocalStorage)
+    const tokenOnSessionStorage = sessionStorage.getItem("token");
+    if (tokenOnLocalStorage && tokenOnSessionStorage === undefined)
         sessionStorage.setItem('token', tokenOnLocalStorage);
     let token = sessionStorage.getItem("token");
     if (token) {
         token = atob(token);
-        axios.defaults.headers.common['Accept'] = 'application/json';
-        axios.defaults.headers.post['Authorization'] = `Bearer ${token}`;
-        axios.defaults.headers.put['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+/*        axios.defaults.headers.put['Authorization'] = `Bearer ${token}`;
         axios.defaults.headers.get['Authorization'] = `Bearer ${token}`;
-        axios.defaults.headers.delete['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.delete['Authorization'] = `Bearer ${token}`;*/
     } else {
-        axios.defaults.headers.post['Authorization'] = null;
-        axios.defaults.headers.put['Authorization'] = null;
+        axios.defaults.headers.common['Authorization'] = null;
+/*        axios.defaults.headers.put['Authorization'] = null;
         axios.defaults.headers.get['Authorization'] = null;
-        axios.defaults.headers.delete['Authorization'] = null;
+        axios.defaults.headers.delete['Authorization'] = null;*/
         /*if setting null does not remove `Authorization` header then try
           delete axios.defaults.headers.common['Authorization'];
         */

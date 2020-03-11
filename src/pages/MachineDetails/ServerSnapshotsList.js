@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Button from "@material-ui/core/Button";
 import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import Table from '@material-ui/core/Table';
@@ -63,7 +62,7 @@ export default function ServerSnapshotsList(props) {
 
     return (
         <Paper>
-            <Box width={700} p={1}>
+            <Box p={1}>
                 <h2>تصاویر آنی</h2>
                 <p>
                     تصاویر آنی کپی لحظه ای از دیسک های سرور شماست.
@@ -85,7 +84,7 @@ export default function ServerSnapshotsList(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>نام</TableCell>
-                                <TableCell >تاریخ ساخت</TableCell>
+                                <TableCell>تاریخ ساخت</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

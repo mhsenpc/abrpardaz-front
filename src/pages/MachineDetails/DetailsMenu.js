@@ -91,7 +91,7 @@ export default function DetailsMenu(props) {
         setValue(newValue);
     };
     const id = props.match.params.id;
-    const [machine, setMachine] = React.useState({name: '', plan: {hourly_price:0}});
+    const [machine, setMachine] = React.useState({name: '', plan: {hourly_price: 0}});
     const [editMode, setEditMode] = React.useState(false);
     const [name, setName] = React.useState('');
     const [response, setResponse] = React.useState([]);
@@ -101,8 +101,7 @@ export default function DetailsMenu(props) {
         if (powerState) {
             requestPowerOff()
             setPowerState(!powerState);
-        }
-        else{
+        } else {
             requestPowerOn();
         }
 
@@ -135,15 +134,15 @@ export default function DetailsMenu(props) {
 
                 setMachine(machine);
                 setName(machine.name)
-                if(machine.status == 'SHUTOFF')
+                if (machine.status === 'SHUTOFF')
                     setPowerState(0);
                 else
                     setPowerState(1);
 
                 setBackDropOpen(false)
 
-                if(machine.status == 'ERROR'){
-                    swal('متاسفانه این سرور ساخته نشده است','ساخت این سرور به دلیل مشکلات فنی انجام نشده است. برای اطلاعات بیشتر لطفا با پشتیبانی تماس حاصل فرمایید','error');
+                if (machine.status === 'ERROR') {
+                    swal('متاسفانه این سرور ساخته نشده است', 'ساخت این سرور به دلیل مشکلات فنی انجام نشده است. برای اطلاعات بیشتر لطفا با پشتیبانی تماس حاصل فرمایید', 'error');
                 }
             })
     }, []);
@@ -163,10 +162,10 @@ export default function DetailsMenu(props) {
 
     return (
         <div>
-            <Grid container item xs={12}>
-                <Grid xs={3}>
+            <Grid container>
+                <Grid item xs={4}>
                     <CreateIcon/>
-                    {editMode == true &&
+                    {editMode === true &&
                     <span>
                     <TextField
                         variant="outlined"
@@ -185,35 +184,35 @@ export default function DetailsMenu(props) {
 
                     }
 
-                    {editMode == false &&
+                    {editMode === false &&
                     <span onClick={() => setEditMode(true)}>{name}</span>
                     }
                 </Grid>
-                <Grid xs={3}>
+                <Grid item xs={4}>
                     <div>
                         <DnsIcon/>
                         <span><b>IPv4:</b>{machine.public_ipv4}</span>
                     </div>
                 </Grid>
-                <Grid xs={3}>
-
+                <Grid item xs={4}>
                     <FormControlLabel
                         control={
                             <div>
                                 <PowerIcon/>
                                 <Switch
-                                    checked={powerState}
+                                    checked={Boolean(powerState)}
                                     onChange={handleChangePower}
                                     value={powerState}
                                     color="primary"
                                 />
                             </div>
                         }
-                        label={(powerState == 1 ? 'روشن' : 'خاموش')}
+                        label={(powerState === 1 ? 'روشن' : 'خاموش')}
                     />
                 </Grid>
 
             </Grid>
+
             <div className={classes.root}>
                 <Tabs
                     orientation="vertical"
@@ -275,7 +274,7 @@ export default function DetailsMenu(props) {
             </div>
             <MessageBox response={response}/>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
-                <CircularProgress color="inherit" />
+                <CircularProgress color="inherit"/>
             </Backdrop>
         </div>
     );

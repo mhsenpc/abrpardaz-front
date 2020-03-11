@@ -26,41 +26,38 @@ export default function Overview(props) {
     }, [])
 
     return (
+        <Grid item xs={12}>
+            <Paper>
+                <Box p={1}>
+                    <h2>نمای کلی</h2>
+                    <AlarmIcon/> {props.machine.plan.name}
+                    <LoyaltyIcon/> {props.machine.plan.vcpu}
+                    <LocalOfferIcon/> {props.machine.plan.ram} GB
+                    <AlbumIcon/> {props.machine.plan.disk} GB
+                    <AttachMoneyIcon/>ماهیانه {props.machine.plan.hourly_price * 24 * 30} تومان
 
-        <div>
-            <Grid item xs={12}>
-                <Paper>
-                    <Box p={1} width={700}>
-                        <h2>نمای کلی</h2>
-                        <AlarmIcon/> {props.machine.plan.name}
-                        <LoyaltyIcon/> {props.machine.plan.vcpu}
-                        <LocalOfferIcon/> {props.machine.plan.ram} GB
-                        <AlbumIcon/> {props.machine.plan.disk} GB
-                        <AttachMoneyIcon/>ماهیانه {props.machine.plan.hourly_price * 24 * 30} تومان
+                    <hr/>
+                    <h3>فعالیت های سرور</h3>
+                    <div style={{
+                        overflow: 'auto',
+                        maxHeight: 260,
+                    }}>
+                        {items.map(row => (
+                            <div key={row.id}>
+                                <p>
+                                    <CheckIcon color={'primary'}/>
+                                    {row.message}
+                                </p>
 
-                        <hr/>
-                        <h3>فعالیت های سرور</h3>
-                        <div style={{    overflow: 'auto',
-                            maxHeight: 260,}}>
-                            {items.map(row => (
-                                <div>
-                                    <p>
-                                        <CheckIcon color={'primary'}/>
-                                        {row.message}
-                                    </p>
+                                <p>
+                                    {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
+                                </p>
 
-                                    <p>
-                                        {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
-                                    </p>
-
-                                </div>
-                            ))}
-                        </div>
-                    </Box>
-                </Paper>
-            </Grid>
-
-
-        </div>
+                            </div>
+                        ))}
+                    </div>
+                </Box>
+            </Paper>
+        </Grid>
     )
 }

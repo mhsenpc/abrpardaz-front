@@ -113,7 +113,7 @@ export default function UploadCertificates(props) {
                 <Paper>
 
                     <Box p={2} width={700}>
-                        {props.userInfo.profile.national_card_front == null &&
+                        {props.userInfo.profile.national_card_front === null &&
                         <UploadNationalCardFrontForm/>
                         }
 
@@ -121,12 +121,12 @@ export default function UploadCertificates(props) {
                         <span>تصویر جلوی کارت ملی: تایید شده</span>
                         }
 
-                        {(props.userInfo.profile.national_card_front && props.userInfo.profile.national_card_front_verified_at == null) &&
+                        {(props.userInfo.profile.national_card_front && props.userInfo.profile.national_card_front_verified_at === null) &&
                         <span>تصویر جلوی کارت ملی: در انتظار تایید</span>
                         }
 
                         <br/>
-                        {props.userInfo.profile.national_card_back == null &&
+                        {props.userInfo.profile.national_card_back === null &&
                         <UploadNationalCardBackForm/>
                         }
 
@@ -134,14 +134,14 @@ export default function UploadCertificates(props) {
                         <span>تصویر پشت کارت ملی: تایید شده</span>
                         }
 
-                        {(props.userInfo.profile.national_card_back && props.userInfo.profile.national_card_back_verified_at == null) &&
+                        {(props.userInfo.profile.national_card_back && props.userInfo.profile.national_card_back_verified_at === null) &&
                         <span>تصویر پشت کارت ملی: در انتظار تایید</span>
                         }
 
 
                         <br/>
 
-                        {props.userInfo.profile.birth_certificate == null &&
+                        {props.userInfo.profile.birth_certificate === null &&
                         <UploadBirthCertificateForm/>
                         }
 
@@ -149,7 +149,7 @@ export default function UploadCertificates(props) {
                         <span>تصویر شناسنامه: تایید شده</span>
                         }
 
-                        {(props.userInfo.profile.birth_certificate && props.userInfo.profile.birth_certificate_verified_at == null) &&
+                        {(props.userInfo.profile.birth_certificate && props.userInfo.profile.birth_certificate_verified_at === null) &&
                         <span>تصویر شناسنامه: در انتظار تایید</span>
                         }
 

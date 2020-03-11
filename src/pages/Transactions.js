@@ -6,11 +6,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
-import {api_base, InvoicesListPath, plansList, TransactionsListPath} from "../Api";
-import Button from '@material-ui/core/Button';
+import {api_base, TransactionsListPath} from "../Api";
 import Alert from "@material-ui/lab/Alert/Alert";
 
 const useStyles = makeStyles({
@@ -39,7 +37,7 @@ export default function Invoices() {
     return (
         <Paper className={classes.root}>
             <h2 style={{direction: "rtl", marginRight: 20}}>تراکنش های بانکی</h2>
-            {items.length == 0 &&
+            {items.length === 0 &&
             <Alert severity="info">
                 تاکنون هیچ تراکنشی مالی برای این شما ثبت نشده است.
             </Alert>

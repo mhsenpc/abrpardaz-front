@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStyles, makeStyles, Theme, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/AddBox';
@@ -34,7 +34,8 @@ export default function ServerList(props) {
     React.useEffect(() => {
         let id = props.match.params.id;
         loadMachines();
-        function loadMachines(){
+
+        function loadMachines() {
             axios.get(api_base + machinesOfProject + id.toString())
                 .then(res => {
                     const list = res.data.list;
@@ -44,6 +45,7 @@ export default function ServerList(props) {
                 })
         }
 
+        Pusher = Pusher;
         var channel = window.Echo.channel('private-project-' + id.toString());
         channel.listen('.server.created', function (data) {
             loadMachines();
@@ -62,25 +64,25 @@ export default function ServerList(props) {
                     <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
                     <Typography>
                         {props.row.name}
-                        {props.row.status == 'failed' &&
-                        <HighlightOffIcon color={"error"} />
+                        {props.row.status === 'failed' &&
+                        <HighlightOffIcon color={"error"}/>
                         }
 
-                        {props.row.status == 'creating' &&
-                        <CircularProgress />
+                        {props.row.status === 'creating' &&
+                        <CircularProgress/>
                         }
 
-                        {props.row.status == 'power_on' &&
-                        <PowerIcon style={{color:'green'}} />
+                        {props.row.status === 'power_on' &&
+                        <PowerIcon style={{color: 'green'}}/>
                         }
 
-                        {props.row.status == 'power_off' &&
-                        <PowerOffIcon style={{color:'brown'}} />
+                        {props.row.status === 'power_off' &&
+                        <PowerOffIcon style={{color: 'brown'}}/>
                         }
                     </Typography>
 
                     <Typography variant="subtitle1" color="textSecondary">
-                        {props.row.image.name}{props.row.image.version}
+                        {props.row.image.name} {props.row.image.version}
                     </Typography>
                 </Paper>
             </Grid>
@@ -101,7 +103,7 @@ export default function ServerList(props) {
                 </Paper>
             </Grid>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
-                <CircularProgress color="inherit" />
+                <CircularProgress color="inherit"/>
             </Backdrop>
         </Grid>
 

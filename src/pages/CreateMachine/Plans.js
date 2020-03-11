@@ -42,7 +42,7 @@ function Plans(props) {
     }
 
     function isActive(id) {
-        if (id == props.planId) {
+        if (id === props.planId) {
             return 'active';
         } else {
             return '';

@@ -88,7 +88,7 @@ export default function CreateSnapshot(props) {
 
             </div>
             }
-            {machineItems.length == 0 &&
+            {machineItems.length === 0 &&
             <Alert severity="warning">
                 هم اکنون سروری برای حساب کاربری شما وجود ندارد
             </Alert>

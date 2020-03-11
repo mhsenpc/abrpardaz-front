@@ -115,7 +115,7 @@ function TicketList() {
                         </Grid>
                     ))}
 
-                    {items.length == 0 &&
+                    {items.length === 0 &&
                     <Alert severity="info">
                         شما تاکنون تیکتی ایجاد نکرده اید
                     </Alert>

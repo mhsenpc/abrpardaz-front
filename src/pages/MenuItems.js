@@ -65,7 +65,7 @@ export const mainListItems = (
             <ListItemIcon>
                 <LayersIcon/>
             </ListItemIcon>
-            <ListItemText primary="مدیریت کاربران"/>
+            <ListItemText primary="کاربران"/>
         </ListItem>
         }
     </div>

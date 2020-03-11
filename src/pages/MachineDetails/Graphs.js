@@ -8,13 +8,12 @@ export default function Graphs() {
         <div>
             <Grid item xs={12}>
                 <Paper>
-                    <Box width={700} p={1}>
+                    <Box p={1}>
                         <h2>نمودار</h2>
-                        <h3>این صفحه در آینده راه اندازی می گردد</h3>
+                        <p>این صفحه در آینده راه اندازی می گردد</p>
                     </Box>
                 </Paper>
             </Grid>
-
         </div>
     )
 }

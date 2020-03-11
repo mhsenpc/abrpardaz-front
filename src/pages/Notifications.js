@@ -45,7 +45,7 @@ export default function Notifications() {
                     <Box p={1}>
                         <Paper style={{padding: 10}}>
                             {row.data.message}
-                            {row.read_at == null &&
+                            {row.read_at === null &&
                             <NewReleasesIcon color={"primary"}/>
                             }
                         </Paper>

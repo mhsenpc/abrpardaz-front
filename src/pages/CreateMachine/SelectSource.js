@@ -67,7 +67,7 @@ export default function SelectSource(props) {
     }, []);
 
     function isImageActive(id) {
-        if (id == props.imageId) {
+        if (id === props.imageId) {
             return 'active';
         } else {
             return '';
@@ -75,7 +75,7 @@ export default function SelectSource(props) {
     }
 
     function isSnapshotActive(id) {
-        if (id == props.snapshotId) {
+        if (id === props.snapshotId) {
             return 'active';
         } else {
             return '';
@@ -85,10 +85,10 @@ export default function SelectSource(props) {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        if(newValue == 0){
+        if(newValue === 0){
             props.setSnapshotId(null);
         }
-        else if(newValue == 1){
+        else if(newValue === 1){
             props.setImageId(null);
         }
     };

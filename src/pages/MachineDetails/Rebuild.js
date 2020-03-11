@@ -33,19 +33,21 @@ export default function Rebuild(props) {
         <div>
             <Grid item xs={12}>
                 <Paper>
-                    <Box width={700} p={1}>
-                        <h1>نصب مجدد</h1>
+                    <Box p={1}>
+                        <h2>نصب مجدد</h2>
                         <p>
                             در این بخش می توانید سیستم عامل سرور خود را مجددا نصب نمایید.
                         </p>
                         <p>
                             توجه: تمامی اطلاعات قبلی سرور حذف می گردد!
+
                         </p>
                         <Select value={imageId}>
                             {imageItems.map(row=>(
                                 <MenuItem value={row.id} >{row.name} {row.version}</MenuItem>
                             ))}
                         </Select>
+                        <br/>
                         <br/>
                         <Button onClick={requestRebuild} variant="contained" color="primary">نصب مجدد</Button>
                     </Box>
