@@ -2,6 +2,7 @@ import React from 'react';
 import axios from "axios";
 import {api_base, LimitList} from "../Api";
 import Grid from '@material-ui/core/Grid';
+import {Box, Paper} from "@material-ui/core";
 
 
 export default function Limits() {
@@ -12,7 +13,6 @@ export default function Limits() {
     const [currentVolumesUsage, setCurrentVolumesUsage] = React.useState(0);
     const [maxVolumesUsage, setMaxVolumesUsage] = React.useState(0);
     const [name, setName] = React.useState('');
-
 
 
     React.useEffect(() => {
@@ -29,36 +29,52 @@ export default function Limits() {
             })
     }, []);
 
+    function caclPercentage(some, total) {
+        return (100 * some) / total;
+    }
+
     return (
 
-        <Grid container spacing={1}>
+        <Grid container>
             <Grid item xs={12}>
-            <h2>{name}</h2>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-            <p>تعداد ماشین</p>
-            <div id="myProgress">
-                <span style={{position:'absolute'}}>{currentMachines}/{maxMachines}</span>
-                <div id="myBar">
-                </div>
-            </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-            <p>تعداد تصویرآنی </p>
-            <div id="myProgress">
-                <span style={{position:'absolute'}}> {currentSnapshots}/{maxSnapshots}</span>
-                <div id="myBar">
-                </div>
+                <Paper>
+                    <Box p={1}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <h2>{name}</h2>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <p>تعداد ماشین</p>
+                                <div id="limitProgress">
+                                    <span style={{position: 'absolute'}}>{currentMachines}/{maxMachines}</span>
+                                    <div id="limitBar"
+                                         style={{width: caclPercentage(currentMachines, maxMachines) + '%'}}>
+                                    </div>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <p>تعداد تصویرآنی </p>
+                                <div id="limitProgress">
+                                    <span style={{position: 'absolute'}}> {currentSnapshots}/{maxSnapshots}</span>
+                                    <div id="limitBar"
+                                         style={{width: caclPercentage(currentSnapshots, maxSnapshots) + '%'}}>
+                                    </div>
 
-            </div>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-            <p>حجم استفاده شده دیسک ها</p>
-            <div id="myProgress">
-                <span style={{position:'absolute'}}>{currentVolumesUsage}/{maxVolumesUsage} GB</span>
-                <div id="myBar">
-                </div>
-            </div>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <p>حجم استفاده شده دیسک ها</p>
+                                <div id="limitProgress">
+                                    <span
+                                        style={{position: 'absolute'}}>{currentVolumesUsage}/{maxVolumesUsage} GB</span>
+                                    <div id="limitBar"
+                                         style={{width: caclPercentage(currentVolumesUsage, maxVolumesUsage) + '%'}}>
+                                    </div>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Paper>
             </Grid>
         </Grid>
     )

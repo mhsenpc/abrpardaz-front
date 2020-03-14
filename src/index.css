@@ -39,18 +39,15 @@ code {
     background-color: #ff5d47;
 }
 
-#myProgress {
-
+#limitProgress {
     background-color: white;
     border: #282c34 1px solid;
     text-align: center;
 }
 
-#myBar {
-    width: 20%;
+#limitBar {
     height: 30px;
     background-color: dodgerblue;
-
 }
 
 .osItem{
