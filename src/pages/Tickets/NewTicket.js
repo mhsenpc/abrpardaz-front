@@ -190,7 +190,7 @@ function NewTicket() {
                         <TextField
                             name="title"
                             id="filled-multiline-static"
-                            label="عنوان تیکت را وارد کنید"
+                            label="عنوان تیکت"
                             variant="filled"
                             required
                         />
@@ -200,7 +200,7 @@ function NewTicket() {
                         <TextField
                             name="message"
                             id="filled-multiline-static"
-                            label="متن سوال را وارد کنید"
+                            label="متن تیکت"
                             multiline
                             rows="4"
                             variant="filled"

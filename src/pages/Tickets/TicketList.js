@@ -13,6 +13,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Pagination from '@material-ui/lab/Pagination';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,22 +31,36 @@ const useStyles = makeStyles((theme: Theme) =>
 function TicketList() {
 
     const classes = useStyles();
-
     const [items, setItems] = React.useState([]);
+    const [filter, setFilter] = React.useState('all');
+    const [count, setCount] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const JDate = require('jalali-date');
 
-    React.useEffect(() => {
-        axios.get(api_base + ticketsList)
+    function loadTicketsList() {
+        axios.get(api_base + ticketsList + '?filter=' + filter + '&page=' + page)
             .then(res => {
-                const list = res.data.list;
+                const list = res.data.pagination.data;
 
                 setItems(list);
+                setCount(res.data.pagination.last_page);
             })
-    }, []);
+    }
 
+    React.useEffect(() => {
+        loadTicketsList();
+    }, [page, filter]);
+
+    function changeFilter(event) {
+        setFilter(event.target.value)
+        setPage(1)
+    }
+
+    function handleChangePagination(event, newPage) {
+        setPage(newPage);
+    }
 
     return (
-
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Paper className={classes.paper} style={{padding: 10}}>
@@ -64,47 +79,43 @@ function TicketList() {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Select>
-                            <MenuItem>همه</MenuItem>
-                            <MenuItem>بدون پاسخ</MenuItem>
-                            <MenuItem>پاسخ مشتری</MenuItem>
-                            <MenuItem>باز</MenuItem>
-                            <MenuItem>بسته شده</MenuItem>
-                            <MenuItem>پاسخ اپراتور</MenuItem>
+                        <Select onChange={changeFilter} value={filter}>
+                            <MenuItem value={"all"}>همه</MenuItem>
+                            <MenuItem value={'awaiting_reply'}>انتظار پاسخ</MenuItem>
+                            <MenuItem value={'flagged'}>علامت دار</MenuItem>
+                            <MenuItem value='active'>فعال</MenuItem>
+                            <MenuItem value='open'>باز</MenuItem>
+                            <MenuItem value='answered'>پاسخ داده شده</MenuItem>
+                            <MenuItem value='customer_reply'>پاسخ مشتری</MenuItem>
+                            <MenuItem value='on_hold'>معلق</MenuItem>
+                            <MenuItem value='in_progress'>در جریان</MenuItem>
+                            <MenuItem value='closed'>بسته شده</MenuItem>
                         </Select>
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <Select>
-                            <MenuItem>جدیدترین تیکت</MenuItem>
-                            <MenuItem>جدیدترین پاسخ</MenuItem>
-                            <MenuItem>قدیمی ترین تیکت</MenuItem>
-                            <MenuItem>قدیمی ترین پاسخ</MenuItem>
-                        </Select>
-                    </Grid>
 
                     {items.map(row => (
-                        <Grid item xs={12}>
-
+                        <Grid item xs={12} key={row.id}>
                             <Card variant={"outlined"} className={classes.ticketItem}>
                                 <CardContent key={row.id}>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        <Grid container>
-                                            <Grid item xs={8}>
-                                                <h3>
-                                                    {row.title}
-                                                </h3>
-                                            </Grid>
-                                            <Grid item xs={4}>
-                                                <Typography className={classes.title} color="textSecondary">
-                                                    ایجاد شده در
-                                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
-                                                    {new Date(row.created_at).toLocaleTimeString()}
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Typography>
 
+                                    <Grid container>
+                                        <Grid item xs={8}>
+
+                                                <Typography variant={'h3'} className={classes.title} color="textSecondary"
+                                                            gutterBottom>
+                                                    {row.title}
+                                                </Typography>
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <Typography className={classes.title} color="textSecondary">
+                                                ایجاد شده در
+                                                {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                                {new Date(row.created_at).toLocaleTimeString()}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
                                 </CardContent>
 
                                 <CardActions>
@@ -114,6 +125,10 @@ function TicketList() {
                             </Card>
                         </Grid>
                     ))}
+
+                    {items.length > 0 &&
+                    <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"/>
+                    }
 
                     {items.length === 0 &&
                     <Alert severity="info">
