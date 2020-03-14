@@ -1,8 +1,4 @@
 import React from 'react';
-
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
@@ -78,6 +74,7 @@ export default function ContactWays(props) {
                     <TextField name='txtmobile' id="outlined-basic" label='موبایل' variant="outlined"
                                value={mobileNumber}
                     />
+                    &nbsp;
                     <Button type="submit" variant="contained">ارسال کد</Button>
                     <br/><br/>
                 </form>
@@ -90,7 +87,9 @@ export default function ContactWays(props) {
         return (
             <div>
                 <form onSubmit={requestPhoneRequest}>
-                    <TextField name='txtphone' id="outlined-basic" label="تلفن ثابت" variant="outlined" value={phoneNumber} />
+                    <TextField name='txtphone' id="outlined-basic" label="تلفن ثابت" variant="outlined"
+                               value={phoneNumber}/>
+                    &nbsp;
                     <Button type="submit" variant="contained">ارسال کد</Button>
                 </form>
             </div>
@@ -159,23 +158,10 @@ export default function ContactWays(props) {
     }
 
     return (
-
         <div>
-            <Grid item xs={12} container
-                  direction="row"
-                  alignItems="center"
-            >
-                <Paper>
-
-                    <Box p={2} width={700}>
-                        <MobileForm/>
-                        <br />
-                        <PhoneForm/>
-                    </Box>
-
-                </Paper>
-            </Grid>
+            <MobileForm/>
+            <br/>
+            <PhoneForm/>
         </div>
-
     )
 }

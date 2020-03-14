@@ -7,19 +7,19 @@ import axios from "axios";
 import {api_base, changePassword} from "../../Api";
 import MessageBox from "../MessageBox";
 import Grid from '@material-ui/core/Grid';
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             '& > *': {
                 margin: theme.spacing(1),
-                 width: 900,
+                width: 900,
 
             },
         },
     }),
 );
-
 
 
 export default function ChangePassword() {
@@ -41,31 +41,35 @@ export default function ChangePassword() {
     }
 
     return (
-            <Paper  className={classes.root}>
-                <Grid container>
-                    <Grid item xs={12}>
+        <Grid container>
+            <Grid item xs={12}>
+                <Paper>
+                    <Box p={1}>
+                        <form onSubmit={RequestChangePassword} noValidate
+                              autoComplete="off">
+                            <h2> تغییر رمز عبور </h2>
+                            <br/>
 
-                            <form onSubmit={RequestChangePassword}  noValidate
-                                  autoComplete="off">
-                                <h2> تغییر رمز عبور </h2>
-                                <br/>
-                                <TextField name="current_password"  type="password" variant="outlined" label={"رمز عبور فعلی"} style={{padding:5}} />
+                            <TextField name="current_password" type="password" variant="outlined"
+                                       label={"رمز عبور فعلی"}
+                                       style={{padding: 5}}/>
 
-                                <br/>
-                                <TextField name="new_password" id="new-password" type="password" variant="outlined" label={"رمز عبور جدید"} style={{padding:5}}/>
-                                <br/>
-                                <TextField name="new_password_confirmation" id="confirm-password" type="password" variant="outlined" label={"تایید رمز عبور"} style={{padding:5}}/>
-                                <br/>
-                                <Button type="submit" variant="contained" color="primary">
-                                    تغییر رمز عبور
-                                </Button>
-                            </form>
 
-                    </Grid>
-                </Grid>
+                            <br/>
+                            <TextField name="new_password" id="new-password" type="password" variant="outlined"
+                                       label={"رمز عبور جدید"} style={{padding: 5}}/>
+                            <br/>
+                            <TextField name="new_password_confirmation" id="confirm-password" type="password"
+                                       variant="outlined" label={"تایید رمز عبور"} style={{padding: 5}}/>
+                            <br/>
+                            <Button type="submit" variant="contained" color="primary">
+                                تغییر رمز عبور
+                            </Button>
+                        </form>
+                    </Box>
+                </Paper>
                 <MessageBox response={response}/>
-            </Paper>
-
-
+            </Grid>
+        </Grid>
     );
 }

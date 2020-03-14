@@ -3,10 +3,11 @@ import {makeStyles} from '@material-ui/core/styles';
 import BasicInfo from './BasicInfo';
 import ContactWays from './ContactWays';
 import UploadCertificates from './UploadCertificates';
-import {Paper} from "@material-ui/core";
+import {Box, Paper} from "@material-ui/core";
 import axios from "axios";
 import {api_base, getUserInfo} from "../../Api";
 import MessageBox from "../MessageBox";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -37,24 +38,34 @@ export default function ProfileValidation(props) {
 
 
     return (
-        <div className={classes.root}>
-            <Paper>
-                <fieldset>
-                    <legend>اطلاعات کاربر</legend>
-                    <BasicInfo userInfo={userInfo} setResponse={setResponse}/>
-                </fieldset>
+        <Grid container>
+            <Grid item xs={12}>
+                <Box p={1}>
+                    <fieldset>
+                        <legend>اطلاعات کاربر</legend>
+                        <Paper>
+                            <BasicInfo userInfo={userInfo} setResponse={setResponse}/>
+                        </Paper>
+                    </fieldset>
+                    <br/>
 
-                <fieldset>
-                    <legend>راه های ارتباطی</legend>
-                    <ContactWays userInfo={userInfo} setResponse={setResponse}/>
-                </fieldset>
+                    <fieldset>
+                        <legend>راه های ارتباطی</legend>
+                        <Paper>
+                            <ContactWays userInfo={userInfo} setResponse={setResponse}/>
+                        </Paper>
+                    </fieldset>
 
-                <fieldset>
-                    <legend>بارگذاری مدارک</legend>
-                    <UploadCertificates userInfo={userInfo} setResponse={setResponse}/>
-                </fieldset>
-            </Paper>
-            <MessageBox response={response}/>
-        </div>
+                    <br/>
+                    <fieldset>
+                        <legend>بارگذاری مدارک</legend>
+                        <Paper>
+                            <UploadCertificates userInfo={userInfo} setResponse={setResponse}/>
+                        </Paper>
+                    </fieldset>
+                </Box>
+                <MessageBox response={response}/>
+            </Grid>
+        </Grid>
     );
 }

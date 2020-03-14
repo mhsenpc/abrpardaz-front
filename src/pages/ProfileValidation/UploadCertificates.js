@@ -112,7 +112,7 @@ export default function UploadCertificates(props) {
             >
                 <Paper>
 
-                    <Box p={2} width={700}>
+                    <Box p={2}>
                         {props.userInfo.profile.national_card_front === null &&
                         <UploadNationalCardFrontForm/>
                         }
