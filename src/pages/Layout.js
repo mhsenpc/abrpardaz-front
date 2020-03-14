@@ -241,8 +241,7 @@ function Layout(props) {
                         [classes.appBarShift]: drawerFullWidth,
                     })}>
                 <Toolbar>
-                    <Grid item xs={11}>
-
+                    <Grid item xs={9} sm={10} md={11}>
                         <Typography variant="h6" noWrap>
                             <IconButton
                                 color="inherit"
@@ -258,7 +257,7 @@ function Layout(props) {
                     </Grid>
 
 
-                    <Grid item xs={2} md={1}>
+                    <Grid item xs={3} sm={2} md={1} >
                         <div className={classes.sectionDesktop}>
                             <IconButton color="inherit" href={"/Notifications"}>
                                 <Badge badgeContent={unreadCount} color="secondary">
@@ -294,8 +293,6 @@ function Layout(props) {
                         </div>
 
                     </Grid>
-
-
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}

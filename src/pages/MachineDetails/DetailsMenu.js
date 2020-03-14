@@ -188,13 +188,13 @@ export default function DetailsMenu(props) {
                     <span onClick={() => setEditMode(true)}>{name}</span>
                     }
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} sm={5}>
                     <div>
                         <DnsIcon/>
                         <span><b>IPv4:</b>{machine.public_ipv4}</span>
                     </div>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} sm={3}>
                     <FormControlLabel
                         control={
                             <div>
