@@ -33,6 +33,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import swal from 'sweetalert';
+import {Select} from "@material-ui/core";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -79,6 +80,18 @@ const useStyles = makeStyles(theme => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
+    },
+    sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+        },
+    },
+    sectionMobile: {
+        display: 'flex',
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
     },
 }));
 
@@ -159,6 +172,24 @@ export default function DetailsMenu(props) {
         setBackDropOpen(false);
     };
 
+    const handleChangeMenuItem = event => {
+        setValue(parseInt(event.target.value));
+    };
+
+    const detailsmenuItems = [
+        {id: 0, title: 'نمای کلی'},
+        {id: 1, title: 'نمودار'},
+        {id: 2, title: 'نسخه پشتیبان'},
+        {id: 3, title: 'تصاویر آنی'},
+        {id: 4, title: 'شبکه'},
+        {id: 5, title: 'دیسک اضافه'},
+        {id: 6, title: 'برق'},
+        {id: 7, title: 'مرکز نجات'},
+        {id: 8, title: 'اتصال دیسکت'},
+        {id: 9, title: 'ارتقاء'},
+        {id: 10, title: 'نصب مجدد'},
+        {id: 11, title: 'حذف'},
+    ]
 
     return (
         <div>
@@ -213,27 +244,23 @@ export default function DetailsMenu(props) {
 
             </Grid>
 
+            <Select onChange={handleChangeMenuItem} native={true} className={classes.sectionMobile} value={value}>
+                {detailsmenuItems.map(row => (
+                    <option value={row.id}>{row.title}</option>
+                ))}
+            </Select>
+
             <div className={classes.root}>
                 <Tabs
                     orientation="vertical"
                     variant="scrollable"
                     value={value}
                     onChange={handleChange}
-                    aria-label="Vertical tabs example"
-                    className={classes.tabs}
+                    className={classes.tabs + ' ' + classes.sectionDesktop}
                 >
-                    <Tab label="نمای کلی" {...a11yProps(0)} />
-                    <Tab label="نمودار" {...a11yProps(1)} />
-                    <Tab label="نسخه پشتیبان" {...a11yProps(2)} />
-                    <Tab label="تصاویر آنی" {...a11yProps(3)} />
-                    <Tab label="شبکه" {...a11yProps(4)} />
-                    <Tab label="دیسک اضافه" {...a11yProps(5)} />
-                    <Tab label="برق" {...a11yProps(6)} />
-                    <Tab label="مرکز نجات" {...a11yProps(7)} />
-                    <Tab label="اتصال دیسکت" {...a11yProps(8)} />
-                    <Tab label="ارتقاء" {...a11yProps(9)} />
-                    <Tab label="نصب مجدد" {...a11yProps(10)} />
-                    <Tab label="حذف" {...a11yProps(11)} />
+                    {detailsmenuItems.map(row => (
+                        <Tab label={row.title} {...a11yProps(row.id)} />
+                    ))}
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <Overview id={id} machine={machine} setResponse={setResponse}/>
