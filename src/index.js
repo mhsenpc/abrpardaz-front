@@ -37,6 +37,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import ImagesList from "./pages/Images/ImagesList";
 import ImageAdd from "./pages/Images/ImageAdd";
 import ImageEdit from "./pages/Images/ImageEdit";
+import PlansList from "./pages/Plans/PlansList";
+import PlanAdd from "./pages/Plans/PlanAdd";
+import PlanEdit from "./pages/Plans/PlanEdit";
 
 
 const theme = createMuiTheme({
@@ -131,6 +134,10 @@ const routing = (
             <DefaultLayout path="/ImagesList" component={ImagesList}/>
             <DefaultLayout path="/ImageAdd" component={ImageAdd}/>
             <DefaultLayout path="/ImageEdit/:id" component={ImageEdit}/>
+
+            <DefaultLayout path="/PlansList" component={PlansList}/>
+            <DefaultLayout path="/PlanAdd" component={PlanAdd}/>
+            <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
         </div>
     </Router>
 );

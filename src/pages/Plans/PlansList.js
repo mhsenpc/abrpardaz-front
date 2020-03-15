@@ -20,7 +20,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {api_base, imagesList} from "../../Api";
+import {api_base, plansList} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
 import swal from "sweetalert";
@@ -85,7 +85,7 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 
-export default function ImagesList() {
+export default function PlansList() {
     const [items, setItems] = React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [response, setResponse] = React.useState([]);
@@ -101,11 +101,11 @@ export default function ImagesList() {
     };
 
     React.useEffect(() => {
-        loadImages();
+        loadPlans();
     }, [page])
 
-    function loadImages() {
-        axios.get(api_base + imagesList)
+    function loadPlans() {
+        axios.get(api_base + plansList)
             .then(res => {
                 const items = res.data.pagination.data;
 
@@ -118,17 +118,17 @@ export default function ImagesList() {
         setPage(newPage);
     }
 
-    const removeImage = id => {
-        swal("آیا از حذف تصویر اطمینان دارید؟", {
+    const removePlan = id => {
+        swal("آیا از حذف پلن اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
         }).then(function (isConfirm) {
             if (isConfirm) {
-                axios.delete(api_base + 'images/' + id.toString() + '/remove')
+                axios.delete(api_base + 'plans/' + id.toString() + '/remove')
                     .then(res => {
                         setResponse(res.data)
-                        loadImages();
+                        loadPlans();
                     })
             }
         });
@@ -146,11 +146,11 @@ export default function ImagesList() {
                         <Grid container>
                             <Grid item xs={8} md={10}>
                                 <h2>
-                                    تصاویر قابل نصب
+                                    پلن های قابل انتخاب سرور
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
-                                <Button href={'/ImageAdd'} variant="contained" color="primary">
+                                <Button href={'/PlanAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
@@ -159,9 +159,9 @@ export default function ImagesList() {
 
 
                         <p>
-                            روش استاندارد افزودن تصویر با استفاده از دکمه همگام سازی است. هر چند که می توانید اطلاعات
-                            تصاویر موجود را تغییر دهید
+                            پلن های مختلف به کاربر امکان ساخت سرور با مشخصات مختلف می دهد.
                         </p>
+
                         <p>
                             توجه کنید که تغییر در این صفحه به معنی تغییر اطلاعات در اوپن استک نمی باشد
                         </p>
@@ -174,9 +174,10 @@ export default function ImagesList() {
                                         <StyledTableCell align="right">#</StyledTableCell>
                                         <StyledTableCell align="right">remote_id</StyledTableCell>
                                         <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">نسخه</StyledTableCell>
-                                        <StyledTableCell align="right">حداقل دیسک</StyledTableCell>
-                                        <StyledTableCell align="right">حداقل رم</StyledTableCell>
+                                        <StyledTableCell align="right">دیسک</StyledTableCell>
+                                        <StyledTableCell align="right">رم</StyledTableCell>
+                                        <StyledTableCell align="right">Vcpu</StyledTableCell>
+                                        <StyledTableCell align="right">هزینه ساعتی</StyledTableCell>
                                         <StyledTableCell align="right">&nbsp;</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
@@ -196,15 +197,19 @@ export default function ImagesList() {
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
-                                                {row.version}
+                                                {row.disk} GB
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
-                                                {row.min_disk} GB
+                                                {row.ram} GB
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
-                                                {row.min_ram} GB
+                                                {row.vcpu} VCore
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
+                                                {row.hourly_price} تومان
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right">
@@ -224,13 +229,13 @@ export default function ImagesList() {
                                                     onClose={handleClose}
                                                 >
                                                     <StyledMenuItem
-                                                        onClick={() => window.location.href = '/ImageEdit/' + row.id}>
+                                                        onClick={() => window.location.href = '/PlanEdit/' + row.id}>
                                                         <ListItemIcon>
                                                             <EditIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
-                                                    <StyledMenuItem onClick={() => removeImage(row.id)}>
+                                                    <StyledMenuItem onClick={() => removePlan(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

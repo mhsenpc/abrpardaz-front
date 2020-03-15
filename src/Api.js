@@ -10,6 +10,7 @@ export const machinesList = 'machines/list';
 export const machinesOfProject = 'machines/ofProject/';
 export const createMachine = 'machines/create';
 export const plansList = 'plans/list';
+export const newPlan = 'plans/add';
 export const getUserInfo = 'profile/getUserInfo';
 export const setUserInfo = 'profile/setUserBasicInfo';
 export const requestSetMobile = 'profile/requestSetMobile';
