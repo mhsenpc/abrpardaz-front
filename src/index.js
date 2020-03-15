@@ -40,6 +40,8 @@ import ImageEdit from "./pages/Images/ImageEdit";
 import PlansList from "./pages/Plans/PlansList";
 import PlanAdd from "./pages/Plans/PlanAdd";
 import PlanEdit from "./pages/Plans/PlanEdit";
+import UsersList from "./pages/Users/UsersList";
+import UserAdd from "./pages/Users/UserAdd";
 
 
 const theme = createMuiTheme({
@@ -130,14 +132,14 @@ const routing = (
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
-
             <DefaultLayout path="/ImagesList" component={ImagesList}/>
             <DefaultLayout path="/ImageAdd" component={ImageAdd}/>
             <DefaultLayout path="/ImageEdit/:id" component={ImageEdit}/>
-
             <DefaultLayout path="/PlansList" component={PlansList}/>
             <DefaultLayout path="/PlanAdd" component={PlanAdd}/>
             <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
+            <DefaultLayout path="/UsersList" component={UsersList}/>
+            <DefaultLayout path="/UserAdd" component={UserAdd}/>
         </div>
     </Router>
 );
