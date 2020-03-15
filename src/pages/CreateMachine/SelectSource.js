@@ -51,7 +51,7 @@ export default function SelectSource(props) {
     React.useEffect(() => {
         axios.get(api_base + imagesList)
             .then(res => {
-                const list = res.data.list;
+                const list = res.data.pagination.data;
                 setOsItems(list);
                 if (list.length > 0) {
                     props.setImageId(list[0].id)

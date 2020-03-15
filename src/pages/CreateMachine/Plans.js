@@ -28,7 +28,7 @@ function Plans(props) {
     React.useEffect(() => {
         axios.get(api_base + plansList)
             .then(res => {
-                const list = res.data.list;
+                const list = res.data.pagination.data;
 
                 setItems(list);
                 if (list.length > 0) {

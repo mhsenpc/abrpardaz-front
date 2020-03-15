@@ -20,7 +20,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {api_base, sshKeysList} from "../../Api";
+import {api_base, imagesList} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
 import swal from "sweetalert";
@@ -85,7 +85,7 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 
-export default function SshkeyList() {
+export default function ImagesList() {
     const [items, setItems] = React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [response, setResponse] = React.useState([]);
@@ -101,11 +101,11 @@ export default function SshkeyList() {
     };
 
     React.useEffect(() => {
-        loadKeys();
+        loadImages();
     }, [page])
 
-    function loadKeys() {
-        axios.get(api_base + sshKeysList)
+    function loadImages() {
+        axios.get(api_base + imagesList)
             .then(res => {
                 const items = res.data.pagination.data;
 
@@ -118,17 +118,17 @@ export default function SshkeyList() {
         setPage(newPage);
     }
 
-    const removeSshKey = id => {
-        swal("آیا از حذف این کلید امنیتی اطمینان دارید؟", {
+    const removeImage = id => {
+        swal("آیا از حذف تصویر اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
         }).then(function (isConfirm) {
             if (isConfirm) {
-                axios.delete(api_base + 'sshKeys/' + id.toString() + '/remove')
+                axios.delete(api_base + 'images/' + id.toString() + '/remove')
                     .then(res => {
                         setResponse(res.data)
-                        loadKeys();
+                        loadImages();
                     })
             }
         });
@@ -146,21 +146,21 @@ export default function SshkeyList() {
                         <Grid container>
                             <Grid item xs={8} md={10}>
                                 <h2>
-                                    کلیدهای امنیتی
+                                    تصاویر قابل نصب
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
-                                <Button href={'/SshKeyAdd'} variant="contained" color="primary">
+                                <Button href={'/ImageAdd'} variant="contained" color="primary">
                                     <AddIcon/>
-                                    افزودن کلید
+                                    افزودن تصویر
                                 </Button>
                             </Grid>
                         </Grid>
 
 
                         <p>
-                            استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و آسان
-                            تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
+                            روش استاندارد افزودن تصویر با استفاده از دکمه همگام سازی است. هر چند که می توانید اطلاعات
+                            تصاویر موجود را تغییر دهید
                         </p>
 
                         <TableContainer component={Paper}
@@ -169,7 +169,11 @@ export default function SshkeyList() {
                                 <TableHead>
                                     <TableRow>
                                         <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
+                                        <StyledTableCell align="right">remote_id</StyledTableCell>
+                                        <StyledTableCell align="right">نام</StyledTableCell>
+                                        <StyledTableCell align="right">نسخه</StyledTableCell>
+                                        <StyledTableCell align="right">حداقل دیسک</StyledTableCell>
+                                        <StyledTableCell align="right">حداقل رم</StyledTableCell>
                                         <StyledTableCell align="right">&nbsp;</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
@@ -181,7 +185,23 @@ export default function SshkeyList() {
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
+                                                {row.remote_id}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
                                                 {row.name}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
+                                                {row.version}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
+                                                {row.min_disk} GB
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
+                                                {row.min_ram} GB
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right">
@@ -201,13 +221,13 @@ export default function SshkeyList() {
                                                     onClose={handleClose}
                                                 >
                                                     <StyledMenuItem
-                                                        onClick={() => window.location.href = '/SshKeyEdit/' + row.id}>
+                                                        onClick={() => window.location.href = '/ImageEdit/' + row.id}>
                                                         <ListItemIcon>
                                                             <EditIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
-                                                    <StyledMenuItem onClick={() => removeSshKey(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeImage(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
@@ -228,7 +248,7 @@ export default function SshkeyList() {
 
                         {items.length === 0 &&
                         <Alert severity="warning">
-                            شما هنوز هیچ کلید امنیتی نساخته اید
+                            شما هنوز هیچ تصویری نساخته اید
                         </Alert>
                         }
                     </Box>

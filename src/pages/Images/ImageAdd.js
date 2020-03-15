@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
-import {api_base, sshKeysAdd} from "../../Api";
+import {api_base, newImage} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
@@ -30,19 +30,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function SshKeyAdd() {
+function ImageAdd() {
     const [response, setResponse] = React.useState([]);
     const paper = paperStyle();
     const classes = useStyles();
 
-    function requestAddKey(event) {
+    function requestAddImage(event) {
         event.preventDefault();
-        const {name, content} = event.currentTarget.elements;
-        axios.post(api_base + sshKeysAdd, {name: name.value, content: content.value})
+        const {remote_id, name, version, min_disk, min_ram} = event.currentTarget.elements;
+        axios.post(api_base + newImage, {
+            remote_id: remote_id.value,
+            name: name.value,
+            version: version.value,
+            min_disk: min_disk.value,
+            min_ram: min_ram.value
+        })
             .then(res => {
                 setResponse(res.data)
                 if (res.data.success)
-                    window.location.href = '/Sshkeylist';
+                    window.location.href = '/ImagesList';
             })
     }
 
@@ -53,25 +59,50 @@ function SshKeyAdd() {
             <Grid container>
                 <Grid item xs>
                     <Paper className={paper.paper}>
-                        <h2>افزودن کلید امنیتی</h2>
+                        <h2>افزودن تصویر</h2>
 
-                        <form onSubmit={requestAddKey}>
+                        <form onSubmit={requestAddImage}>
+                            <TextField
+                                className={paper.alignText}
+                                name="remote_id"
+                                label="remote_id"
+                                variant="filled"
+                                required
+                            />
+                            <br/><br/>
                             <TextField
                                 className={paper.alignText}
                                 name="name"
                                 label="نام"
                                 variant="filled"
+                                required
                             />
                             <br/><br/>
                             <TextField
-                                name="content"
-                                label="محتوا"
-                                multiline
-                                rows="4"
-                                cols="5"
+                                className={paper.alignText}
+                                name="version"
+                                label="نسخه"
                                 variant="filled"
+                                required
                             />
                             <br/><br/>
+                            <TextField
+                                className={paper.alignText}
+                                name="min_disk"
+                                label="حداقل دیسک "
+                                variant="filled"
+                                required
+                            />
+                            <br/><br/>
+                            <TextField
+                                className={paper.alignText}
+                                name="min_ram"
+                                label="حداقل رم"
+                                variant="filled"
+                                required
+                            />
+                            <br/><br/>
+
                             <Button type="submit" variant="contained" color="primary">
                                 ذخیره
                             </Button>
@@ -87,4 +118,4 @@ function SshKeyAdd() {
     );
 }
 
-export default SshKeyAdd;
+export default ImageAdd;

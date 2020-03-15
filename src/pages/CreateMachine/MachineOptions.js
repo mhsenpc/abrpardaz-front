@@ -29,7 +29,7 @@ export default function MachineOptions(props) {
     React.useEffect(() => {
         axios.get(api_base + sshKeysList)
             .then(res => {
-                const list = res.data.list;
+                const list = res.data.pagination.data;
 
                 setSshkeyItems(list);
             })

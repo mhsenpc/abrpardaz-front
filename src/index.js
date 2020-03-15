@@ -34,6 +34,9 @@ import swal from 'sweetalert';
 import Invoices from "./pages/Invoices";
 import Limits from "./pages/Limits";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import ImagesList from "./pages/Images/ImagesList";
+import ImageAdd from "./pages/Images/ImageAdd";
+import ImageEdit from "./pages/Images/ImageEdit";
 
 
 const theme = createMuiTheme({
@@ -124,6 +127,10 @@ const routing = (
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>
             <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
+
+            <DefaultLayout path="/ImagesList" component={ImagesList}/>
+            <DefaultLayout path="/ImageAdd" component={ImageAdd}/>
+            <DefaultLayout path="/ImageEdit/:id" component={ImageEdit}/>
         </div>
     </Router>
 );

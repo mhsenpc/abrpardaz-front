@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import axios from "axios";
-import {api_base, NotificationPath} from "../Api";
+import {api_base, logout, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
 import Echo from "laravel-echo"
 import Menu from "@material-ui/core/Menu";
@@ -209,7 +209,7 @@ function Layout(props) {
 
 
     function requestLogout() {
-        axios.put(api_base + 'auth/logout')
+        axios.put(api_base + logout)
             .then(res => {
                 setResponse(res.data)
 

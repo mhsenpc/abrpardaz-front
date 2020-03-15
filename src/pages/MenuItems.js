@@ -60,14 +60,32 @@ export const mainListItems = (
             <ListItemText primary="پشتیبانی"/>
         </ListItem>
 
-        {sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&
+        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&*/}
         <ListItem style={{textAlign: 'right'}} button component="a" href="/UsersList">
             <ListItemIcon>
                 <LayersIcon/>
             </ListItemIcon>
             <ListItemText primary="کاربران"/>
         </ListItem>
-        }
+
+
+        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Images") &&*/}
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/ImagesList">
+            <ListItemIcon>
+                <LayersIcon/>
+            </ListItemIcon>
+            <ListItemText primary="تصاویر"/>
+        </ListItem>
+
+
+        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Plans") &&*/}
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/PlansList">
+            <ListItemIcon>
+                <LayersIcon/>
+            </ListItemIcon>
+            <ListItemText primary="پلن ها"/>
+        </ListItem>
+
     </div>
 );
 

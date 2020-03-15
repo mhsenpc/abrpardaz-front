@@ -66,3 +66,7 @@ code {
 .active{
     background-color: #ff3d32 !important;
 }
+
+.ltr{
+    direction:ltr;
+}
