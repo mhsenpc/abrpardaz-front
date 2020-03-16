@@ -42,6 +42,7 @@ import PlanAdd from "./pages/Plans/PlanAdd";
 import PlanEdit from "./pages/Plans/PlanEdit";
 import UsersList from "./pages/Users/UsersList";
 import UserAdd from "./pages/Users/UserAdd";
+import UserProfile from './pages/Users/UserProfile';
 
 
 const theme = createMuiTheme({
@@ -140,6 +141,7 @@ const routing = (
             <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
             <DefaultLayout path="/UsersList" component={UsersList}/>
             <DefaultLayout path="/UserAdd" component={UserAdd}/>
+            <DefaultLayout path="/UserProfile/:id" component={UserProfile}/>
         </div>
     </Router>
 );

@@ -199,7 +199,9 @@ export default function UsersList() {
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
+                                                <a href={'/UserProfile/' + row.id}>
                                                 {row.email}
+                                                </a>
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
@@ -248,13 +250,6 @@ export default function UsersList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/UserEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/UserProfile/' + row.id}>
                                                         <ListItemIcon>

@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {api_base, uploadBirthCertificate, uploadNationalCardBack, uploadNationalCardFront} from "../../Api";
+import swal from "sweetalert";
 
 
 export default function UploadCertificates(props) {
@@ -14,6 +15,9 @@ export default function UploadCertificates(props) {
         axios.post(api_base + uploadNationalCardFront, data)
             .then(res => {
                 props.setResponse(res.data)
+                swal('تصویر با موفقیت بارگذاری شد','تصویر بعد از بررسی کارشناسان ما تایید می شود','success').then((value) => {
+                    window.location.reload()
+                });
             })
     };
 
@@ -23,9 +27,10 @@ export default function UploadCertificates(props) {
         axios.post(api_base + uploadNationalCardBack, data)
             .then(res => {
                 props.setResponse(res.data)
-
+                swal('تصویر با موفقیت بارگذاری شد','تصویر بعد از بررسی کارشناسان ما تایید می شود','success').then((value) => {
+                    window.location.reload()
+                });
             })
-
     }
 
     const onChangeHandlerCertificate = event => {
@@ -35,7 +40,9 @@ export default function UploadCertificates(props) {
         axios.post(api_base + uploadBirthCertificate, data)
             .then(res => {
                 props.setResponse(res.data)
-
+                swal('تصویر با موفقیت بارگذاری شد','تصویر بعد از بررسی کارشناسان ما تایید می شود','success').then((value) => {
+                    window.location.reload()
+                });
             })
 
     }

@@ -11,6 +11,9 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import HelpIcon from '@material-ui/icons/Help';
 import Divider from "@material-ui/core/Divider";
 import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
+import ImageIcon from '@material-ui/icons/Image';
+import PeopleIcon from '@material-ui/icons/People';
+import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 
 export const mainListItems = (
     <div>
@@ -63,7 +66,7 @@ export const mainListItems = (
         {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&*/}
         <ListItem style={{textAlign: 'right'}} button component="a" href="/UsersList">
             <ListItemIcon>
-                <LayersIcon/>
+                <PeopleIcon/>
             </ListItemIcon>
             <ListItemText primary="کاربران"/>
         </ListItem>
@@ -72,7 +75,7 @@ export const mainListItems = (
         {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Images") &&*/}
         <ListItem style={{textAlign: 'right'}} button component="a" href="/ImagesList">
             <ListItemIcon>
-                <LayersIcon/>
+                <ImageIcon/>
             </ListItemIcon>
             <ListItemText primary="تصاویر"/>
         </ListItem>
@@ -81,7 +84,7 @@ export const mainListItems = (
         {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Plans") &&*/}
         <ListItem style={{textAlign: 'right'}} button component="a" href="/PlansList">
             <ListItemIcon>
-                <LayersIcon/>
+                <SettingsEthernetIcon/>
             </ListItemIcon>
             <ListItemText primary="پلن ها"/>
         </ListItem>

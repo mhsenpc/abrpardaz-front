@@ -9,30 +9,16 @@ import {api_base, getUserInfo} from "../../Api";
 import MessageBox from "../MessageBox";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-    },
-    backButton: {
-        marginRight: theme.spacing(1),
-    },
-    instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-    },
-}));
-
 export default function ProfileValidation(props) {
-    const classes = useStyles();
     const [userInfo, setUserInfo] = React.useState({profile: []});
     const [response, setResponse] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(api_base + getUserInfo)
             .then(res => {
-                const list = res.data.user;
+                const user = res.data.user;
 
-                setUserInfo(list);
+                setUserInfo(user);
             })
     }, []);
 
@@ -44,7 +30,7 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>اطلاعات کاربر</legend>
                         <Paper>
-                            <BasicInfo userInfo={userInfo} setResponse={setResponse}/>
+                            <BasicInfo userInfo={userInfo} setResponse={setResponse} setUserInfo={setUserInfo}/>
                         </Paper>
                     </fieldset>
                     <br/>
@@ -52,7 +38,7 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>راه های ارتباطی</legend>
                         <Paper>
-                            <ContactWays userInfo={userInfo} setResponse={setResponse}/>
+                            <ContactWays userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse} />
                         </Paper>
                     </fieldset>
 
@@ -60,7 +46,7 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>بارگذاری مدارک</legend>
                         <Paper>
-                            <UploadCertificates userInfo={userInfo} setResponse={setResponse}/>
+                            <UploadCertificates userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse}/>
                         </Paper>
                     </fieldset>
                 </Box>
