@@ -14,6 +14,7 @@ import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 import ImageIcon from '@material-ui/icons/Image';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
+import ListIcon from '@material-ui/icons/List';
 
 export const mainListItems = (
     <div>
@@ -87,6 +88,14 @@ export const mainListItems = (
                 <SettingsEthernetIcon/>
             </ListItemIcon>
             <ListItemText primary="پلن ها"/>
+        </ListItem>
+
+        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups") &&*/}
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/UserGroupList">
+            <ListItemIcon>
+                <ListIcon/>
+            </ListItemIcon>
+            <ListItemText primary="گروه ها"/>
         </ListItem>
 
     </div>
