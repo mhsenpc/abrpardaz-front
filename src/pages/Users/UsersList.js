@@ -25,6 +25,8 @@ import {Box} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -253,9 +255,16 @@ export default function UsersList() {
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/UserProfile/' + row.id}>
                                                         <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
+                                                            <AssignmentIndIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="نمایش پروفایل"/>
+                                                    </StyledMenuItem>
+                                                    <StyledMenuItem
+                                                        onClick={() => window.location.href = '/ChangeUserGroup/' + row.id}>
+                                                        <ListItemIcon>
+                                                            <AssignmentIcon fontSize="small"/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary="تغییر گروه کاربری"/>
                                                     </StyledMenuItem>
                                                     <StyledMenuItem onClick={() => removeUser(row.id)}>
                                                         <ListItemIcon>

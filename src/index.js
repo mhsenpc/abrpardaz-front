@@ -46,6 +46,7 @@ import UserProfile from './pages/Users/UserProfile';
 import UserGroupList from "./pages/UserGroups/UserGroupList";
 import UserGroupAdd from "./pages/UserGroups/UserGroupAdd";
 import UserGroupEdit from "./pages/UserGroups/UserGroupEdit";
+import ChangeUserGroup from "./pages/Users/ChangeUserGroup";
 
 
 const theme = createMuiTheme({
@@ -144,6 +145,7 @@ const routing = (
             <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
             <DefaultLayout path="/UsersList" component={UsersList}/>
             <DefaultLayout path="/UserAdd" component={UserAdd}/>
+            <DefaultLayout path="/ChangeUserGroup/:id" component={ChangeUserGroup}/>
             <DefaultLayout path="/UserProfile/:id" component={UserProfile}/>
             <DefaultLayout path="/UserGroupList" component={UserGroupList}/>
             <DefaultLayout path="/UserGroupAdd" component={UserGroupAdd}/>
