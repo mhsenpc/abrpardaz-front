@@ -8,6 +8,8 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import WarningIcon from '@material-ui/icons/Warning';
 import CheckIcon from '@material-ui/icons/Check';
 import Button from '@material-ui/core/Button';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -34,21 +36,95 @@ const useStyles = makeStyles(theme => ({
 function UserProfile(props) {
     const [response, setResponse] = React.useState([]);
     const [item, setItem] = React.useState({profile: {}});
-
     const paper = paperStyle();
     const classes = useStyles();
+    let id = props.match.params.id;
 
     React.useEffect(() => {
-        let id = props.match.params.id;
+        loadUserInfo();
+    }, [])
+
+    function loadUserInfo(){
         axios.get(api_base + 'users/' + id.toString() + '/show')
             .then(res => {
-                const image = res.data.item;
+                const profile = res.data.item;
 
-                setItem(image);
-
-
+                setItem(profile);
             })
-    }, [])
+    }
+
+    function validateProfile() {
+        axios.put(api_base + 'profile/' + id.toString() + '/validate')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function invalidateProfile() {
+        axios.put(api_base + 'profile/' + id.toString() + '/invalidate')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function validateNCFront() {
+        axios.put(api_base + 'profile/' + id.toString() + '/validateNCFront')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function invalidateNCFront() {
+        axios.put(api_base + 'profile/' + id.toString() + '/invalidateNCFront')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function validateNCBack() {
+        axios.put(api_base + 'profile/' + id.toString() + '/validateNCBack')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function invalidateNCBack() {
+        axios.put(api_base + 'profile/' + id.toString() + '/invalidateNCBack')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function validateBC() {
+        axios.put(api_base + 'profile/' + id.toString() + '/validateBC')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function invalidateBC() {
+        axios.put(api_base + 'profile/' + id.toString() + '/invalidateBC')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
+    function verifyEmail() {
+        axios.put(api_base + 'users/' + id.toString() + '/verifyEmail')
+            .then(res => {
+                setResponse(res.data)
+                loadUserInfo()
+            })
+    }
+
 
     return (
 
@@ -59,19 +135,43 @@ function UserProfile(props) {
                     <Paper className={paper.paper}>
                         <Grid container>
                             <Grid item xs={10}>
-                            <h2>نمایش پروفایل</h2>
+                                <h2>نمایش پروفایل</h2>
                             </Grid>
 
                             <Grid item xs={2}>
 
-                            {item.profile.validated_at !== true &&
-                                <Button variant={"contained"} color={"primary"}>تایید پروفایل</Button>
-                            }
+                                {item.profile.validated_at === null &&
+                                <Button variant={"contained"} color={"primary"} onClick={validateProfile}>تایید
+                                    پروفایل</Button>
+                                }
+
+                                {item.profile.validated_at !== null &&
+                                <Button variant={"contained"} style={{backgroundColor: 'red'}}
+                                        onClick={invalidateProfile}>رد
+                                    پروفایل</Button>
+                                }
                             </Grid>
                         </Grid>
                         <p>
                             <span>ایمیل: </span>
                             <span>{item.email}</span>
+                            {item.email_verified_at === null &&
+                            <span>
+                                    <WarningIcon color={"error"}/>
+                                        تاییده نشده
+                                &nbsp;
+                                <Button onClick={verifyEmail} variant={"outlined"}>
+                                    <CheckCircleOutlineIcon style={{color: 'green'}}/>
+                                </Button>
+                            </span>
+                            }
+
+                            {item.email_verified_at !== null &&
+                            <span>
+                                <CheckIcon style={{color: "green"}}/>
+                                    تاییده شده
+                                </span>
+                            }
                         </p>
 
                         <p>
@@ -85,14 +185,14 @@ function UserProfile(props) {
 
                         <p>
                             <span>وضعیت پروفایل: </span>
-                            {item.profile.validated_at === true &&
+                            {item.profile.validated_at !== null &&
                             <span>
                                 <CheckIcon style={{color: "green"}}/>
                                     تاییده شده
                                 </span>
                             }
 
-                            {item.profile.validated_at !== true &&
+                            {item.profile.validated_at === null &&
                             <span>
                                     <WarningIcon color={"error"}/>
                                         تاییده نشده
@@ -185,16 +285,17 @@ function UserProfile(props) {
                             <span>تصویر جلوی کارت ملی: </span>
                             {item.profile.national_card_front !== null &&
                             <a href={item.profile.national_card_front} target={'_blank'}>
-                                <img height={300} width={500} src={item.profile.national_card_front}/>
+                                <img height={200} width={300} src={item.profile.national_card_front}/>
                             </a>
                             }
 
                             {item.profile.national_card_front === null &&
                             <span>انتخاب نشده</span>
                             }
-
+                            <br/>
                             {item.profile.national_card_front_verified_at === null &&
                             <span>
+                                وضعیت فعلی:
                                 <WarningIcon color={"error"}/>
                                         تاییده نشده
                                     </span>
@@ -202,23 +303,36 @@ function UserProfile(props) {
 
                             {item.profile.national_card_front_verified_at !== null &&
                             <span>
+                                وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
                                     تاییده شده
                                 </span>
                             }
+                            <br/>
+                            <p>
+                                <Button variant={"outlined"}>
+                                    <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateNCFront} />
+                                </Button>
+                                &nbsp;
+                                <Button variant={"outlined"}>
+                                    <CancelIcon color={"error"} onClick={invalidateNCFront} />
+                                </Button>
+                            </p>
                         </p>
+                        <hr />
 
                         <p>
                             <span>تصویر پشت کارت ملی: </span>
                             {item.profile.national_card_back !== null &&
                             <a href={item.profile.national_card_back} target={'_blank'}>
-                                <img height={300} width={500} src={item.profile.national_card_back}/>
-                                </a>
+                                <img height={200} width={300} src={item.profile.national_card_back}/>
+                            </a>
                             }
 
                             {item.profile.national_card_back === null &&
                             <span>انتخاب نشده</span>
                             }
+                            <br/>
 
                             {item.profile.national_card_back_verified_at === null &&
                             <span>
@@ -233,19 +347,33 @@ function UserProfile(props) {
                                     تاییده شده
                                 </span>
                             }
+
+                            <br/>
+                            <p>
+                                <Button variant={"outlined"}>
+                                    <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateNCBack} />
+                                </Button>
+                                &nbsp;
+                                <Button variant={"outlined"}>
+                                    <CancelIcon color={"error"} onClick={invalidateNCBack} />
+                                </Button>
+                            </p>
                         </p>
+
+                        <hr />
 
                         <p>
                             <span>تصویر شناسنامه: </span>
                             {item.profile.birth_certificate !== null &&
                             <a href={item.profile.birth_certificate} target={'_blank'}>
-                                <img height={300} width={500} src={item.profile.birth_certificate}/>
+                                <img height={200} width={300} src={item.profile.birth_certificate}/>
                             </a>
                             }
 
                             {item.profile.birth_certificate === null &&
                             <span>انتخاب نشده</span>
                             }
+                            <br />
 
 
                             {item.profile.birth_certificate_verified_at === null &&
@@ -261,6 +389,17 @@ function UserProfile(props) {
                                     تاییده شده
                                 </span>
                             }
+                            <br/>
+                            <p>
+                                <Button variant={"outlined"}>
+                                    <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateBC} />
+                                </Button>
+                                &nbsp;
+                                <Button variant={"outlined"}>
+                                    <CancelIcon color={"error"} onClick={invalidateBC} />
+                                </Button>
+                            </p>
+
                         </p>
 
                     </Paper>

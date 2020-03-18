@@ -136,16 +136,16 @@ export default function UsersList() {
         });
     }
 
-    function activateUser(id) {
-        axios.put(api_base + 'users/' + id.toString() + '/activate' )
+    function unsuspendUser(id) {
+        axios.put(api_base + 'users/' + id.toString() + '/unsuspend' )
             .then(res => {
                 setResponse(res.data)
                 loadUsers();
             })
     }
 
-    function deactivateUser(id) {
-        axios.put(api_base + 'users/' + id.toString() + '/deactivate' )
+    function suspendUser(id) {
+        axios.put(api_base + 'users/' + id.toString() + '/suspend' )
             .then(res => {
                 setResponse(res.data)
                 loadUsers();
@@ -219,14 +219,14 @@ export default function UsersList() {
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
-                                                {row.is_active === true &&
-                                                <Alert severity="success" onClick={() => deactivateUser(row.id)} style={{cursor:'pointer'}}>
+                                                {row.suspend === false &&
+                                                <Alert severity="success" onClick={() => suspendUser(row.id)} style={{cursor:'pointer'}}>
                                                     فعال
                                                 </Alert>
                                                 }
-                                                {row.is_active === false &&
-                                                <Alert severity="error" onClick={() => activateUser(row.id)} style={{cursor:'pointer'}}>
-                                                    غیر فعال
+                                                {row.suspend === true &&
+                                                <Alert severity="error" onClick={() => unsuspendUser(row.id)} style={{cursor:'pointer'}}>
+                                                    مسدود
                                                 </Alert>
                                                 }
                                             </StyledTableCell>
