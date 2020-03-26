@@ -20,12 +20,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {api_base, plansList} from "../../Api";
+import {api_base, plansList, syncImagesPath, syncPlansPath} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
+import SimpleModal from "../SimpleModal";
+import CachedIcon from '@material-ui/icons/Cached';
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -91,6 +93,8 @@ export default function PlansList() {
     const [response, setResponse] = React.useState([]);
     const [count, setCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
+    const [open, setOpen] = React.useState(false);
+    const [syncResult, setSyncResult] = React.useState('Loading...');
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget)
@@ -132,8 +136,15 @@ export default function PlansList() {
                     })
             }
         });
+    }
 
-
+    function syncPlans(){
+        setOpen(true)
+        setSyncResult("Loading...")
+        axios.put(api_base + syncPlansPath)
+            .then(res => {
+                setSyncResult(res.data)
+            })
     }
 
     return (
@@ -144,15 +155,19 @@ export default function PlansList() {
                 <Paper style={{padding: 10}}>
                     <Box>
                         <Grid container>
-                            <Grid item xs={8} md={10}>
+                            <Grid item xs={8}>
                                 <h2>
                                     پلن های قابل انتخاب سرور
                                 </h2>
                             </Grid>
-                            <Grid item xs={4} md={2}>
+                            <Grid item xs={4}>
                                 <Button href={'/PlanAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
+                                </Button>
+                                <Button onClick={syncPlans} variant="contained" color="default">
+                                    <CachedIcon/>
+                                    همسان سازی
                                 </Button>
                             </Grid>
                         </Grid>
@@ -262,6 +277,10 @@ export default function PlansList() {
                     </Box>
                 </Paper>
             </Grid>
+
+            <SimpleModal open={open} setOpen={setOpen}>
+                <div className="content" dangerouslySetInnerHTML={{__html: syncResult}}></div>
+            </SimpleModal>
 
             <MessageBox response={response}/>
         </div>
