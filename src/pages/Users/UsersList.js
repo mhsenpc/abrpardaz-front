@@ -202,7 +202,7 @@ export default function UsersList() {
                                         <StyledTableCell align="right">email</StyledTableCell>
                                         <StyledTableCell align="right">نام</StyledTableCell>
                                         <StyledTableCell align="right">نام خانوادگی</StyledTableCell>
-                                        <StyledTableCell align="right">گروه کاربری</StyledTableCell>
+                                        <StyledTableCell align="right">محدودیت</StyledTableCell>
                                         <StyledTableCell align="right">نقش</StyledTableCell>
                                         <StyledTableCell align="right">وضعیت</StyledTableCell>
                                         <StyledTableCell align="right">تاریخ ثبت</StyledTableCell>
@@ -231,7 +231,7 @@ export default function UsersList() {
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
-                                                {row.user_group.name}
+                                                {row.user_limit.name}
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
@@ -279,13 +279,13 @@ export default function UsersList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="نمایش پروفایل"/>
                                                     </StyledMenuItem>
-                                                    {sessionStorage.getItem('permissions').includes("Change User Group") &&
+                                                    {sessionStorage.getItem('permissions').includes("Change User Limit") &&
                                                     <StyledMenuItem
-                                                        onClick={() => window.location.href = '/ChangeUserGroup/' + row.id}>
+                                                        onClick={() => window.location.href = '/ChangeUserLimit/' + row.id}>
                                                         <ListItemIcon>
                                                             <AssignmentIcon fontSize="small"/>
                                                         </ListItemIcon>
-                                                        <ListItemText primary="تغییر گروه کاربری"/>
+                                                        <ListItemText primary="تغییر محدودیت"/>
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Change User Role") &&
