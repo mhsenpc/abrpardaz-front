@@ -22,7 +22,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import {api_base, imagesList, syncImagesPath} from "../../Api";
 import MessageBox from "../MessageBox";
-import {Box} from "@material-ui/core";
+import {Box, makeStyles} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
@@ -86,6 +86,19 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        margin: 'auto',
+        maxWidth: 700,
+        marginTop: 12
+
+    },
+}));
+
 
 export default function ImagesList() {
     const [items, setItems] = React.useState([]);
@@ -144,6 +157,7 @@ export default function ImagesList() {
         axios.put(api_base + syncImagesPath)
             .then(res => {
                 setSyncResult(res.data)
+                loadImages()
             })
     }
 
@@ -152,7 +166,7 @@ export default function ImagesList() {
 
             <Grid item xs={12} container>
 
-                <Paper style={{padding: 10}}>
+                <Paper className={useStyles.paper} style={{padding: 10}}>
                     <Box>
                         <Grid container>
                             <Grid item xs={8}>
@@ -161,15 +175,18 @@ export default function ImagesList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4}>
+                                {sessionStorage.getItem('permissions').includes("Add Images") &&
                                 <Button href={'/ImageAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
-
+                                }
+                                {sessionStorage.getItem('permissions').includes("Sync Images") &&
                                 <Button onClick={syncImages} variant="contained" color="default">
                                     <CachedIcon/>
                                     همسان سازی
                                 </Button>
+                                }
                             </Grid>
                         </Grid>
 
@@ -239,6 +256,7 @@ export default function ImagesList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
+                                                    {sessionStorage.getItem('permissions').includes("Edit Images") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/ImageEdit/' + row.id}>
                                                         <ListItemIcon>
@@ -246,12 +264,15 @@ export default function ImagesList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Remove Images") &&
                                                     <StyledMenuItem onClick={() => removeImage(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
+                                                    }
                                                 </StyledMenu>
                                             </StyledTableCell>
                                         </StyledTableRow>

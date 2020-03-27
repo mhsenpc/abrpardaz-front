@@ -144,6 +144,7 @@ export default function PlansList() {
         axios.put(api_base + syncPlansPath)
             .then(res => {
                 setSyncResult(res.data)
+                loadPlans()
             })
     }
 
@@ -161,14 +162,18 @@ export default function PlansList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4}>
+                                {sessionStorage.getItem('permissions').includes("Add Plans") &&
                                 <Button href={'/PlanAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
+                                }
+                                {sessionStorage.getItem('permissions').includes("Sync Plans") &&
                                 <Button onClick={syncPlans} variant="contained" color="default">
                                     <CachedIcon/>
                                     همسان سازی
                                 </Button>
+                                }
                             </Grid>
                         </Grid>
 
@@ -243,6 +248,7 @@ export default function PlansList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
+                                                    {sessionStorage.getItem('permissions').includes("Edit Plans") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/PlanEdit/' + row.id}>
                                                         <ListItemIcon>
@@ -250,12 +256,15 @@ export default function PlansList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Remove Plans") &&
                                                     <StyledMenuItem onClick={() => removePlan(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
+                                                    }
                                                 </StyledMenu>
                                             </StyledTableCell>
                                         </StyledTableRow>

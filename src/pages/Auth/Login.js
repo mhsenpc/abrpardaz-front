@@ -69,7 +69,7 @@ export default function Login() {
                         localStorage.setItem("user_id", res.data.user_id);
                         localStorage.setItem("permissions", res.data.permissions);
                     }
-                    window.location.href = '/';
+                    window.location.href = '/Dashboard';
                 }
             })
     }

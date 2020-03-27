@@ -149,10 +149,12 @@ export default function RolesList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={2}>
+                                {sessionStorage.getItem('permissions').includes("Add Roles") &&
                                 <Button href={'/RoleAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
+                                }
                             </Grid>
                         </Grid>
 
@@ -205,6 +207,7 @@ export default function RolesList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
+                                                    {sessionStorage.getItem('permissions').includes("Edit Roles") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/RoleEdit/' + row.id}>
                                                         <ListItemIcon>
@@ -212,12 +215,15 @@ export default function RolesList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Remove Roles") &&
                                                     <StyledMenuItem onClick={() => removeRole(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
+                                                    }
                                                 </StyledMenu>
                                             </StyledTableCell>
                                         </StyledTableRow>

@@ -20,6 +20,12 @@ const paperStyle = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
         },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            maxWidth: 700,
+            marginTop: 12
+        },
     }),
 );
 
@@ -32,6 +38,21 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+        maxWidth: 300,
+    },
+    chips: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: 2,
+    },
+    noLabel: {
+        marginTop: theme.spacing(3),
     },
 }));
 
@@ -94,7 +115,10 @@ function RoleAdd() {
 
         <div className={classes.root}>
 
-            <Grid container>
+            <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center">
                 <Grid item xs>
                     <Paper className={paper.paper}>
                         <h2>افزودن نقش کاربری</h2>

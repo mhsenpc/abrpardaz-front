@@ -86,7 +86,7 @@ function ChangeUserRole(props) {
                 <Grid item xs>
 
                     <Paper className={classes.paper}>
-                        <h2>تغییر گروه کاربری</h2>
+                        <h2>تغییر نقش کاربری</h2>
 
                         <form onSubmit={requestChangeUserGroup}>
                             <p>

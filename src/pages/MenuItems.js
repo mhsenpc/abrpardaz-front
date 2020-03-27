@@ -20,92 +20,96 @@ import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 export const mainListItems = (
     <div>
         <ListItem style={{textAlign: 'right'}} button component="a" href="/">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'} >
                 <DashboardIcon/>
             </ListItemIcon>
             <ListItemText primary="داشبورد"/>
         </ListItem>
         <ListItem style={{textAlign: 'right'}} button component="a" href="/ProjectsList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <DnsIcon/>
             </ListItemIcon>
             <ListItemText primary="سرورهای من"/>
         </ListItem>
 
         <ListItem style={{textAlign: 'right'}} button component="a" href="/snapshotList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <BackupIcon/>
             </ListItemIcon>
             <ListItemText primary="تصاویر آنی"/>
         </ListItem>
 
         <ListItem style={{textAlign: 'right'}} button component="a" href="/Sshkeylist">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <VpnKeyIcon/>
             </ListItemIcon>
             <ListItemText primary="کلیدهای امنیتی"/>
         </ListItem>
         <ListItem style={{textAlign: 'right'}} button component="a" href="/Invoices">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <AttachMoneyIcon/>
             </ListItemIcon>
             <ListItemText primary="امور مالی"/>
         </ListItem>
         <Divider/>
         <ListItem style={{textAlign: 'right'}} button component="a" href="/faq">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <HelpIcon/>
             </ListItemIcon>
             <ListItemText primary="پرسش و پاسخ"/>
         </ListItem>
         <ListItem style={{textAlign: 'right'}} button component="a" href="/tickets">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <HeadsetMicIcon/>
             </ListItemIcon>
             <ListItemText primary="پشتیبانی"/>
         </ListItem>
 
-        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") &&*/}
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users") ) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/UsersList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <PeopleIcon/>
             </ListItemIcon>
             <ListItemText primary="کاربران"/>
         </ListItem>
+        }
 
-
-        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Images") &&*/}
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Images")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/ImagesList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <ImageIcon/>
             </ListItemIcon>
             <ListItemText primary="تصاویر"/>
         </ListItem>
+        }
 
 
-        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Plans") &&*/}
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Plans")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/PlansList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <SettingsEthernetIcon/>
             </ListItemIcon>
             <ListItemText primary="پلن ها"/>
         </ListItem>
+        }
 
-        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups") &&*/}
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/UserGroupList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <ListIcon/>
             </ListItemIcon>
             <ListItemText primary="محدودیت ها"/>
         </ListItem>
+        }
 
-        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups") &&*/}
+        {(sessionStorage.getItem('permissions') &&sessionStorage.getItem('permissions').includes("List Roles")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/RolesList">
-            <ListItemIcon>
+            <ListItemIcon className={'iconItem'}>
                 <SupervisedUserCircleIcon/>
             </ListItemIcon>
             <ListItemText primary="نقش ها"/>
         </ListItem>
+        }
 
     </div>
 );

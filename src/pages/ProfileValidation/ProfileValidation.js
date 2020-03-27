@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import BasicInfo from './BasicInfo';
 import ContactWays from './ContactWays';
 import UploadCertificates from './UploadCertificates';
@@ -30,7 +29,9 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>اطلاعات کاربر</legend>
                         <Paper>
-                            <BasicInfo userInfo={userInfo} setResponse={setResponse} setUserInfo={setUserInfo}/>
+                            <Box p={1}>
+                                <BasicInfo userInfo={userInfo} setResponse={setResponse} setUserInfo={setUserInfo}/>
+                            </Box>
                         </Paper>
                     </fieldset>
                     <br/>
@@ -38,7 +39,9 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>راه های ارتباطی</legend>
                         <Paper>
-                            <ContactWays userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse} />
+                            <Box p={1}>
+                                <ContactWays userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse}/>
+                            </Box>
                         </Paper>
                     </fieldset>
 
@@ -46,7 +49,10 @@ export default function ProfileValidation(props) {
                     <fieldset>
                         <legend>بارگذاری مدارک</legend>
                         <Paper>
-                            <UploadCertificates userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse}/>
+                            <Box p={1}>
+                                <UploadCertificates userInfo={userInfo} setUserInfo={setUserInfo}
+                                                    setResponse={setResponse}/>
+                            </Box>
                         </Paper>
                     </fieldset>
                 </Box>

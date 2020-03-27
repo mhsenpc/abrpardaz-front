@@ -70,3 +70,7 @@ code {
 .ltr{
     direction:ltr;
 }
+
+.iconItem{
+    min-width: 30px !important;
+}

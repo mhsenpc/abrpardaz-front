@@ -21,7 +21,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import {activateUserPath, api_base, deactivateUserPath, usersList} from "../../Api";
 import MessageBox from "../MessageBox";
-import {Box} from "@material-ui/core";
+import {Box, makeStyles} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
@@ -85,6 +85,20 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
+const paperStyle = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            maxWidth: 700,
+            marginTop: 12
+
+        },
+    }),
+);
 
 export default function UsersList() {
     const [items, setItems] = React.useState([]);
@@ -153,12 +167,11 @@ export default function UsersList() {
     }
 
     return (
-        <div>
+        <div className={paperStyle.root}>
 
             <Grid item xs={12} container>
-
-                <Paper style={{padding: 10}}>
-                    <Box>
+                <Paper className={paperStyle.paper} >
+                    <Box p={1}>
                         <Grid container>
                             <Grid item xs={8} md={10}>
                                 <h2>
@@ -166,10 +179,12 @@ export default function UsersList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
+                                {sessionStorage.getItem('permissions').includes("Add Users") &&
                                 <Button href={'/UserAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
+                                }
                             </Grid>
                         </Grid>
 
@@ -264,6 +279,7 @@ export default function UsersList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="نمایش پروفایل"/>
                                                     </StyledMenuItem>
+                                                    {sessionStorage.getItem('permissions').includes("Change User Group") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/ChangeUserGroup/' + row.id}>
                                                         <ListItemIcon>
@@ -271,6 +287,8 @@ export default function UsersList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="تغییر گروه کاربری"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Change User Role") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/ChangeUserRole/' + row.id}>
                                                         <ListItemIcon>
@@ -278,12 +296,15 @@ export default function UsersList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="تغییر نقش کاربری"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Remove Users") &&
                                                     <StyledMenuItem onClick={() => removeUser(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
+                                                    }
                                                 </StyledMenu>
                                             </StyledTableCell>
                                         </StyledTableRow>

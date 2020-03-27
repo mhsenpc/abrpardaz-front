@@ -11,9 +11,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import axios from "axios";
-import {api_base, logout, NotificationPath} from "../Api";
+import {api_base, getUserInfo, logout, NotificationPath} from "../Api";
 import MessageBox from "./MessageBox";
-import Echo from "laravel-echo"
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -23,6 +22,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import {mainListItems, secondaryListItems} from "./MenuItems";
 import Grid from "@material-ui/core/Grid";
 import clsx from 'clsx';
+import Avatar from "@material-ui/core/Avatar";
+import Gravatar from "react-gravatar";
 
 
 let drawerWidth = 151;
@@ -113,7 +114,8 @@ function Layout(props) {
     };
     const [drawerFullWidth, setDrawerFullWidth] = React.useState(true);
 
-    const [unreadCount, setUnreadCount] = React.useState([]);
+    const [unreadCount, setUnreadCount] = React.useState(0);
+    const [user, setUser] = React.useState(0);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -151,6 +153,14 @@ function Layout(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+            <div className={classes.sectionDesktop}>
+                <center style={{margin: 2}}>
+                    <Avatar className={classes.large}>
+                        <Gravatar email={user.email}/>
+                    </Avatar>
+                    {user.email}
+                </center>
+            </div>
             {secondaryListItems.map(row => (
                 <MenuItem key={row.url} component="a" href={row.url} onClick={handleMenuClose}>{row.title}</MenuItem>
             ))}
@@ -188,9 +198,10 @@ function Layout(props) {
 
 
     React.useEffect(() => {
-        axios.get(api_base + NotificationPath)
+        axios.get(api_base + getUserInfo)
             .then(res => {
-                setUnreadCount(res.data.unread_count)
+                setUnreadCount(res.data.notifications)
+                setUser(res.data.user)
             })
     }, []);
 
@@ -213,7 +224,15 @@ function Layout(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar}/>
+            <div className={classes.toolbar + ' ' + classes.sectionDesktop }/>
+            <div className={classes.sectionMobile}>
+                <center style={{margin: 2}}>
+                    <Avatar className={classes.large}>
+                        <Gravatar email={user.email}/>
+                    </Avatar>
+                    {user.email}
+                </center>
+            </div>
             <Divider/>
             <List>{mainListItems}</List>
 

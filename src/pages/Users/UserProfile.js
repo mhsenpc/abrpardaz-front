@@ -10,6 +10,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Button from '@material-ui/core/Button';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import Box from "@material-ui/core/Box";
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -27,8 +28,9 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
+        margin: 'auto',
+        maxWidth: 700,
+        marginTop: 12
     },
 }));
 
@@ -133,6 +135,7 @@ function UserProfile(props) {
             <Grid container>
                 <Grid item xs>
                     <Paper className={paper.paper}>
+                        <Box p={1}>
                         <Grid container>
                             <Grid item xs={10}>
                                 <h2>نمایش پروفایل</h2>
@@ -140,12 +143,12 @@ function UserProfile(props) {
 
                             <Grid item xs={2}>
 
-                                {item.profile.validated_at === null &&
+                                {(sessionStorage.getItem('permissions').includes("Verify Users") && item.profile.validated_at === null) &&
                                 <Button variant={"contained"} color={"primary"} onClick={validateProfile}>تایید
                                     پروفایل</Button>
                                 }
 
-                                {item.profile.validated_at !== null &&
+                                {(sessionStorage.getItem('permissions').includes("Verify Users") && item.profile.validated_at !== null) &&
                                 <Button variant={"contained"} style={{backgroundColor: 'red'}}
                                         onClick={invalidateProfile}>رد
                                     پروفایل</Button>
@@ -401,7 +404,7 @@ function UserProfile(props) {
                             </p>
 
                         </p>
-
+                        </Box>
                     </Paper>
                 </Grid>
 

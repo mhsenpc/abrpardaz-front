@@ -51,6 +51,7 @@ import RolesList from "./pages/Roles/RolesList";
 import RoleAdd from "./pages/Roles/RoleAdd";
 import RoleEdit from "./pages/Roles/RoleEdit";
 import ChangeUserRole from "./pages/Users/ChangeUserRole";
+import App from "./App";
 
 
 const theme = createMuiTheme({
@@ -62,23 +63,18 @@ const theme = createMuiTheme({
     axios.defaults.headers.common['Accept'] = 'application/json';
     const tokenOnLocalStorage = localStorage.getItem("token");
     const tokenOnSessionStorage = sessionStorage.getItem("token");
-    if (tokenOnLocalStorage && tokenOnSessionStorage === undefined)
+    if (tokenOnLocalStorage && !tokenOnSessionStorage){
+        //load everything from localstorage
+        sessionStorage.setItem('user_id', localStorage.getItem("user_id"));
+        sessionStorage.setItem('permissions', localStorage.getItem("permissions"));
         sessionStorage.setItem('token', tokenOnLocalStorage);
+    }
     let token = sessionStorage.getItem("token");
     if (token) {
         token = atob(token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-/*        axios.defaults.headers.put['Authorization'] = `Bearer ${token}`;
-        axios.defaults.headers.get['Authorization'] = `Bearer ${token}`;
-        axios.defaults.headers.delete['Authorization'] = `Bearer ${token}`;*/
     } else {
         axios.defaults.headers.common['Authorization'] = null;
-/*        axios.defaults.headers.put['Authorization'] = null;
-        axios.defaults.headers.get['Authorization'] = null;
-        axios.defaults.headers.delete['Authorization'] = null;*/
-        /*if setting null does not remove `Authorization` header then try
-          delete axios.defaults.headers.common['Authorization'];
-        */
     }
 
     axios.interceptors.response.use(function (response) {
@@ -115,7 +111,8 @@ const DefaultLayout = ({component: Component, ...rest}) => {
 const routing = (
     <Router>
         <div>
-            <DefaultLayout exact path="/" component={Dashboard}/>
+            <DefaultLayout exact path="/" component={App}/>
+            <DefaultLayout path="/Dashboard" component={Dashboard}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
             <DefaultLayout path="/faq" component={FAQ}/>

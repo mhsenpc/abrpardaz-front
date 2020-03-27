@@ -156,10 +156,12 @@ export default function UserGroupList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
+                                {sessionStorage.getItem('permissions').includes("Add User Limits") &&
                                 <Button href={'/UserGroupAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
+                                }
                             </Grid>
                         </Grid>
 
@@ -226,26 +228,32 @@ export default function UserGroupList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
+                                                    {sessionStorage.getItem('permissions').includes("Edit User Limits") &&
                                                     <StyledMenuItem
-                                                        onClick={() => setAsDefault(row.id)} >
+                                                        onClick={() => setAsDefault(row.id)}>
                                                         <ListItemIcon>
                                                             <StarIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="انتخاب بعنوان پیش فرض"/>
                                                     </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Edit User Limits") &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/UserGroupEdit/' + row.id}>
                                                         <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
+                                                        <EditIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
+                                                        </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Remove User Limits") &&
                                                     <StyledMenuItem onClick={() => removeUserGroup(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="حذف"/>
                                                     </StyledMenuItem>
+                                                    }
                                                 </StyledMenu>
                                             </StyledTableCell>
                                         </StyledTableRow>
