@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import axios from "axios";
-import {api_base, newPlan, newUserGroup} from "../../Api";
+import {api_base} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
@@ -14,9 +14,28 @@ const paperStyle = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
         },
+        paper: {
+            padding: theme.spacing(2),
+            margin: 'auto',
+            maxWidth: 700,
+            marginTop: 12
+
+        },
+        image: {
+            width: 128,
+            height: 128,
+        },
+        img: {
+            margin: 'auto',
+            display: 'block',
+            maxWidth: '100%',
+            maxHeight: '100%',
+        },
+        alignText: {
+            textAlign: 'right'
+        }
     }),
 );
-
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,15 +49,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function UserGroupAdd() {
+function UserLimitEdit(props) {
     const [response, setResponse] = React.useState([]);
+    const [item, setItem] = React.useState({name: '', content: ''});
     const paper = paperStyle();
     const classes = useStyles();
 
-    function requestAddUserGroup(event) {
+    React.useEffect(() => {
+        let id = props.match.params.id;
+        axios.get(api_base + 'user_limits/' + id.toString() + '/show')
+            .then(res => {
+                const user_limit = res.data.item;
+
+                setItem(user_limit);
+
+
+            })
+    }, [])
+
+    function requestEditUserLimit(event) {
+        let id = props.match.params.id;
         event.preventDefault();
         const {name, max_machines, max_snapshots, max_volumes_usage} = event.currentTarget.elements;
-        axios.post(api_base + newUserGroup, {
+        axios.post(api_base + 'user_limits/' + id.toString() + '/edit', {
             name: name.value,
             max_machines: max_machines.value,
             max_snapshots: max_snapshots.value,
@@ -47,50 +80,62 @@ function UserGroupAdd() {
             .then(res => {
                 setResponse(res.data)
                 if (res.data.success)
-                    window.location.href = '/UserGroupList';
+                    window.location.href = '/UserLimitList';
             })
     }
 
-    return (
 
+    return (
         <div className={classes.root}>
 
-            <Grid container>
-                <Grid item xs>
-                    <Paper className={paper.paper}>
-                        <h2>افزودن گروه کاربری</h2>
+            <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center">
 
-                        <form onSubmit={requestAddUserGroup}>
+                <Grid item xs>
+
+                    <Paper className={paper.paper}>
+                        <h2>ویرایش محدودیت کاربری</h2>
+
+                        <form onSubmit={requestEditUserLimit}>
                             <TextField
+                                name='name'
                                 className={paper.alignText}
-                                name="name"
                                 label="نام"
                                 variant="filled"
+                                onChange={event => setItem({name: event.target.value})}
+                                value={item.name}
                                 required
                             />
                             <br/><br/>
                             <TextField
+                                name='max_machines'
                                 className={paper.alignText}
-                                name="max_machines"
                                 label="حداکثر تعداد ماشین "
                                 variant="filled"
+                                onChange={event => setItem({max_machines: event.target.value})}
+                                value={item.max_machines}
                                 required
                             />
                             <br/><br/>
                             <TextField
+                                name='max_snapshots'
                                 className={paper.alignText}
-                                name="max_snapshots"
                                 label="حداکثر تعداد تصاویر آنی"
                                 variant="filled"
+                                onChange={event => setItem({max_snapshots: event.target.value})}
+                                value={item.max_snapshots}
                                 required
                             />
                             <br/><br/>
-
                             <TextField
+                                name='max_volumes_usage'
                                 className={paper.alignText}
-                                name="max_volumes_usage"
                                 label="حداکثر تعداد volume"
                                 variant="filled"
+                                onChange={event => setItem({max_volumes_usage: event.target.value})}
+                                value={item.max_volumes_usage}
                                 required
                             />
                             <br/><br/>
@@ -108,6 +153,7 @@ function UserGroupAdd() {
             <MessageBox response={response}/>
         </div>
     );
+
 }
 
-export default UserGroupAdd;
+export default UserLimitEdit;

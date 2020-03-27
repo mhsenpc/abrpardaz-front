@@ -93,8 +93,8 @@ export const mainListItems = (
         </ListItem>
         }
 
-        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups")) &&
-        <ListItem style={{textAlign: 'right'}} button component="a" href="/UserGroupList">
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Limits")) &&
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/UserLimitList">
             <ListItemIcon className={'iconItem'}>
                 <ListIcon/>
             </ListItemIcon>

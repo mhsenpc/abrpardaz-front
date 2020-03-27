@@ -43,10 +43,10 @@ import PlanEdit from "./pages/Plans/PlanEdit";
 import UsersList from "./pages/Users/UsersList";
 import UserAdd from "./pages/Users/UserAdd";
 import UserProfile from './pages/Users/UserProfile';
-import UserGroupList from "./pages/UserGroups/UserGroupList";
-import UserGroupAdd from "./pages/UserGroups/UserGroupAdd";
-import UserGroupEdit from "./pages/UserGroups/UserGroupEdit";
-import ChangeUserGroup from "./pages/Users/ChangeUserGroup";
+import UserLimitList from "./pages/UserLimits/UserLimitList";
+import UserLimitAdd from "./pages/UserLimits/UserLimitAdd";
+import UserLimitEdit from "./pages/UserLimits/UserLimitEdit";
+import ChangeUserLimit from "./pages/Users/ChangeUserLimit";
 import RolesList from "./pages/Roles/RolesList";
 import RoleAdd from "./pages/Roles/RoleAdd";
 import RoleEdit from "./pages/Roles/RoleEdit";
@@ -146,12 +146,12 @@ const routing = (
             <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
             <DefaultLayout path="/UsersList" component={UsersList}/>
             <DefaultLayout path="/UserAdd" component={UserAdd}/>
-            <DefaultLayout path="/ChangeUserGroup/:id" component={ChangeUserGroup}/>
+            <DefaultLayout path="/ChangeUserLimit/:id" component={ChangeUserLimit}/>
             <DefaultLayout path="/ChangeUserRole/:id" component={ChangeUserRole}/>
             <DefaultLayout path="/UserProfile/:id" component={UserProfile}/>
-            <DefaultLayout path="/UserGroupList" component={UserGroupList}/>
-            <DefaultLayout path="/UserGroupAdd" component={UserGroupAdd}/>
-            <DefaultLayout path="/UserGroupEdit/:id" component={UserGroupEdit}/>
+            <DefaultLayout path="/UserLimitList" component={UserLimitList}/>
+            <DefaultLayout path="/UserLimitAdd" component={UserLimitAdd}/>
+            <DefaultLayout path="/UserLimitEdit/:id" component={UserLimitEdit}/>
             <DefaultLayout path="/RolesList" component={RolesList}/>
             <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
             <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>

@@ -19,7 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {api_base, userGroupList} from "../../Api";
+import {api_base, userLimitList} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
 import swal from "sweetalert";
@@ -85,7 +85,7 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 
-export default function UserGroupList() {
+export default function UserLimitList() {
     const [items, setItems] = React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [response, setResponse] = React.useState([]);
@@ -101,11 +101,11 @@ export default function UserGroupList() {
     };
 
     React.useEffect(() => {
-        loadUserGroups();
+        loadUserLimits();
     }, [page])
 
-    function loadUserGroups() {
-        axios.get(api_base + userGroupList)
+    function loadUserLimits() {
+        axios.get(api_base + userLimitList)
             .then(res => {
                 const items = res.data.pagination.data;
 
@@ -118,27 +118,27 @@ export default function UserGroupList() {
         setPage(newPage);
     }
 
-    const removeUserGroup = id => {
-        swal("آیا از حذف پلن اطمینان دارید؟", {
+    const removeUserLimit = id => {
+        swal("آیا از حذف محدودیت کاربری اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
         }).then(function (isConfirm) {
             if (isConfirm) {
-                axios.delete(api_base + 'user_groups/' + id.toString() + '/remove')
+                axios.delete(api_base + 'user_limits/' + id.toString() + '/remove')
                     .then(res => {
                         setResponse(res.data)
-                        loadUserGroups();
+                        loadUserLimits();
                     })
             }
         });
     }
 
     function setAsDefault(id){
-        axios.put(api_base + 'user_groups/' + id.toString() + '/setAsDefault')
+        axios.put(api_base + 'user_limits/' + id.toString() + '/setAsDefault')
             .then(res => {
                 setResponse(res.data)
-                loadUserGroups()
+                loadUserLimits()
             })
     }
 
@@ -152,12 +152,12 @@ export default function UserGroupList() {
                         <Grid container>
                             <Grid item xs={8} md={10}>
                                 <h2>
-                                    گروه های کاربری
+                                    محدودیت های کاربری
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
                                 {sessionStorage.getItem('permissions').includes("Add User Limits") &&
-                                <Button href={'/UserGroupAdd'} variant="contained" color="primary">
+                                <Button href={'/UserLimitAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
@@ -239,7 +239,7 @@ export default function UserGroupList() {
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Edit User Limits") &&
                                                     <StyledMenuItem
-                                                        onClick={() => window.location.href = '/UserGroupEdit/' + row.id}>
+                                                        onClick={() => window.location.href = '/UserLimitEdit/' + row.id}>
                                                         <ListItemIcon>
                                                         <EditIcon fontSize="small"/>
                                                         </ListItemIcon>
@@ -247,7 +247,7 @@ export default function UserGroupList() {
                                                         </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove User Limits") &&
-                                                    <StyledMenuItem onClick={() => removeUserGroup(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeUserLimit(row.id)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
@@ -269,7 +269,7 @@ export default function UserGroupList() {
 
                         {items.length === 0 &&
                         <Alert severity="warning">
-                            هیچ گروه کاربری وجود ندارد
+                            هیچ محدودیت کاربری وجود ندارد
                         </Alert>
                         }
                     </Box>
