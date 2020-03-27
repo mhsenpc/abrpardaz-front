@@ -74,7 +74,7 @@ export const mainListItems = (
         </ListItem>
         }
 
-        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Images")) &&
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Manage Images")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/ImagesList">
             <ListItemIcon className={'iconItem'}>
                 <ImageIcon/>
@@ -84,7 +84,7 @@ export const mainListItems = (
         }
 
 
-        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Plans")) &&
+        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Manage Plans")) &&
         <ListItem style={{textAlign: 'right'}} button component="a" href="/PlansList">
             <ListItemIcon className={'iconItem'}>
                 <SettingsEthernetIcon/>

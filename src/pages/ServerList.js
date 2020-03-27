@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/AddBox';
 import axios from "axios";
-import {api_base, machinesOfProject} from "../Api";
+import {api_base, broadcasting_base, machinesOfProject} from "../Api";
 import CloudIcon from '@material-ui/icons/Cloud';
 import Pusher from "pusher-js"
 import {Paper} from "@material-ui/core";
@@ -37,7 +37,7 @@ export default function ServerList(props) {
         key: '95c0537be9f255c6a252',
         cluster: 'ap3',
         forceTLS: true,
-        authEndpoint: 'http://localhost/broadcasting/auth',
+        authEndpoint: broadcasting_base,
         auth: {
             headers: {
                 Authorization: 'Bearer ' + token

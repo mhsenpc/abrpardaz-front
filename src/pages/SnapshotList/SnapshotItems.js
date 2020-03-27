@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {api_base, snapshotsList} from "../../Api";
+import {api_base, broadcasting_base, snapshotsList} from "../../Api";
 import DeleteIcon from '@material-ui/icons/Delete';
 import swal from "sweetalert";
 import SnapshotName from "./SnapshotName";
@@ -31,7 +31,7 @@ export default function SnapshotItems(props) {
         key: '95c0537be9f255c6a252',
         cluster: 'ap3',
         forceTLS: true,
-        authEndpoint: 'http://localhost/broadcasting/auth',
+        authEndpoint: broadcasting_base,
         auth: {
             headers: {
                 Authorization: 'Bearer ' + token

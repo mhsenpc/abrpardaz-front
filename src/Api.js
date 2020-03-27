@@ -1,5 +1,7 @@
-//export const api_base = 'http://185.112.34.220:3334/api/v1/';
-export const api_base = 'http://localhost/api/v1/';
+//export const api_host = 'http://185.112.34.220:3334';
+export const api_host = 'http://localhost';
+export const api_base = api_host + '/api/v1/';
+export const broadcasting_base = api_host + '/broadcasting/auth';
 export const register = 'auth/register';
 export const login = 'auth/login';
 export const forgetPassword = 'auth/forgetPassword';
