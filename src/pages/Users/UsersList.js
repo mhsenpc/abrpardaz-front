@@ -188,6 +188,7 @@ export default function UsersList() {
                                         <StyledTableCell align="right">نام</StyledTableCell>
                                         <StyledTableCell align="right">نام خانوادگی</StyledTableCell>
                                         <StyledTableCell align="right">گروه کاربری</StyledTableCell>
+                                        <StyledTableCell align="right">نقش</StyledTableCell>
                                         <StyledTableCell align="right">وضعیت</StyledTableCell>
                                         <StyledTableCell align="right">تاریخ ثبت</StyledTableCell>
                                         <StyledTableCell align="right">&nbsp;</StyledTableCell>
@@ -216,6 +217,10 @@ export default function UsersList() {
 
                                             <StyledTableCell align="right" component="th" scope="row">
                                                 {row.user_group.name}
+                                            </StyledTableCell>
+
+                                            <StyledTableCell align="right" component="th" scope="row">
+                                                {row.roles[0].name}
                                             </StyledTableCell>
 
                                             <StyledTableCell align="right" component="th" scope="row">
@@ -265,6 +270,13 @@ export default function UsersList() {
                                                             <AssignmentIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="تغییر گروه کاربری"/>
+                                                    </StyledMenuItem>
+                                                    <StyledMenuItem
+                                                        onClick={() => window.location.href = '/ChangeUserRole/' + row.id}>
+                                                        <ListItemIcon>
+                                                            <AssignmentIcon fontSize="small"/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary="تغییر نقش کاربری"/>
                                                     </StyledMenuItem>
                                                     <StyledMenuItem onClick={() => removeUser(row.id)}>
                                                         <ListItemIcon>
