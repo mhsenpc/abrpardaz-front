@@ -47,6 +47,9 @@ import UserGroupList from "./pages/UserGroups/UserGroupList";
 import UserGroupAdd from "./pages/UserGroups/UserGroupAdd";
 import UserGroupEdit from "./pages/UserGroups/UserGroupEdit";
 import ChangeUserGroup from "./pages/Users/ChangeUserGroup";
+import RolesList from "./pages/Roles/RolesList";
+import RoleAdd from "./pages/Roles/RoleAdd";
+import RoleEdit from "./pages/Roles/RoleEdit";
 
 
 const theme = createMuiTheme({
@@ -150,6 +153,9 @@ const routing = (
             <DefaultLayout path="/UserGroupList" component={UserGroupList}/>
             <DefaultLayout path="/UserGroupAdd" component={UserGroupAdd}/>
             <DefaultLayout path="/UserGroupEdit/:id" component={UserGroupEdit}/>
+            <DefaultLayout path="/RolesList" component={RolesList}/>
+            <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
+            <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>
         </div>
     </Router>
 );

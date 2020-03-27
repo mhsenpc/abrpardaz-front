@@ -13,6 +13,7 @@ import PowerIcon from '@material-ui/icons/Power';
 import PowerOffIcon from '@material-ui/icons/PowerOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
+import Echo from "laravel-echo";
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -28,6 +29,21 @@ export default function ServerList(props) {
     function showDetails(machine_id) {
         window.location.href = '/server/' + machine_id.toString();
     }
+
+    let token = atob(sessionStorage.getItem("token"));
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '95c0537be9f255c6a252',
+        cluster: 'ap3',
+        forceTLS: true,
+        authEndpoint: 'http://localhost/broadcasting/auth',
+        auth: {
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+        },
+    });
 
     const [items, setItems] = React.useState([]);
 

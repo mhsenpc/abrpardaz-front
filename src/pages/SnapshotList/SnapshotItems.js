@@ -12,6 +12,7 @@ import {api_base, snapshotsList} from "../../Api";
 import DeleteIcon from '@material-ui/icons/Delete';
 import swal from "sweetalert";
 import SnapshotName from "./SnapshotName";
+import Echo from "laravel-echo";
 
 
 export default function SnapshotItems(props) {
@@ -23,6 +24,20 @@ export default function SnapshotItems(props) {
         user_id = sessionStorage.getItem('user_id');
     else if (localStorage.getItem('user_id'))
         user_id = localStorage.getItem('user_id');
+
+    let token = atob(sessionStorage.getItem("token"));
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '95c0537be9f255c6a252',
+        cluster: 'ap3',
+        forceTLS: true,
+        authEndpoint: 'http://localhost/broadcasting/auth',
+        auth: {
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+        },
+    });
 
 
     React.useEffect(() => {

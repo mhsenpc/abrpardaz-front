@@ -127,7 +127,7 @@ function TicketList() {
                     ))}
 
                     {items.length > 0 &&
-                    <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"/>
+                    <Pagination page={page} count={count} onChange={handleChangePagination} color="primary" className={'ltr'}/>
                     }
 
                     {items.length === 0 &&

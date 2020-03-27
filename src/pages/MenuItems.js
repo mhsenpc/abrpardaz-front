@@ -15,6 +15,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import ListIcon from '@material-ui/icons/List';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 
 export const mainListItems = (
     <div>
@@ -95,7 +96,15 @@ export const mainListItems = (
             <ListItemIcon>
                 <ListIcon/>
             </ListItemIcon>
-            <ListItemText primary="گروه ها"/>
+            <ListItemText primary="محدودیت ها"/>
+        </ListItem>
+
+        {/*{sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Groups") &&*/}
+        <ListItem style={{textAlign: 'right'}} button component="a" href="/RolesList">
+            <ListItemIcon>
+                <SupervisedUserCircleIcon/>
+            </ListItemIcon>
+            <ListItemText primary="نقش ها"/>
         </ListItem>
 
     </div>
