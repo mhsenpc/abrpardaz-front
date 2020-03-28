@@ -27,6 +27,8 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PanToolIcon from '@material-ui/icons/PanTool';
+import PersonIcon from '@material-ui/icons/Person';
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -166,6 +168,25 @@ export default function UsersList() {
             })
     }
 
+    function requestLoginAsUSer(id) {
+        axios.post(api_base + 'users/' + id.toString() + '/loginAs' )
+            .then(res => {
+                if (res.data.success) {
+                    const token = res.data.access_token;
+                    sessionStorage.setItem('token', btoa(token));
+                    sessionStorage.setItem('user_id', res.data.user_id);
+                    sessionStorage.setItem('permissions', res.data.permissions);
+
+                    swal(res.data.message,"", "success").then((value) => {
+                        window.location.href = '/Dashboard';
+                    });
+                }
+                else{
+                    swal('عملیات ناموفق بود','','error')
+                }
+            })
+    }
+
     return (
         <div className={paperStyle.root}>
 
@@ -283,7 +304,7 @@ export default function UsersList() {
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/ChangeUserLimit/' + row.id}>
                                                         <ListItemIcon>
-                                                            <AssignmentIcon fontSize="small"/>
+                                                            <PanToolIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="تغییر محدودیت"/>
                                                     </StyledMenuItem>
@@ -295,6 +316,15 @@ export default function UsersList() {
                                                             <AssignmentIcon fontSize="small"/>
                                                         </ListItemIcon>
                                                         <ListItemText primary="تغییر نقش کاربری"/>
+                                                    </StyledMenuItem>
+                                                    }
+                                                    {sessionStorage.getItem('permissions').includes("Login As User") &&
+                                                    <StyledMenuItem
+                                                        onClick={() => requestLoginAsUSer(row.id)}>
+                                                        <ListItemIcon>
+                                                            <PersonIcon fontSize="small"/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary="ورود بعنوان این کاربر"/>
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove Users") &&
