@@ -134,8 +134,8 @@ export default function UsersList() {
         setPage(newPage);
     }
 
-    const removeUser = id => {
-        swal("آیا از حذف کاربر اطمینان دارید؟", {
+    const removeUser =( id,email )=> {
+        swal("آیا از حذف " + email +" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -298,7 +298,7 @@ export default function UsersList() {
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove Users") &&
-                                                    <StyledMenuItem onClick={() => removeUser(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeUser(row.id,row.email)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

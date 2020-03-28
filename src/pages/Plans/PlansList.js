@@ -122,8 +122,8 @@ export default function PlansList() {
         setPage(newPage);
     }
 
-    const removePlan = id => {
-        swal("آیا از حذف پلن اطمینان دارید؟", {
+    const removePlan = (id,name) => {
+        swal("آیا از حذف پلن "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -258,7 +258,7 @@ export default function PlansList() {
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove Plans") &&
-                                                    <StyledMenuItem onClick={() => removePlan(row.id)}>
+                                                    <StyledMenuItem onClick={() => removePlan(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

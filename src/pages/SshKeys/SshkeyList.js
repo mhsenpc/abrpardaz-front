@@ -118,8 +118,8 @@ export default function SshkeyList() {
         setPage(newPage);
     }
 
-    const removeSshKey = id => {
-        swal("آیا از حذف این کلید امنیتی اطمینان دارید؟", {
+    const removeSshKey = (id,name) => {
+        swal("آیا از حذف  کلید امنیتی "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -207,7 +207,7 @@ export default function SshkeyList() {
                                                         </ListItemIcon>
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
-                                                    <StyledMenuItem onClick={() => removeSshKey(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeSshKey(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

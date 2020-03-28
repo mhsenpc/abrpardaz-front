@@ -118,8 +118,8 @@ export default function UserLimitList() {
         setPage(newPage);
     }
 
-    const removeUserLimit = id => {
-        swal("آیا از حذف محدودیت کاربری اطمینان دارید؟", {
+    const removeUserLimit = (id,name) => {
+        swal("آیا از حذف محدودیت کاربری "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -247,7 +247,7 @@ export default function UserLimitList() {
                                                         </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove User Limits") &&
-                                                    <StyledMenuItem onClick={() => removeUserLimit(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeUserLimit(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

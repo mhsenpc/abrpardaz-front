@@ -62,8 +62,8 @@ export default function SnapshotItems(props) {
             })
     }
 
-    function requestRemoveSnapshot(id) {
-        swal("آیا از حذف تصویر آنی اطمینان دارید؟", {
+    function requestRemoveSnapshot(id,name) {
+        swal("آیا از حذف تصویر آنی "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -107,7 +107,7 @@ export default function SnapshotItems(props) {
                                     {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id)}>حذف تصویر
+                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id,row.name)}>حذف تصویر
                                         آنی</DeleteIcon>
                                 </TableCell>
 

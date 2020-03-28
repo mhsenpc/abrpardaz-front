@@ -119,8 +119,8 @@ export default function RolesList() {
         setPage(newPage);
     }
 
-    const removeRole = id => {
-        swal("آیا از حذف نقش کاربری اطمینان دارید؟", {
+    const removeRole = (id,name) => {
+        swal("آیا از حذف نقش کاربری "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -217,7 +217,7 @@ export default function RolesList() {
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove Roles") &&
-                                                    <StyledMenuItem onClick={() => removeRole(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeRole(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>

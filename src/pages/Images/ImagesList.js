@@ -135,8 +135,8 @@ export default function ImagesList() {
         setPage(newPage);
     }
 
-    const removeImage = id => {
-        swal("آیا از حذف تصویر اطمینان دارید؟", {
+    const removeImage = (id,name) => {
+        swal("آیا از حذف "+name+" اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -266,7 +266,7 @@ export default function ImagesList() {
                                                     </StyledMenuItem>
                                                     }
                                                     {sessionStorage.getItem('permissions').includes("Remove Images") &&
-                                                    <StyledMenuItem onClick={() => removeImage(row.id)}>
+                                                    <StyledMenuItem onClick={() => removeImage(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>
                                                         </ListItemIcon>
