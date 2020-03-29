@@ -143,7 +143,7 @@ export default function PlansList() {
         setSyncResult("Loading...")
         axios.put(api_base + syncPlansPath)
             .then(res => {
-                setSyncResult(res.data)
+                setSyncResult(res.data.message)
                 loadPlans()
             })
     }

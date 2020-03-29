@@ -46,9 +46,8 @@ export default function SnapshotItems(props) {
         if (user_id) {
             var channel = window.Echo.channel('private-user-' + user_id);
             channel.listen('.snapshot.created', function (data) {
-                alert(JSON.stringify(data));
-                //TODO: update snapshot which its creation process is completed
                 loadSnapshots();
+                swal("تصویر آنی شما با نام "+data.snapshot_name+" با موفقیت ایجاد گردید","","success");
             });
         }
     }, []);

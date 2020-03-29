@@ -14,6 +14,8 @@ import PowerOffIcon from '@material-ui/icons/PowerOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
 import Echo from "laravel-echo";
+import swal from "sweetalert";
+
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -65,6 +67,7 @@ export default function ServerList(props) {
         var channel = window.Echo.channel('private-project-' + id.toString());
         channel.listen('.server.created', function (data) {
             loadMachines();
+            swal("سرور شما با نام "+data.machine_name+" با موفقیت ایجاد گردید","","success");
         });
 
     }, []);

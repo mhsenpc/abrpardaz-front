@@ -156,7 +156,7 @@ export default function ImagesList() {
         setSyncResult("Loading...")
         axios.put(api_base + syncImagesPath)
             .then(res => {
-                setSyncResult(res.data)
+                setSyncResult(res.data.message)
                 loadImages()
             })
     }
