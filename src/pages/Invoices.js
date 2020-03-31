@@ -78,8 +78,8 @@ export default function Invoices() {
                                 <TableCell align="right">ارزش افزوده</TableCell>
                                 <TableCell align="right">جمع کل</TableCell>
                                 <TableCell align="right">تاریخ ایجاد</TableCell>
-                                <TableCell align="right">جزئیات</TableCell>
-                                <TableCell align="right">پرداخت</TableCell>
+                                <TableCell align="right"></TableCell>
+                                <TableCell align="right"></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -135,8 +135,6 @@ export default function Invoices() {
                                 <TableCell align="right">هزینه ساعتی</TableCell>
                                 <TableCell align="right">میزان مصرف</TableCell>
                                 <TableCell align="right">هزینه</TableCell>
-                                <TableCell align="right">ارزش افزوده</TableCell>
-                                <TableCell align="right">جمع</TableCell>
                                 <TableCell align="right">تاریخ شروع</TableCell>
                                 <TableCell align="right">تاریخ پایان</TableCell>
                             </TableRow>
@@ -148,21 +146,20 @@ export default function Invoices() {
                                         {row.type === 'machine' &&
                                         <span>سرور {row.machine.name}</span>
                                         }
+                                        {row.type === 'backup' &&
+                                        <span>نسخه پشتیبان از {row.machine.name}</span>
+                                        }
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         {row.plan.name}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {row.plan.hourly_price} تومان
+                                        {row.type === 'machine' &&
+                                        <span>{row.plan.hourly_price} تومان</span>
+                                        }
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         {row.hours} ساعت
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {numeral(row.amount).format('0,0')}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {numeral(row.vat).format('0,0')}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         {numeral(row.total).format('0,0')}

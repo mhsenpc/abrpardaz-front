@@ -6,6 +6,9 @@ import {api_base, setUserInfo} from "../../Api";
 import Gravatar from 'react-gravatar'
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
+import InfoIcon from "@material-ui/icons/Info";
+import WarningIcon from '@material-ui/icons/Warning';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles(theme => ({
     large: {
@@ -67,6 +70,21 @@ export default function BasicInfo(props) {
             <TextField id="outlined-basic"
                        onChange={event => setNationalCode(event.target.value)} value={nationalCode} label="کد ملی"
                        variant="outlined" required/>
+
+            {props.userInfo.profile.national_code_status == 1 &&
+            <span>
+                                    <CheckIcon style={{color: "green"}}/>
+                                    تاییده شده
+                                </span>
+            }
+
+            {props.userInfo.profile.national_code_status == 2 &&
+            <span>
+                                    <WarningIcon style={{color: "red"}}/>
+                                    رد شده. دلیل: {props.userInfo.profile.national_code_reason}
+
+            </span>
+            }
 
             <br/><br/>
             <TextField id="outlined-basic" label="کد پستی" variant="outlined"
