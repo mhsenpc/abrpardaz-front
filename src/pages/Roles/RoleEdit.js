@@ -14,6 +14,7 @@ import Input from "@material-ui/core/Input";
 import Chip from "@material-ui/core/Chip";
 import MenuItem from "@material-ui/core/MenuItem";
 import {useTheme} from "@material-ui/core/styles";
+import {admin_title_postfix} from "../../consts";
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -143,6 +144,7 @@ function RoleEdit(props) {
 
     return (
         <div className={classes.root}>
+            <title>ویرایش نقش کاربری{admin_title_postfix}</title>
 
             <Grid container
                   direction="row"

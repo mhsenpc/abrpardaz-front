@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import axios from "axios";
 import {api_base, register} from "../../Api";
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,6 +51,7 @@ export default function Register() {
 
     return (
         <Container component="main" maxWidth="xs">
+            <title>ثبت نام کاربران{user_title_postfix}</title>
             <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>

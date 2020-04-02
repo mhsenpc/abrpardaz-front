@@ -3,6 +3,7 @@ import axios from "axios";
 import {api_base, LimitList} from "../Api";
 import Grid from '@material-ui/core/Grid';
 import {Box, Paper} from "@material-ui/core";
+import {user_title_postfix} from "../consts";
 
 
 export default function Limits() {
@@ -34,9 +35,10 @@ export default function Limits() {
     }
 
     return (
-
         <Grid container>
             <Grid item xs={12}>
+                <title>محدودیت ها{user_title_postfix}</title>
+
                 <Paper>
                     <Box p={1}>
                         <Grid container spacing={1}>

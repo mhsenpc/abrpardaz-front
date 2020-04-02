@@ -8,6 +8,7 @@ import {api_base, plansList} from "../../Api";
 import Button from "@material-ui/core/Button";
 import {Checkbox} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import {user_title_postfix} from "../../consts";
 
 
 const useStyles = makeStyles({
@@ -57,6 +58,8 @@ function UpgradeMachine(props) {
 
     return (
         <div>
+            <title>ارتقاء سرور{user_title_postfix}</title>
+
             <Grid item xs={12}>
                 <Paper>
                     <Box p={1}>

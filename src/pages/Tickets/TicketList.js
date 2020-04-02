@@ -14,6 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Pagination from '@material-ui/lab/Pagination';
+import {user_title_postfix} from "../../consts";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,6 +64,8 @@ function TicketList() {
     return (
         <Grid container spacing={3}>
             <Grid item xs={12}>
+                <title>لیست تیکت ها{user_title_postfix}</title>
+
                 <Paper className={classes.paper} style={{padding: 10}}>
                     <Grid container>
                         <Grid item xs={8} md={10}>

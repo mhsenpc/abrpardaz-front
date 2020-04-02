@@ -11,6 +11,7 @@ import MessageBox from "../MessageBox";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import TextField from "@material-ui/core/TextField";
+import {user_title_postfix} from "../../consts";
 
 const useStyles = makeStyles({
     card: {
@@ -103,6 +104,7 @@ function TicketDetails(props) {
 
     return (
         <div>
+            <title>جزئیات تیکت {ticket.ticket_id} {user_title_postfix}</title>
 
             <Grid container>
                 <Grid item xs={12}>

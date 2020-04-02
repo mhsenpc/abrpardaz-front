@@ -8,6 +8,7 @@ import {api_base, changePassword} from "../../Api";
 import MessageBox from "../MessageBox";
 import Grid from '@material-ui/core/Grid';
 import {Box} from "@material-ui/core";
+import {user_title_postfix} from "../../consts";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,6 +44,7 @@ export default function ChangePassword() {
     return (
         <Grid container>
             <Grid item xs={12}>
+                <title>تغییر رمز عبور{user_title_postfix}</title>
                 <Paper>
                     <Box p={1}>
                         <form onSubmit={RequestChangePassword} noValidate

@@ -6,6 +6,7 @@ import SnapshotRules from "./SnapshotRules";
 import CreateSnapshot from "./CreateSnapshot";
 import SnapshotItems from "./SnapshotItems";
 import MessageBox from "../MessageBox";
+import {admin_title_postfix, user_title_postfix} from "../../consts";
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,6 +30,8 @@ export default function SnapshotList(props) {
 
     return (
         <div>
+            <title>تصاویر آنی{user_title_postfix}</title>
+
             <Grid container>
                 <Grid item xs={8}>
                     <Paper className={classes.paper}>

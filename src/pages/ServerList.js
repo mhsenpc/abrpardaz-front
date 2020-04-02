@@ -15,6 +15,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
 import Echo from "laravel-echo";
 import swal from "sweetalert";
+import {user_title_postfix} from "../consts";
 
 
 const useStyles = makeStyles(theme => ({
@@ -110,6 +111,8 @@ export default function ServerList(props) {
 
     return (
         <Grid container spacing={1}>
+            <title>سرورها{user_title_postfix}</title>
+
             {items.map(row => (
                 <ServerItem row={row}/>
             ))}

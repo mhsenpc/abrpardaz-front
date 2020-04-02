@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {api_base} from "../../Api";
+import {admin_title_postfix, user_title_postfix} from "../../consts";
 
 export default function Backups(props) {
 
@@ -32,6 +33,8 @@ export default function Backups(props) {
 
     return (
         <div>
+            <title>نسخه های پشتیبان{user_title_postfix}</title>
+
             <Grid item xs={12}>
                 <Box>
                     <Paper>

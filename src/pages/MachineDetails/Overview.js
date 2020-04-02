@@ -10,6 +10,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import {Box} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import {user_title_postfix} from "../../consts";
 
 export default function Overview(props) {
 
@@ -27,6 +28,8 @@ export default function Overview(props) {
 
     return (
         <Grid item xs={12}>
+            <title>نمای کلی{user_title_postfix}</title>
+
             <Paper>
                 <Box p={1}>
                     <h2>نمای کلی</h2>

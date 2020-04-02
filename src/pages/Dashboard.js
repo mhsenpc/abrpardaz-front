@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Alert from "@material-ui/lab/Alert/Alert";
 import axios from "axios";
 import {api_base, machinesList, ProjectsListPath, snapshotsList} from "../Api";
+import {admin_title_postfix, user_title_postfix} from "../consts";
 
 export default function Dashboard() {
     const [machinesCount, setMachinesCount] = React.useState(0);
@@ -32,6 +33,8 @@ export default function Dashboard() {
 
     return (
         <Paper>
+            <title>داشبورد{user_title_postfix}</title>
+
             <Grid item xs={12}>
 
                 <Box p={2}>

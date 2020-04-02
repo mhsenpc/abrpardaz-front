@@ -28,6 +28,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import SimpleModal from "../SimpleModal";
 import CachedIcon from '@material-ui/icons/Cached';
+import {admin_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -163,6 +164,7 @@ export default function ImagesList() {
 
     return (
         <div>
+            <title>لیست تصاویر{admin_title_postfix}</title>
 
             <Grid item xs={12} container>
 

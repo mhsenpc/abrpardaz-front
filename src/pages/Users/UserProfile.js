@@ -466,7 +466,7 @@ function UserProfile(props) {
     return (
 
         <div className={classes.root}>
-            <title>اطلاعات کاربری{admin_title_postfix}</title>
+            <title>{item.email}اطلاعات کاربری {admin_title_postfix}</title>
             <Grid container>
                 <Grid item xs>
                     <Paper className={paper.paper}>

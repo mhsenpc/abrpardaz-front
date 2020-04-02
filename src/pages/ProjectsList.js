@@ -12,6 +12,7 @@ import {makeStyles} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
+import {user_title_postfix} from "../consts";
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -61,6 +62,8 @@ export default function ProjectsList() {
 
     return (
         <Grid container spacing={1}>
+            <title>پروژه ها{user_title_postfix}</title>
+
             {machines.map(row => (
                 <Grid item xs={12} sm={4} key={row.id}>
                     <Paper className={"boxItem projectItem"}

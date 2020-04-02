@@ -8,6 +8,7 @@ import MessageBox from "../MessageBox";
 import {makeStyles} from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import MenuItem from '@material-ui/core/MenuItem';
+import {admin_title_postfix} from "../../consts";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -77,6 +78,7 @@ function ChangeUserRole(props) {
 
     return (
         <div className={classes.root}>
+            <title>تغییر نقش کاربری{admin_title_postfix}</title>
 
             <Grid container
                   direction="row"

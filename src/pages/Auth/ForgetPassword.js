@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 export default function ForgetPassword() {
     const [response, setResponse] = React.useState([]);
@@ -23,6 +24,7 @@ export default function ForgetPassword() {
 
     return (
         <div>
+            <title>فراموشی رمز عبور{user_title_postfix}</title>
             <Grid item xs={12} container
                   direction="row"
                   alignItems="center"

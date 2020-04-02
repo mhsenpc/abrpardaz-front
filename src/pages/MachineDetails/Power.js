@@ -3,10 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import {user_title_postfix} from "../../consts";
 
 export default function Power() {
     return (
         <div>
+            <title>برق{user_title_postfix}</title>
+
             <Grid item xs={12} >
                 <Paper>
                     <Box p={1}>

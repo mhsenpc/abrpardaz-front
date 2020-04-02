@@ -29,6 +29,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import PersonIcon from '@material-ui/icons/Person';
+import {admin_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -189,6 +190,7 @@ export default function UsersList() {
 
     return (
         <div className={paperStyle.root}>
+            <title>لیست کاربران{admin_title_postfix}</title>
 
             <Grid item xs={12} container>
                 <Paper className={paperStyle.paper} >
@@ -196,7 +198,7 @@ export default function UsersList() {
                         <Grid container>
                             <Grid item xs={8} md={10}>
                                 <h2>
-                                    کاربران
+                                    لیست کاربران
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>

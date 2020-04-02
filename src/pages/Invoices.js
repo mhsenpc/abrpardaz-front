@@ -12,6 +12,7 @@ import {api_base, InvoicesListPath} from "../Api";
 import Button from '@material-ui/core/Button';
 import Alert from "@material-ui/lab/Alert/Alert";
 import SimpleModal from "./SimpleModal";
+import {user_title_postfix} from "../consts";
 
 const useStyles = makeStyles({
     root: {
@@ -56,7 +57,9 @@ export default function Invoices() {
 
     return (
         <Paper className={classes.root} style={{padding: 10}}>
-            <h2 style={{direction: "rtl", marginRight: 20}}>فاکتور های پرداخت</h2>
+            <title>صورت حساب ها{user_title_postfix}</title>
+
+            <h2 style={{direction: "rtl", marginRight: 20}}>صورت حساب ها</h2>
             {items.length === 0 &&
             <Alert severity="info">
                 در حال حاضر فاکتوری برای شما وجود ندارد

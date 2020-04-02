@@ -28,6 +28,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import SimpleModal from "../SimpleModal";
 import CachedIcon from '@material-ui/icons/Cached';
+import {admin_title_postfix, user_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -150,6 +151,7 @@ export default function PlansList() {
 
     return (
         <div>
+            <title>لیست پلن ها{admin_title_postfix}</title>
 
             <Grid item xs={12} container>
 

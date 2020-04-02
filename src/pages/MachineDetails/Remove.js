@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import axios from "axios";
 import {api_base} from "../../Api";
 import swal from "sweetalert";
+import {user_title_postfix} from "../../consts";
 
 
 function Remove(props) {
@@ -36,6 +37,8 @@ function Remove(props) {
 
     return (
         <div>
+            <title>حذف سرور{user_title_postfix}</title>
+
             <Grid item xs={12}>
                 <Paper>
                     <Box p={1}>

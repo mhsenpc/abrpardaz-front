@@ -14,6 +14,7 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useTheme } from '@material-ui/core/styles';
+import {admin_title_postfix, user_title_postfix} from "../../consts";
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -114,6 +115,7 @@ function RoleAdd() {
     return (
 
         <div className={classes.root}>
+            <title>افزودن نقش کاربری{admin_title_postfix}</title>
 
             <Grid container
                   direction="row"

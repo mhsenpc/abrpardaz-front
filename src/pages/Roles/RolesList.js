@@ -25,6 +25,7 @@ import {Box} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
+import {admin_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -137,6 +138,7 @@ export default function RolesList() {
 
     return (
         <div>
+            <title>لیست نقش های کاربری{admin_title_postfix}</title>
 
             <Grid item xs={12} container>
 

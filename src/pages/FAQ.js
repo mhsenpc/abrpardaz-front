@@ -6,6 +6,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import Grid from '@material-ui/core/Grid';
 import {items} from './FAQList';
+import {user_title_postfix} from "../consts";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,6 +37,8 @@ export default function FAQ(props) {
 
     return (
         <div className={classes.root}>
+            <title>پرسش و پاسخ{user_title_postfix}</title>
+
             <h2>پرسش و پاسخ</h2>
             <TextField
                 id="outlined-full-width"

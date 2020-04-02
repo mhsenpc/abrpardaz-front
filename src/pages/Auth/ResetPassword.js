@@ -7,6 +7,7 @@ import {api_base, resetPassword} from "../../Api";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import {user_title_postfix} from "../../consts";
 
 function ResetPasswordSend(event) {
     let search = window.location.search;
@@ -45,6 +46,7 @@ export default function ResetPassword() {
                   direction="row"
                   alignItems="center"
             >
+                <title>بازنشانی رمز عبور{user_title_postfix}</title>
                 <Paper>
 
                     <Box p={2} width={700}>

@@ -26,6 +26,7 @@ import {Box} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
+import {user_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -138,6 +139,7 @@ export default function SshkeyList() {
 
     return (
         <div>
+            <title>لیست کلید های امنیتی{user_title_postfix}</title>
 
             <Grid item xs={12} container>
 

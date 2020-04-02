@@ -7,6 +7,7 @@ import MessageBox from "../MessageBox";
 import axios from "axios";
 import {api_base, createMachine} from "../../Api";
 import Grid from '@material-ui/core/Grid';
+import {user_title_postfix} from "../../consts";
 
 
 export default function CreateMachinePage() {
@@ -41,6 +42,8 @@ export default function CreateMachinePage() {
     return (
         <Grid container item xs={12}>
             <Grid item xs={12}>
+                <title>ساخت ماشین{user_title_postfix}</title>
+
                 <SelectSource setImageId={setImageId} imageId={imageId} snapshotId={snapshotId}
                               setSnapshotId={setSnapshotId}/>
             </Grid>

@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import {api_base, machineSnapshotsList} from "../../Api";
 import swal from "sweetalert";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {user_title_postfix} from "../../consts";
 
 
 const useStyles = makeStyles(theme => ({
@@ -62,6 +63,8 @@ export default function ServerSnapshotsList(props) {
 
     return (
         <Paper>
+            <title>تصاویر آنی{user_title_postfix}</title>
+
             <Box p={1}>
                 <h2>تصاویر آنی</h2>
                 <p>

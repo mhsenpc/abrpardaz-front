@@ -14,6 +14,7 @@ import axios from "axios";
 import {api_base, machinesList, newTicket, ticketCategories} from "../../Api";
 import swal from 'sweetalert';
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 const BootstrapInput = withStyles(theme => ({
     root: {
@@ -129,6 +130,7 @@ function NewTicket() {
               alignItems="center"
         >
             <Paper>
+                <title>تیکت جدید{user_title_postfix}</title>
 
                 <Box p={2} width={700}>
                     <form onSubmit={requestNewTicket}>

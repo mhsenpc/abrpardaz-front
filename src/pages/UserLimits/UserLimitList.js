@@ -26,6 +26,7 @@ import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import StarIcon from '@material-ui/icons/Star';
+import {admin_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -144,6 +145,7 @@ export default function UserLimitList() {
 
     return (
         <div>
+            <title>لیست محدودیت کاربری{admin_title_postfix}</title>
 
             <Grid item xs={12} container>
 

@@ -14,6 +14,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {api_base, login} from "../../Api";
 import axios from 'axios';
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 
 const useStyles = makeStyles(theme => ({
@@ -76,6 +77,7 @@ export default function Login() {
 
     return (
         <Grid container component="main" className={classes.root}>
+            <title>ورود کاربران{user_title_postfix}</title>
             <CssBaseline/>
             <Grid item xs={false} sm={4} md={7} className={classes.image}/>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

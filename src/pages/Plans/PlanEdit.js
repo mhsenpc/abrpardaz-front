@@ -7,6 +7,7 @@ import axios from "axios";
 import {api_base} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {admin_title_postfix, user_title_postfix} from "../../consts";
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -89,6 +90,7 @@ function PlanEdit(props) {
 
     return (
         <div className={classes.root}>
+            <title>ویرایش پلن{admin_title_postfix}</title>
 
             <Grid container
                   direction="row"

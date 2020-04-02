@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {api_base} from "../../Api";
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 export default function Rescue(props) {
 
@@ -22,6 +23,8 @@ export default function Rescue(props) {
 
     return (
         <div>
+            <title>مرکز نجات{user_title_postfix}</title>
+
             <Grid item xs={12}>
                 <Paper>
                     <Box p={1}>

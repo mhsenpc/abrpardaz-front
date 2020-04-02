@@ -7,6 +7,7 @@ import axios from "axios";
 import {api_base, newUser} from "../../Api";
 import MessageBox from "../MessageBox";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {admin_title_postfix} from "../../consts";
 
 
 const paperStyle = makeStyles((theme: Theme) =>
@@ -52,6 +53,7 @@ function UserAdd() {
     return (
 
         <div className={classes.root}>
+            <title>افزودن کاربر{admin_title_postfix}</title>
 
             <Grid container>
                 <Grid item xs>

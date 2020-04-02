@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
+import {user_title_postfix} from "../../consts";
 
 const useStyles = makeStyles({
     table: {
@@ -20,6 +21,8 @@ export default function Network() {
 
     return (
             <Grid item xs={12}>
+                <title>شبکه{user_title_postfix}</title>
+
                 <Paper>
                     <Box p={1}>
                         <h2>شبکه</h2>

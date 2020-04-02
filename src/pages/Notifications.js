@@ -5,6 +5,7 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import {Paper} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
+import {user_title_postfix} from "../consts";
 
 export default function Notifications() {
 
@@ -35,6 +36,8 @@ export default function Notifications() {
     return (
         <Grid container>
             <Grid item>
+                <title>رویدادها{user_title_postfix}</title>
+
                 <h1>
                     رویدادها
                 </h1>

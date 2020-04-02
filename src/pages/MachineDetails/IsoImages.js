@@ -2,10 +2,13 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
+import {user_title_postfix} from "../../consts";
 
 export default function IsoImages() {
     return (
         <Grid item xs={12}>
+            <title>اتصال دیسکت{user_title_postfix}</title>
+
             <Paper>
                 <Box p={1}>
                     <h2>اتصال دیسکت</h2>

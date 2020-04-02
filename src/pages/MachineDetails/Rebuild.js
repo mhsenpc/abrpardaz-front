@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from '@material-ui/core/MenuItem';
 import axios from "axios";
 import {api_base, imagesList} from "../../Api";
+import {user_title_postfix} from "../../consts";
 
 export default function Rebuild(props) {
     const [imageItems, setImageItems] = React.useState([]);
@@ -31,6 +32,8 @@ export default function Rebuild(props) {
 
     return (
         <div>
+            <title>نصب مجدد{user_title_postfix}</title>
+
             <Grid item xs={12}>
                 <Paper>
                     <Box p={1}>

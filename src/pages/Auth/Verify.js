@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import axios from "axios";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MessageBox from "../MessageBox";
+import {user_title_postfix} from "../../consts";
 
 
 export default function Verify() {
@@ -43,6 +44,7 @@ export default function Verify() {
         return (
 
             <div>
+                <title>تایید ایمیل{user_title_postfix}</title>
 
                 <Grid item xs={12} container
                       direction="row"
