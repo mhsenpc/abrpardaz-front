@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import axios from "axios";
-import {api_base, getUserInfo, logout, NotificationPath} from "../Api";
+import {api_base, getUserInfo, logout} from "../Api";
 import MessageBox from "./MessageBox";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -19,11 +19,12 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import {mainListItems, secondaryListItems} from "./MenuItems";
 import Grid from "@material-ui/core/Grid";
 import clsx from 'clsx';
 import Avatar from "@material-ui/core/Avatar";
 import Gravatar from "react-gravatar";
+import {secondaryListItems} from "./secondaryListItems";
+import MainMenuItems from "./MainMenuItems";
 
 
 let drawerWidth = 151;
@@ -234,7 +235,7 @@ function Layout(props) {
                 </center>
             </div>
             <Divider/>
-            <List>{mainListItems}</List>
+            <List><MainMenuItems drawerFullWidth={drawerFullWidth} /></List>
 
         </div>
     );

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Layout from "./pages/Layout";
-import FAQ from "./pages/FAQ";
-
 import {BrowserRouter as Router, Route,Switch} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
@@ -116,7 +114,6 @@ const routing = (
             <DefaultLayout path="/Dashboard" component={Dashboard}/>
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
-            <DefaultLayout path="/faq" component={FAQ}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/Transactions" component={Transactions}/>
             <DefaultLayout path="/Invoices" component={Invoices}/>
