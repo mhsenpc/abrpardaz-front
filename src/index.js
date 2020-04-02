@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import Layout from "./pages/Layout";
 import FAQ from "./pages/FAQ";
 
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route,Switch} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
@@ -111,6 +111,7 @@ const DefaultLayout = ({component: Component, ...rest}) => {
 const routing = (
     <Router>
         <div>
+            <Switch>
             <DefaultLayout exact path="/" component={App}/>
             <DefaultLayout path="/Dashboard" component={Dashboard}/>
             <Route path="/login" component={Login}/>
@@ -120,7 +121,6 @@ const routing = (
             <DefaultLayout path="/Transactions" component={Transactions}/>
             <DefaultLayout path="/Invoices" component={Invoices}/>
             <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
-            <DefaultLayout path="/404" component={Notfound}/>
             <DefaultLayout path="/snapshotList" component={SnapshotList}/>
             <DefaultLayout path="/Tickets" component={TicketList}/>
             <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
@@ -155,6 +155,8 @@ const routing = (
             <DefaultLayout path="/RolesList" component={RolesList}/>
             <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
             <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>
+            <Route component={Notfound}/>
+            </Switch>
         </div>
     </Router>
 );
