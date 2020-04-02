@@ -158,7 +158,7 @@ export default function UserLimitList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4} md={2}>
-                                {sessionStorage.getItem('permissions').includes("Add User Limits") &&
+                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add User Limits")) &&
                                 <Button href={'/UserLimitAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
@@ -230,7 +230,7 @@ export default function UserLimitList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
-                                                    {sessionStorage.getItem('permissions').includes("Edit User Limits") &&
+                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
                                                     <StyledMenuItem
                                                         onClick={() => setAsDefault(row.id)}>
                                                         <ListItemIcon>
@@ -239,7 +239,7 @@ export default function UserLimitList() {
                                                         <ListItemText primary="انتخاب بعنوان پیش فرض"/>
                                                     </StyledMenuItem>
                                                     }
-                                                    {sessionStorage.getItem('permissions').includes("Edit User Limits") &&
+                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/UserLimitEdit/' + row.id}>
                                                         <ListItemIcon>
@@ -248,7 +248,7 @@ export default function UserLimitList() {
                                                         <ListItemText primary="ویرایش"/>
                                                         </StyledMenuItem>
                                                     }
-                                                    {sessionStorage.getItem('permissions').includes("Remove User Limits") &&
+                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove User Limits")) &&
                                                     <StyledMenuItem onClick={() => removeUserLimit(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>

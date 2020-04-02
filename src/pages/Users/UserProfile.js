@@ -231,7 +231,7 @@ function UserProfile(props) {
 
                 <br/>
                 <p>
-                    {(sessionStorage.getItem('permissions').includes("Validate Documents")) &&
+                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Documents")) &&
                     <Button color={"primary"} variant={"outlined"} onClick={() => setNcFrontOpen(true)}>تغییر
                         وضعیت</Button>
                     }
@@ -312,7 +312,7 @@ function UserProfile(props) {
 
                 <br/>
                 <p>
-                    {(sessionStorage.getItem('permissions').includes("Validate Documents")) &&
+                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Documents")) &&
                     <Button color={"primary"} variant={"outlined"} onClick={() => setNcBackOpen(true)}>تغییر
                         وضعیت</Button>
                     }
@@ -437,7 +437,7 @@ function UserProfile(props) {
 
                 <br/>
                 <p>
-                    {(sessionStorage.getItem('permissions').includes("Validate Documents")) &&
+                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Documents")) &&
                     <Button color={"primary"} variant={"outlined"} onClick={() => setBcOpen(true)}>تغییر
                         وضعیت</Button>
                     }
@@ -483,7 +483,7 @@ function UserProfile(props) {
                                 </Grid>
 
                                 <Grid item xs={2}>
-                                    {(sessionStorage.getItem('permissions').includes("Validate Profile")) &&
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Profile")) &&
                                     <Button variant={"contained"} color={"primary"}
                                             onClick={() => setProfileOpen(true)}>
                                         تغییر وضعیت
@@ -632,7 +632,7 @@ function UserProfile(props) {
                                 </div>
                                 }
                                 <br/>
-                                {(sessionStorage.getItem('permissions').includes("Validate Documents")) &&
+                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Documents")) &&
                                 <Button variant={"outlined"} color={"primary"}
                                         onClick={() => setNationalCodeOpen(true)}>
                                     تغییر وضعیت

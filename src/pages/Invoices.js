@@ -181,9 +181,9 @@ export default function Invoices() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <p> قیمت خام{amount}</p>
-                <p>ارزش افزوده{vat}</p>
-                <p>جمع کل{total}</p>
+                <p> قیمت خام {amount} تومان</p>
+                <p> ارزش افزوده{vat} تومان</p>
+                <p>جمع کل {total} تومان</p>
             </SimpleModal>
         </Paper>
     );

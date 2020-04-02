@@ -177,13 +177,13 @@ export default function ImagesList() {
                                 </h2>
                             </Grid>
                             <Grid item xs={4}>
-                                {sessionStorage.getItem('permissions').includes("Add Images") &&
+                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Images")) &&
                                 <Button href={'/ImageAdd'} variant="contained" color="primary">
                                     <AddIcon/>
                                     افزودن
                                 </Button>
                                 }
-                                {sessionStorage.getItem('permissions').includes("Sync Images") &&
+                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Images")) &&
                                 <Button onClick={syncImages} variant="contained" color="default">
                                     <CachedIcon/>
                                     همسان سازی
@@ -258,7 +258,7 @@ export default function ImagesList() {
                                                     open={Boolean(anchorEl)}
                                                     onClose={handleClose}
                                                 >
-                                                    {sessionStorage.getItem('permissions').includes("Edit Images") &&
+                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Images")) &&
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/ImageEdit/' + row.id}>
                                                         <ListItemIcon>
@@ -267,7 +267,7 @@ export default function ImagesList() {
                                                         <ListItemText primary="ویرایش"/>
                                                     </StyledMenuItem>
                                                     }
-                                                    {sessionStorage.getItem('permissions').includes("Remove Images") &&
+                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Images")) &&
                                                     <StyledMenuItem onClick={() => removeImage(row.id,row.name)}>
                                                         <ListItemIcon>
                                                             <DeleteIcon fontSize="small"/>

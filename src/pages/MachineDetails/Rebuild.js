@@ -16,7 +16,7 @@ export default function Rebuild(props) {
     React.useEffect(() => {
         axios.get(api_base + imagesList)
             .then(res => {
-                const list = res.data.list;
+                const list = res.data.pagination.data;
                 setImageItems(list);
                 if(list.length>0)
                     setImageId(list[0].id);
