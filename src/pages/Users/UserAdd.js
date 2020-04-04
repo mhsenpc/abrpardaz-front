@@ -75,6 +75,7 @@ function UserAdd() {
                                 label="رمز"
                                 variant="filled"
                                 required
+                                type="password"
                             />
                             <br/><br/>
 

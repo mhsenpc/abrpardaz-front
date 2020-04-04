@@ -113,7 +113,7 @@ const routing = (
             <DefaultLayout exact path="/" component={App}/>
             <DefaultLayout path="/Dashboard" component={Dashboard}/>
             <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
+            <Route path="/Register" component={Register}/>
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/Transactions" component={Transactions}/>
             <DefaultLayout path="/Invoices" component={Invoices}/>
@@ -127,10 +127,10 @@ const routing = (
             <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
             <DefaultLayout path="/NewTicket" component={NewTicket}/>
             <DefaultLayout path="/Limits" component={Limits}/>
-            <DefaultLayout path="/ResetPassword" component={ResetPassword}/>
+            <Route path="/ResetPassword" component={ResetPassword}/>
             <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
-            <DefaultLayout path="/ForgetPassword" component={ForgetPassword}/>
-            <DefaultLayout path="/Verify" component={Verify}/>
+            <Route path="/ForgetPassword" component={ForgetPassword}/>
+            <Route path="/Verify" component={Verify}/>
             <DefaultLayout path="/Notifications" component={Notifications}/>
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>

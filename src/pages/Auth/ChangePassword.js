@@ -47,21 +47,22 @@ export default function ChangePassword() {
                 <title>تغییر رمز عبور{user_title_postfix}</title>
                 <Paper>
                     <Box p={1}>
-                        <form onSubmit={RequestChangePassword} noValidate
+                        <form onSubmit={RequestChangePassword}
                               autoComplete="off">
                             <h2> تغییر رمز عبور </h2>
                             <br/>
 
                             <TextField name="current_password" type="password" variant="outlined"
                                        label={"رمز عبور فعلی"}
+                                       required
                                        style={{padding: 5}}/>
 
 
                             <br/>
-                            <TextField name="new_password" id="new-password" type="password" variant="outlined"
+                            <TextField name="new_password" id="new-password" type="password" variant="outlined" required
                                        label={"رمز عبور جدید"} style={{padding: 5}}/>
                             <br/>
-                            <TextField name="new_password_confirmation" id="confirm-password" type="password"
+                            <TextField name="new_password_confirmation" id="confirm-password" type="password" required
                                        variant="outlined" label={"تایید رمز عبور"} style={{padding: 5}}/>
                             <br/>
                             <Button type="submit" variant="contained" color="primary">

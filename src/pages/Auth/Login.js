@@ -133,8 +133,9 @@ export default function Login() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"حساب کاربری ندارید؟ ثبت نام"}
+                                <span>حساب کاربری ندارید؟</span>
+                                <Link href="/Register" variant="body2">
+                                    {" ثبت نام"}
                                 </Link>
                             </Grid>
                         </Grid>
