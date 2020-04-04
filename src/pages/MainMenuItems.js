@@ -62,14 +62,6 @@ export default function MainMenuItems(props) {
                 }
             </ListItem>
             <Divider/>
-            <ListItem style={{textAlign: 'right'}} button component="a" href="/faq">
-                <ListItemIcon className={'iconItem'}>
-                    <HelpIcon/>
-                </ListItemIcon>
-                {props.drawerFullWidth &&
-                <ListItemText primary="پرسش و پاسخ"/>
-                }
-            </ListItem>
             <ListItem style={{textAlign: 'right'}} button component="a" href="/tickets">
                 <ListItemIcon className={'iconItem'}>
                     <HeadsetMicIcon/>
