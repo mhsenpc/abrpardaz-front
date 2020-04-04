@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 function TicketList() {
-
     const classes = useStyles();
     const [items, setItems] = React.useState([]);
     const [filter, setFilter] = React.useState('all');
@@ -81,17 +80,14 @@ function TicketList() {
                         </Grid>
                     </Grid>
 
+                    {/*(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Ticket Operator")) &&*/}
                     <Grid item xs={12}>
                         <Select onChange={changeFilter} value={filter}>
-                            <MenuItem value={"all"}>همه</MenuItem>
-                            <MenuItem value={'awaiting_reply'}>انتظار پاسخ</MenuItem>
-                            <MenuItem value={'flagged'}>علامت دار</MenuItem>
-                            <MenuItem value='active'>فعال</MenuItem>
+                            <MenuItem value="all">همه</MenuItem>
+                            <MenuItem value='awaiting_reply'>انتظار پاسخ</MenuItem>
                             <MenuItem value='open'>باز</MenuItem>
                             <MenuItem value='answered'>پاسخ داده شده</MenuItem>
                             <MenuItem value='customer_reply'>پاسخ مشتری</MenuItem>
-                            <MenuItem value='on_hold'>معلق</MenuItem>
-                            <MenuItem value='in_progress'>در جریان</MenuItem>
                             <MenuItem value='closed'>بسته شده</MenuItem>
                         </Select>
                     </Grid>

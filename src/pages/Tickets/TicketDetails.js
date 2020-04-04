@@ -167,7 +167,7 @@ function TicketDetails(props) {
                         <form onSubmit={requestSendReply}>
                             <p>پرسش دیگری دارید؟</p>
                             <Grid item xs={12}>
-                                <TextField name="comment" variant="outlined" multiline
+                                <TextField name="comment" variant="outlined" multiline required
                                 />
                             </Grid>
 
