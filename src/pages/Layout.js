@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import axios from "axios";
-import {api_base, getUserInfo, logout} from "../Api";
+import {api_base, broadcasting_base, getUserInfo, logout} from "../Api";
 import MessageBox from "./MessageBox";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -25,6 +25,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Gravatar from "react-gravatar";
 import {secondaryListItems} from "./secondaryListItems";
 import MainMenuItems from "./MainMenuItems";
+import swal from "sweetalert";
+import Echo from "laravel-echo";
 
 
 let drawerWidth = 151;
@@ -142,7 +144,6 @@ function Layout(props) {
     };
 
 
-
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -203,8 +204,44 @@ function Layout(props) {
             .then(res => {
                 setUnreadCount(res.data.notifications)
                 setUser(res.data.user)
-            })
+            });
+        waitForPushMessages();
     }, []);
+
+    function waitForPushMessages() {
+        let token = atob(sessionStorage.getItem("token"));
+        if (!token)
+            return;
+
+        window.Echo = new Echo({
+            broadcaster: 'pusher',
+            key: '95c0537be9f255c6a252',
+            cluster: 'ap3',
+            forceTLS: true,
+            authEndpoint: broadcasting_base,
+            auth: {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+            },
+        });
+
+        let user_id;
+        if (sessionStorage.getItem('user_id'))
+            user_id = sessionStorage.getItem('user_id');
+
+        if (user_id) {
+            var channel1 = window.Echo.channel('private-user-' + user_id);
+            channel1.listen('.snapshot.created', function (data) {
+                swal("تصویر آنی شما با نام " + data.snapshot_name + " با موفقیت ایجاد گردید", "", "success");
+            });
+
+            var channel2 = window.Echo.channel('private-user-' + user_id);
+            channel2.listen('.server.created', function (data) {
+                swal("سرور شما با نام " + data.machine_name + " با موفقیت ایجاد گردید", "", "success");
+            });
+        }
+    }
 
 
     function requestLogout() {
@@ -225,7 +262,7 @@ function Layout(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar + ' ' + classes.sectionDesktop }/>
+            <div className={classes.toolbar + ' ' + classes.sectionDesktop}/>
             <div className={classes.sectionMobile}>
                 <center style={{margin: 2}}>
                     <Avatar className={classes.large}>
@@ -235,7 +272,7 @@ function Layout(props) {
                 </center>
             </div>
             <Divider/>
-            <List><MainMenuItems drawerFullWidth={drawerFullWidth} /></List>
+            <List><MainMenuItems drawerFullWidth={drawerFullWidth}/></List>
 
         </div>
     );
@@ -264,7 +301,7 @@ function Layout(props) {
                     </Grid>
 
 
-                    <Grid item xs={3} sm={2} md={1} >
+                    <Grid item xs={3} sm={2} md={1}>
                         <div className={classes.sectionDesktop}>
                             <IconButton color="inherit" href={"/Notifications"}>
                                 <Badge badgeContent={unreadCount} color="secondary">

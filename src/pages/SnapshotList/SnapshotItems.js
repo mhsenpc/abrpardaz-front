@@ -8,48 +8,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {api_base, broadcasting_base, snapshotsList} from "../../Api";
+import {api_base, snapshotsList} from "../../Api";
 import DeleteIcon from '@material-ui/icons/Delete';
 import swal from "sweetalert";
 import SnapshotName from "./SnapshotName";
-import Echo from "laravel-echo";
 
 
 export default function SnapshotItems(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
     const JDate = require('jalali-date');
 
-    let user_id;
-    if (sessionStorage.getItem('user_id'))
-        user_id = sessionStorage.getItem('user_id');
-    else if (localStorage.getItem('user_id'))
-        user_id = localStorage.getItem('user_id');
-
-    let token = atob(sessionStorage.getItem("token"));
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: '95c0537be9f255c6a252',
-        cluster: 'ap3',
-        forceTLS: true,
-        authEndpoint: broadcasting_base,
-        auth: {
-            headers: {
-                Authorization: 'Bearer ' + token
-            },
-        },
-    });
-
-
     React.useEffect(() => {
         loadSnapshots();
-
-        if (user_id) {
-            var channel = window.Echo.channel('private-user-' + user_id);
-            channel.listen('.snapshot.created', function (data) {
-                loadSnapshots();
-                swal("تصویر آنی شما با نام "+data.snapshot_name+" با موفقیت ایجاد گردید","","success");
-            });
-        }
     }, []);
 
     function loadSnapshots() {
@@ -61,8 +31,8 @@ export default function SnapshotItems(props) {
             })
     }
 
-    function requestRemoveSnapshot(id,name) {
-        swal("آیا از حذف تصویر آنی "+name+" اطمینان دارید؟", {
+    function requestRemoveSnapshot(id, name) {
+        swal("آیا از حذف تصویر آنی " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -106,7 +76,7 @@ export default function SnapshotItems(props) {
                                     {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id,row.name)}>حذف تصویر
+                                    <DeleteIcon onClick={() => requestRemoveSnapshot(row.id, row.name)}>حذف تصویر
                                         آنی</DeleteIcon>
                                 </TableCell>
 

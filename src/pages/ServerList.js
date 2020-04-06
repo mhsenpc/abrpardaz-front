@@ -33,21 +33,6 @@ export default function ServerList(props) {
         window.location.href = '/server/' + machine_id.toString();
     }
 
-    let token = atob(sessionStorage.getItem("token"));
-
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: '95c0537be9f255c6a252',
-        cluster: 'ap3',
-        forceTLS: true,
-        authEndpoint: broadcasting_base,
-        auth: {
-            headers: {
-                Authorization: 'Bearer ' + token
-            },
-        },
-    });
-
     const [items, setItems] = React.useState([]);
 
     React.useEffect(() => {
@@ -63,13 +48,6 @@ export default function ServerList(props) {
                     setBackDropOpen(false)
                 })
         }
-
-        Pusher = Pusher;
-        var channel = window.Echo.channel('private-project-' + id.toString());
-        channel.listen('.server.created', function (data) {
-            loadMachines();
-            swal("سرور شما با نام "+data.machine_name+" با موفقیت ایجاد گردید","","success");
-        });
 
     }, []);
 
