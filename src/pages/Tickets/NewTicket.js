@@ -64,6 +64,8 @@ function NewTicket() {
     const [category, setCategory] = React.useState('');
     const [priority, setPriority] = React.useState('متوسط');
     const [response, setResponse] = React.useState('');
+    const [fileName, setFileName] = React.useState('');
+    const [file, setFile] = React.useState('');
 
     const handleChangeMachine = event => {
         setMachine(event.target.value);
@@ -98,27 +100,37 @@ function NewTicket() {
     }, []);
 
 
+    function onChangeHandler(event) {
+        if (event.target.files[0] !== undefined) {
+            setFileName(event.target.files[0].name);
+            setFile(event.target.files[0]);
+        } else {
+            setFile('');
+            setFileName('')
+        }
+    }
+
     function requestNewTicket(event) {
         event.preventDefault();
-
+        const formData = new FormData();
         const {machine, category, message, title, priority} = event.currentTarget.elements;
-        axios.post(api_base + newTicket, {
-            machine: machine.value,
-            category: category.value,
-            title: title.value,
-            message: message.value,
-            priority: priority.value
-        })
+        formData.append('machine',machine.value);
+        formData.append('category',category.value);
+        formData.append('title',title.value);
+        formData.append('message',message.value);
+        formData.append('priority',priority.value);
+        formData.append('file',file);
+
+        axios.post(api_base + newTicket, formData)
             .then(res => {
                 const msg = res.data.message;
                 if (res.data.success) {
 
-                    swal(msg, '', 'success').then((result)=>{
+                    swal(msg, '', 'success').then((result) => {
                         window.location.href = '/tickets'
                     })
 
-                }
-                else{
+                } else {
                     setResponse(res.data)
                 }
             })
@@ -208,6 +220,24 @@ function NewTicket() {
                             variant="filled"
                             required
                         />
+                        <br/>
+                        <br/>
+                        فایل ضمیمه:
+
+                        <Button
+                            variant="contained"
+                            component="label"
+                        >
+                            انتخاب
+                            <input
+                                type="file"
+                                name="file"
+                                style={{display: "none"}}
+                                onChange={onChangeHandler}
+                            />
+                        </Button>
+                        &nbsp;
+                        <span>{fileName}</span>
                         <br/>
                         <br/>
                         <Button type="submit" variant="contained" color="primary">

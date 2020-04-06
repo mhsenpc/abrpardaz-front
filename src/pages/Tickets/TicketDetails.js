@@ -60,9 +60,11 @@ const useStyles = makeStyles({
 function TicketDetails(props) {
 
     const classes = useStyles();
-    const [ticket, setTicket] = React.useState({replies: []});
+    const [ticket, setTicket] = React.useState({replies: [], user: {profile: []}});
     const [response, setResponse] = React.useState([]);
     const JDate = require('jalali-date');
+    const [fileName, setFileName] = React.useState('');
+    const [file, setFile] = React.useState('');
 
     function loadTicket() {
         let id = props.match.params.id;
@@ -79,14 +81,19 @@ function TicketDetails(props) {
 
 
     function requestSendReply(event) {
-
         event.preventDefault();
+        const formData = new FormData();
         const {comment} = event.currentTarget.elements;
+        formData.append('comment', comment.value);
+        formData.append('file', file);
+
         let id = props.match.params.id;
-        axios.post(api_base + 'tickets/' + id.toString() + '/newReply', {comment: comment.value})
+        axios.post(api_base + 'tickets/' + id.toString() + '/newReply', formData)
             .then(res => {
                 setResponse(res.data);
                 comment.value = "";
+                setFile('');
+                setFileName('')
                 loadTicket();
             })
     }
@@ -99,8 +106,18 @@ function TicketDetails(props) {
             .then(res => {
                 setResponse(res.data)
             })
-
     }
+
+    function onChangeHandler(event) {
+        if (event.target.files[0] !== undefined) {
+            setFileName(event.target.files[0].name);
+            setFile(event.target.files[0]);
+        } else {
+            setFile('');
+            setFileName('')
+        }
+    }
+
 
     return (
         <div>
@@ -125,12 +142,30 @@ function TicketDetails(props) {
                         <Typography className={classes.title} variant="h5" component="h2">
                             {ticket.message}
                         </Typography>
+                        {ticket.attachment &&
+                        <p>
+                            <a target={"_blank"} href={ticket.attachment}>فایل ضمیمه</a>
+                        </p>
+                        }
 
                         <Typography color={"textSecondary"} variant={"caption"}>
                             نوشته شده در:
                             {(new JDate(new Date(ticket.created_at))).format('YYYY/MM/DD')}&nbsp;
                             {new Date(ticket.created_at).toLocaleTimeString()}
+                            &nbsp;
+                            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Ticket Operator")) &&
+                            <div>
+                                <a target={"_blank"} href={'/UserProfile/' + ticket.user.id}>
+                                    توسط:
+                                    {ticket.user.profile.first_name} {ticket.user.profile.last_name}
+                                    <br/>
+                                    ایمیل:
+                                    {ticket.user.email}
+                                </a>
+                            </div>
+                            }
                         </Typography>
+
                         <br/>
                         <br/>
                         <Grid container>
@@ -149,6 +184,11 @@ function TicketDetails(props) {
                                         <Typography className={classes.title} variant="h5" component="h2">
                                             {row.comment}
                                         </Typography>
+                                        {row.attachment &&
+                                        <p>
+                                            <a target={"_blank"} href={row.attachment}>فایل ضمیمه</a>
+                                        </p>
+                                        }
                                         <Typography color={"textSecondary"} variant={"caption"}>
                                             نوشته شده در:
                                             {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
@@ -167,10 +207,30 @@ function TicketDetails(props) {
                         <form onSubmit={requestSendReply}>
                             <p>پرسش دیگری دارید؟</p>
                             <Grid item xs={12}>
-                                <TextField name="comment" variant="outlined" multiline required
-                                />
+                                <TextField name="comment" variant="outlined" multiline required/>
                             </Grid>
 
+                            <Grid item xs={12}>
+                                فایل ضمیمه:
+
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                >
+                                    انتخاب
+                                    <input
+                                        type="file"
+                                        name="file"
+                                        style={{display: "none"}}
+                                        onChange={onChangeHandler}
+                                    />
+                                </Button>
+                                &nbsp;
+                                <span>{fileName}</span>
+
+                            </Grid>
+
+                            <br/>
                             <div>
 
                                 <Button type="submit" variant="contained" color={"primary"}>پاسخ</Button>
