@@ -48,4 +48,5 @@ export const AddProject = 'projects/add';
 export const NotificationPath = 'notifications/list';
 export const NotificationMarkAllRead = 'notifications/markAllRead';
 export const LimitList = 'limits/list';
-
+export const redirectToGooglePath = 'auth/redirectToGoogle';
+export const handleGoogleCallbackPath = 'auth/handleGoogleCallback';

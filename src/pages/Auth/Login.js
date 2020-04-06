@@ -11,11 +11,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import {api_base, login} from "../../Api";
+import {api_base, login, redirectToGooglePath} from "../../Api";
 import axios from 'axios';
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
-
+import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -75,6 +75,13 @@ export default function Login() {
             })
     }
 
+    function redirectToGoogle() {
+        axios.get(api_base + redirectToGooglePath)
+            .then(res => {
+                window.location.href = res.data.url;
+            })
+    }
+
     return (
         <Grid container component="main" className={classes.root}>
             <title>ورود کاربران{user_title_postfix}</title>
@@ -125,6 +132,17 @@ export default function Login() {
                             className={classes.submit}
                         >
                             ورود
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={redirectToGoogle}
+                            fullWidth
+                            variant="contained"
+                            style={{backgroundColor: 'red', color: 'white'}}
+                            className={classes.submit}
+                        >
+                            ورود با گوگل
+                            <EmailIcon/>
                         </Button>
                         <Grid container>
                             <Grid item xs>

@@ -50,6 +50,7 @@ import RoleAdd from "./pages/Roles/RoleAdd";
 import RoleEdit from "./pages/Roles/RoleEdit";
 import ChangeUserRole from "./pages/Users/ChangeUserRole";
 import App from "./App";
+import LoginWithGoogle from "./pages/Auth/LoginWithGoogle";
 
 
 const theme = createMuiTheme({
@@ -131,6 +132,7 @@ const routing = (
             <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
             <Route path="/ForgetPassword" component={ForgetPassword}/>
             <Route path="/Verify" component={Verify}/>
+            <Route path="/LoginWithGoogle" component={LoginWithGoogle}/>
             <DefaultLayout path="/Notifications" component={Notifications}/>
             <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
             <DefaultLayout path="/servers/:id" component={ServerList}/>
