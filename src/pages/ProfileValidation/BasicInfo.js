@@ -74,7 +74,7 @@ export default function BasicInfo(props) {
             {props.userInfo.profile.national_code_status == 1 &&
             <span>
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
             }
 

@@ -211,7 +211,7 @@ function UserProfile(props) {
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                 }
 
@@ -220,7 +220,7 @@ function UserProfile(props) {
                                 <span>
                                 وضعیت فعلی:
                                 <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
                     <span>
                                         <br/>
@@ -292,7 +292,7 @@ function UserProfile(props) {
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                 }
 
@@ -301,7 +301,7 @@ function UserProfile(props) {
                                 <span>
                                 وضعیت فعلی:
                                 <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
                     <span>
                                         <br/>
@@ -417,7 +417,7 @@ function UserProfile(props) {
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                 }
 
@@ -426,7 +426,7 @@ function UserProfile(props) {
                                 <span>
                                 وضعیت فعلی:
                                 <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
                     <span>
                                         <br/>
@@ -497,7 +497,7 @@ function UserProfile(props) {
                                 {item.email_verified_at === null &&
                                 <span>
                                     <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     &nbsp;
                                     <Button onClick={verifyEmail} variant={"outlined"}>
                                     <CheckCircleOutlineIcon style={{color: 'green'}}/>
@@ -508,7 +508,7 @@ function UserProfile(props) {
                                 {item.email_verified_at !== null &&
                                 <span>
                                 <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                                 }
                             </p>
@@ -527,14 +527,14 @@ function UserProfile(props) {
                                 {item.profile.validated_at !== null &&
                                 <span>
                                 <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                                 }
 
                                 {item.profile.validated_at === null &&
                                 <span>
                                     <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
 
                                 }
@@ -547,14 +547,14 @@ function UserProfile(props) {
                                 {item.profile.mobile_verified_at === null &&
                                 <span>
                                 <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
                                 }
 
                                 {item.profile.mobile_verified_at !== null &&
                                 <span>
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                                 }
                             </p>
@@ -566,14 +566,14 @@ function UserProfile(props) {
                                 {item.profile.phone_verified_at === null &&
                                 <span>
                                 <WarningIcon color={"error"}/>
-                                        تاییده نشده
+                                        تایید نشده
                                     </span>
                                 }
 
                                 {item.profile.phone_verified_at !== null &&
                                 <span>
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                                 }
                             </p>
@@ -615,7 +615,7 @@ function UserProfile(props) {
                                 {item.profile.national_code_status === 1 &&
                                 <span>
                                     <CheckIcon style={{color: "green"}}/>
-                                    تاییده شده
+                                    تایید شده
                                 </span>
                                 }
 

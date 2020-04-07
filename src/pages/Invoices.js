@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Alert from "@material-ui/lab/Alert/Alert";
 import SimpleModal from "./SimpleModal";
 import {user_title_postfix} from "../consts";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useStyles = makeStyles({
     root: {
@@ -52,7 +53,7 @@ export default function Invoices() {
     }
 
     function pay(id) {
-
+        window.location.href = '/InvoicePayment/' + id.toString();
     }
 
     return (
@@ -78,8 +79,6 @@ export default function Invoices() {
                             <TableRow>
                                 <TableCell align="right">شماره فاکتور</TableCell>
                                 <TableCell align="right">هزینه</TableCell>
-                                <TableCell align="right">ارزش افزوده</TableCell>
-                                <TableCell align="right">جمع کل</TableCell>
                                 <TableCell align="right">تاریخ ایجاد</TableCell>
                                 <TableCell align="right"></TableCell>
                                 <TableCell align="right"></TableCell>
@@ -88,19 +87,13 @@ export default function Invoices() {
                         <TableBody>
                             {items.map(row => (
                                 <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" align="right">
                                         {row.invoice_id}
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {numeral(row.amount).format('0,0')}
+                                    <TableCell component="th" scope="row" align="right">
+                                        {numeral(row.total).format('0,0')} تومان
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {numeral(row.vat).format('0,0')}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {numeral(row.total).format('0,0')}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" align="right">
                                         {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
                                         {new Date(row.created_at).toLocaleTimeString()}
                                     </TableCell>
@@ -110,9 +103,18 @@ export default function Invoices() {
                                             جزئیات</Button>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
+                                        {row.is_paid &&
+                                        <div>
+                                            <CheckIcon style={{color: "green"}}/>
+                                            پرداخت شده
+                                        </div>
+                                        }
+                                        {!row.is_paid &&
+
                                         <Button variant={"outlined"} color={"primary"} onClick={() => pay(row.id)}>
                                             پرداخت
                                         </Button>
+                                        }
                                     </TableCell>
 
                                 </TableRow>

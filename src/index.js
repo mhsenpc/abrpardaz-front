@@ -51,6 +51,7 @@ import RoleEdit from "./pages/Roles/RoleEdit";
 import ChangeUserRole from "./pages/Users/ChangeUserRole";
 import App from "./App";
 import LoginWithGoogle from "./pages/Auth/LoginWithGoogle";
+import InvoicePayment from "./pages/InvoicePayment";
 
 
 const theme = createMuiTheme({
@@ -154,6 +155,7 @@ const routing = (
             <DefaultLayout path="/RolesList" component={RolesList}/>
             <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
             <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>
+            <DefaultLayout path="/InvoicePayment/:id" component={InvoicePayment}/>
             <Route component={Notfound}/>
             </Switch>
         </div>
