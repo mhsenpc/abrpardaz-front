@@ -120,8 +120,8 @@ export default function RolesList() {
         setPage(newPage);
     }
 
-    const removeRole = (id,name) => {
-        swal("آیا از حذف نقش کاربری "+name+" اطمینان دارید؟", {
+    const removeRole = (id, name) => {
+        swal("آیا از حذف نقش کاربری " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -140,112 +140,114 @@ export default function RolesList() {
         <div>
             <title>لیست نقش های کاربری{admin_title_postfix}</title>
 
-            <Grid item xs={12} container>
-
-                <Paper style={{padding: 10}}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={10}>
-                                <h2>
-                                    نقش های کاربری سیستم
-                                </h2>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Paper>
+                        <Box p={1}>
+                            <Grid container>
+                                <Grid item xs={10}>
+                                    <h2>
+                                        نقش های کاربری سیستم
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Roles")) &&
+                                    <Button href={'/RoleAdd'} variant="contained" color="primary">
+                                        <AddIcon/>
+                                        افزودن
+                                    </Button>
+                                    }
+                                </Grid>
                             </Grid>
-                            <Grid item xs={2}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Roles")) &&
-                                <Button href={'/RoleAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن
-                                </Button>
-                                }
-                            </Grid>
-                        </Grid>
 
 
-                        <p>
-                            نقش های مختلف به شما اجازه می دهد که اختیارات قابل تقویض به کاربران را در دسته های معنادار
-                            گروه بندی کنید
-                        </p>
+                            <p>
+                                نقش های مختلف به شما اجازه می دهد که اختیارات قابل تقویض به کاربران را در دسته های
+                                معنادار
+                                گروه بندی کنید
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">تاریخ ایجاد</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map(row => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">نام</StyledTableCell>
+                                            <StyledTableCell align="right">تاریخ ایجاد</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map(row => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
-                                                {new Date(row.created_at).toLocaleTimeString()}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                                    {new Date(row.created_at).toLocaleTimeString()}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={handleClick}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEl}
-                                                    keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
-                                                >
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Roles")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/RoleEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Roles")) &&
-                                                    <StyledMenuItem onClick={() => removeRole(row.id,row.name)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Roles")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/RoleEdit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <EditIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ویرایش"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Roles")) &&
+                                                        <StyledMenuItem onClick={() => removeRole(row.id, row.name)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            نقش وجود ندارد
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                نقش وجود ندارد
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <MessageBox response={response}/>

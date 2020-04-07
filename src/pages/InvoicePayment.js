@@ -11,6 +11,9 @@ import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert/Alert";
+import CheckIcon from "@material-ui/icons/Check";
+import WarningIcon from "@material-ui/icons/Warning";
+import swal from "sweetalert";
 
 
 const useStyles = makeStyles(theme => ({}));
@@ -25,7 +28,7 @@ export default function InvoicePayment(props) {
     const [fileName, setFileName] = React.useState('');
     var numeral = require('numeral');
 
-    React.useEffect(() => {
+    function loadInvoice() {
         let id = props.match.params.id;
         axios.get(api_base + 'invoices/' + id + '/show')
             .then(res => {
@@ -33,6 +36,10 @@ export default function InvoicePayment(props) {
 
                 setInvoice(item);
             })
+    }
+
+    React.useEffect(() => {
+        loadInvoice();
     }, []);
 
     function onChangeFileHandler(event) {
@@ -55,7 +62,26 @@ export default function InvoicePayment(props) {
             .then(res => {
                 setResponse(res.data)
                 setOpen(false)
+                loadInvoice();
             })
+    }
+
+    function requestConfirmReceipt() {
+        let id = props.match.params.id;
+        swal("آیا از تایید دستی این فاکتور اطمینان دارید؟", {
+            buttons: true,
+            icon: "warning",
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                axios.put(api_base + 'invoices/' + id.toString() + '/confirmReceipt')
+                    .then(res => {
+                        swal(res.data.message, '', 'success');
+                        setResponse(res.data)
+                        loadInvoice();
+                    })
+            }
+        });
+
     }
 
     return (
@@ -74,30 +100,83 @@ export default function InvoicePayment(props) {
                         </span>
                         </Alert>
                         }
+                        <Grid container>
+                            <Grid item xs={11}>
+                                <h2>پرداخت فاکتور {invoice.invoice_id}</h2>
+                            </Grid>
 
-                        <h2>پرداخت فاکتور {invoice.invoice_id}</h2>
+                            <Grid item xs={1}>
+                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Invoice Operator")) &&
+                                <Button variant={"contained"} color={"primary"}
+                                        onClick={requestConfirmReceipt}>تایید</Button>
+                                }
+                            </Grid>
+                        </Grid>
                         <p>
                             مبلغ خام:
+                            &nbsp;
                             {numeral(invoice.amount).format('0,0')} تومان
                         </p>
                         <p>
                             ارزش افزوده:
+                            &nbsp;
                             {numeral(invoice.vat).format('0,0')} تومان
                         </p>
                         <p>
                             مجموع:
+                            &nbsp;
                             {numeral(invoice.total).format('0,0')} تومان
                         </p>
-                        <p>
-                            <Button variant={"contained"} color={"primary"}>پرداخت آنلاین</Button>
-                        </p>
-                        <p>
-                            و یا
-                        </p>
-                        <p>
-                            <Button variant={"contained"} color={"secondary"} onClick={() => setOpen(true)}>بارگذاری فیش
-                                بانکی</Button>
-                        </p>
+
+                        {(!sessionStorage.getItem('permissions') || (sessionStorage.getItem('permissions') && !sessionStorage.getItem('permissions').includes("Invoice Operator"))) &&
+                        <div>
+                            <p>
+                                <Button variant={"contained"} color={"primary"}>پرداخت آنلاین</Button>
+                            </p>
+                            <p>
+                                و یا
+                            </p>
+                            <p>
+                                <Button variant={"contained"} color={"secondary"} onClick={() => setOpen(true)}>بارگذاری
+                                    فیش
+                                    بانکی</Button>
+                            </p>
+                        </div>
+                        }
+                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Invoice Operator")) &&
+                        <div>
+                            وضعیت:
+                            &nbsp;
+                            {invoice.is_paid &&
+                            <span>
+                                    <CheckIcon style={{color: "green"}}/>
+                                    پرداخت شده
+                                </span>
+                            }
+
+                            {!invoice.is_paid &&
+                            <span>
+                                    <WarningIcon style={{color: "red"}}/>
+                                    در انتظار پرداخت
+
+                            </span>
+                            }
+
+                            {invoice.receipt &&
+                            <div>
+                                <p>
+                                    <a target={"_blank"} href={invoice.receipt}>
+                                        <img width={300} height={200} src={invoice.receipt}/>
+                                    </a>
+                                </p>
+                                <p>
+                                    توضیحات:
+                                    {invoice.description}
+                                </p>
+                            </div>
+                            }
+                        </div>
+                        }
                     </Box>
                 </Paper>
             </Grid>
@@ -130,6 +209,7 @@ export default function InvoicePayment(props) {
                     ثبت
                 </Button>
             </SimpleModal>
+            <MessageBox response={response}/>
         </Grid>
     )
 }

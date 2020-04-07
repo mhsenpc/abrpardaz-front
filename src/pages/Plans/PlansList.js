@@ -20,7 +20,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {api_base, plansList, syncImagesPath, syncPlansPath} from "../../Api";
+import {api_base, plansList, syncPlansPath} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box} from "@material-ui/core";
 import swal from "sweetalert";
@@ -28,7 +28,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import SimpleModal from "../SimpleModal";
 import CachedIcon from '@material-ui/icons/Cached';
-import {admin_title_postfix, user_title_postfix} from "../../consts";
+import {admin_title_postfix} from "../../consts";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -123,8 +123,8 @@ export default function PlansList() {
         setPage(newPage);
     }
 
-    const removePlan = (id,name) => {
-        swal("آیا از حذف پلن "+name+" اطمینان دارید؟", {
+    const removePlan = (id, name) => {
+        swal("آیا از حذف پلن " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -139,7 +139,7 @@ export default function PlansList() {
         });
     }
 
-    function syncPlans(){
+    function syncPlans() {
         setOpen(true)
         setSyncResult("Loading...")
         axios.put(api_base + syncPlansPath)
@@ -153,140 +153,145 @@ export default function PlansList() {
         <div>
             <title>لیست پلن ها{admin_title_postfix}</title>
 
-            <Grid item xs={12} container>
+            <Grid container>
+                <Grid item xs={12}>
 
-                <Paper style={{padding: 10}}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={8}>
-                                <h2>
-                                    پلن های قابل انتخاب سرور
-                                </h2>
+                    <Paper>
+                        <Box p={1}>
+                            <Grid container>
+                                <Grid item xs={9}>
+                                    <h2>
+                                        پلن های قابل انتخاب سرور
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Box p={1}>
+                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Plans")) &&
+                                        <Button href={'/PlanAdd'} variant="contained" color="primary">
+                                            <AddIcon/>
+                                            افزودن
+                                        </Button>
+                                        }
+                                        &nbsp;
+                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Plans")) &&
+                                        <Button onClick={syncPlans} variant="contained" color="default">
+                                            <CachedIcon/>
+                                            همسان سازی
+                                        </Button>
+                                        }
+                                    </Box>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Plans")) &&
-                                <Button href={'/PlanAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن
-                                </Button>
-                                }
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Plans")) &&
-                                <Button onClick={syncPlans} variant="contained" color="default">
-                                    <CachedIcon/>
-                                    همسان سازی
-                                </Button>
-                                }
-                            </Grid>
-                        </Grid>
 
 
-                        <p>
-                            پلن های مختلف به کاربر امکان ساخت سرور با مشخصات مختلف می دهد.
-                        </p>
+                            <p>
+                                پلن های مختلف به کاربر امکان ساخت سرور با مشخصات مختلف می دهد.
+                            </p>
 
-                        <p>
-                            توجه کنید که تغییر در این صفحه به معنی تغییر اطلاعات در اوپن استک نمی باشد
-                        </p>
+                            <p>
+                                توجه کنید که تغییر در این صفحه به معنی تغییر اطلاعات در اوپن استک نمی باشد
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">remote_id</StyledTableCell>
-                                        <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">دیسک</StyledTableCell>
-                                        <StyledTableCell align="right">رم</StyledTableCell>
-                                        <StyledTableCell align="right">Vcpu</StyledTableCell>
-                                        <StyledTableCell align="right">هزینه ساعتی</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map(row => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">remote_id</StyledTableCell>
+                                            <StyledTableCell align="right">نام</StyledTableCell>
+                                            <StyledTableCell align="right">دیسک</StyledTableCell>
+                                            <StyledTableCell align="right">رم</StyledTableCell>
+                                            <StyledTableCell align="right">Vcpu</StyledTableCell>
+                                            <StyledTableCell align="right">هزینه ساعتی</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map(row => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.remote_id}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.remote_id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.disk} GB
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.disk} GB
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.ram} GB
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.ram} GB
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.vcpu} VCore
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.vcpu} VCore
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.hourly_price} تومان
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.hourly_price} تومان
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={handleClick}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEl}
-                                                    keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
-                                                >
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Plans")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/PlanEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Plans")) &&
-                                                    <StyledMenuItem onClick={() => removePlan(row.id,row.name)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Plans")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/PlanEdit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <EditIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ویرایش"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Plans")) &&
+                                                        <StyledMenuItem onClick={() => removePlan(row.id, row.name)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            پلنی وجود ندارد
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                پلنی وجود ندارد
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <SimpleModal open={open} setOpen={setOpen}>

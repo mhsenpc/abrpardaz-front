@@ -12,6 +12,8 @@ import {api_base, TransactionsListPath} from "../Api";
 import Alert from "@material-ui/lab/Alert/Alert";
 import {user_title_postfix} from "../consts";
 import Grid from "@material-ui/core/Grid";
+import Box from '@material-ui/core/Box';
+
 
 const useStyles = makeStyles({
     root: {
@@ -39,6 +41,7 @@ export default function Invoices() {
     return (
         <Paper className={classes.root}>
             <title>تراکنش های مالی{user_title_postfix}</title>
+            <Box p={1}>
 
             <h2 style={{direction: "rtl", marginRight: 20}}>تراکنش های مالی</h2>
             {items.length === 0 &&
@@ -95,6 +98,7 @@ export default function Invoices() {
                 </Table>
             </TableContainer>
             }
+            </Box>
         </Paper>
     );
 

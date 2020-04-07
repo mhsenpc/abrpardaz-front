@@ -119,8 +119,8 @@ export default function UserLimitList() {
         setPage(newPage);
     }
 
-    const removeUserLimit = (id,name) => {
-        swal("آیا از حذف محدودیت کاربری "+name+" اطمینان دارید؟", {
+    const removeUserLimit = (id, name) => {
+        swal("آیا از حذف محدودیت کاربری " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -135,7 +135,7 @@ export default function UserLimitList() {
         });
     }
 
-    function setAsDefault(id){
+    function setAsDefault(id) {
         axios.put(api_base + 'user_limits/' + id.toString() + '/setAsDefault')
             .then(res => {
                 setResponse(res.data)
@@ -147,135 +147,137 @@ export default function UserLimitList() {
         <div>
             <title>لیست محدودیت کاربری{admin_title_postfix}</title>
 
-            <Grid item xs={12} container>
-
-                <Paper style={{padding: 10}}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={8} md={10}>
-                                <h2>
-                                    محدودیت های کاربری
-                                </h2>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Paper>
+                        <Box p={1}>
+                            <Grid container>
+                                <Grid item xs={8} md={10}>
+                                    <h2>
+                                        محدودیت های کاربری
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={4} md={2}>
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add User Limits")) &&
+                                    <Button href={'/UserLimitAdd'} variant="contained" color="primary">
+                                        <AddIcon/>
+                                        افزودن
+                                    </Button>
+                                    }
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4} md={2}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add User Limits")) &&
-                                <Button href={'/UserLimitAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن
-                                </Button>
-                                }
-                            </Grid>
-                        </Grid>
 
-                        <p>
-                            گروه های کاربری به شما امکان می دهند که برای کاربران مختلف محدودیت های مختلف تعیین کنید.
-                        </p>
+                            <p>
+                                گروه های کاربری به شما امکان می دهند که برای کاربران مختلف محدودیت های مختلف تعیین کنید.
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">حداکثر سرور</StyledTableCell>
-                                        <StyledTableCell align="right">حداکثر تصویر آنی</StyledTableCell>
-                                        <StyledTableCell align="right">حداکثر volume</StyledTableCell>
-                                        <StyledTableCell align="right">پیش فرض</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map((row,i) => (
-                                        <StyledTableRow key={i}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">نام</StyledTableCell>
+                                            <StyledTableCell align="right">حداکثر سرور</StyledTableCell>
+                                            <StyledTableCell align="right">حداکثر تصویر آنی</StyledTableCell>
+                                            <StyledTableCell align="right">حداکثر volume</StyledTableCell>
+                                            <StyledTableCell align="right">پیش فرض</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map((row, i) => (
+                                            <StyledTableRow key={i}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.max_machines}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.max_machines}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.max_snapshots}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.max_snapshots}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.max_volumes_usage} GB
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.max_volumes_usage} GB
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.default === true &&
-                                                    <StarIcon style={{color:'yellow'}} />
-                                                }
-                                            </StyledTableCell>
-
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={handleClick}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEl}
-                                                    keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
-                                                >
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => setAsDefault(row.id)}>
-                                                        <ListItemIcon>
-                                                            <StarIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="انتخاب بعنوان پیش فرض"/>
-                                                    </StyledMenuItem>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.default === true &&
+                                                    <StarIcon style={{color: 'yellow'}}/>
                                                     }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/UserLimitEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                        <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
+                                                </StyledTableCell>
+
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => setAsDefault(row.id)}>
+                                                            <ListItemIcon>
+                                                                <StarIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="انتخاب بعنوان پیش فرض"/>
                                                         </StyledMenuItem>
-                                                    }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove User Limits")) &&
-                                                    <StyledMenuItem onClick={() => removeUserLimit(row.id,row.name)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit User Limits")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/UserLimitEdit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <EditIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ویرایش"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove User Limits")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => removeUserLimit(row.id, row.name)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            هیچ محدودیت کاربری وجود ندارد
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                هیچ محدودیت کاربری وجود ندارد
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <MessageBox response={response}/>

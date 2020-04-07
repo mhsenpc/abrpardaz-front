@@ -114,12 +114,12 @@ function NewTicket() {
         event.preventDefault();
         const formData = new FormData();
         const {machine, category, message, title, priority} = event.currentTarget.elements;
-        formData.append('machine',machine.value);
-        formData.append('category',category.value);
-        formData.append('title',title.value);
-        formData.append('message',message.value);
-        formData.append('priority',priority.value);
-        formData.append('file',file);
+        formData.append('machine', machine.value);
+        formData.append('category', category.value);
+        formData.append('title', title.value);
+        formData.append('message', message.value);
+        formData.append('priority', priority.value);
+        formData.append('file', file);
 
         axios.post(api_base + newTicket, formData)
             .then(res => {
@@ -137,119 +137,121 @@ function NewTicket() {
     }
 
     return (
-        <Grid item xs={12} container
+        <Grid container
               direction="row"
               alignItems="center"
         >
-            <Paper>
-                <title>تیکت جدید{user_title_postfix}</title>
+            <Grid item xs={12}>
+                <Paper>
+                    <title>تیکت جدید{user_title_postfix}</title>
 
-                <Box p={2} width={700}>
-                    <form onSubmit={requestNewTicket}>
-                        <h2>درخواست پشتیبانی</h2>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={4}>
-                                <FormControl className={classes.margin}>
-                                    <InputLabel id="demo-customized-select-label">ماشین</InputLabel>
-                                    <Select
-                                        name="machine"
-                                        labelId="demo-customized-select-label"
-                                        id="demo-customized-select"
-                                        value={machine}
-                                        onChange={handleChangeMachine}
-                                        input={<BootstrapInput/>}
-                                    >
+                    <Box p={1}>
+                        <form onSubmit={requestNewTicket}>
+                            <h2>درخواست پشتیبانی</h2>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} md={4}>
+                                    <FormControl className={classes.margin}>
+                                        <InputLabel id="demo-customized-select-label">ماشین</InputLabel>
+                                        <Select
+                                            name="machine"
+                                            labelId="demo-customized-select-label"
+                                            id="demo-customized-select"
+                                            value={machine}
+                                            onChange={handleChangeMachine}
+                                            input={<BootstrapInput/>}
+                                        >
 
-                                        {itemsMachine.map(row => (
-                                            <MenuItem value={row.id}>{row.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                            {itemsMachine.map(row => (
+                                                <MenuItem value={row.id}>{row.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <FormControl className={classes.margin}>
+                                        <InputLabel id="demo-customized-select-label">دسته بندی</InputLabel>
+                                        <Select
+                                            name="category"
+                                            labelId="demo-customized-select-label"
+                                            id="demo-customized-select"
+                                            value={category}
+                                            onChange={handleChangeCat}
+                                            input={<BootstrapInput/>}
+                                        >
+                                            {itemsTicketsCat.map(row => (
+                                                <MenuItem value={row.id}>{row.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <FormControl className={classes.margin}>
+                                        <InputLabel id="demo-customized-select-label">اولویت</InputLabel>
+                                        <Select
+                                            name="priority"
+                                            labelId="demo-customized-select-label"
+                                            id="demo-customized-select"
+                                            value={priority}
+                                            onChange={handleChangePriority}
+                                            input={<BootstrapInput/>}
+                                        >
+                                            <MenuItem value='کم'>کم</MenuItem>
+                                            <MenuItem value='متوسط'>متوسط</MenuItem>
+                                            <MenuItem value='زیاد'>زیاد</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={4}>
-                                <FormControl className={classes.margin}>
-                                    <InputLabel id="demo-customized-select-label">دسته بندی</InputLabel>
-                                    <Select
-                                        name="category"
-                                        labelId="demo-customized-select-label"
-                                        id="demo-customized-select"
-                                        value={category}
-                                        onChange={handleChangeCat}
-                                        input={<BootstrapInput/>}
-                                    >
-                                        {itemsTicketsCat.map(row => (
-                                            <MenuItem value={row.id}>{row.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <FormControl className={classes.margin}>
-                                    <InputLabel id="demo-customized-select-label">اولویت</InputLabel>
-                                    <Select
-                                        name="priority"
-                                        labelId="demo-customized-select-label"
-                                        id="demo-customized-select"
-                                        value={priority}
-                                        onChange={handleChangePriority}
-                                        input={<BootstrapInput/>}
-                                    >
-                                        <MenuItem value='کم'>کم</MenuItem>
-                                        <MenuItem value='متوسط'>متوسط</MenuItem>
-                                        <MenuItem value='زیاد'>زیاد</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <TextField
-                            name="title"
-                            id="filled-multiline-static"
-                            label="عنوان تیکت"
-                            variant="filled"
-                            required
-                        />
-                        <br/>
-                        <br/>
-
-                        <TextField
-                            name="message"
-                            id="filled-multiline-static"
-                            label="متن تیکت"
-                            multiline
-                            rows="4"
-                            variant="filled"
-                            required
-                        />
-                        <br/>
-                        <br/>
-                        فایل ضمیمه:
-
-                        <Button
-                            variant="contained"
-                            component="label"
-                        >
-                            انتخاب
-                            <input
-                                type="file"
-                                name="file"
-                                style={{display: "none"}}
-                                onChange={onChangeHandler}
+                            <TextField
+                                name="title"
+                                id="filled-multiline-static"
+                                label="عنوان تیکت"
+                                variant="filled"
+                                required
                             />
-                        </Button>
-                        &nbsp;
-                        <span>{fileName}</span>
-                        <br/>
-                        <br/>
-                        <Button type="submit" variant="contained" color="primary">
-                            ثبت تیکت
-                        </Button>
+                            <br/>
+                            <br/>
 
-                    </form>
+                            <TextField
+                                name="message"
+                                id="filled-multiline-static"
+                                label="متن تیکت"
+                                multiline
+                                rows="4"
+                                variant="filled"
+                                required
+                            />
+                            <br/>
+                            <br/>
+                            فایل ضمیمه:
 
-                </Box>
+                            <Button
+                                variant="contained"
+                                component="label"
+                            >
+                                انتخاب
+                                <input
+                                    type="file"
+                                    name="file"
+                                    style={{display: "none"}}
+                                    onChange={onChangeHandler}
+                                />
+                            </Button>
+                            &nbsp;
+                            <span>{fileName}</span>
+                            <br/>
+                            <br/>
+                            <Button type="submit" variant="contained" color="primary">
+                                ثبت تیکت
+                            </Button>
 
-            </Paper>
-            <MessageBox response={response}/>
+                        </form>
+
+                    </Box>
+
+                </Paper>
+                <MessageBox response={response}/>
+            </Grid>
         </Grid>
 
     )

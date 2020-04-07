@@ -136,8 +136,8 @@ export default function ImagesList() {
         setPage(newPage);
     }
 
-    const removeImage = (id,name) => {
-        swal("آیا از حذف "+name+" اطمینان دارید؟", {
+    const removeImage = (id, name) => {
+        swal("آیا از حذف " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -152,7 +152,7 @@ export default function ImagesList() {
         });
     }
 
-    function syncImages(){
+    function syncImages() {
         setOpen(true)
         setSyncResult("Loading...")
         axios.put(api_base + syncImagesPath)
@@ -166,135 +166,139 @@ export default function ImagesList() {
         <div>
             <title>لیست تصاویر{admin_title_postfix}</title>
 
-            <Grid item xs={12} container>
+            <Grid container>
+                <Grid item xs={12}>
 
-                <Paper className={useStyles.paper} style={{padding: 10}}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={8}>
-                                <h2>
-                                    تصاویر قابل نصب
-                                </h2>
+                    <Paper className={useStyles.paper}>
+                        <Box p={1}>
+                            <Grid container>
+                                <Grid item xs={9}>
+                                    <h2>
+                                        تصاویر قابل نصب
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Images")) &&
+                                    <Button href={'/ImageAdd'} variant="contained" color="primary">
+                                        <AddIcon/>
+                                        افزودن
+                                    </Button>
+                                    }
+                                    &nbsp;
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Images")) &&
+                                    <Button onClick={syncImages} variant="contained" color="default">
+                                        <CachedIcon/>
+                                        همسان سازی
+                                    </Button>
+                                    }
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Images")) &&
-                                <Button href={'/ImageAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن
-                                </Button>
-                                }
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Images")) &&
-                                <Button onClick={syncImages} variant="contained" color="default">
-                                    <CachedIcon/>
-                                    همسان سازی
-                                </Button>
-                                }
-                            </Grid>
-                        </Grid>
 
 
-                        <p>
-                            روش استاندارد افزودن تصویر با استفاده از دکمه همگام سازی است. هر چند که می توانید اطلاعات
-                            تصاویر موجود را تغییر دهید
-                        </p>
-                        <p>
-                            توجه کنید که تغییر در این صفحه به معنی تغییر اطلاعات در اوپن استک نمی باشد
-                        </p>
+                            <p>
+                                روش استاندارد افزودن تصویر با استفاده از دکمه همگام سازی است. هر چند که می توانید
+                                اطلاعات
+                                تصاویر موجود را تغییر دهید
+                            </p>
+                            <p>
+                                توجه کنید که تغییر در این صفحه به معنی تغییر اطلاعات در اوپن استک نمی باشد
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">remote_id</StyledTableCell>
-                                        <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">نسخه</StyledTableCell>
-                                        <StyledTableCell align="right">حداقل دیسک</StyledTableCell>
-                                        <StyledTableCell align="right">حداقل رم</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map(row => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">remote_id</StyledTableCell>
+                                            <StyledTableCell align="right">نام</StyledTableCell>
+                                            <StyledTableCell align="right">نسخه</StyledTableCell>
+                                            <StyledTableCell align="right">حداقل دیسک</StyledTableCell>
+                                            <StyledTableCell align="right">حداقل رم</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map(row => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.remote_id}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.remote_id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.version}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.version}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.min_disk} GB
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.min_disk} GB
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.min_ram} GB
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.min_ram} GB
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={handleClick}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEl}
-                                                    keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
-                                                >
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Images")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/ImageEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Images")) &&
-                                                    <StyledMenuItem onClick={() => removeImage(row.id,row.name)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Images")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/ImageEdit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <EditIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ویرایش"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Images")) &&
+                                                        <StyledMenuItem onClick={() => removeImage(row.id, row.name)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            شما هنوز هیچ تصویری نساخته اید
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                شما هنوز هیچ تصویری نساخته اید
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <SimpleModal open={open} setOpen={setOpen}>
