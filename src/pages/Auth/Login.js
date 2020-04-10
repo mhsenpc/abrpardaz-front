@@ -11,18 +11,20 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import {api_base, login, redirectToGooglePath} from "../../Api";
+import {api_base, api_host, getOneCaptcha, login, redirectToGooglePath} from "../../Api";
 import axios from 'axios';
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
 import EmailIcon from '@material-ui/icons/Email';
+import ReplayIcon from '@material-ui/icons/Replay';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(http://www.mihanfal.com/wp-content/uploads/2017/04/3003925.jpg)',
+        backgroundImage: 'url(images/back.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
@@ -53,11 +55,26 @@ export default function Login() {
     const classes = useStyles();
     const [response, setResponse] = React.useState([]);
     const [rememberMe, setRememberMe] = React.useState(false);
+    const [captchaUrl, setCaptchaUrl] = React.useState('');
+    const [captchaKey, setCaptchaKey] = React.useState('');
+    const [captcha, setCaptcha] = React.useState('');
+
+    React.useEffect(() => {
+        loadCaptcha();
+    }, []);
+
+    function loadCaptcha(){
+        axios.get(api_host + '/' + getOneCaptcha)
+            .then(res => {
+                setCaptchaUrl(res.data.img);
+                setCaptchaKey(res.data.key);
+            });
+    }
 
     function sendUser(event) {
         event.preventDefault();
         const {email, password} = event.currentTarget.elements;
-        axios.post(api_base + login, {email: email.value, password: password.value})
+        axios.post(api_base + login, {email: email.value, password: password.value, captcha: captcha,ckey:captchaKey})
             .then(res => {
                 setResponse(res.data);
                 if (res.data.success) {
@@ -71,6 +88,10 @@ export default function Login() {
                         localStorage.setItem("permissions", res.data.permissions);
                     }
                     window.location.href = '/Dashboard';
+                }
+                else{
+                    loadCaptcha();
+                    setCaptcha('')
                 }
             })
     }
@@ -95,7 +116,7 @@ export default function Login() {
                     <Typography component="h1" variant="h5">
                         ورود کاربران
                     </Typography>
-                    <form onSubmit={sendUser} className={classes.form} noValidate>
+                    <form onSubmit={sendUser} className={classes.form}>
                         <TextField
 
                             variant="outlined"
@@ -119,6 +140,29 @@ export default function Login() {
                             id="password"
                             autoComplete="current-password"
                         />
+                        <Grid container spacing={1}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    id="captcha"
+                                    label="کد را وارد کنید"
+                                    name="captcha"
+                                    value={captcha}
+                                    onChange={(event)=>setCaptcha(event.target.value)}
+                                />
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                <img src={captchaUrl}/>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button onClick={loadCaptcha} variant={"outlined"}>
+                                    <ReplayIcon  />
+                                </Button>
+                            </Grid>
+                        </Grid>
+
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary"
                                                onChange={event => setRememberMe(event.target.checked)}/>}

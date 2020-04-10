@@ -51,7 +51,8 @@ export default function MessageBox(props) {
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
-            }}>
+            }}
+            className={'ltr'}>
             <Alert onClose={handleClose} severity={type}>
                 {messages.map(message => (
                     <p key={message}>{message}</p>

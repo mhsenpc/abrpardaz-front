@@ -50,3 +50,4 @@ export const NotificationMarkAllRead = 'notifications/markAllRead';
 export const LimitList = 'limits/list';
 export const redirectToGooglePath = 'auth/redirectToGoogle';
 export const handleGoogleCallbackPath = 'auth/handleGoogleCallback';
+export const getOneCaptcha = 'captcha/api/math';

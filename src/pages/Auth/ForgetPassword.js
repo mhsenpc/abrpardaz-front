@@ -1,12 +1,9 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import FormLabel from '@material-ui/core/FormLabel';
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import {api_base, forgetPassword} from "../../Api";
+import {api_base, api_host, forgetPassword, getOneCaptcha} from "../../Api";
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
 import {makeStyles} from "@material-ui/core/styles";
@@ -15,7 +12,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import ReplayIcon from "@material-ui/icons/Replay";
+import swal from 'sweetalert';
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,14 +39,36 @@ const useStyles = makeStyles(theme => ({
 export default function ForgetPassword() {
     const [response, setResponse] = React.useState([]);
     const classes = useStyles();
+    const [captchaUrl, setCaptchaUrl] = React.useState('');
+    const [captchaKey, setCaptchaKey] = React.useState('');
+    const [captcha, setCaptcha] = React.useState('');
 
     function RequestForgetPassword(event) {
         event.preventDefault();
         const {email} = event.currentTarget.elements;
-        axios.post(api_base + forgetPassword, {email: email.value})
+        axios.post(api_base + forgetPassword, {email: email.value, captcha: captcha, ckey: captchaKey})
             .then(res => {
                 setResponse(res.data)
+                if (res.data.success === true) {
+                    swal(res.data.message,'','success');
+                }
+                else{
+                    loadCaptcha();
+                    setCaptcha('')
+                }
             })
+    }
+
+    React.useEffect(() => {
+        loadCaptcha();
+    }, []);
+
+    function loadCaptcha() {
+        axios.get(api_host + '/' + getOneCaptcha)
+            .then(res => {
+                setCaptchaUrl(res.data.img);
+                setCaptchaKey(res.data.key);
+            });
     }
 
     return (
@@ -63,7 +83,7 @@ export default function ForgetPassword() {
                 <Typography component="h1" variant="h5">
                     فراموشی رمز عبور
                 </Typography>
-                <form onSubmit={RequestForgetPassword} className={classes.form} noValidate>
+                <form onSubmit={RequestForgetPassword} className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -77,6 +97,29 @@ export default function ForgetPassword() {
                             />
                         </Grid>
 
+                    </Grid>
+                    <br/>
+                    <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                id="captcha"
+                                label="کد را وارد کنید"
+                                name="captcha"
+                                value={captcha}
+                                onChange={(event) => setCaptcha(event.target.value)}
+                            />
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <img src={captchaUrl}/>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Button onClick={loadCaptcha} variant={"outlined"}>
+                                <ReplayIcon/>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"

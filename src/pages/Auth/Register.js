@@ -10,10 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
-import {api_base, register} from "../../Api";
+import {api_base, api_host, getOneCaptcha, register} from "../../Api";
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
-
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import {OutlinedInput} from "@material-ui/core";
+import InputLabel from '@material-ui/core/InputLabel';
+import ReplayIcon from "@material-ui/icons/Replay";
+import swal from "sweetalert";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -39,13 +46,44 @@ const useStyles = makeStyles(theme => ({
 export default function Register() {
     const classes = useStyles();
     const [response, setResponse] = React.useState([]);
+    const [captchaUrl, setCaptchaUrl] = React.useState('');
+    const [captchaKey, setCaptchaKey] = React.useState('');
+    const [captcha, setCaptcha] = React.useState('');
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    React.useEffect(() => {
+        loadCaptcha();
+    }, []);
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    function loadCaptcha() {
+        axios.get(api_host + '/' + getOneCaptcha)
+            .then(res => {
+                setCaptchaUrl(res.data.img);
+                setCaptchaKey(res.data.key);
+            });
+    }
 
     function registerUser(event) {
         event.preventDefault();
         const {email, password} = event.currentTarget.elements;
-        axios.post(api_base + register, {email: email.value, password: password.value})
+        axios.post(api_base + register, {email: email.value, password: password.value,captcha: captcha,ckey:captchaKey})
             .then(res => {
                 setResponse(res.data);
+                if(res.data.success === true){
+                    swal(res.data.message,'اکنون به پست الکترونیکی خود مراجعه کرده و روی دکمه فعال سازی حساب کلیک نمایید','success')
+                }
+                else{
+                    setCaptcha('')
+                    loadCaptcha();
+                }
             })
     }
 
@@ -60,10 +98,8 @@ export default function Register() {
                 <Typography component="h1" variant="h5">
                     ثبت نام
                 </Typography>
-                <form onSubmit={registerUser} className={classes.form} noValidate>
+                <form onSubmit={registerUser} className={classes.form}>
                     <Grid container spacing={2}>
-
-
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -76,18 +112,55 @@ export default function Register() {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <div>
+                                <InputLabel htmlFor="password">رمز عبور</InputLabel>
+                                <OutlinedInput
+                                    variant="outlined"
+                                    label={"رمز عبور"}
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    id="password"
+                                    autoComplete="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </div>
+                        </Grid>
+
+                    </Grid>
+                    <br/>
+                    <Grid container spacing={1}>
+                        <Grid item xs={6}>
                             <TextField
                                 variant="outlined"
                                 required
-                                fullWidth
-                                name="password"
-                                label="رمز عبور"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                id="captcha"
+                                label="کد را وارد کنید"
+                                name="captcha"
+                                value={captcha}
+                                onChange={(event) => setCaptcha(event.target.value)}
                             />
                         </Grid>
 
+                        <Grid item xs={4}>
+                            <img src={captchaUrl}/>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Button onClick={loadCaptcha} variant={"outlined"}>
+                                <ReplayIcon/>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
