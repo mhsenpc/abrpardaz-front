@@ -12,7 +12,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {createStyles, Theme, withStyles} from '@material-ui/core/styles';
-
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -88,17 +87,22 @@ const StyledMenuItem = withStyles(theme => ({
 
 export default function SshkeyList() {
     const [items, setItems] = React.useState([]);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEls, setAnchorEls] = React.useState([]);
     const [response, setResponse] = React.useState([]);
     const [count, setCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget)
+    const handleClick = (id, event) => {
+        let newArr = [...anchorEls];
+        newArr[id] = event.currentTarget;
+        setAnchorEls(newArr);
     };
 
-    const handleClose = event => {
-        setAnchorEl(null)
+    const handleClose = (id, event) => {
+        let newArr = [...anchorEls];
+        newArr[id] = null;
+
+        setAnchorEls(newArr);
     };
 
     React.useEffect(() => {
@@ -119,8 +123,8 @@ export default function SshkeyList() {
         setPage(newPage);
     }
 
-    const removeSshKey = (id,name) => {
-        swal("آیا از حذف  کلید امنیتی "+name+" اطمینان دارید؟", {
+    const removeSshKey = (id, name) => {
+        swal("آیا از حذف  کلید امنیتی " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -140,103 +144,104 @@ export default function SshkeyList() {
     return (
         <div>
             <title>لیست کلید های امنیتی{user_title_postfix}</title>
+            <Grid container>
+                <Grid item xs={12}>
 
-            <Grid item xs={12} container>
-
-                <Paper style={{padding: 10}}>
-                    <Box>
-                        <Grid container>
-                            <Grid item xs={8} md={10}>
-                                <h2>
-                                    کلیدهای امنیتی
-                                </h2>
+                    <Paper style={{padding: 10}}>
+                        <Box>
+                            <Grid container>
+                                <Grid item xs={8} md={10}>
+                                    <h2>
+                                        کلیدهای امنیتی
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={4} md={2}>
+                                    <Button href={'/SshKeyAdd'} variant="contained" color="primary">
+                                        <AddIcon/>
+                                        افزودن کلید
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4} md={2}>
-                                <Button href={'/SshKeyAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن کلید
-                                </Button>
-                            </Grid>
-                        </Grid>
 
 
-                        <p>
-                            استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و آسان
-                            تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
-                        </p>
+                            <p>
+                                استفاده از کلید امنیتی روشی برای احراز هویت شما به سرور است به طوری که بسیار امن تر و
+                                آسان
+                                تر از روش سنتی احراز هویت از طریق رمز عبور می باشد
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map(row => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">نام&nbsp;</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map(row => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={handleClick}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEl}
-                                                    keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
-                                                >
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/SshKeyEdit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <EditIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ویرایش"/>
-                                                    </StyledMenuItem>
-                                                    <StyledMenuItem onClick={() => removeSshKey(row.id,row.name)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={(e) => handleClick(row.id, e)}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEls[row.id]}
+                                                        keepMounted
+                                                        open={Boolean(anchorEls[row.id])}
+                                                        onClose={(e) => handleClose(row.id, e)}
+                                                    >
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/SshKeyEdit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <EditIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ویرایش"/>
+                                                        </StyledMenuItem>
+                                                        <StyledMenuItem onClick={() => removeSshKey(row.id, row.name)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            شما هنوز هیچ کلید امنیتی نساخته اید
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                شما هنوز هیچ کلید امنیتی نساخته اید
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
-
             <MessageBox response={response}/>
         </div>
 

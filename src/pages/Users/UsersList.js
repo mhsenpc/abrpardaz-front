@@ -105,18 +105,23 @@ const paperStyle = makeStyles((theme: Theme) =>
 
 export default function UsersList() {
     const [items, setItems] = React.useState([]);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEls, setAnchorEls] = React.useState([]);
     const [response, setResponse] = React.useState([]);
     const [count, setCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
     const JDate = require('jalali-date');
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget)
+    const handleClick = (id, event) => {
+        let newArr = [...anchorEls];
+        newArr[id] = event.currentTarget;
+        setAnchorEls(newArr);
     };
 
-    const handleClose = event => {
-        setAnchorEl(null)
+    const handleClose = (id, event) => {
+        let newArr = [...anchorEls];
+        newArr[id] = null;
+
+        setAnchorEls(newArr);
     };
 
     React.useEffect(() => {
@@ -284,16 +289,16 @@ export default function UsersList() {
                                                     aria-label="more"
                                                     aria-controls="long-menu"
                                                     aria-haspopup="true"
-                                                    onClick={handleClick}
+                                                    onClick={(e) => handleClick(row.id, e)}
                                                 >
                                                     <MoreVertIcon/>
                                                 </IconButton>
                                                 <StyledMenu
                                                     id="customized-menu"
-                                                    anchorEl={anchorEl}
+                                                    anchorEl={anchorEls[row.id]}
                                                     keepMounted
-                                                    open={Boolean(anchorEl)}
-                                                    onClose={handleClose}
+                                                    open={Boolean(anchorEls[row.id])}
+                                                    onClose={(e) => handleClose(row.id, e)}
                                                 >
                                                     <StyledMenuItem
                                                         onClick={() => window.location.href = '/UserProfile/' + row.id}>
