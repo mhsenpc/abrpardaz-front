@@ -15,20 +15,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {user_title_postfix} from "../../consts";
 
 
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
-
-
 export default function ServerSnapshotsList(props) {
     const [snapShotItems, setSnapShotItems] = React.useState([]);
-    const classes = useStyles();
     const JDate = require('jalali-date');
 
     React.useEffect(() => {
@@ -83,7 +71,7 @@ export default function ServerSnapshotsList(props) {
                 </p>
 
                 <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
+                    <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>نام</TableCell>

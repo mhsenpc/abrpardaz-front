@@ -31,6 +31,7 @@ export const setMobile = 'profile/setMobile';
 export const setPhone = 'profile/setPhone';
 export const snapshotsList = 'snapshots/list';
 export const machineSnapshotsList = 'snapshots/ofMachine';
+export const machineBackupsList = 'backups/ofMachine';
 export const sshKeysList = 'sshKeys/list';
 export const sshKeysAdd = 'sshKeys/add';
 export const ticketsList = 'tickets/list';

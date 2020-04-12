@@ -4,10 +4,50 @@ import Paper from "@material-ui/core/Paper";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
-import {api_base} from "../../Api";
-import {admin_title_postfix, user_title_postfix} from "../../consts";
+import {api_base, machineBackupsList} from "../../Api";
+import {user_title_postfix} from "../../consts";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import DeleteIcon from "@material-ui/icons/Delete";
+import TableContainer from "@material-ui/core/TableContainer";
+import swal from "sweetalert";
 
 export default function Backups(props) {
+    const [backupsItems, setBackupItems] = React.useState([]);
+    const JDate = require('jalali-date');
+
+    React.useEffect(() => {
+        loadBackups();
+    }, []);
+
+    function loadBackups() {
+        axios.get(api_base + machineBackupsList + '?machine_id=' + props.id.toString())
+
+            .then(res => {
+                const list = res.data.list;
+
+                setBackupItems(list);
+            })
+    }
+
+    function requestRemoveBackup(id,name) {
+        swal("آیا از حذف نسخه پشیبان  "+name+" اطمینان دارید؟", {
+            dangerMode: true,
+            buttons: true,
+            icon: "warning",
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                axios.delete(api_base + 'backups/' + id + '/remove')
+                    .then(res => {
+                        props.setResponse(res.data)
+                        loadBackups();
+                    })
+            }
+        });
+    }
 
     function requestEnableBackup() {
         let id = props.id;
@@ -28,6 +68,15 @@ export default function Backups(props) {
                 if (res.data.success) {
                     props.setMachine({backup: false})
                 }
+            })
+    }
+
+    function requestTriggerBackup() {
+        let id = props.id;
+        axios.put(api_base + 'backups/trigger?machine_id='+ id.toString())
+            .then(res => {
+                props.setResponse(res.data);
+                loadBackups();
             })
     }
 
@@ -58,7 +107,8 @@ export default function Backups(props) {
                                 کند.
                             </p>
 
-                            <Button variant="contained" color="primary">اجرای دستی ساخت پشتیبان</Button>
+                            <Button onClick={() => requestTriggerBackup()} variant="contained" color="primary"> اجرای
+                                دستی Backup</Button>
                             &nbsp;
                             {props.machine.backup === true &&
                             <Button onClick={() => requestDisableBackup()} variant="contained" color="secondary">غیرفعال
@@ -69,6 +119,41 @@ export default function Backups(props) {
                             <Button onClick={() => requestEnableBackup()} variant="contained" color="primary">فعال سازی
                                 پشتیبان گیری خودکار</Button>
                             }
+
+
+                            <TableContainer component={Paper}>
+                                <Table aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>#</TableCell>
+                                            <TableCell>نام</TableCell>
+                                            <TableCell>تاریخ ساخت</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {backupsItems.map(row => (
+                                            <TableRow key={row.name}>
+                                                <TableCell component="th" scope="row">
+                                                    {row.id}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row">
+                                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                                    {new Date(row.created_at).toLocaleTimeString()}
+                                                </TableCell>
+
+                                                <TableCell component="th" scope="row">
+                                                    <DeleteIcon onClick={() => requestRemoveBackup(row.id,row.name)}>حذف پشتیبان</DeleteIcon>
+                                                </TableCell>
+
+                                            </TableRow>
+
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </Box>
                     </Paper>
                 </Box>
