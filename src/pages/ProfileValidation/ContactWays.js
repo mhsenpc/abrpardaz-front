@@ -19,11 +19,11 @@ export default function ContactWays(props) {
     function requestMobileRequest(event) {
         event.preventDefault();
         const {txtmobile} = event.currentTarget.elements;
-        setMobileNumber(txtmobile.value)
         axios.post(api_base + requestSetMobile, {mobile: txtmobile.value})
             .then(res => {
                 if (res.data.success) {
                     setMobileStep(1)
+                    setMobileNumber(txtmobile.value)
                 }
                 props.setResponse(res.data)
             })
@@ -32,11 +32,11 @@ export default function ContactWays(props) {
     function requestPhoneRequest(event) {
         event.preventDefault();
         const {txtphone} = event.currentTarget.elements;
-        setPhoneNumber(txtphone.value)
         axios.post(api_base + requestSetPhone, {phone: txtphone.value})
             .then(res => {
                 if (res.data.success) {
                     setPhoneStep(1)
+                    setPhoneNumber(txtphone.value)
                 }
                 props.setResponse(res.data)
             })

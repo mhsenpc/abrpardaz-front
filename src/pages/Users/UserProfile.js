@@ -54,9 +54,7 @@ function UserProfile(props) {
         'آدرس معتبر نمی باشد',
         'نام به درستی وارد نشده است',
         'کد پستی معتبر نیست',
-    ];
-    const nc_reasons = [
-        'کد ملی با تصویر مطابقت ندارد'
+        'کد ملی معتبر نیست',
     ];
     const [ncFrontOpen, setNcFrontOpen] = React.useState(false);
     const [ncFrontReason, setNcFrontReason] = React.useState(picture_reasons[0]);
@@ -66,8 +64,6 @@ function UserProfile(props) {
     const [bcReason, setBcReason] = React.useState(picture_reasons[0]);
     const [profileOpen, setProfileOpen] = React.useState(false);
     const [profileReason, setProfileReason] = React.useState(profile_reasons[0]);
-    const [nationalCodeOpen, setNationalCodeOpen] = React.useState(false);
-    const [nationalCodeReason, setNationalCodeReason] = React.useState(nc_reasons[0]);
 
 
     React.useEffect(() => {
@@ -98,25 +94,6 @@ function UserProfile(props) {
                 setResponse(res.data)
                 loadUserInfo()
                 setProfileOpen(false)
-            })
-    }
-
-
-    function validateNationalCode() {
-        axios.put(api_base + 'profile/' + id.toString() + '/validateNationalCode')
-            .then(res => {
-                setResponse(res.data)
-                loadUserInfo()
-                setNationalCodeOpen(false)
-            })
-    }
-
-    function invalidateNationalCode() {
-        axios.post(api_base + 'profile/' + id.toString() + '/invalidateNationalCode', {reason: nationalCodeReason})
-            .then(res => {
-                setResponse(res.data)
-                loadUserInfo()
-                setNationalCodeOpen(false)
             })
     }
 
@@ -195,7 +172,11 @@ function UserProfile(props) {
                 }
                 <br/>
 
-                {(item.profile.national_card_front_status === 0 && item.profile.national_card_front) &&
+                {item.profile.national_card_front_status === 0 &&
+                <span>وضعیت:<InfoIcon style={{color: 'orange'}}/> انتخاب نشده</span>
+                }
+
+                {item.profile.national_card_front_status === 1 &&
                 <span>
                                     <span>وضعیت:<InfoIcon style={{color: 'blue'}}/> در انتظار تایید</span>
 
@@ -203,11 +184,8 @@ function UserProfile(props) {
 
                 }
 
-                {(item.profile.national_card_front_status === 0 && !item.profile.national_card_front) &&
-                <span>وضعیت:<InfoIcon style={{color: 'orange'}}/> انتخاب نشده</span>
-                }
 
-                {item.profile.national_card_front_status === 1 &&
+                {item.profile.national_card_front_status === 2 &&
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
@@ -215,7 +193,7 @@ function UserProfile(props) {
                                 </span>
                 }
 
-                {item.profile.national_card_front_status === 2 &&
+                {item.profile.national_card_front_status === 3 &&
                 <div>
                                 <span>
                                 وضعیت فعلی:
@@ -276,7 +254,11 @@ function UserProfile(props) {
                 }
                 <br/>
 
-                {(item.profile.national_card_back_status === 0 && item.profile.national_card_back) &&
+                {item.profile.national_card_back_status === 0 &&
+                <span>وضعیت:<InfoIcon style={{color: 'orange'}}/> انتخاب نشده</span>
+                }
+
+                {item.profile.national_card_back_status === 1 &&
                 <span>
                                     <span>وضعیت:<InfoIcon style={{color: 'blue'}}/> در انتظار تایید</span>
 
@@ -284,11 +266,7 @@ function UserProfile(props) {
 
                 }
 
-                {(item.profile.national_card_back_status === 0 && !item.profile.national_card_back) &&
-                <span>وضعیت:<InfoIcon style={{color: 'orange'}}/> انتخاب نشده</span>
-                }
-
-                {item.profile.national_card_back_status === 1 &&
+                {item.profile.national_card_back_status === 2 &&
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
@@ -296,7 +274,7 @@ function UserProfile(props) {
                                 </span>
                 }
 
-                {item.profile.national_card_back_status === 2 &&
+                {item.profile.national_card_back_status === 3 &&
                 <div>
                                 <span>
                                 وضعیت فعلی:
@@ -366,28 +344,6 @@ function UserProfile(props) {
         )
     }
 
-    function NationalCodePart() {
-        return (
-            <SimpleModal open={nationalCodeOpen} setOpen={setNationalCodeOpen}>
-                <h2>کد ملی</h2>
-
-                <Button variant={"outlined"}>
-                    <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateNationalCode}/>
-                </Button>
-                <br/>
-                <Select value={nationalCodeReason}
-                        onChange={event => setNationalCodeReason(event.target.value)}>
-                    {nc_reasons.map(reason =>
-                        <option value={reason}>{reason}</option>
-                    )}
-                </Select>
-                <Button variant={"outlined"}>
-                    <CancelIcon color={"error"} onClick={invalidateNationalCode}/>
-                </Button>
-            </SimpleModal>
-        )
-    }
-
     function BcPart() {
         return (
             <p>
@@ -401,19 +357,18 @@ function UserProfile(props) {
                 }
                 <br/>
 
-                {(item.profile.birth_certificate_status === 0 && item.profile.birth_certificate) &&
-                <span>
-                                    <span>وضعیت:<InfoIcon style={{color: 'blue'}}/> در انتظار تایید</span>
-
-                                </span>
-
-                }
-
-                {(item.profile.birth_certificate_status === 0 && !item.profile.birth_certificate) &&
+                {item.profile.birth_certificate_status === 0 &&
                 <span>وضعیت:<InfoIcon style={{color: 'orange'}}/> انتخاب نشده</span>
                 }
 
                 {item.profile.birth_certificate_status === 1 &&
+                <span>
+                                    <span>وضعیت:<InfoIcon style={{color: 'blue'}}/> در انتظار تایید</span>
+
+                                </span>
+                }
+
+                {item.profile.birth_certificate_status === 2 &&
                 <span>
                                 وضعیت فعلی:
                                     <CheckIcon style={{color: "green"}}/>
@@ -421,7 +376,7 @@ function UserProfile(props) {
                                 </span>
                 }
 
-                {item.profile.birth_certificate_status === 2 &&
+                {item.profile.birth_certificate_status === 3 &&
                 <div>
                                 <span>
                                 وضعیت فعلی:
@@ -605,40 +560,6 @@ function UserProfile(props) {
                                 <span>کد ملی: </span>
                                 <span>{item.profile.national_code}</span>
 
-
-                                {item.profile.national_code_status === 0 &&
-                                <span>
-                                    <span><InfoIcon style={{color: 'blue'}}/> در انتظار تایید</span>
-                                </span>
-                                }
-
-                                {item.profile.national_code_status === 1 &&
-                                <span>
-                                    <CheckIcon style={{color: "green"}}/>
-                                    تایید شده
-                                </span>
-                                }
-
-                                {item.profile.national_code_status === 2 &&
-                                <div>
-                                <span>
-                                <WarningIcon color={"error"}/>
-                                        رد شده
-                                    </span>
-                                    <br/>
-                                    <span>
-                                        دلیل: {item.profile.national_code_reason}
-                                    </span>
-                                </div>
-                                }
-                                <br/>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Validate Documents")) &&
-                                <Button variant={"outlined"} color={"primary"}
-                                        onClick={() => setNationalCodeOpen(true)}>
-                                    تغییر وضعیت
-                                </Button>
-                                }
-
                             </p>
 
                             <NcFrontPart/>
@@ -648,7 +569,6 @@ function UserProfile(props) {
                             <BcPart/>
                             <hr/>
                             <ProfilePart/>
-                            <NationalCodePart/>
                         </Box>
                     </Paper>
                 </Grid>

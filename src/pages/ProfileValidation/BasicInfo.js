@@ -71,21 +71,6 @@ export default function BasicInfo(props) {
                        onChange={event => setNationalCode(event.target.value)} value={nationalCode} label="کد ملی"
                        variant="outlined" required/>
 
-            {props.userInfo.profile.national_code_status == 1 &&
-            <span>
-                                    <CheckIcon style={{color: "green"}}/>
-                                    تایید شده
-                                </span>
-            }
-
-            {props.userInfo.profile.national_code_status == 2 &&
-            <span>
-                                    <WarningIcon style={{color: "red"}}/>
-                                    رد شده. دلیل: {props.userInfo.profile.national_code_reason}
-
-            </span>
-            }
-
             <br/><br/>
             <TextField id="outlined-basic" label="کد پستی" variant="outlined"
                        onChange={event => setPostalCode(event.target.value)}
