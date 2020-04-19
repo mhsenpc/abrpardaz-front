@@ -1,6 +1,5 @@
 import React from 'react';
 import BasicInfo from './BasicInfo';
-import ContactWays from './ContactWays';
 import UploadCertificates from './UploadCertificates';
 import {Box, Paper} from "@material-ui/core";
 import axios from "axios";
@@ -40,7 +39,7 @@ function a11yProps(index) {
 }
 
 
-export default function ProfileValidation(props) {
+export default function Profile(props) {
     const [userInfo, setUserInfo] = React.useState({profile: []});
     const [response, setResponse] = React.useState([]);
     const [value, setValue] = React.useState(0);
@@ -71,7 +70,7 @@ export default function ProfileValidation(props) {
                 {(userInfo.profile.validation_status == 2) &&
                 <Alert severity="warning">
                     پروفایل شما توسط پشتیبانی تایید نشده است.
-                    <br />
+                    <br/>
                     دلیل: {userInfo.profile.validation_reason}
                 </Alert>
                 }
@@ -82,36 +81,27 @@ export default function ProfileValidation(props) {
                 }
             </Grid>
             <Grid item xs={12}>
-                <AppBar position="static">
+                <AppBar position="static" color={"transparent"}>
                     <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                        <Tab label="اطلاعات کاربری" {...a11yProps(0)} />
-                        <Tab label="راه های ارتباطی" {...a11yProps(1)} />
-                        <Tab label="بارگذاری مدارک" {...a11yProps(2)} />
+                        <Tab label="بارگذاری مدارک" {...a11yProps(0)} />
+                        <Tab label="اطلاعات کاربری" {...a11yProps(1)} />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
                     <Paper>
                         <Box p={1}>
-                            <BasicInfo userInfo={userInfo} setResponse={setResponse} setUserInfo={setUserInfo}/>
+                            <UploadCertificates userInfo={userInfo} setUserInfo={setUserInfo}
+                                                setResponse={setResponse}/>
                         </Box>
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Paper>
                         <Box p={1}>
-                            <ContactWays userInfo={userInfo} setUserInfo={setUserInfo} setResponse={setResponse}/>
+                            <BasicInfo userInfo={userInfo} setResponse={setResponse} setUserInfo={setUserInfo}/>
                         </Box>
                     </Paper>
                 </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <Paper>
-                    <Box p={1}>
-                        <UploadCertificates userInfo={userInfo} setUserInfo={setUserInfo}
-                                            setResponse={setResponse}/>
-                    </Box>
-                </Paper>
-                </TabPanel>
-
                 <MessageBox response={response}/>
             </Grid>
         </Grid>

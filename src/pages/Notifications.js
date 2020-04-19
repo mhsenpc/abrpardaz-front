@@ -6,10 +6,11 @@ import {Paper} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
 import {user_title_postfix} from "../consts";
+import Alert from "@material-ui/lab/Alert/Alert";
 
 export default function Notifications() {
 
-    const [notification, setNotification] = React.useState([]);
+    const [notifications, setNotifications] = React.useState([]);
 
     React.useEffect(() => {
         loadNotifications()
@@ -20,7 +21,7 @@ export default function Notifications() {
     function loadNotifications() {
         axios.get(api_base + NotificationPath)
             .then(res => {
-                setNotification(res.data.list)
+                setNotifications(res.data.list)
             })
     }
 
@@ -43,7 +44,7 @@ export default function Notifications() {
                 </h1>
             </Grid>
 
-            {notification.map(row => (
+            {notifications.map(row => (
                 <Grid item xs={12}>
                     <Box p={1}>
                         <Paper style={{padding: 10}}>
@@ -55,6 +56,17 @@ export default function Notifications() {
                     </Box>
                 </Grid>
             ))}
+            {notifications.length === 0 &&
+            <Grid item xs={12}>
+                <Box p={1}>
+                    <Alert severity="info">
+                        تا کنون رویدادی ثبت نشده است
+                    </Alert>
+
+                </Box>
+            </Grid>
+
+            }
 
         </Grid>
     )

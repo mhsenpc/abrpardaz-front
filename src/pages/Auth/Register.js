@@ -50,6 +50,7 @@ export default function Register() {
     const [captchaKey, setCaptchaKey] = React.useState('');
     const [captcha, setCaptcha] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
 
     React.useEffect(() => {
         loadCaptcha();
@@ -63,6 +64,14 @@ export default function Register() {
         event.preventDefault();
     };
 
+    const handleClickShowPasswordConfirm = () => {
+        setShowPasswordConfirm(!showPassword);
+    };
+
+    const handleMouseDownPasswordConfirm = (event) => {
+        event.preventDefault();
+    };
+
     function loadCaptcha() {
         axios.get(api_host + '/' + getOneCaptcha)
             .then(res => {
@@ -73,22 +82,22 @@ export default function Register() {
 
     function registerUser(event) {
         event.preventDefault();
-        const {email, password} = event.currentTarget.elements;
-        axios.post(api_base + register, {email: email.value, password: password.value,captcha: captcha,ckey:captchaKey})
+        const {email, password,password_confirmation} = event.currentTarget.elements;
+        axios.post(api_base + register, {email: email.value, password: password.value,password_confirmation:password_confirmation.value,captcha: captcha,ckey:captchaKey})
             .then(res => {
-                setResponse(res.data);
                 if(res.data.success === true){
-                    swal(res.data.message,'اکنون به پست الکترونیکی خود مراجعه کرده و روی دکمه فعال سازی حساب کلیک نمایید','success')
+                    window.location.href = "/WaitForConfirmation";
                 }
                 else{
                     setCaptcha('')
                     loadCaptcha();
+                    setResponse(res.data);
                 }
             })
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" >
             <title>ثبت نام کاربران{user_title_postfix}</title>
             <CssBaseline/>
             <div className={classes.paper}>
@@ -97,6 +106,9 @@ export default function Register() {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     ثبت نام
+                </Typography>
+                <Typography component="h7" color={"textSecondary"} >
+                    لطفا آدرس ایمیل و رمز دلخواه خود را وارد کنید
                 </Typography>
                 <form onSubmit={registerUser} className={classes.form}>
                     <Grid container spacing={2}>
@@ -138,6 +150,32 @@ export default function Register() {
                             </div>
                         </Grid>
 
+                        <Grid item xs={12}>
+                            <div>
+                                <InputLabel htmlFor="password">تکرار رمز عبور</InputLabel>
+                                <OutlinedInput
+                                    variant="outlined"
+                                    label={"تکرار رمز عبور"}
+                                    required
+                                    fullWidth
+                                    name="password_confirmation"
+                                    id="password_confirmation"
+                                    autoComplete="password"
+                                    type={showPasswordConfirm ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPasswordConfirm}
+                                                onMouseDown={handleMouseDownPasswordConfirm}
+                                            >
+                                                {showPasswordConfirm ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </div>
+                        </Grid>
                     </Grid>
                     <br/>
                     <Grid container spacing={1}>

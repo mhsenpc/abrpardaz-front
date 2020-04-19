@@ -222,8 +222,8 @@ function UserProfile(props) {
                         </div>
                         }
 
-                        <Button variant={"outlined"}>
-                            <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateNCFront}/>
+                        <Button variant={"outlined"} onClick={validateNCFront}>
+                            <CheckCircleOutlineIcon style={{color: 'green'}} />
                         </Button>
                         <br/>
                         <Select value={ncFrontReason}
@@ -232,8 +232,8 @@ function UserProfile(props) {
                                 <option value={reason}>{reason}</option>
                             )}
                         </Select>
-                        <Button variant={"outlined"}>
-                            <CancelIcon color={"error"} onClick={invalidateNCFront}/>
+                        <Button variant={"outlined"} onClick={invalidateNCFront}>
+                            <CancelIcon color={"error"} />
                         </Button>
                     </SimpleModal>
                 </p>
@@ -303,8 +303,8 @@ function UserProfile(props) {
                         </div>
                         }
 
-                        <Button variant={"outlined"}>
-                            <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateNCBack}/>
+                        <Button variant={"outlined"} onClick={validateNCBack}>
+                            <CheckCircleOutlineIcon style={{color: 'green'}} />
                         </Button>
                         <br/>
                         <Select value={ncBackReason}
@@ -313,8 +313,8 @@ function UserProfile(props) {
                                 <option value={reason}>{reason}</option>
                             )}
                         </Select>
-                        <Button variant={"outlined"}>
-                            <CancelIcon color={"error"} onClick={invalidateNCBack}/>
+                        <Button variant={"outlined"} onClick={invalidateNCBack}>
+                            <CancelIcon color={"error"} />
                         </Button>
                     </SimpleModal>
                 </p>
@@ -327,8 +327,8 @@ function UserProfile(props) {
             <SimpleModal open={profileOpen} setOpen={setProfileOpen}>
                 <h2>کلیت پروفایل</h2>
 
-                <Button variant={"outlined"}>
-                    <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateProfile}/>
+                <Button variant={"outlined"} onClick={validateProfile}>
+                    <CheckCircleOutlineIcon style={{color: 'green'}} />
                 </Button>
                 <br/>
                 <Select value={profileReason}
@@ -337,8 +337,8 @@ function UserProfile(props) {
                         <option value={reason}>{reason}</option>
                     )}
                 </Select>
-                <Button variant={"outlined"}>
-                    <CancelIcon color={"error"} onClick={invalidateProfile}/>
+                <Button variant={"outlined"} onClick={invalidateProfile}>
+                    <CancelIcon color={"error"} />
                 </Button>
             </SimpleModal>
         )
@@ -405,8 +405,8 @@ function UserProfile(props) {
                         </div>
                         }
 
-                        <Button variant={"outlined"}>
-                            <CheckCircleOutlineIcon style={{color: 'green'}} onClick={validateBC}/>
+                        <Button variant={"outlined"} onClick={validateBC}>
+                            <CheckCircleOutlineIcon style={{color: 'green'}} />
                         </Button>
                         <br/>
                         <Select value={bcReason}
@@ -415,8 +415,8 @@ function UserProfile(props) {
                                 <option value={reason}>{reason}</option>
                             )}
                         </Select>
-                        <Button variant={"outlined"}>
-                            <CancelIcon color={"error"} onClick={invalidateBC}/>
+                        <Button variant={"outlined"} onClick={invalidateBC}>
+                            <CancelIcon color={"error"} />
                         </Button>
                     </SimpleModal>
                 </p>

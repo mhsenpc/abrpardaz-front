@@ -21,7 +21,7 @@ import TicketDetails from "./pages/Tickets/TicketDetails";
 import ForgetPassword from "./pages/Auth/ForgetPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import Verify from "./pages/Auth/Verify";
-import ProfileValidation from "./pages/ProfileValidation/ProfileValidation";
+import Profile from "./pages/ProfileValidation/Profile";
 import ServerDetailsMenu from "./pages/MachineDetails/DetailsMenu";
 import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
@@ -52,6 +52,8 @@ import ChangeUserRole from "./pages/Users/ChangeUserRole";
 import App from "./App";
 import LoginWithGoogle from "./pages/Auth/LoginWithGoogle";
 import InvoicePayment from "./pages/InvoicePayment";
+import WaitForConfirmation from "./pages/Auth/WaitForConfirmation";
+import ProfileValidationWizard from "./pages/Auth/ProfileValidationWizard";
 
 
 const theme = createMuiTheme({
@@ -116,6 +118,8 @@ const routing = (
             <DefaultLayout path="/Dashboard" component={Dashboard}/>
             <Route path="/login" component={Login}/>
             <Route path="/Register" component={Register}/>
+            <Route path="/WaitForConfirmation" component={WaitForConfirmation} />
+            <Route path="/ProfileValidationWizard" component={ProfileValidationWizard} />
             <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
             <DefaultLayout path="/Transactions" component={Transactions}/>
             <DefaultLayout path="/Invoices" component={Invoices}/>
@@ -123,7 +127,7 @@ const routing = (
             <DefaultLayout path="/snapshotList" component={SnapshotList}/>
             <DefaultLayout path="/Tickets" component={TicketList}/>
             <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
-            <DefaultLayout path="/profile" component={ProfileValidation}/>
+            <DefaultLayout path="/profile" component={Profile}/>
             <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
             <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
             <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>

@@ -1,14 +1,9 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {api_base, setUserInfo} from "../../Api";
 import Gravatar from 'react-gravatar'
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
-import InfoIcon from "@material-ui/icons/Info";
-import WarningIcon from '@material-ui/icons/Warning';
-import CheckIcon from '@material-ui/icons/Check';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     large: {
@@ -59,35 +54,30 @@ export default function BasicInfo(props) {
             <br/>
 
 
-            <TextField id="outlined-basic" onChange={event => setFirstName(event.target.value)}
-                       value={firsName} label="نام" variant="outlined" required/>
+            <label>نام: </label>
+            <b>
+                <label>{firsName} {lastName}</label>
+            </b>
+            <br/>
 
-            <br/><br/>
-            <TextField id="outlined-basic" onChange={event => setLastName(event.target.value)}
-                       value={lastName} label="نام خانوادگی" variant="outlined" required/>
-            <br/><br/>
+            <label>کد ملی: </label>
+            <b>
+                <label>{nationalCode}</label>
+            </b>
+            <br/>
 
-            <TextField id="outlined-basic"
-                       onChange={event => setNationalCode(event.target.value)} value={nationalCode} label="کد ملی"
-                       variant="outlined" required/>
+            <label>کد پستی: </label>
+            <b>
+                <label>{postalCode}</label>
+            </b>
+            <br/>
 
-            <br/><br/>
-            <TextField id="outlined-basic" label="کد پستی" variant="outlined"
-                       onChange={event => setPostalCode(event.target.value)}
-                       value={postalCode} required/>
+            <label>آدرس: </label>
+            <b>
+                <label>{address}</label>
+            </b>
+            <br/>
 
-            <br/><br/>
-            <TextField id="outlined-basic" label="آدرس" variant="outlined" multiline
-                       onChange={event => setAddress(event.target.value)}
-                       value={address}
-                       rows="5"
-                       required
-            />
-
-            <br/><br/>
-            <Button type='submit' variant="contained" color="primary">
-                ذخیره
-            </Button>
         </form>
     )
 }
