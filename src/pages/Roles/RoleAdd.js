@@ -13,8 +13,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useTheme } from '@material-ui/core/styles';
-import {admin_title_postfix, user_title_postfix} from "../../consts";
+import {useTheme} from '@material-ui/core/styles';
+import {admin_title_postfix} from "../../consts";
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -90,7 +90,8 @@ function RoleAdd() {
         axios.get(api_base + permissionsList)
             .then(res => {
                 const list = res.data.list;
-                setPermissions(list);
+                if (res.data.list)
+                    setPermissions(list);
             });
     }, []);
 
@@ -153,7 +154,8 @@ function RoleAdd() {
                                     MenuProps={MenuProps}
                                 >
                                     {permissions.map(row => (
-                                        <MenuItem key={row.name} value={row.name} style={getStyles(row.name, selectedPermissions, theme)}>
+                                        <MenuItem key={row.name} value={row.name}
+                                                  style={getStyles(row.name, selectedPermissions, theme)}>
                                             {row.name}
                                         </MenuItem>
                                     ))}

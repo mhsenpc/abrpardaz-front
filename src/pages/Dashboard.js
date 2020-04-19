@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Alert from "@material-ui/lab/Alert/Alert";
 import axios from "axios";
 import {api_base, machinesList, ProjectsListPath, snapshotsList} from "../Api";
-import {admin_title_postfix, user_title_postfix} from "../consts";
+import {user_title_postfix} from "../consts";
 
 export default function Dashboard() {
     const [machinesCount, setMachinesCount] = React.useState(0);
@@ -15,17 +15,20 @@ export default function Dashboard() {
     React.useEffect(() => {
         axios.get(api_base + ProjectsListPath)
             .then(res => {
-                setProjectsCount(res.data.list.length)
+                if (res.data.list)
+                    setProjectsCount(res.data.list.length)
             })
 
         axios.get(api_base + machinesList)
             .then(res => {
-                setMachinesCount(res.data.list.length)
+                if (res.data.list)
+                    setMachinesCount(res.data.list.length)
             })
 
         axios.get(api_base + snapshotsList)
             .then(res => {
-                setSnapshotsCount(res.data.list.length)
+                if (res.data.list)
+                    setSnapshotsCount(res.data.list.length)
             })
 
     }, []);

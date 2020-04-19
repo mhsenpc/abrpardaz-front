@@ -22,7 +22,8 @@ export default function Overview(props) {
         axios.get(api_base + 'machines/' + props.id.toString() + '/activities')
             .then(res => {
                 const activities = res.data.list;
-                setItems(activities);
+                if (activities)
+                    setItems(activities);
             })
     }, [])
 

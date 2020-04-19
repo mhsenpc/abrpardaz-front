@@ -108,8 +108,8 @@ function RoleEdit(props) {
             .then(res => {
                 const role = res.data.item;
                 setItem(role);
-                var arr=[];
-                role.permissions.map(row=>(
+                var arr = [];
+                role.permissions.map(row => (
                     arr.push(row.name)
                 ));
                 setSelectedPermissions(arr)
@@ -118,14 +118,15 @@ function RoleEdit(props) {
         axios.get(api_base + permissionsList)
             .then(res => {
                 const list = res.data.list;
-                setPermissions(list);
+                if (res.data.list)
+                    setPermissions(list);
             });
     }, [])
 
     function requestEditRole(event) {
         let id = props.match.params.id;
         event.preventDefault();
-        const { name} = event.currentTarget.elements;
+        const {name} = event.currentTarget.elements;
         axios.post(api_base + 'roles/' + id.toString() + '/edit', {
             name: name.value,
             permissions: selectedPermissions,
@@ -186,7 +187,8 @@ function RoleEdit(props) {
                                     MenuProps={MenuProps}
                                 >
                                     {permissions.map(row => (
-                                        <MenuItem key={row.name} value={row.name} style={getStyles(row.name, selectedPermissions, theme)}>
+                                        <MenuItem key={row.name} value={row.name}
+                                                  style={getStyles(row.name, selectedPermissions, theme)}>
                                             {row.name}
                                         </MenuItem>
                                     ))}

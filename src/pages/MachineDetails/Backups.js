@@ -28,13 +28,13 @@ export default function Backups(props) {
 
             .then(res => {
                 const list = res.data.list;
-
-                setBackupItems(list);
+                if (list)
+                    setBackupItems(list);
             })
     }
 
-    function requestRemoveBackup(id,name) {
-        swal("آیا از حذف نسخه پشیبان  "+name+" اطمینان دارید؟", {
+    function requestRemoveBackup(id, name) {
+        swal("آیا از حذف نسخه پشیبان  " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -73,7 +73,7 @@ export default function Backups(props) {
 
     function requestTriggerBackup() {
         let id = props.id;
-        axios.put(api_base + 'backups/trigger?machine_id='+ id.toString())
+        axios.put(api_base + 'backups/trigger?machine_id=' + id.toString())
             .then(res => {
                 props.setResponse(res.data);
                 loadBackups();
@@ -145,7 +145,8 @@ export default function Backups(props) {
                                                 </TableCell>
 
                                                 <TableCell component="th" scope="row">
-                                                    <DeleteIcon onClick={() => requestRemoveBackup(row.id,row.name)}>حذف پشتیبان</DeleteIcon>
+                                                    <DeleteIcon onClick={() => requestRemoveBackup(row.id, row.name)}>حذف
+                                                        پشتیبان</DeleteIcon>
                                                 </TableCell>
 
                                             </TableRow>

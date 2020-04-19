@@ -26,8 +26,8 @@ export default function SnapshotItems(props) {
         axios.get(api_base + snapshotsList)
             .then(res => {
                 const list = res.data.list;
-
-                setSnapShotItems(list);
+                if (list)
+                    setSnapShotItems(list);
             })
     }
 

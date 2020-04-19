@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/AddBox';
 import axios from "axios";
-import {api_base, broadcasting_base, machinesOfProject} from "../Api";
+import {api_base, machinesOfProject} from "../Api";
 import CloudIcon from '@material-ui/icons/Cloud';
 import Pusher from "pusher-js"
 import {Paper} from "@material-ui/core";
@@ -43,8 +43,8 @@ export default function ServerList(props) {
             axios.get(api_base + machinesOfProject + id.toString())
                 .then(res => {
                     const list = res.data.list;
-
-                    setItems(list);
+                    if (res.data.list)
+                        setItems(list);
                     setBackDropOpen(false)
                 })
         }

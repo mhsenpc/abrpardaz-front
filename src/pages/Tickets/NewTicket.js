@@ -84,7 +84,8 @@ function NewTicket() {
         axios.get(api_base + machinesList)
             .then(res => {
                 const list = res.data.list;
-                setItemsMachine(list);
+                if (list)
+                    setItemsMachine(list);
                 if (list.length > 0)
                     setMachine(list[0].id);
             });
@@ -92,7 +93,8 @@ function NewTicket() {
         axios.get(api_base + ticketCategories)
             .then(res => {
                 const list = res.data.list;
-                setItemsTicketsCat(list);
+                if (res.data.list)
+                    setItemsTicketsCat(list);
                 if (list.length > 0)
                     setCategory(list[0].id);
             })

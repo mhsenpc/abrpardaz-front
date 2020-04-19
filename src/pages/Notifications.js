@@ -21,7 +21,8 @@ export default function Notifications() {
     function loadNotifications() {
         axios.get(api_base + NotificationPath)
             .then(res => {
-                setNotifications(res.data.list)
+                if (res.data.list)
+                    setNotifications(res.data.list)
             })
     }
 

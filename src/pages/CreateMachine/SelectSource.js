@@ -61,8 +61,8 @@ export default function SelectSource(props) {
         axios.get(api_base + snapshotsList)
             .then(res => {
                 const list = res.data.list;
-
-                setSnapshotItems(list);
+                if (res.data.list)
+                    setSnapshotItems(list);
             })
     }, []);
 
@@ -85,10 +85,9 @@ export default function SelectSource(props) {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        if(newValue === 0){
+        if (newValue === 0) {
             props.setSnapshotId(null);
-        }
-        else if(newValue === 1){
+        } else if (newValue === 1) {
             props.setImageId(null);
         }
     };
@@ -142,7 +141,8 @@ export default function SelectSource(props) {
                     {snapshotItems.map(row => (
                         <Grid item xs={12} md={4} style={{padding: 2}}>
                             <Paper>
-                                <Box className={"boxItem snapshotItem " + isSnapshotActive(row.id)} key={row.id} onClick={() => selectSnapshot(row.id)}>
+                                <Box className={"boxItem snapshotItem " + isSnapshotActive(row.id)} key={row.id}
+                                     onClick={() => selectSnapshot(row.id)}>
                                     <Save/>
                                     <h3>{row.name}</h3>
                                 </Box>

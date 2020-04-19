@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,13 +27,13 @@ export default function ServerSnapshotsList(props) {
 
             .then(res => {
                 const list = res.data.list;
-
-                setSnapShotItems(list);
+                if (res.data.list)
+                    setSnapShotItems(list);
             })
     }
 
-    function requestRemoveSnapshot(id,name) {
-        swal("آیا از حذف تصویر آنی "+name+" اطمینان دارید؟", {
+    function requestRemoveSnapshot(id, name) {
+        swal("آیا از حذف تصویر آنی " + name + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -91,7 +90,7 @@ export default function ServerSnapshotsList(props) {
                                     </TableCell>
 
                                     <TableCell component="th" scope="row">
-                                        <DeleteIcon onClick={() => requestRemoveSnapshot(row.id,row.name)}>حذف تصویر
+                                        <DeleteIcon onClick={() => requestRemoveSnapshot(row.id, row.name)}>حذف تصویر
                                             آنی</DeleteIcon>
                                     </TableCell>
 

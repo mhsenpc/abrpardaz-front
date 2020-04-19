@@ -22,17 +22,18 @@ export default function CreateSnapshot(props) {
         axios.get(api_base + machinesList)
             .then(res => {
                 const list = res.data.list;
-
-                setMachineItems(list);
-                if (list.length > 0)
-                    setMachineId(list[0].id);
+                if (list){
+                    setMachineItems(list);
+                    if (list.length > 0)
+                        setMachineId(list[0].id);
+                }
             })
     }, []);
 
 
     function requestMakeSnapshot() {
         swal("آیا ازساخت تصویر آنی اطمینان دارید؟", {
-            icon:'warning',
+            icon: 'warning',
             buttons: true,
         }).then(function (isConfirm) {
             if (isConfirm) {
@@ -44,10 +45,10 @@ export default function CreateSnapshot(props) {
     const [name, setName] = React.useState('');
 
     function requestSnapShot() {
-        axios.post(api_base + 'snapshots/takeSnapshot', {machine_id:machineId, name: name})
+        axios.post(api_base + 'snapshots/takeSnapshot', {machine_id: machineId, name: name})
             .then(res => {
                 props.setResponse(res.data)
-                if(res.data.success)
+                if (res.data.success)
                     setName('');
             })
     }
@@ -78,7 +79,7 @@ export default function CreateSnapshot(props) {
 
                 <p>
                     <TextField label={"نام تصویر آنی"} name='name'
-                               onChange={event => setName(event.target.value)} value={name} />
+                               onChange={event => setName(event.target.value)} value={name}/>
                     &nbsp;
                     <Button color={"primary"} variant={"contained"} onClick={() => requestMakeSnapshot()}>
                         ساخت تصویرآنی

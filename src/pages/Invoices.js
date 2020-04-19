@@ -40,7 +40,8 @@ export default function Invoices() {
         axios.get(api_base + InvoicesListPath)
             .then(res => {
                 const list = res.data.list;
-                setItems(list);
+                if(res.data.list)
+                    setItems(list);
             })
     }, []);
 

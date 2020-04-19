@@ -6,7 +6,7 @@ import SnapshotRules from "./SnapshotRules";
 import CreateSnapshot from "./CreateSnapshot";
 import SnapshotItems from "./SnapshotItems";
 import MessageBox from "../MessageBox";
-import {admin_title_postfix, user_title_postfix} from "../../consts";
+import {user_title_postfix} from "../../consts";
 
 const paperStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,7 +46,7 @@ export default function SnapshotList(props) {
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
                         <div>
-                            <SnapshotItems setResponse={setResponse} />
+                            <SnapshotItems setResponse={setResponse}/>
                         </div>
                     </Paper>
                 </Grid>

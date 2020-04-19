@@ -62,21 +62,9 @@ export default function Profile(props) {
         <Grid container>
             <Grid item xs={12}>
                 <title>اطلاعات کاربری{user_title_postfix}</title>
-                {(userInfo.profile.validation_status == 0) &&
+                {(userInfo.profile.national_card_front_status !== 2 || userInfo.profile.national_card_back_status !== 2 || userInfo.profile.birth_certificate_status !== 2  ) &&
                 <Alert severity="warning">
-                    پروفایل شما در حالت تایید نشده می باشد
-                </Alert>
-                }
-                {(userInfo.profile.validation_status == 2) &&
-                <Alert severity="warning">
-                    پروفایل شما توسط پشتیبانی تایید نشده است.
-                    <br/>
-                    دلیل: {userInfo.profile.validation_reason}
-                </Alert>
-                }
-                {(userInfo.profile.validation_status == 1) &&
-                <Alert severity="success">
-                    اطلاعات پروفایل شما تایید شده است
+                    لطفا هر چه سریع تر برای تکمیل کردن مدارک خود اقدام نمایید
                 </Alert>
                 }
             </Grid>

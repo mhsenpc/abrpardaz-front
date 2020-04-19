@@ -42,7 +42,8 @@ export default function ProjectsList() {
         setBackDropOpen(true)
         axios.get(api_base + ProjectsListPath)
             .then(res => {
-                setMachines(res.data.list)
+                if(res.data.list)
+                    setMachines(res.data.list)
                 setBackDropOpen(false)
             })
     }

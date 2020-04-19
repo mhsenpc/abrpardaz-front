@@ -54,46 +54,14 @@ import LoginWithGoogle from "./pages/Auth/LoginWithGoogle";
 import InvoicePayment from "./pages/InvoicePayment";
 import WaitForConfirmation from "./pages/Auth/WaitForConfirmation";
 import ProfileValidationWizard from "./pages/Auth/ProfileValidationWizard";
+import {SetupAxios} from "./Helpers";
 
 
 const theme = createMuiTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
 });
 
-
-(function () {
-    axios.defaults.headers.common['Accept'] = 'application/json';
-    const tokenOnLocalStorage = localStorage.getItem("token");
-    const tokenOnSessionStorage = sessionStorage.getItem("token");
-    if (tokenOnLocalStorage && !tokenOnSessionStorage){
-        //load everything from localstorage
-        sessionStorage.setItem('user_id', localStorage.getItem("user_id"));
-        sessionStorage.setItem('permissions', localStorage.getItem("permissions"));
-        sessionStorage.setItem('token', tokenOnLocalStorage);
-    }
-    let token = sessionStorage.getItem("token");
-    if (token) {
-        token = atob(token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-        axios.defaults.headers.common['Authorization'] = null;
-    }
-
-    axios.interceptors.response.use(function (response) {
-        return response;
-    }, function (error) {
-        if (401 === error.response.status) {
-            swal("توکن منقضی شده است", "شما نیاز به احراز هویت مجدد دارید!", "warning").then((value) => {
-                window.location.href = '/login';
-            });
-            return Promise.reject(error);
-        } else {
-            swal("خطا", "در پردازش درخواست شما مشکلی وجود دارد", "error");
-            return Promise.reject(error);
-        }
-    });
-})();
-
+SetupAxios();
 
 const DefaultLayout = ({component: Component, ...rest}) => {
     return (

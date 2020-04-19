@@ -37,8 +37,8 @@ export default function MachineOptions(props) {
         axios.get(api_base + ProjectsListPath)
             .then(res => {
                 const list = res.data.list;
-
-                setProjectItems(list);
+                if (res.data.list)
+                    setProjectItems(list);
                 if (list.length > 0)
                     props.setProjectId(list[0].id)
             })

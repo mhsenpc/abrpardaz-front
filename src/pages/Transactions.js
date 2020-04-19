@@ -11,7 +11,6 @@ import axios from "axios";
 import {api_base, TransactionsListPath} from "../Api";
 import Alert from "@material-ui/lab/Alert/Alert";
 import {user_title_postfix} from "../consts";
-import Grid from "@material-ui/core/Grid";
 import Box from '@material-ui/core/Box';
 
 
@@ -32,8 +31,8 @@ export default function Invoices() {
         axios.get(api_base + TransactionsListPath)
             .then(res => {
                 const list = res.data.list;
-
-                setItems(list);
+                if (res.data.list)
+                    setItems(list);
             })
     }, []);
 
@@ -43,61 +42,61 @@ export default function Invoices() {
             <title>تراکنش های مالی{user_title_postfix}</title>
             <Box p={1}>
 
-            <h2 style={{direction: "rtl", marginRight: 20}}>تراکنش های مالی</h2>
-            {items.length === 0 &&
-            <Alert severity="info">
-                تاکنون هیچ تراکنشی مالی برای این شما ثبت نشده است.
-            </Alert>
-            }
+                <h2 style={{direction: "rtl", marginRight: 20}}>تراکنش های مالی</h2>
+                {items.length === 0 &&
+                <Alert severity="info">
+                    تاکنون هیچ تراکنشی مالی برای این شما ثبت نشده است.
+                </Alert>
+                }
 
-            {items.length > 0 &&
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>نام</TableCell>
-                            <TableCell align="right">شماره فاکتور</TableCell>
-                            <TableCell align="right">هزینه</TableCell>
-                            <TableCell align="right">ارزش افزوده</TableCell>
-                            <TableCell align="right">جمع کل</TableCell>
-                            <TableCell align="right">تاریخ ایجاد</TableCell>
-                            <TableCell align="right">وضعیت</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {items.map(row => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.invoice.id}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.invoice.amount}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.invoice.vat}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.invoice.total}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.created_at}
-                                </TableCell>
-
-                                <TableCell component="th" scope="row">
-                                    {row.is_paid &&
-                                    <span>پرداخت شده</span>
-                                    }
-                                    {!row.is_paid &&
-                                    <span>در انتظار پرداخت</span>
-                                    }
-                                </TableCell>
+                {items.length > 0 &&
+                <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>نام</TableCell>
+                                <TableCell align="right">شماره فاکتور</TableCell>
+                                <TableCell align="right">هزینه</TableCell>
+                                <TableCell align="right">ارزش افزوده</TableCell>
+                                <TableCell align="right">جمع کل</TableCell>
+                                <TableCell align="right">تاریخ ایجاد</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
                             </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {items.map(row => (
+                                <TableRow key={row.id}>
+                                    <TableCell component="th" scope="row">
+                                        {row.invoice.id}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.invoice.amount}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.invoice.vat}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.invoice.total}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {row.created_at}
+                                    </TableCell>
 
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            }
+                                    <TableCell component="th" scope="row">
+                                        {row.is_paid &&
+                                        <span>پرداخت شده</span>
+                                        }
+                                        {!row.is_paid &&
+                                        <span>در انتظار پرداخت</span>
+                                        }
+                                    </TableCell>
+                                </TableRow>
+
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                }
             </Box>
         </Paper>
     );

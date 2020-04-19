@@ -119,7 +119,7 @@ export default function UploadCertificates(props) {
 
                 <Grid item xs={6}>
                     <a target={"_blank"} href={props.userInfo.profile.national_card_front}>
-                        <img width={200} height={200} src={props.userInfo.profile.national_card_front}/>
+                        <img width={300} height={200} src={props.userInfo.profile.national_card_front}/>
                     </a>
                     {props.userInfo.profile.national_card_front_status !== 2 &&
                     <div>

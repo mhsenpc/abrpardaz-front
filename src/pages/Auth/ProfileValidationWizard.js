@@ -11,12 +11,17 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
-import {api_base, requestSetMobilePath, setMobileFinalPath, setUserAddress, setUserInfo, verify} from "../../Api";
+import {api_base, requestSetMobilePath, setMobileFinalPath, setUserAddress, setUserInfo} from "../../Api";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import swal from 'sweetalert';
 import TextField from "@material-ui/core/TextField";
 import MessageBox from "../MessageBox";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import {Paper} from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileValidationWizard() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(3);
+    const [activeStep, setActiveStep] = React.useState(1);
     const steps = profile_validation_steps;
-    const [backDropOpen, setBackDropOpen] = React.useState(true);
+    const [backDropOpen, setBackDropOpen] = React.useState(false);
     const [response, setResponse] = React.useState([]);
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
@@ -58,6 +63,14 @@ export default function ProfileValidationWizard() {
     const [address, setAddress] = React.useState('');
     const [mobile, setMobile] = React.useState('');
     const [mobileUserCode, setMobileUserCode] = React.useState('');
+    const [organizationName, setOrganizationName] = React.useState('');
+    const [personValue, setPersonValue] = React.useState('individual');
+
+    const handleChange = (event) => {
+        setPersonValue(event.target.value);
+        if (event.target.value !== 'organization')
+            setOrganizationName('');
+    };
 
     const handleBackdropClose = () => {
         setBackDropOpen(false);
@@ -68,6 +81,28 @@ export default function ProfileValidationWizard() {
             case 1:
                 return (
                     <div>
+                        <RadioGroup value={personValue} onChange={handleChange}>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <FormControlLabel value="individual" control={<Radio/>} label="حقیقی"/>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FormControlLabel value="organization" control={<Radio/>} label="حقوقی"/>
+                                </Grid>
+                            </Grid>
+                        </RadioGroup>
+
+                        {personValue === 'organization' &&
+                        <div>
+                            <TextField id="organization_name"
+                                       value={organizationName}
+                                       onChange={(event) => setOrganizationName(event.target.value)}
+                                       label="نام سازمان"
+                                       variant="outlined"
+                                       fullWidth/>
+                            <br/><br/>
+                        </div>
+                        }
                         <TextField id="first_name"
                                    value={firstName}
                                    onChange={(event) => setFirstName(event.target.value)}
@@ -147,25 +182,6 @@ export default function ProfileValidationWizard() {
         }
     }
 
-    function VerifyRequest(event) {
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let email = params.get('email');
-        let token = params.get('token');
-
-        axios.post(api_base + verify, {email: email, token: token})
-            .then(res => {
-                if (res.data.success) {
-                    sessionStorage.setItem('token', btoa(res.data.token));
-                    sessionStorage.setItem('user_id', res.data.user_id);
-                    sessionStorage.setItem('permissions', res.data.permissions);
-                } else {
-                    swal(res.data.message, '', 'error')
-                }
-                setBackDropOpen(false);
-            })
-    }
-
 
     function requestMobileRequest() {
         setBackDropOpen(true);
@@ -193,17 +209,6 @@ export default function ProfileValidationWizard() {
             })
     }
 
-    React.useEffect(() => {
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let email = params.get('email');
-        let token = params.get('token');
-
-        if (token && email) {
-            VerifyRequest();
-        }
-
-    }, []);
     const handleNext = () => {
         if (activeStep === 1) {
             saveUserInfo();
@@ -227,6 +232,7 @@ export default function ProfileValidationWizard() {
             first_name: firstName,
             last_name: lastName,
             national_code: nationalCode,
+            organization_name: organizationName
         })
             .then(res => {
                 if (res.data.success) {
@@ -259,7 +265,7 @@ export default function ProfileValidationWizard() {
         <Container component="main" maxWidth="md">
             <title>تایید ایمیل{user_title_postfix}</title>
             <CssBaseline/>
-            <div className={classes.paper}>
+            <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon/>
                 </Avatar>
@@ -269,7 +275,7 @@ export default function ProfileValidationWizard() {
                 <Typography component="h6" color={"textSecondary"}>
                     لطفا تمامی مراحل را تا تکمیل ثبت نام دنبال نمایید
                 </Typography>
-                <form className={classes.form}>
+                <div className={classes.form}>
                     <div className={classes.root}>
                         <Stepper activeStep={activeStep} alternativeLabel>
                             {steps.map((label) => (
@@ -281,13 +287,13 @@ export default function ProfileValidationWizard() {
                         <div>
                             {activeStep === steps.length ? (
                                 <div>
-                                    <Typography className={classes.instructions}>مراحل ثبت نام با موفقیت تکمیل شدند</Typography>
+                                    <Typography className={classes.instructions}>مراحل ثبت نام با موفقیت تکمیل
+                                        شدند</Typography>
 
                                 </div>
                             ) : (
                                 <div>
-                                    <Typography
-                                        className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                                    {getStepContent(activeStep)}
                                     <div>
                                         <Button
                                             disabled={activeStep <= 1}
@@ -304,8 +310,8 @@ export default function ProfileValidationWizard() {
                             )}
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </Paper>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
                 <CircularProgress color="inherit"/>
             </Backdrop>
