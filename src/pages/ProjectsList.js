@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
 import {user_title_postfix} from "../consts";
+import {HtmlTooltip} from "../Helpers";
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -42,7 +43,7 @@ export default function ProjectsList() {
         setBackDropOpen(true)
         axios.get(api_base + ProjectsListPath)
             .then(res => {
-                if(res.data.list)
+                if (res.data.list)
                     setMachines(res.data.list)
                 setBackDropOpen(false)
             })
@@ -67,21 +68,48 @@ export default function ProjectsList() {
 
             {machines.map(row => (
                 <Grid item xs={12} sm={4} key={row.id}>
-                    <Paper className={"boxItem projectItem"}
-                           onClick={() => window.location.href = "servers/" + row.id.toString()}>
-                        <Typography color="textSecondary">
-                            {row.name}
-                        </Typography>
-                    </Paper>
+                    <HtmlTooltip
+                        placement="top"
+
+                        title={
+                            <React.Fragment>
+                                <div style={{direction: 'rtl'}}>
+                                    <Typography color="textPrimary">دیدن سرورهای این پروژه</Typography>
+                                    <Typography color="textSecondary">با کلیک بر روی این گزینه، می توانید سرورهایی که مربوط به این پروژه هستند را مدیریت کنید</Typography>
+                                </div>
+                            </React.Fragment>
+                        }
+                    >
+                        <Paper className={"boxItem projectItem"}
+                               onClick={() => window.location.href = "servers/" + row.id.toString()}>
+                            <Typography color="textSecondary">
+                                {row.name}
+                            </Typography>
+                        </Paper>
+                    </HtmlTooltip>
                 </Grid>
             ))}
 
             <Grid item xs={12} sm={4}>
-                <Paper className={"boxItem addItem"} onClick={handleOpen}>
-                    <Typography color="textSecondary">
-                        <AddIcon/>
-                    </Typography>
-                </Paper>
+                <HtmlTooltip
+                    placement="top"
+
+                    title={
+                        <React.Fragment>
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">ایجاد پروژه جدید</Typography>
+                                <Typography color="textSecondary">با ایجاد پروژه های مختلف، می توانید سرورهای خود را در
+                                    دسته های معنادار گروه بندی نمایید</Typography>
+                            </div>
+                        </React.Fragment>
+                    }
+                >
+                    <Paper className={"boxItem addItem"} onClick={handleOpen}>
+                        <Typography color="textSecondary">
+                            <AddIcon/>
+                        </Typography>
+                    </Paper>
+                </HtmlTooltip>
             </Grid>
 
 

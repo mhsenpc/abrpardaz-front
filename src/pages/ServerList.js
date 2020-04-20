@@ -1,5 +1,4 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/AddBox';
@@ -13,9 +12,11 @@ import PowerIcon from '@material-ui/icons/Power';
 import PowerOffIcon from '@material-ui/icons/PowerOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from "@material-ui/core/Backdrop";
-import Echo from "laravel-echo";
-import swal from "sweetalert";
 import {user_title_postfix} from "../consts";
+import Tooltip from '@material-ui/core/Tooltip';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {HtmlTooltip} from "../Helpers";
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -58,31 +59,70 @@ export default function ServerList(props) {
     function ServerItem(props) {
         return (
             <Grid item xs={12} sm={4}>
-                <Paper className={"boxItem serverItem"} onClick={() => showDetails(props.row.id)}>
-                    <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
-                    <Typography>
-                        {props.row.name}
-                        {props.row.status === 'failed' &&
-                        <HighlightOffIcon color={"error"}/>
-                        }
+                <HtmlTooltip
+                    placement="top"
 
-                        {props.row.status === 'creating' &&
-                        <CircularProgress/>
-                        }
+                    title={
+                        <React.Fragment>
+                            {props.row.status === 'creating' &&
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">سرور در حال ایجاد شدن می باشد. لطفا شکیبا باشید</Typography>
+                                <Typography color="textSecondary">شما می توانید با کلیک بر روی این گزینه، سرور خود را مدیریت نمایید</Typography>
+                            </div>
+                            }
 
-                        {props.row.status === 'power_on' &&
-                        <PowerIcon style={{color: 'green'}}/>
-                        }
+                            {props.row.status === 'power_on' &&
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">سرور روشن و آماده استفاده می باشد</Typography>
+                                <Typography color="textSecondary">شما می توانید با کلیک بر روی این گزینه، سرور خود را مدیریت نمایید</Typography>
+                            </div>
+                            }
 
-                        {props.row.status === 'power_off' &&
-                        <PowerOffIcon style={{color: 'brown'}}/>
-                        }
-                    </Typography>
+                            {props.row.status === 'power_off' &&
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">سرور در حال حاضر خاموش می باشد</Typography>
+                                <Typography color="textSecondary">شما می توانید با کلیک بر روی این گزینه، سرور خود را مدیریت نمایید</Typography>
+                            </div>
+                            }
 
-                    <Typography variant="subtitle1" color="textSecondary">
-                        {props.row.image.name} {props.row.image.version}
-                    </Typography>
-                </Paper>
+                            {props.row.status === 'failed' &&
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">متاسفانه ساخت این سرور با مشکل مواجه شده است.</Typography>
+                                <Typography color="textSecondary">این مشکل به تیم پشتیبانی ابرپرداز اطلاع داده شده است</Typography>
+                            </div>
+                            }
+                        </React.Fragment>
+                    }
+                >
+                    <Paper className={"boxItem serverItem"} onClick={() => showDetails(props.row.id)}>
+                        <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
+
+                        <Typography>
+                            {props.row.name}
+                            &nbsp;
+                            {props.row.status === 'failed' &&
+                            <HighlightOffIcon color={"error"}/>
+                            }
+
+                            {props.row.status === 'power_on' &&
+                            <PowerIcon style={{color: 'green'}}/>
+                            }
+
+                            {props.row.status === 'creating' &&
+                            <CircularProgress size={20} title={"در حال ایجاد سرور"}/>
+                            }
+
+                            {props.row.status === 'power_off' &&
+                            <PowerOffIcon style={{color: 'brown'}}/>
+                            }
+                        </Typography>
+
+
+                        <Typography color="textSecondary">
+                            {props.row.image.name} {props.row.image.version}
+                        </Typography>
+                    </Paper>
+                </HtmlTooltip>
             </Grid>
         )
     }
@@ -96,11 +136,24 @@ export default function ServerList(props) {
             ))}
 
             <Grid item xs={12} sm={4}>
+                <HtmlTooltip
+                    placement="top"
+
+                    title={
+                        <React.Fragment>
+                            <div style={{direction: 'rtl'}}>
+                                <Typography color="textPrimary">ایجاد سرور جدید</Typography>
+                                <Typography color="textSecondary">با کلیک بر روی این گزینه می توانید در کمتر از چند دقیقه سرور جدیدی با مشخصات مورد نیاز بسازید</Typography>
+                            </div>
+                        </React.Fragment>
+                    }
+                >
                 <Paper className={"boxItem addItem"} onClick={() => window.location.href = '/createMachine'}>
                     <Typography color="textSecondary">
                         <AddIcon/>
                     </Typography>
                 </Paper>
+                </HtmlTooltip>
             </Grid>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
                 <CircularProgress color="inherit"/>
