@@ -52,6 +52,8 @@ export default function LoginWithGoogle() {
                 setShowLoading(false);
                 setResponse(res.data)
                 if(res.data.success){
+                    localStorage.clear();
+                    sessionStorage.clear();
                     sessionStorage.setItem('token', btoa(res.data.access_token));
                     sessionStorage.setItem('user_id', res.data.user_id);
                     sessionStorage.setItem('permissions', res.data.permissions);
@@ -70,7 +72,7 @@ export default function LoginWithGoogle() {
         if (params) {
             setTimeout(VerifyRequest, 3000);
         } else {
-           // window.location.href = '/Login';
+           window.location.href = '/Login';
         }
 
     }, []);

@@ -11,7 +11,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
-import {api_base, requestSetMobilePath, setMobileFinalPath, setUserAddress, setUserInfo} from "../../Api";
+import {api_base, getUserInfo, requestSetMobilePath, setMobileFinalPath, setUserAddress, setUserInfo} from "../../Api";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
@@ -75,6 +75,22 @@ export default function ProfileValidationWizard() {
     const handleBackdropClose = () => {
         setBackDropOpen(false);
     };
+
+    React.useEffect(() => {
+        axios.get(api_base + getUserInfo)
+            .then(res => {
+                let user = res.data.user;
+                setFirstName(user.profile.first_name);
+                setLastName(user.profile.last_name);
+                setNationalCode(user.profile.national_code);
+                setPostalCode(user.profile.postal_code);
+                setAddress(user.profile.address);
+                setMobile(user.profile.mobile);
+                setOrganizationName(user.profile.organization_name);
+                if(user.profile.organization)
+                    setPersonValue('organization');
+            });
+    }, []);
 
     function getStepContent(stepIndex) {
         switch (stepIndex) {

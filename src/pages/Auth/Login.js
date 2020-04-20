@@ -79,6 +79,8 @@ export default function Login() {
                 setResponse(res.data);
                 if (res.data.success) {
                     const token = res.data.access_token;
+                    localStorage.clear();
+                    sessionStorage.clear();
                     sessionStorage.setItem('token', btoa(token));
                     sessionStorage.setItem('user_id', res.data.user_id);
                     sessionStorage.setItem('permissions', res.data.permissions);

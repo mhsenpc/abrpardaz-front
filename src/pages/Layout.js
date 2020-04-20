@@ -251,8 +251,8 @@ function Layout(props) {
 
                 setTimeout(function () {
                     if (res.data.success) {
-                        localStorage.removeItem('token');
-                        sessionStorage.removeItem("token");
+                        localStorage.clear();
+                        sessionStorage.clear();
                         window.location.href = '/login';
                     }
                 }, 1000);
