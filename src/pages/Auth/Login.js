@@ -17,6 +17,14 @@ import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
 import EmailIcon from '@material-ui/icons/Email';
 import ReplayIcon from '@material-ui/icons/Replay';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {OutlinedInput} from "@material-ui/core";
+import {fancyTimeFormat, redirectToGoogle} from "../../Helpers";
+import LockIcon from '@material-ui/icons/Lock';
 
 
 const useStyles = makeStyles(theme => ({
@@ -98,12 +106,7 @@ export default function Login() {
             })
     }
 
-    function redirectToGoogle() {
-        axios.get(api_base + redirectToGooglePath)
-            .then(res => {
-                window.location.href = res.data.url;
-            })
-    }
+
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -130,6 +133,10 @@ export default function Login() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            InputProps={{
+                                endAdornment: <InputAdornment
+                                    position="end"><EmailIcon color={"disabled"} /></InputAdornment>,
+                            }}
                         />
                         <TextField
                             variant="outlined"
@@ -141,6 +148,10 @@ export default function Login() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            InputProps={{
+                                endAdornment: <InputAdornment
+                                    position="end"><LockIcon color={"disabled"} /></InputAdornment>,
+                            }}
                         />
                         <Grid container spacing={1}>
                             <Grid item xs={6}>
@@ -152,6 +163,10 @@ export default function Login() {
                                     name="captcha"
                                     value={captcha}
                                     onChange={(event)=>setCaptcha(event.target.value)}
+                                    InputProps={{
+                                        endAdornment: <InputAdornment
+                                            position="end"><VpnKeyIcon color={"disabled"} /></InputAdornment>,
+                                    }}
                                 />
                             </Grid>
 
@@ -184,11 +199,12 @@ export default function Login() {
                             onClick={redirectToGoogle}
                             fullWidth
                             variant="contained"
-                            style={{backgroundColor: 'red', color: 'white'}}
+                            style={{backgroundColor: 'rgb(66,134,245)', color: 'white'}}
                             className={classes.submit}
                         >
                             ورود با گوگل
-                            <EmailIcon/>
+                            &nbsp;
+                            <img src={"/images/google.png"} width={24}/>
                         </Button>
                         <Grid container>
                             <Grid item xs>

@@ -14,6 +14,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
 import swal from 'sweetalert';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LockIcon from "@material-ui/icons/Lock";
+import EmailIcon from "@material-ui/icons/Email";
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +53,9 @@ export default function ForgetPassword() {
             .then(res => {
                 setResponse(res.data)
                 if (res.data.success === true) {
-                    swal(res.data.message,'','success');
+                    swal(res.data.message,'','success').then(function(){
+                        window.location.href=  "/Login";
+                    });
                 }
                 else{
                     loadCaptcha();
@@ -94,6 +99,10 @@ export default function ForgetPassword() {
                                 label="پست الکترونیک"
                                 name="email"
                                 autoComplete="email"
+                                InputProps={{
+                                    endAdornment: <InputAdornment
+                                        position="end"><EmailIcon color={"disabled"} /></InputAdornment>,
+                                }}
                             />
                         </Grid>
 
@@ -109,6 +118,10 @@ export default function ForgetPassword() {
                                 name="captcha"
                                 value={captcha}
                                 onChange={(event) => setCaptcha(event.target.value)}
+                                InputProps={{
+                                    endAdornment: <InputAdornment
+                                        position="end"><LockIcon color={"disabled"} /></InputAdornment>,
+                                }}
                             />
                         </Grid>
 

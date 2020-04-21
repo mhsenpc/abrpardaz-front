@@ -253,7 +253,7 @@ function Layout(props) {
                     if (res.data.success) {
                         localStorage.clear();
                         sessionStorage.clear();
-                        window.location.href = '/login';
+                        window.location.href = '/Login';
                     }
                 }, 1000);
             })

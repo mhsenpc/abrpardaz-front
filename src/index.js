@@ -84,7 +84,7 @@ const routing = (
             <Switch>
             <DefaultLayout exact path="/" component={App}/>
             <DefaultLayout path="/Dashboard" component={Dashboard}/>
-            <Route path="/login" component={Login}/>
+            <Route path="/Login" component={Login}/>
             <Route path="/Register" component={Register}/>
             <Route path="/WaitForConfirmation" component={WaitForConfirmation} />
             <Route path="/ProfileValidationWizard" component={ProfileValidationWizard} />

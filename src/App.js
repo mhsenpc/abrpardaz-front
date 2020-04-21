@@ -4,7 +4,7 @@ export default function App(){
     const tokenOnLocalStorage = localStorage.getItem("token");
     const tokenOnSessionStorage = sessionStorage.getItem("token");
     if(!tokenOnSessionStorage && !tokenOnLocalStorage){
-        window.location.href = '/login';
+        window.location.href = '/Login';
     }
     else{
         window.location.href = '/Dashboard';

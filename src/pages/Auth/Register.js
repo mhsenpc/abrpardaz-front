@@ -21,6 +21,9 @@ import {OutlinedInput} from "@material-ui/core";
 import InputLabel from '@material-ui/core/InputLabel';
 import ReplayIcon from "@material-ui/icons/Replay";
 import swal from "sweetalert";
+import EmailIcon from "@material-ui/icons/Email";
+import LockIcon from "@material-ui/icons/Lock";
+import {redirectToGoogle} from "../../Helpers";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -121,6 +124,10 @@ export default function Register() {
                                 label="پست الکترونیک"
                                 name="email"
                                 autoComplete="email"
+                                InputProps={{
+                                    endAdornment: <InputAdornment
+                                        position="end"><EmailIcon color={"disabled"} /></InputAdornment>,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -188,6 +195,10 @@ export default function Register() {
                                 name="captcha"
                                 value={captcha}
                                 onChange={(event) => setCaptcha(event.target.value)}
+                                InputProps={{
+                                    endAdornment: <InputAdornment
+                                        position="end"><LockIcon color={"disabled"} /></InputAdornment>,
+                                }}
                             />
                         </Grid>
 
@@ -208,6 +219,18 @@ export default function Register() {
                         className={classes.submit}
                     >
                         ثبت نام
+                    </Button>
+                    <Button
+                        type="button"
+                        onClick={redirectToGoogle}
+                        fullWidth
+                        variant="contained"
+                        style={{backgroundColor: 'rgb(66,134,245)', color: 'white'}}
+                        className={classes.submit}
+                    >
+                        ثبت نام با گوگل
+                        &nbsp;
+                        <img src={"/images/google.png"} width={24}/>
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>

@@ -2,6 +2,7 @@ import axios from "axios";
 import swal from "sweetalert";
 import {withStyles} from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
+import {api_base, redirectToGooglePath} from "./Api";
 
 export function SetupAxios() {
     axios.defaults.headers.common['Accept'] = 'application/json';
@@ -26,7 +27,7 @@ export function SetupAxios() {
     }, function (error) {
         if (401 === error.response.status) {
             swal("توکن منقضی شده است", "شما نیاز به احراز هویت مجدد دارید!", "warning").then((value) => {
-                window.location.href = '/login';
+                window.location.href = '/Login';
             });
             return Promise.reject(error);
         } else if (403 === error.response.status) {
@@ -82,4 +83,11 @@ export function fancyTimeFormat(AllSeconds)
     ret += "" + mins + ":" + (secs < 10 ? "0" : "");
     ret += "" + secs;
     return ret;
+}
+
+export function redirectToGoogle() {
+    axios.get(api_base + redirectToGooglePath)
+        .then(res => {
+            window.location.href = res.data.url;
+        })
 }
