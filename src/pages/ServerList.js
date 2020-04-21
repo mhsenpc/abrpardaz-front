@@ -67,7 +67,6 @@ export default function ServerList(props) {
                             {props.row.status === 'creating' &&
                             <div style={{direction: 'rtl'}}>
                                 <Typography color="textPrimary">سرور در حال ایجاد شدن می باشد. لطفا شکیبا باشید</Typography>
-                                <Typography color="textSecondary">شما می توانید با کلیک بر روی این گزینه، سرور خود را مدیریت نمایید</Typography>
                             </div>
                             }
 

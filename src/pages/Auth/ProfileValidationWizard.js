@@ -21,6 +21,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import {Paper} from "@material-ui/core";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import {fancyTimeFormat} from "../../Helpers";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +67,8 @@ export default function ProfileValidationWizard() {
     const [mobileUserCode, setMobileUserCode] = React.useState('');
     const [organizationName, setOrganizationName] = React.useState('');
     const [personValue, setPersonValue] = React.useState('individual');
+    const [counter, setCounter] = React.useState(0);
+    const [timerEnabled, setTimerEnabled] = React.useState(false);
 
     const handleChange = (event) => {
         setPersonValue(event.target.value);
@@ -87,10 +91,20 @@ export default function ProfileValidationWizard() {
                 setAddress(user.profile.address);
                 setMobile(user.profile.mobile);
                 setOrganizationName(user.profile.organization_name);
-                if(user.profile.organization)
+                if (user.profile.organization)
                     setPersonValue('organization');
             });
     }, []);
+
+    React.useEffect(() => {
+        const timer =
+            counter > 0 && setInterval(() => {
+                if (timerEnabled === true) {
+                    setCounter(counter - 1)
+                }
+            }, 1000);
+        return () => clearInterval(timer);
+    }, [counter,timerEnabled]);
 
     function getStepContent(stepIndex) {
         switch (stepIndex) {
@@ -188,6 +202,12 @@ export default function ProfileValidationWizard() {
                                    onChange={(event) => setMobileUserCode(event.target.value)}
                                    required
                                    fullWidth
+                                   InputProps={{
+                                       endAdornment: <InputAdornment
+                                           position="start">{fancyTimeFormat(counter)}</InputAdornment>,
+                                   }}
+
+
                         />
 
                         <br/><br/>
@@ -206,6 +226,8 @@ export default function ProfileValidationWizard() {
             .then(res => {
                 if (res.data.success) {
                     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                    setCounter(300);
+                    setTimerEnabled(true)
                 } else {
                     setResponse(res.data);
                 }
@@ -279,7 +301,7 @@ export default function ProfileValidationWizard() {
 
     return (
         <Container component="main" maxWidth="md">
-            <title>تایید ایمیل{user_title_postfix}</title>
+            <title>مراحل احراز هویت{user_title_postfix}</title>
             <CssBaseline/>
             <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>

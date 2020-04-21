@@ -15,11 +15,10 @@ import {createStyles, Theme, withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-import {activateUserPath, api_base, deactivateUserPath, usersList} from "../../Api";
+import {api_base, usersList} from "../../Api";
 import MessageBox from "../MessageBox";
 import {Box, makeStyles} from "@material-ui/core";
 import swal from "sweetalert";
@@ -142,8 +141,8 @@ export default function UsersList() {
         setPage(newPage);
     }
 
-    const removeUser =( id,email )=> {
-        swal("آیا از حذف " + email +" اطمینان دارید؟", {
+    const removeUser = (id, email) => {
+        swal("آیا از حذف " + email + " اطمینان دارید؟", {
             dangerMode: true,
             buttons: true,
             icon: "warning",
@@ -159,7 +158,7 @@ export default function UsersList() {
     }
 
     function unsuspendUser(id) {
-        axios.put(api_base + 'users/' + id.toString() + '/unsuspend' )
+        axios.put(api_base + 'users/' + id.toString() + '/unsuspend')
             .then(res => {
                 setResponse(res.data)
                 loadUsers();
@@ -167,7 +166,7 @@ export default function UsersList() {
     }
 
     function suspendUser(id) {
-        axios.put(api_base + 'users/' + id.toString() + '/suspend' )
+        axios.put(api_base + 'users/' + id.toString() + '/suspend')
             .then(res => {
                 setResponse(res.data)
                 loadUsers();
@@ -175,7 +174,7 @@ export default function UsersList() {
     }
 
     function requestLoginAsUSer(id) {
-        axios.post(api_base + 'users/' + id.toString() + '/loginAs' )
+        axios.post(api_base + 'users/' + id.toString() + '/loginAs')
             .then(res => {
                 if (res.data.success) {
                     const token = res.data.access_token;
@@ -183,12 +182,11 @@ export default function UsersList() {
                     sessionStorage.setItem('user_id', res.data.user_id);
                     sessionStorage.setItem('permissions', res.data.permissions);
 
-                    swal(res.data.message,"", "success").then((value) => {
+                    swal(res.data.message, "", "success").then((value) => {
                         window.location.href = '/Dashboard';
                     });
-                }
-                else{
-                    swal('عملیات ناموفق بود','','error')
+                } else {
+                    swal('عملیات ناموفق بود', '', 'error')
                 }
             })
     }
@@ -196,172 +194,170 @@ export default function UsersList() {
     return (
         <div className={paperStyle.root}>
             <title>لیست کاربران{admin_title_postfix}</title>
-
-            <Grid item xs={12} container>
-                <Paper className={paperStyle.paper} >
-                    <Box p={1}>
-                        <Grid container>
-                            <Grid item xs={8} md={10}>
-                                <h2>
-                                    لیست کاربران
-                                </h2>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Paper className={paperStyle.paper}>
+                        <Box p={1}>
+                            <Grid container>
+                                <Grid item xs={8} md={10}>
+                                    <h2>
+                                        لیست کاربران
+                                    </h2>
+                                </Grid>
+                                <Grid item xs={4} md={2}>
+                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Users")) &&
+                                    <Button href={'/UserAdd'} variant="contained" color="primary">
+                                        <AddIcon/>
+                                        افزودن
+                                    </Button>
+                                    }
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4} md={2}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Users")) &&
-                                <Button href={'/UserAdd'} variant="contained" color="primary">
-                                    <AddIcon/>
-                                    افزودن
-                                </Button>
-                                }
-                            </Grid>
-                        </Grid>
 
 
-                        <p>
-                            شما می توانید کاربران سیستم را در این صفحه مدیریت کنید
-                        </p>
+                            <p>
+                                شما می توانید کاربران سیستم را در این صفحه مدیریت کنید
+                            </p>
 
-                        <TableContainer component={Paper}
-                                        style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
-                            <Table aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="right">#</StyledTableCell>
-                                        <StyledTableCell align="right">email</StyledTableCell>
-                                        <StyledTableCell align="right">نام</StyledTableCell>
-                                        <StyledTableCell align="right">نام خانوادگی</StyledTableCell>
-                                        <StyledTableCell align="right">محدودیت</StyledTableCell>
-                                        <StyledTableCell align="right">نقش</StyledTableCell>
-                                        <StyledTableCell align="right">وضعیت</StyledTableCell>
-                                        <StyledTableCell align="right">تاریخ ثبت</StyledTableCell>
-                                        <StyledTableCell align="right">&nbsp;</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {items.map(row => (
-                                        <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">
-                                                {row.id}
-                                            </StyledTableCell>
+                            <TableContainer component={Paper}
+                                            style={(items.length === 0) ? {display: 'none'} : {display: 'block'}}>
+                                <Table aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell align="right">#</StyledTableCell>
+                                            <StyledTableCell align="right">email</StyledTableCell>
+                                            <StyledTableCell align="right">نام</StyledTableCell>
+                                            <StyledTableCell align="right">محدودیت</StyledTableCell>
+                                            <StyledTableCell align="right">نقش</StyledTableCell>
+                                            <StyledTableCell align="right">وضعیت</StyledTableCell>
+                                            <StyledTableCell align="right">تاریخ ثبت</StyledTableCell>
+                                            <StyledTableCell align="right">&nbsp;</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {items.map(row => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell align="right">
+                                                    {row.id}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                <a href={'/UserProfile/' + row.id}>
-                                                {row.email}
-                                                </a>
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    <a href={'/UserProfile/' + row.id}>
+                                                        {row.email}
+                                                    </a>
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.profile.first_name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.profile.first_name} {row.profile.last_name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.profile.last_name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.user_limit.name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.user_limit.name}
-                                            </StyledTableCell>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.roles[0].name}
+                                                </StyledTableCell>
 
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.roles[0].name}
-                                            </StyledTableCell>
-
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {row.suspend === false &&
-                                                <Alert severity="success" onClick={() => suspendUser(row.id)} style={{cursor:'pointer'}}>
-                                                    فعال
-                                                </Alert>
-                                                }
-                                                {row.suspend === true &&
-                                                <Alert severity="error" onClick={() => unsuspendUser(row.id)} style={{cursor:'pointer'}}>
-                                                    مسدود
-                                                </Alert>
-                                                }
-                                            </StyledTableCell>
-
-                                            <StyledTableCell align="right" component="th" scope="row">
-                                                {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
-                                                {new Date(row.created_at).toLocaleTimeString()}
-                                            </StyledTableCell>
-
-                                            <StyledTableCell align="right">
-                                                <IconButton
-                                                    aria-label="more"
-                                                    aria-controls="long-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={(e) => handleClick(row.id, e)}
-                                                >
-                                                    <MoreVertIcon/>
-                                                </IconButton>
-                                                <StyledMenu
-                                                    id="customized-menu"
-                                                    anchorEl={anchorEls[row.id]}
-                                                    keepMounted
-                                                    open={Boolean(anchorEls[row.id])}
-                                                    onClose={(e) => handleClose(row.id, e)}
-                                                >
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/UserProfile/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <AssignmentIndIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="نمایش پروفایل"/>
-                                                    </StyledMenuItem>
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Limit")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/ChangeUserLimit/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <PanToolIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="تغییر محدودیت"/>
-                                                    </StyledMenuItem>
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {row.suspend === false &&
+                                                    <Alert severity="success" onClick={() => suspendUser(row.id)}
+                                                           style={{cursor: 'pointer'}}>
+                                                        فعال
+                                                    </Alert>
                                                     }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Role")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => window.location.href = '/ChangeUserRole/' + row.id}>
-                                                        <ListItemIcon>
-                                                            <AssignmentIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="تغییر نقش کاربری"/>
-                                                    </StyledMenuItem>
+                                                    {row.suspend === true &&
+                                                    <Alert severity="error" onClick={() => unsuspendUser(row.id)}
+                                                           style={{cursor: 'pointer'}}>
+                                                        مسدود
+                                                    </Alert>
                                                     }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Login As User")) &&
-                                                    <StyledMenuItem
-                                                        onClick={() => requestLoginAsUSer(row.id)}>
-                                                        <ListItemIcon>
-                                                            <PersonIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="ورود بعنوان این کاربر"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Users")) &&
-                                                    <StyledMenuItem onClick={() => removeUser(row.id,row.email)}>
-                                                        <ListItemIcon>
-                                                            <DeleteIcon fontSize="small"/>
-                                                        </ListItemIcon>
-                                                        <ListItemText primary="حذف"/>
-                                                    </StyledMenuItem>
-                                                    }
-                                                </StyledMenu>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                                </StyledTableCell>
 
-                        {items.length > 0 &&
-                        <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
-                                    className={'ltr'}/>
-                        }
+                                                <StyledTableCell align="right" component="th" scope="row">
+                                                    {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
+                                                    {new Date(row.created_at).toLocaleTimeString()}
+                                                </StyledTableCell>
 
-                        {items.length === 0 &&
-                        <Alert severity="warning">
-                            کاربری وجود ندارد
-                        </Alert>
-                        }
-                    </Box>
-                </Paper>
+                                                <StyledTableCell align="right">
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={(e) => handleClick(row.id, e)}
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </IconButton>
+                                                    <StyledMenu
+                                                        id="customized-menu"
+                                                        anchorEl={anchorEls[row.id]}
+                                                        keepMounted
+                                                        open={Boolean(anchorEls[row.id])}
+                                                        onClose={(e) => handleClose(row.id, e)}
+                                                    >
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/UserProfile/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <AssignmentIndIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="نمایش پروفایل"/>
+                                                        </StyledMenuItem>
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Limit")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/ChangeUserLimit/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <PanToolIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="تغییر محدودیت"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Role")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => window.location.href = '/ChangeUserRole/' + row.id}>
+                                                            <ListItemIcon>
+                                                                <AssignmentIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="تغییر نقش کاربری"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Login As User")) &&
+                                                        <StyledMenuItem
+                                                            onClick={() => requestLoginAsUSer(row.id)}>
+                                                            <ListItemIcon>
+                                                                <PersonIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="ورود بعنوان این کاربر"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Users")) &&
+                                                        <StyledMenuItem onClick={() => removeUser(row.id, row.email)}>
+                                                            <ListItemIcon>
+                                                                <DeleteIcon fontSize="small"/>
+                                                            </ListItemIcon>
+                                                            <ListItemText primary="حذف"/>
+                                                        </StyledMenuItem>
+                                                        }
+                                                    </StyledMenu>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+
+                            {items.length > 0 &&
+                            <Pagination page={page} count={count} onChange={handleChangePagination} color="primary"
+                                        className={'ltr'}/>
+                            }
+
+                            {items.length === 0 &&
+                            <Alert severity="warning">
+                                کاربری وجود ندارد
+                            </Alert>
+                            }
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
 
             <MessageBox response={response}/>

@@ -1,4 +1,4 @@
-//export const api_host = 'http://185.112.34.220:3334';
+//export const api_host = 'http://185.112.34.210';
 export const api_host = 'http://localhost';
 export const api_base = api_host + '/api/v1/';
 export const broadcasting_base = api_host + '/broadcasting/auth';
