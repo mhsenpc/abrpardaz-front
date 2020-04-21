@@ -40,6 +40,12 @@ export function SetupAxios() {
                     window.location.href = '/ProfileValidationWizard';
                 });
             }
+            else if(error.response.data.message){
+                swal(error.response.data.message,'','error');
+            }
+            else{
+                swal("خطا", "در پردازش درخواست شما مشکلی وجود دارد", "error");
+            }
 
             return Promise.reject(error);
         } else {
