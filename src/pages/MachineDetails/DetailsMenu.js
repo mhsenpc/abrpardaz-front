@@ -34,6 +34,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import swal from 'sweetalert';
 import {Select} from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -244,61 +245,70 @@ export default function DetailsMenu(props) {
 
             </Grid>
 
-            <Select onChange={handleChangeMenuItem} native={true} className={classes.sectionMobile} value={value}>
-                {detailsmenuItems.map(row => (
-                    <option value={row.id}>{row.title}</option>
-                ))}
-            </Select>
 
-            <div className={classes.root}>
-                <Tabs
-                    orientation="vertical"
-                    variant="scrollable"
-                    value={value}
-                    onChange={handleChange}
-                    className={classes.tabs + ' ' + classes.sectionDesktop}
-                >
-                    {detailsmenuItems.map(row => (
-                        <Tab label={row.title} {...a11yProps(row.id)} />
-                    ))}
-                </Tabs>
-                <TabPanel value={value} index={0}>
-                    <Overview id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <Graphs id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <Backups id={id} machine={machine} setMachine={setMachine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    <ServerSnapshotsList id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={4}>
-                    <Network id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={5}>
-                    <Volumes id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={6}>
-                    <Power id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={7}>
-                    <Rescue id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={8}>
-                    <IsoImages id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={9}>
-                    <UpgradeMachine id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={10}>
-                    <Rebuild id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-                <TabPanel value={value} index={11}>
-                    <Remove id={id} machine={machine} setResponse={setResponse}/>
-                </TabPanel>
-            </div>
+            <Grid container>
+                <Grid item md={2}>
+                    <Paper variant={"outlined"}>
+                        <Tabs
+                            orientation="vertical"
+                            variant="scrollable"
+                            value={value}
+                            onChange={handleChange}
+                            className={classes.tabs + ' ' + classes.sectionDesktop}
+                        >
+                            {detailsmenuItems.map(row => (
+                                <Tab label={row.title} {...a11yProps(row.id)} />
+                            ))}
+                        </Tabs>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={10}>
+                    <Select onChange={handleChangeMenuItem} native={true} className={classes.sectionMobile} value={value}>
+                        {detailsmenuItems.map(row => (
+                            <option value={row.id}>{row.title}</option>
+                        ))}
+                    </Select>
+
+                    <TabPanel value={value} index={0}>
+                        <Overview id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <Graphs id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <Backups id={id} machine={machine} setMachine={setMachine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        <ServerSnapshotsList id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={4}>
+                        <Network id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={5}>
+                        <Volumes id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={6}>
+                        <Power id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={7}>
+                        <Rescue id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={8}>
+                        <IsoImages id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={9}>
+                        <UpgradeMachine id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={10}>
+                        <Rebuild id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                    <TabPanel value={value} index={11}>
+                        <Remove id={id} machine={machine} setResponse={setResponse}/>
+                    </TabPanel>
+                </Grid>
+            </Grid>
+
             <MessageBox response={response}/>
             <Backdrop className={classes.backdrop} open={backDropOpen} onClick={handleBackdropClose}>
                 <CircularProgress color="inherit"/>

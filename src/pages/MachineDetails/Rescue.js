@@ -26,7 +26,7 @@ export default function Rescue(props) {
             <title>مرکز نجات{user_title_postfix}</title>
 
             <Grid item xs={12}>
-                <Paper>
+                <Paper variant={"outlined"}>
                     <Box p={1}>
                         <h2>مرکز نجات</h2>
                         <p>
@@ -47,8 +47,8 @@ export default function Rescue(props) {
                         <Button variant="contained" color="secondary">فعال سازی حالت نجات و راه اندازی مجدد</Button>
                     </Box>
                 </Paper>
-
-                <Paper>
+<br/>
+                <Paper variant={"outlined"}>
                     <Box p={1}>
                         <h2>فراموشی رمز سیستم عامل</h2>
                         <p>
