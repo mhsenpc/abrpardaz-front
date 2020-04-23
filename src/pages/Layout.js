@@ -233,12 +233,33 @@ function Layout(props) {
         if (user_id) {
             var channel1 = window.Echo.channel('private-user-' + user_id);
             channel1.listen('.snapshot.created', function (data) {
-                swal("تصویر آنی شما با نام " + data.snapshot_name + " با موفقیت ایجاد گردید", "", "success");
+                swal("تصویر آنی شما با نام " + data.snapshot_name + " با موفقیت ایجاد گردید", "", "success").then((value) => {
+                    if(window.location.pathname.includes('snapshotList'))
+                        window.location.reload();
+                });
             });
 
             var channel2 = window.Echo.channel('private-user-' + user_id);
             channel2.listen('.server.created', function (data) {
-                swal("سرور شما با نام " + data.machine_name + " با موفقیت ایجاد گردید", "", "success");
+
+                swal("سرور شما با نام " + data.machine_name + " با موفقیت ایجاد گردید", {
+                    icon: 'success',
+                    buttons: {
+                        cancel: "باشه",
+                        gotoserver: "دیدن جزئیات",
+                    },
+                })
+                    .then((value) => {
+                        switch (value) {
+                            case "gotoserver":
+                                window.location.href=  "/server/" + data.machine_id.toString();
+                                break;
+
+                            default:
+                                if(window.location.pathname.includes('servers/'))
+                                    window.location.reload();
+                        }
+                    });
             });
         }
     }

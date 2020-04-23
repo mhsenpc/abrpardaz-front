@@ -47,7 +47,7 @@ export default function Rescue(props) {
                         <Button variant="contained" color="secondary">فعال سازی حالت نجات و راه اندازی مجدد</Button>
                     </Box>
                 </Paper>
-<br/>
+                <br/>
                 <Paper variant={"outlined"}>
                     <Box p={1}>
                         <h2>فراموشی رمز سیستم عامل</h2>
@@ -59,19 +59,11 @@ export default function Rescue(props) {
                             نکته: در صورتی که برنامه quemu-guest agent را از سیستم عامل خود حذف نمایید، این قابلیت از
                             کار می افتد و عملیات با شکست مواجه می شود.
                         </p>
+                        <p>
+                            در صورت موفق بودن عملیات،رمز جدید به آدرس پست الکترونیک شما ارسال می گردد.
+                        </p>
 
                         <Button variant="contained" color="primary">تنظیم مجدد رمز مدیر سیستم</Button>
-                    </Box>
-                </Paper>
-                <br/>
-                <Paper>
-                    <Box p={1}>
-                        <h2>فراموشی رمز سیستم عامل</h2>
-                        <p>
-                            درصورت نیاز به بازیابی رمز و دریافت از طریق صندوق پستی خود، کلیک کنید.
-                        </p>
-                        <Button onClick={requestPassword} variant="contained"
-                                color="secondary">بازیابی رمز </Button>
                     </Box>
                 </Paper>
             </Grid>
