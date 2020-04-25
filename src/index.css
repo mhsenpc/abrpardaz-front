@@ -78,3 +78,7 @@ code {
 .swal-modal {
     direction: rtl;
 }
+
+.swal-text{
+    text-align: right;
+}
