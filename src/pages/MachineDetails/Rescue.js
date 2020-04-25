@@ -13,8 +13,8 @@ export default function Rescue(props) {
 
     const [response, setResponse] = React.useState([]);
 
-    function requestPassword() {
-        axios.put(api_base + 'machines/' + props.id.toString() + '/resendInfo')
+    function requestResetPassword() {
+        axios.put(api_base + 'machines/' + props.id.toString() + '/resetPassword')
             .then(res => {
                 setResponse(res.data)
             })
@@ -63,7 +63,7 @@ export default function Rescue(props) {
                             در صورت موفق بودن عملیات،رمز جدید به آدرس پست الکترونیک شما ارسال می گردد.
                         </p>
 
-                        <Button variant="contained" color="primary">تنظیم مجدد رمز مدیر سیستم</Button>
+                        <Button onClick={requestResetPassword} variant="contained" color="primary">بازنشانی رمز مدیر سیستم</Button>
                     </Box>
                 </Paper>
             </Grid>

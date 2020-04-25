@@ -157,6 +157,10 @@ export default function DetailsMenu(props) {
 
                 if (machine.status === 'ERROR') {
                     swal('متاسفانه این سرور ساخته نشده است', 'ساخت این سرور به دلیل مشکلات فنی انجام نشده است. برای اطلاعات بیشتر لطفا با پشتیبانی تماس حاصل فرمایید', 'error');
+                } else if (machine.status === 'CREATING') {
+                    swal('سرور هم اکنون درحال ایجاد می باشد', 'تا زمانیکه سرور بطور کامل ساخته نشده باشد، نمی توانید تغییری روی آن اعمال نمایید', 'warning').then(function () {
+                        window.location.href = "/ProjectsList";
+                    });
                 }
             })
     }, []);
@@ -264,7 +268,8 @@ export default function DetailsMenu(props) {
                 </Grid>
 
                 <Grid item xs={12} md={10}>
-                    <Select onChange={handleChangeMenuItem} native={true} className={classes.sectionMobile} value={value}>
+                    <Select onChange={handleChangeMenuItem} native={true} className={classes.sectionMobile}
+                            value={value}>
                         {detailsmenuItems.map(row => (
                             <option value={row.id}>{row.title}</option>
                         ))}

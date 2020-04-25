@@ -29,31 +29,32 @@ export default function Overview(props) {
             <Paper>
                 <Box p={1}>
                     <h2>نمای کلی</h2>
-                    <Grid container>
-                        <Grid item xs={2} title={"نام پلن جاری"}>
+                    <Grid container spacing={1}>
+                        <Grid item sm={1}></Grid>
+                        <Grid item xs={4} sm={2} title={"نام پلن جاری"}>
                             <img src={"/images/settings.png"} width={32}/>
                             <br/>
                             {props.machine.plan.name}
                         </Grid>
 
-                        <Grid item xs={2} title={"تعداد پردازنده های مجازی اختصاص داده شده به این سرور"}>
+                        <Grid item xs={4} sm={2} title={"تعداد پردازنده های مجازی اختصاص داده شده به این سرور"}>
                             <img src={"/images/cpu.jpg"} width={32}/>
                             <br/>
-                            {props.machine.plan.vcpu } عدد
+                            {props.machine.plan.vcpu} عدد
                         </Grid>
-                        <Grid item xs={2} title={"میزان رم سرور"}>
+                        <Grid item xs={3} sm={2} title={"میزان رم سرور"}>
                             <img src={"/images/ram.webp"} width={32}/>
                             <br/>
                             {props.machine.plan.ram} GB
 
                         </Grid>
-                        <Grid item xs={2} title={"میزان فضای دیسک سرور"}>
+                        <Grid item xs={4} md={2} title={"میزان فضای دیسک سرور"}>
                             <img src={"/images/disk.png"} width={32}/>
                             <br/>
                             {props.machine.plan.disk} GB
 
                         </Grid>
-                        <Grid item xs={3} title={"هزینه ماهیانه این سرور"}>
+                        <Grid item xs={4} md={3} title={"هزینه ماهیانه این سرور"}>
                             <img src={"/images/money.webp"} width={32}/>
                             <br/>
                             {props.machine.plan.hourly_price * 24 * 30}
