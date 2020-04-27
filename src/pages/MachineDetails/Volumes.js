@@ -17,8 +17,7 @@ export default function Volumes() {
                         <p>
                             دیسک ها به شما توانایی اضافه کردن فضای سرور تا 100 گیگابایت را می دهند. شما می توانید دیسک را از سروری جدا کرده و به سرور دیگری متصل نمایید.
                         </p>
-
-                        <Button variant="contained" color="primary">ساخت دیسک</Button>
+                        <img title={"این قابلیت در آینده راه اندازی می گردد"} src={"/images/coming-soon.jpg"} />
                     </Box>
                 </Paper>
             </Grid>

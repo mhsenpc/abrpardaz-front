@@ -13,7 +13,7 @@ export default function Graphs() {
                 <Paper>
                     <Box p={1}>
                         <h2>نمودار</h2>
-                        <p>این صفحه در آینده راه اندازی می گردد</p>
+                        <img title={"این قابلیت در آینده راه اندازی می گردد"} src={"/images/coming-soon.jpg"} />
                     </Box>
                 </Paper>
             </Grid>

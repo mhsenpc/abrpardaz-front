@@ -2,7 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import SnapshotRules from "./SnapshotRules";
 import CreateSnapshot from "./CreateSnapshot";
 import SnapshotItems from "./SnapshotItems";
 import MessageBox from "../MessageBox";
@@ -38,7 +37,6 @@ export default function SnapshotList(props) {
                         <CreateSnapshot setResponse={setResponse}/>
 
                         <hr/>
-                        <SnapshotRules/>
 
                     </Paper>
                 </Grid>

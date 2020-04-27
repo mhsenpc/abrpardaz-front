@@ -6,6 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import {Box} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import {user_title_postfix} from "../../consts";
+import Typography from "@material-ui/core/Typography";
 
 export default function Overview(props) {
 
@@ -77,10 +78,9 @@ export default function Overview(props) {
                                     {row.message}
                                 </p>
 
-                                <p>
+                                <Typography  title={new Date(row.created_at).toLocaleTimeString()} color={"textSecondary"} component="span" variant={"subtitle2"} >
                                     {(new JDate(new Date(row.created_at))).format('DD MMMM YYYY')}
-                                </p>
-
+                                </Typography>
                             </div>
                         ))}
                     </div>
