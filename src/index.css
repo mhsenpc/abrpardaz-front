@@ -78,6 +78,12 @@ code {
 .swal-modal {
     direction: rtl;
 }
+.disable {
+    background-color: #d5d9de;
+    border-radius: 5px;
+    border: black solid 2px;
+    cursor: not-allowed;
+}
 
 .swal-text{
     text-align: right;

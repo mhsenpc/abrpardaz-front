@@ -18,6 +18,8 @@ export default function CreateMachinePage() {
     const [projectId, setProjectId] = React.useState(null);
     const [machineName, setMachineName] = React.useState(null);
     const [response, setResponse] = React.useState([]);
+    const [minDisk, setMinDisk] = React.useState(0);
+    const [minRam, setMinRam] = React.useState(0);
 
     function createMachineRequest() {
         axios.post(api_base + createMachine, {
@@ -41,18 +43,18 @@ export default function CreateMachinePage() {
 
     return (
         <Grid container item xs={12}>
-            <Grid item xs={12}>
+                <Grid item xs={12}>
                 <title>ساخت ماشین{user_title_postfix}</title>
 
                 <SelectSource setImageId={setImageId} imageId={imageId} snapshotId={snapshotId}
-                              setSnapshotId={setSnapshotId}/>
+                              setSnapshotId={setSnapshotId} setMinDisk={setMinDisk} setMinRam={setMinRam}/>
             </Grid>
             <Grid item xs={12}>
-                <Plans setPlanId={setPlanId} planId={planId}/>
+                <Plans setPlanId={setPlanId} planId={planId}  minRam={minRam} minDisk={minDisk} />
             </Grid>
             <Grid item xs={12}>
                 <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}
-                                projectId={projectId}/>
+                                projectId={projectId} />
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>

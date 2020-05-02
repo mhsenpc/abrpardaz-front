@@ -55,6 +55,8 @@ export default function SelectSource(props) {
                 setOsItems(list);
                 if (list.length > 0) {
                     props.setImageId(list[0].id)
+                    props.setMinRam(list[0].min_ram)
+                    props.setMinDisk(list[0].min_disk)
                 }
             });
 
@@ -92,8 +94,10 @@ export default function SelectSource(props) {
         }
     };
 
-    const selectImage = id => {
-        props.setImageId(id)
+    const selectImage = (id , minRam ,minDisk) => {
+        props.setImageId(id);
+        props.setMinDisk(minDisk);
+        props.setMinRam(minRam)
     };
 
     const selectSnapshot = id => {
@@ -123,7 +127,7 @@ export default function SelectSource(props) {
                         <Grid item xs={12} md={4} style={{padding: 2}}>
                             <Paper>
                                 <Box className={"boxItem osItem " + isImageActive(row.id)} key={row.id}
-                                     onClick={() => selectImage(row.id)}>
+                                     onClick ={() => selectImage(row.id ,row.min_ram , row.min_disk)}>
                                     <Save/>
                                     <h3>{row.name}{row.version}</h3>
                                 </Box>
