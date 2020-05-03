@@ -6,46 +6,30 @@ import CreateSnapshot from "./CreateSnapshot";
 import SnapshotItems from "./SnapshotItems";
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
-
-const paperStyle = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            margin: 'auto',
-            maxWidth: 700,
-            marginTop: 12
-
-        },
-
-    }),
-);
+import {Box} from "@material-ui/core";
 
 export default function SnapshotList(props) {
-    const classes = paperStyle();
     const [response, setResponse] = React.useState([]);
 
     return (
         <div>
             <title>تصاویر آنی{user_title_postfix}</title>
 
-            <Grid container>
-                <Grid item xs={8}>
-                    <Paper className={classes.paper}>
-                        <CreateSnapshot setResponse={setResponse}/>
-
-                        <hr/>
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    <Paper>
+                        <Box p={1}>
+                            <CreateSnapshot setResponse={setResponse}/>
+                        </Box>
 
                     </Paper>
                 </Grid>
 
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <div>
+                <Grid item xs={12}>
+                    <Paper>
+                        <Box p={1}>
                             <SnapshotItems setResponse={setResponse}/>
-                        </div>
+                        </Box>
                     </Paper>
                 </Grid>
             </Grid>

@@ -7,20 +7,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {createStyles, Theme, withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 import {api_base, usersList} from "../../Api";
 import MessageBox from "../MessageBox";
-import {Box, makeStyles} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import swal from "sweetalert";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Pagination from "@material-ui/lab/Pagination";
@@ -29,78 +25,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import PersonIcon from '@material-ui/icons/Person';
 import {admin_title_postfix} from "../../consts";
-
-const StyledTableCell = withStyles((theme: Theme) =>
-    createStyles({
-        margin: {
-            marginTop: 25
-        },
-        head: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        body: {
-            fontSize: 14,
-        },
-    }),
-)(TableCell);
-
-const StyledTableRow = withStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            '&:nth-of-type(odd)': {
-                backgroundColor: theme.palette.background.default,
-            },
-        },
-    }),
-)(TableRow);
-
-
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})(props => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
-
-const StyledMenuItem = withStyles(theme => ({
-    root: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
-
-const paperStyle = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            margin: 'auto',
-            maxWidth: 700,
-            marginTop: 12
-
-        },
-    }),
-);
+import {StyledMenu, StyledMenuItem, StyledTableCell, StyledTableRow} from "../../StyledComponents";
 
 export default function UsersList() {
     const [items, setItems] = React.useState([]);
@@ -192,11 +117,11 @@ export default function UsersList() {
     }
 
     return (
-        <div className={paperStyle.root}>
+        <div>
             <title>لیست کاربران{admin_title_postfix}</title>
             <Grid container>
                 <Grid item xs={12}>
-                    <Paper className={paperStyle.paper}>
+                    <Paper>
                         <Box p={1}>
                             <Grid container>
                                 <Grid item xs={8} md={10}>

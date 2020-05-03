@@ -29,77 +29,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import SimpleModal from "../SimpleModal";
 import CachedIcon from '@material-ui/icons/Cached';
 import {admin_title_postfix} from "../../consts";
-
-const StyledTableCell = withStyles((theme: Theme) =>
-    createStyles({
-        margin: {
-            marginTop: 25
-        },
-        head: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        body: {
-            fontSize: 14,
-        },
-    }),
-)(TableCell);
-
-const StyledTableRow = withStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            '&:nth-of-type(odd)': {
-                backgroundColor: theme.palette.background.default,
-            },
-        },
-    }),
-)(TableRow);
-
-
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})(props => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
-
-const StyledMenuItem = withStyles(theme => ({
-    root: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 700,
-        marginTop: 12
-
-    },
-}));
-
+import {StyledMenu, StyledMenuItem, StyledTableCell, StyledTableRow} from "../../StyledComponents";
 
 export default function ImagesList() {
     const [items, setItems] = React.useState([]);
@@ -174,7 +104,7 @@ export default function ImagesList() {
             <Grid container>
                 <Grid item xs={12}>
 
-                    <Paper className={useStyles.paper}>
+                    <Paper>
                         <Box p={1}>
                             <Grid container>
                                 <Grid item xs={9}>

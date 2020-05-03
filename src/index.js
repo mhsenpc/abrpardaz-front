@@ -55,10 +55,16 @@ import InvoicePayment from "./pages/InvoicePayment";
 import WaitForConfirmation from "./pages/Auth/WaitForConfirmation";
 import ProfileValidationWizard from "./pages/Auth/ProfileValidationWizard";
 import {SetupAxios} from "./Helpers";
+import {green, grey, purple, red} from "@material-ui/core/colors";
 
 
 const theme = createMuiTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
+    palette: {
+        primary: red,
+        secondary: grey,
+    },
+
 });
 
 SetupAxios();

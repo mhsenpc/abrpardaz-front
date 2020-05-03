@@ -22,7 +22,7 @@ export default function CreateSnapshot(props) {
         axios.get(api_base + machinesList)
             .then(res => {
                 const list = res.data.list;
-                if (list){
+                if (list) {
                     setMachineItems(list);
                     if (list.length > 0)
                         setMachineId(list[0].id);
@@ -43,13 +43,16 @@ export default function CreateSnapshot(props) {
     }
 
     const [name, setName] = React.useState('');
+    const [description, setDescription] = React.useState('');
 
     function requestSnapShot() {
-        axios.post(api_base + 'snapshots/takeSnapshot', {machine_id: machineId, name: name})
+        axios.post(api_base + 'snapshots/takeSnapshot', {machine_id: machineId, name: name, description: description})
             .then(res => {
                 props.setResponse(res.data)
-                if (res.data.success)
+                if (res.data.success) {
                     setName('');
+                    setDescription('');
+                }
             })
     }
 
@@ -80,7 +83,10 @@ export default function CreateSnapshot(props) {
                 <p>
                     <TextField label={"نام تصویر آنی"} name='name'
                                onChange={event => setName(event.target.value)} value={name}/>
-                    &nbsp;
+                    <br/>
+                    <TextField label={"توضیحات"} name='name'
+                               onChange={event => setDescription(event.target.value)} value={description}/>
+                    <br/>
                     <Button color={"primary"} variant={"contained"} onClick={() => requestMakeSnapshot()}>
                         ساخت تصویرآنی
                     </Button>

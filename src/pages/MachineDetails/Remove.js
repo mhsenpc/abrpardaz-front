@@ -54,7 +54,7 @@ function Remove(props) {
                             نکته: تصاویر آنی گرفته شده از سرور آسیبی نخواهند دید
                         </p>
 
-                        <Button onClick={() => requestRemoveMachine()} variant="contained" color="secondary">
+                        <Button onClick={() => requestRemoveMachine()} variant="contained" color="primary">
                             حذف ماشین
                         </Button>
 

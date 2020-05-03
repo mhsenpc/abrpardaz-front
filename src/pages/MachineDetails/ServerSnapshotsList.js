@@ -12,41 +12,10 @@ import {api_base, machineSnapshotsList} from "../../Api";
 import swal from "sweetalert";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {user_title_postfix} from "../../consts";
+import SnapshotItems from "../SnapshotList/SnapshotItems";
 
 
 export default function ServerSnapshotsList(props) {
-    const [snapShotItems, setSnapShotItems] = React.useState([]);
-    const JDate = require('jalali-date');
-
-    React.useEffect(() => {
-        loadSnapshots();
-    }, []);
-
-    function loadSnapshots() {
-        axios.get(api_base + machineSnapshotsList + '?machine_id=' + props.id.toString())
-
-            .then(res => {
-                const list = res.data.list;
-                if (res.data.list)
-                    setSnapShotItems(list);
-            })
-    }
-
-    function requestRemoveSnapshot(id, name) {
-        swal("آیا از حذف تصویر آنی " + name + " اطمینان دارید؟", {
-            dangerMode: true,
-            buttons: true,
-            icon: "warning",
-        }).then(function (isConfirm) {
-            if (isConfirm) {
-                axios.delete(api_base + 'snapshots/' + id + '/remove')
-                    .then(res => {
-                        props.setResponse(res.data)
-                        loadSnapshots();
-                    })
-            }
-        });
-    }
 
     return (
         <Paper>
@@ -69,37 +38,7 @@ export default function ServerSnapshotsList(props) {
                     هزینه استفاده از تصویر آنی 100 تومان به ازای هر گیگابایت است
                 </p>
 
-                <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>نام</TableCell>
-                                <TableCell>تاریخ ساخت</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {snapShotItems.map(row => (
-                                <TableRow key={row.name}>
-
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
-                                        {new Date(row.created_at).toLocaleTimeString()}
-                                    </TableCell>
-
-                                    <TableCell component="th" scope="row">
-                                        <DeleteIcon onClick={() => requestRemoveSnapshot(row.id, row.name)}>حذف تصویر
-                                            آنی</DeleteIcon>
-                                    </TableCell>
-
-                                </TableRow>
-
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <SnapshotItems machineId={props.id}/>
 
             </Box>
         </Paper>
