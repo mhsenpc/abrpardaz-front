@@ -106,7 +106,7 @@ export default function InvoicePayment(props) {
                             </Grid>
 
                             <Grid item xs={1}>
-                                {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Invoice Operator")) &&
+                                {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Invoice Operator")) &&
                                 <Button variant={"contained"} color={"primary"}
                                         onClick={requestConfirmReceipt}>تایید</Button>
                                 }
@@ -128,7 +128,7 @@ export default function InvoicePayment(props) {
                             {numeral(invoice.total).format('0,0')} تومان
                         </p>
 
-                        {(!sessionStorage.getItem('permissions') || (sessionStorage.getItem('permissions') && !sessionStorage.getItem('permissions').includes("Invoice Operator"))) &&
+                        {(!localStorage.getItem('permissions') || (localStorage.getItem('permissions') && !localStorage.getItem('permissions').includes("Invoice Operator"))) &&
                         <div>
                             <p>
                                 <Button variant={"contained"} color={"primary"}>پرداخت آنلاین</Button>
@@ -143,7 +143,7 @@ export default function InvoicePayment(props) {
                             </p>
                         </div>
                         }
-                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Invoice Operator")) &&
+                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Invoice Operator")) &&
                         <div>
                             وضعیت:
                             &nbsp;

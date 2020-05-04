@@ -6,15 +6,7 @@ import {api_base, redirectToGooglePath} from "./Api";
 
 export function SetupAxios() {
     axios.defaults.headers.common['Accept'] = 'application/json';
-    const tokenOnLocalStorage = localStorage.getItem("token");
-    const tokenOnSessionStorage = sessionStorage.getItem("token");
-    if (tokenOnLocalStorage && !tokenOnSessionStorage) {
-        //load everything from localstorage
-        sessionStorage.setItem('user_id', localStorage.getItem("user_id"));
-        sessionStorage.setItem('permissions', localStorage.getItem("permissions"));
-        sessionStorage.setItem('token', tokenOnLocalStorage);
-    }
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     if (token) {
         token = atob(token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

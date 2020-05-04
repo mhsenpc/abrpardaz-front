@@ -30,10 +30,10 @@ export default function Verify() {
         axios.post(api_base + verify, {email: email, token: token})
             .then(res => {
                 if (res.data.success) {
-                    sessionStorage.setItem('token', btoa(res.data.token));
-                    sessionStorage.setItem('user_id', res.data.user_id);
-                    sessionStorage.setItem('permissions', res.data.permissions);
                     window.localStorage.clear();
+                    localStorage.setItem('token', btoa(res.data.token));
+                    localStorage.setItem('user_id', res.data.user_id);
+                    localStorage.setItem('permissions', res.data.permissions);
                     window.location.href = '/ProfileValidationWizard'
                 } else {
                     swal(res.data.message, '', 'error')

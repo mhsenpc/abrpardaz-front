@@ -71,7 +71,7 @@ export default function MainMenuItems(props) {
                 }
             </ListItem>
 
-            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Users")) &&
+            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("List Users")) &&
             <ListItem style={{textAlign: 'right'}} button component="a" href="/UsersList">
                 <ListItemIcon className={'iconItem'}>
                     <PeopleIcon/>
@@ -82,7 +82,7 @@ export default function MainMenuItems(props) {
             </ListItem>
             }
 
-            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Manage Images")) &&
+            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Manage Images")) &&
             <ListItem style={{textAlign: 'right'}} button component="a" href="/ImagesList">
                 <ListItemIcon className={'iconItem'}>
                     <ImageIcon/>
@@ -94,7 +94,7 @@ export default function MainMenuItems(props) {
             }
 
 
-            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Manage Plans")) &&
+            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Manage Plans")) &&
             <ListItem style={{textAlign: 'right'}} button component="a" href="/PlansList">
                 <ListItemIcon className={'iconItem'}>
                     <SettingsEthernetIcon/>
@@ -105,7 +105,7 @@ export default function MainMenuItems(props) {
             </ListItem>
             }
 
-            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List User Limits")) &&
+            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("List User Limits")) &&
             <ListItem style={{textAlign: 'right'}} button component="a" href="/UserLimitList">
                 <ListItemIcon className={'iconItem'}>
                     <ListIcon/>
@@ -116,7 +116,7 @@ export default function MainMenuItems(props) {
             </ListItem>
             }
 
-            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("List Roles")) &&
+            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("List Roles")) &&
             <ListItem style={{textAlign: 'right'}} button component="a" href="/RolesList">
                 <ListItemIcon className={'iconItem'}>
                     <SupervisedUserCircleIcon/>

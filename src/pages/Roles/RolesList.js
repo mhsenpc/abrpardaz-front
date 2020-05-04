@@ -96,7 +96,7 @@ export default function RolesList() {
                                     </h2>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Roles")) &&
+                                    {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Add Roles")) &&
                                     <Button href={'/RoleAdd'} variant="contained" color="primary">
                                         <AddIcon/>
                                         افزودن
@@ -155,7 +155,7 @@ export default function RolesList() {
                                                         open={Boolean(anchorEls[row.id])}
                                                         onClose={(e) => handleClose(row.id, e)}
                                                     >
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Roles")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Edit Roles")) &&
                                                         <StyledMenuItem
                                                             onClick={() => window.location.href = '/RoleEdit/' + row.id}>
                                                             <ListItemIcon>
@@ -164,7 +164,7 @@ export default function RolesList() {
                                                             <ListItemText primary="ویرایش"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Roles")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Remove Roles")) &&
                                                         <StyledMenuItem onClick={() => removeRole(row.id, row.name)}>
                                                             <ListItemIcon>
                                                                 <DeleteIcon fontSize="small"/>

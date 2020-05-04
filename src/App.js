@@ -2,8 +2,7 @@ import React from 'react';
 
 export default function App(){
     const tokenOnLocalStorage = localStorage.getItem("token");
-    const tokenOnSessionStorage = sessionStorage.getItem("token");
-    if(!tokenOnSessionStorage && !tokenOnLocalStorage){
+    if(!tokenOnLocalStorage){
         window.location.href = '/Login';
     }
     else{

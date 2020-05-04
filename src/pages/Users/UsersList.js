@@ -103,9 +103,9 @@ export default function UsersList() {
             .then(res => {
                 if (res.data.success) {
                     const token = res.data.access_token;
-                    sessionStorage.setItem('token', btoa(token));
-                    sessionStorage.setItem('user_id', res.data.user_id);
-                    sessionStorage.setItem('permissions', res.data.permissions);
+                    localStorage.setItem('token', btoa(token));
+                    localStorage.setItem('user_id', res.data.user_id);
+                    localStorage.setItem('permissions', res.data.permissions);
 
                     swal(res.data.message, "", "success").then((value) => {
                         window.location.href = '/Dashboard';
@@ -130,7 +130,7 @@ export default function UsersList() {
                                     </h2>
                                 </Grid>
                                 <Grid item xs={4} md={2}>
-                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Users")) &&
+                                    {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Add Users")) &&
                                     <Button href={'/UserAdd'} variant="contained" color="primary">
                                         <AddIcon/>
                                         افزودن
@@ -227,7 +227,7 @@ export default function UsersList() {
                                                             </ListItemIcon>
                                                             <ListItemText primary="نمایش پروفایل"/>
                                                         </StyledMenuItem>
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Limit")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Change User Limit")) &&
                                                         <StyledMenuItem
                                                             onClick={() => window.location.href = '/ChangeUserLimit/' + row.id}>
                                                             <ListItemIcon>
@@ -236,7 +236,7 @@ export default function UsersList() {
                                                             <ListItemText primary="تغییر محدودیت"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Change User Role")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Change User Role")) &&
                                                         <StyledMenuItem
                                                             onClick={() => window.location.href = '/ChangeUserRole/' + row.id}>
                                                             <ListItemIcon>
@@ -245,7 +245,7 @@ export default function UsersList() {
                                                             <ListItemText primary="تغییر نقش کاربری"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Login As User")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Login As User")) &&
                                                         <StyledMenuItem
                                                             onClick={() => requestLoginAsUSer(row.id)}>
                                                             <ListItemIcon>
@@ -254,7 +254,7 @@ export default function UsersList() {
                                                             <ListItemText primary="ورود بعنوان این کاربر"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Users")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Remove Users")) &&
                                                         <StyledMenuItem onClick={() => removeUser(row.id, row.email)}>
                                                             <ListItemIcon>
                                                                 <DeleteIcon fontSize="small"/>

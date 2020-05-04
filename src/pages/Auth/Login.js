@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import {api_base, api_host, getOneCaptcha, login, redirectToGooglePath} from "../../Api";
+import {api_base, api_host, getOneCaptcha, login} from "../../Api";
 import axios from 'axios';
 import MessageBox from "../MessageBox";
 import {user_title_postfix} from "../../consts";
@@ -19,11 +19,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import ReplayIcon from '@material-ui/icons/Replay';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import {OutlinedInput} from "@material-ui/core";
-import {fancyTimeFormat, redirectToGoogle} from "../../Helpers";
+import {redirectToGoogle} from "../../Helpers";
 import LockIcon from '@material-ui/icons/Lock';
 
 
@@ -62,7 +58,6 @@ const useStyles = makeStyles(theme => ({
 export default function Login() {
     const classes = useStyles();
     const [response, setResponse] = React.useState([]);
-    const [rememberMe, setRememberMe] = React.useState(false);
     const [captchaUrl, setCaptchaUrl] = React.useState('');
     const [captchaKey, setCaptchaKey] = React.useState('');
     const [captcha, setCaptcha] = React.useState('');
@@ -71,7 +66,7 @@ export default function Login() {
         loadCaptcha();
     }, []);
 
-    function loadCaptcha(){
+    function loadCaptcha() {
         axios.get(api_host + '/' + getOneCaptcha)
             .then(res => {
                 setCaptchaUrl(res.data.img);
@@ -82,30 +77,22 @@ export default function Login() {
     function sendUser(event) {
         event.preventDefault();
         const {email, password} = event.currentTarget.elements;
-        axios.post(api_base + login, {email: email.value, password: password.value, captcha: captcha,ckey:captchaKey})
+        axios.post(api_base + login, {email: email.value, password: password.value, captcha: captcha, ckey: captchaKey})
             .then(res => {
                 setResponse(res.data);
                 if (res.data.success) {
                     const token = res.data.access_token;
                     localStorage.clear();
-                    sessionStorage.clear();
-                    sessionStorage.setItem('token', btoa(token));
-                    sessionStorage.setItem('user_id', res.data.user_id);
-                    sessionStorage.setItem('permissions', res.data.permissions);
-                    if (rememberMe) {
-                        localStorage.setItem("token", btoa(token));
-                        localStorage.setItem("user_id", res.data.user_id);
-                        localStorage.setItem("permissions", res.data.permissions);
-                    }
+                    localStorage.setItem("token", btoa(token));
+                    localStorage.setItem("user_id", res.data.user_id);
+                    localStorage.setItem("permissions", res.data.permissions);
                     window.location.href = '/Dashboard';
-                }
-                else{
+                } else {
                     loadCaptcha();
                     setCaptcha('')
                 }
             })
     }
-
 
 
     return (
@@ -135,7 +122,7 @@ export default function Login() {
                             autoFocus
                             InputProps={{
                                 endAdornment: <InputAdornment
-                                    position="end"><EmailIcon color={"disabled"} /></InputAdornment>,
+                                    position="end"><EmailIcon color={"disabled"}/></InputAdornment>,
                             }}
                         />
                         <TextField
@@ -150,7 +137,7 @@ export default function Login() {
                             autoComplete="current-password"
                             InputProps={{
                                 endAdornment: <InputAdornment
-                                    position="end"><LockIcon color={"disabled"} /></InputAdornment>,
+                                    position="end"><LockIcon color={"disabled"}/></InputAdornment>,
                             }}
                         />
                         <Grid container spacing={1}>
@@ -162,10 +149,10 @@ export default function Login() {
                                     label="کد را وارد کنید"
                                     name="captcha"
                                     value={captcha}
-                                    onChange={(event)=>setCaptcha(event.target.value)}
+                                    onChange={(event) => setCaptcha(event.target.value)}
                                     InputProps={{
                                         endAdornment: <InputAdornment
-                                            position="end"><VpnKeyIcon color={"disabled"} /></InputAdornment>,
+                                            position="end"><VpnKeyIcon color={"disabled"}/></InputAdornment>,
                                     }}
                                 />
                             </Grid>
@@ -175,16 +162,11 @@ export default function Login() {
                             </Grid>
                             <Grid item xs={2}>
                                 <Button onClick={loadCaptcha} variant={"outlined"}>
-                                    <ReplayIcon  />
+                                    <ReplayIcon/>
                                 </Button>
                             </Grid>
                         </Grid>
 
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary"
-                                               onChange={event => setRememberMe(event.target.checked)}/>}
-                            label="مرا به خاطر بسپار"
-                        />
                         <Button
                             type="submit"
                             fullWidth

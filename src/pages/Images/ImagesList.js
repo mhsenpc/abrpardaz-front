@@ -113,14 +113,14 @@ export default function ImagesList() {
                                     </h2>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Images")) &&
+                                    {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Add Images")) &&
                                     <Button href={'/ImageAdd'} variant="contained" color="primary">
                                         <AddIcon/>
                                         افزودن
                                     </Button>
                                     }
                                     &nbsp;
-                                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Images")) &&
+                                    {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Sync Images")) &&
                                     <Button onClick={syncImages} variant="contained" color="default">
                                         <CachedIcon/>
                                         همسان سازی
@@ -196,7 +196,7 @@ export default function ImagesList() {
                                                         open={Boolean(anchorEls[row.id])}
                                                         onClose={(e) => handleClose(row.id, e)}
                                                     >
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Images")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Edit Images")) &&
                                                         <StyledMenuItem
                                                             onClick={() => window.location.href = '/ImageEdit/' + row.id}>
                                                             <ListItemIcon>
@@ -205,7 +205,7 @@ export default function ImagesList() {
                                                             <ListItemText primary="ویرایش"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Images")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Remove Images")) &&
                                                         <StyledMenuItem onClick={() => removeImage(row.id, row.name)}>
                                                             <ListItemIcon>
                                                                 <DeleteIcon fontSize="small"/>

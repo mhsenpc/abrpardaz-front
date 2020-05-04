@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Layout from "./pages/Layout";
-import {BrowserRouter as Router, Route,Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Notfound from "./pages/Notfound";
 import Dashboard from "./pages/Dashboard";
 import ServerList from "./pages/ServerList";
@@ -27,11 +27,9 @@ import ServerSnapshotsList from "./pages/MachineDetails/ServerSnapshotsList";
 import SshKeyEdit from "./pages/SshKeys/SshKeyEdit";
 import ProjectsList from "./pages/ProjectsList";
 import Notifications from "./pages/Notifications";
-import axios from "axios";
-import swal from 'sweetalert';
 import Invoices from "./pages/Invoices";
 import Limits from "./pages/Limits";
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import ImagesList from "./pages/Images/ImagesList";
 import ImageAdd from "./pages/Images/ImageAdd";
 import ImageEdit from "./pages/Images/ImageEdit";
@@ -55,7 +53,7 @@ import InvoicePayment from "./pages/InvoicePayment";
 import WaitForConfirmation from "./pages/Auth/WaitForConfirmation";
 import ProfileValidationWizard from "./pages/Auth/ProfileValidationWizard";
 import {SetupAxios} from "./Helpers";
-import {green, grey, purple, red} from "@material-ui/core/colors";
+import {grey, red} from "@material-ui/core/colors";
 
 
 const theme = createMuiTheme({
@@ -84,57 +82,71 @@ const DefaultLayout = ({component: Component, ...rest}) => {
     )
 };
 
+
+const NoLayout = ({component: Component, ...rest}) => {
+    return (
+        <Route {...rest} render={matchProps => (
+            <ThemeProvider theme={theme}>
+                <div>
+                    <Component {...matchProps} />
+                </div>
+            </ThemeProvider>
+
+        )}/>
+    )
+};
+
 const routing = (
     <Router>
         <div>
             <Switch>
-            <DefaultLayout exact path="/" component={App}/>
-            <DefaultLayout path="/Dashboard" component={Dashboard}/>
-            <Route path="/Login" component={Login}/>
-            <Route path="/Register" component={Register}/>
-            <Route path="/WaitForConfirmation" component={WaitForConfirmation} />
-            <Route path="/ProfileValidationWizard" component={ProfileValidationWizard} />
-            <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
-            <DefaultLayout path="/Transactions" component={Transactions}/>
-            <DefaultLayout path="/Invoices" component={Invoices}/>
-            <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
-            <DefaultLayout path="/snapshotList" component={SnapshotList}/>
-            <DefaultLayout path="/Tickets" component={TicketList}/>
-            <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
-            <DefaultLayout path="/profile" component={Profile}/>
-            <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
-            <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
-            <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
-            <DefaultLayout path="/NewTicket" component={NewTicket}/>
-            <DefaultLayout path="/Limits" component={Limits}/>
-            <Route path="/ResetPassword" component={ResetPassword}/>
-            <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
-            <Route path="/ForgetPassword" component={ForgetPassword}/>
-            <Route path="/Verify" component={Verify}/>
-            <Route path="/LoginWithGoogle" component={LoginWithGoogle}/>
-            <DefaultLayout path="/Notifications" component={Notifications}/>
-            <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
-            <DefaultLayout path="/servers/:id" component={ServerList}/>
-            <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
-            <DefaultLayout path="/ImagesList" component={ImagesList}/>
-            <DefaultLayout path="/ImageAdd" component={ImageAdd}/>
-            <DefaultLayout path="/ImageEdit/:id" component={ImageEdit}/>
-            <DefaultLayout path="/PlansList" component={PlansList}/>
-            <DefaultLayout path="/PlanAdd" component={PlanAdd}/>
-            <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
-            <DefaultLayout path="/UsersList" component={UsersList}/>
-            <DefaultLayout path="/UserAdd" component={UserAdd}/>
-            <DefaultLayout path="/ChangeUserLimit/:id" component={ChangeUserLimit}/>
-            <DefaultLayout path="/ChangeUserRole/:id" component={ChangeUserRole}/>
-            <DefaultLayout path="/UserProfile/:id" component={UserProfile}/>
-            <DefaultLayout path="/UserLimitList" component={UserLimitList}/>
-            <DefaultLayout path="/UserLimitAdd" component={UserLimitAdd}/>
-            <DefaultLayout path="/UserLimitEdit/:id" component={UserLimitEdit}/>
-            <DefaultLayout path="/RolesList" component={RolesList}/>
-            <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
-            <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>
-            <DefaultLayout path="/InvoicePayment/:id" component={InvoicePayment}/>
-            <Route component={Notfound}/>
+                <DefaultLayout exact path="/" component={App}/>
+                <DefaultLayout path="/Dashboard" component={Dashboard}/>
+                <NoLayout path="/Login" component={Login}/>
+                <NoLayout path="/Register" component={Register}/>
+                <NoLayout path="/WaitForConfirmation" component={WaitForConfirmation}/>
+                <NoLayout path="/ProfileValidationWizard" component={ProfileValidationWizard}/>
+                <DefaultLayout path="/ProjectsList" component={ProjectsList}/>
+                <DefaultLayout path="/Transactions" component={Transactions}/>
+                <DefaultLayout path="/Invoices" component={Invoices}/>
+                <DefaultLayout path="/createMachine" component={CreateMachinePage}/>
+                <DefaultLayout path="/snapshotList" component={SnapshotList}/>
+                <DefaultLayout path="/Tickets" component={TicketList}/>
+                <DefaultLayout path="/ChangePassword" component={ChangePassword}/>
+                <DefaultLayout path="/profile" component={Profile}/>
+                <DefaultLayout path="/SshKeyList" component={SshKeyList}/>
+                <DefaultLayout path="/SshKeyAdd" component={SshKeyAdd}/>
+                <DefaultLayout path="/SshKeyEdit/:id" component={SshKeyEdit}/>
+                <DefaultLayout path="/NewTicket" component={NewTicket}/>
+                <DefaultLayout path="/Limits" component={Limits}/>
+                <NoLayout path="/ResetPassword" component={ResetPassword}/>
+                <DefaultLayout path="/TicketDetails/:id" component={TicketDetails}/>
+                <NoLayout path="/ForgetPassword" component={ForgetPassword}/>
+                <NoLayout path="/Verify" component={Verify}/>
+                <NoLayout path="/LoginWithGoogle" component={LoginWithGoogle}/>
+                <DefaultLayout path="/Notifications" component={Notifications}/>
+                <DefaultLayout path="/MachineSnapshotList/:id" component={ServerSnapshotsList}/>
+                <DefaultLayout path="/servers/:id" component={ServerList}/>
+                <DefaultLayout path="/server/:id" component={ServerDetailsMenu}/>
+                <DefaultLayout path="/ImagesList" component={ImagesList}/>
+                <DefaultLayout path="/ImageAdd" component={ImageAdd}/>
+                <DefaultLayout path="/ImageEdit/:id" component={ImageEdit}/>
+                <DefaultLayout path="/PlansList" component={PlansList}/>
+                <DefaultLayout path="/PlanAdd" component={PlanAdd}/>
+                <DefaultLayout path="/PlanEdit/:id" component={PlanEdit}/>
+                <DefaultLayout path="/UsersList" component={UsersList}/>
+                <DefaultLayout path="/UserAdd" component={UserAdd}/>
+                <DefaultLayout path="/ChangeUserLimit/:id" component={ChangeUserLimit}/>
+                <DefaultLayout path="/ChangeUserRole/:id" component={ChangeUserRole}/>
+                <DefaultLayout path="/UserProfile/:id" component={UserProfile}/>
+                <DefaultLayout path="/UserLimitList" component={UserLimitList}/>
+                <DefaultLayout path="/UserLimitAdd" component={UserLimitAdd}/>
+                <DefaultLayout path="/UserLimitEdit/:id" component={UserLimitEdit}/>
+                <DefaultLayout path="/RolesList" component={RolesList}/>
+                <DefaultLayout path="/RoleAdd" component={RoleAdd}/>
+                <DefaultLayout path="/RoleEdit/:id" component={RoleEdit}/>
+                <DefaultLayout path="/InvoicePayment/:id" component={InvoicePayment}/>
+                <NoLayout component={Notfound}/>
             </Switch>
         </div>
     </Router>

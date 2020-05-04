@@ -209,7 +209,7 @@ function Layout(props) {
     }, []);
 
     function waitForPushMessages() {
-        let token = atob(sessionStorage.getItem("token"));
+        let token = atob(localStorage.getItem("token"));
         if (!token)
             return;
 
@@ -227,8 +227,8 @@ function Layout(props) {
         });
 
         let user_id;
-        if (sessionStorage.getItem('user_id'))
-            user_id = sessionStorage.getItem('user_id');
+        if (localStorage.getItem('user_id'))
+            user_id = localStorage.getItem('user_id');
 
         if (user_id) {
             var channel1 = window.Echo.channel('private-user-' + user_id);
@@ -273,7 +273,6 @@ function Layout(props) {
                 setTimeout(function () {
                     if (res.data.success) {
                         localStorage.clear();
-                        sessionStorage.clear();
                         window.location.href = '/Login';
                     }
                 }, 1000);

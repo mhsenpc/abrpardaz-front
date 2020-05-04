@@ -153,7 +153,7 @@ function TicketDetails(props) {
                             {(new JDate(new Date(ticket.created_at))).format('YYYY/MM/DD')}&nbsp;
                             {new Date(ticket.created_at).toLocaleTimeString()}
                             &nbsp;
-                            {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Ticket Operator")) &&
+                            {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Ticket Operator")) &&
                             <div>
                                 <a target={"_blank"} href={'/UserProfile/' + ticket.user.id}>
                                     توسط:

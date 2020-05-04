@@ -53,10 +53,9 @@ export default function LoginWithGoogle() {
                 setResponse(res.data)
                 if(res.data.success){
                     localStorage.clear();
-                    sessionStorage.clear();
-                    sessionStorage.setItem('token', btoa(res.data.access_token));
-                    sessionStorage.setItem('user_id', res.data.user_id);
-                    sessionStorage.setItem('permissions', res.data.permissions);
+                    localStorage.setItem('token', btoa(res.data.access_token));
+                    localStorage.setItem('user_id', res.data.user_id);
+                    localStorage.setItem('permissions', res.data.permissions);
                     window.location.href='/Dashboard';
                 }
                 else{

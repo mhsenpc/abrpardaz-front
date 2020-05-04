@@ -110,14 +110,14 @@ export default function PlansList() {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Box p={1}>
-                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Add Plans")) &&
+                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Add Plans")) &&
                                         <Button href={'/PlanAdd'} variant="contained" color="primary">
                                             <AddIcon/>
                                             افزودن
                                         </Button>
                                         }
                                         &nbsp;
-                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Sync Plans")) &&
+                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Sync Plans")) &&
                                         <Button onClick={syncPlans} variant="contained" color="default">
                                             <CachedIcon/>
                                             همسان سازی
@@ -198,7 +198,7 @@ export default function PlansList() {
                                                         open={Boolean(anchorEls[row.id])}
                                                         onClose={(e) => handleClose(row.id, e)}
                                                     >
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Edit Plans")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Edit Plans")) &&
                                                         <StyledMenuItem
                                                             onClick={() => window.location.href = '/PlanEdit/' + row.id}>
                                                             <ListItemIcon>
@@ -207,7 +207,7 @@ export default function PlansList() {
                                                             <ListItemText primary="ویرایش"/>
                                                         </StyledMenuItem>
                                                         }
-                                                        {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Remove Plans")) &&
+                                                        {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Remove Plans")) &&
                                                         <StyledMenuItem onClick={() => removePlan(row.id, row.name)}>
                                                             <ListItemIcon>
                                                                 <DeleteIcon fontSize="small"/>

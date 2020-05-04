@@ -80,7 +80,7 @@ function TicketList() {
                         </Grid>
                     </Grid>
 
-                    {(sessionStorage.getItem('permissions') && sessionStorage.getItem('permissions').includes("Ticket Operator")) &&
+                    {(localStorage.getItem('permissions') && localStorage.getItem('permissions').includes("Ticket Operator")) &&
                     <Grid item xs={12}>
                         <Select onChange={changeFilter} value={filter}>
                             <MenuItem value="all">همه</MenuItem>
