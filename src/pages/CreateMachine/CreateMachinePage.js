@@ -5,7 +5,7 @@ import Plans from "./Plans";
 import MachineOptions from "./MachineOptions";
 import MessageBox from "../MessageBox";
 import axios from "axios";
-import {api_base, createMachine, TransactionsListPath} from "../../Api";
+import {api_base, createMachine} from "../../Api";
 import Grid from '@material-ui/core/Grid';
 import {user_title_postfix} from "../../consts";
 import {Box, Paper} from "@material-ui/core";
@@ -22,6 +22,7 @@ export default function CreateMachinePage(props) {
     const [minRam, setMinRam] = React.useState(0);
     const [sourceName, setSourceName] = React.useState('');
     const [planName, setPlanName] = React.useState('');
+    const [backup, setBackup] = React.useState(true);
 
     function createMachineRequest() {
         axios.post(api_base + createMachine, {
@@ -30,7 +31,8 @@ export default function CreateMachinePage(props) {
             image_id: imageId,
             project_id: props.match.params.projectId,
             ssh_key_id: sshId,
-            snapshot_id: snapshotId
+            snapshot_id: snapshotId,
+            auto_backup: backup
         })
             .then(res => {
                 setResponse(res.data)
@@ -45,7 +47,7 @@ export default function CreateMachinePage(props) {
 
     React.useEffect(() => {
         setMachineName('Tehran-' + sourceName + '-' + planName)
-    }, [sourceName,planName]);
+    }, [sourceName, planName]);
 
     return (
         <Grid container>
@@ -59,7 +61,7 @@ export default function CreateMachinePage(props) {
                         <Grid item xs={12}>
                             <span className={'numbering'}>1</span>
                             &nbsp;
-                            <h3 style={{display:"inline"}}>محل سرور</h3>
+                            <h3 style={{display: "inline"}}>محل سرور</h3>
                         </Grid>
                     </Grid>
                     <br/>
@@ -84,11 +86,12 @@ export default function CreateMachinePage(props) {
                     <Grid item xs={12}>
                         <span className={'numbering'}>2</span>
                         &nbsp;
-                        <h3 style={{display:"inline"}}>انتخاب سیستم عامل</h3>
+                        <h3 style={{display: "inline"}}>انتخاب سیستم عامل</h3>
                     </Grid>
                 </Grid>
 
-                <SelectSource setSourceName={setSourceName} setImageId={setImageId} imageId={imageId} snapshotId={snapshotId}
+                <SelectSource setSourceName={setSourceName} setImageId={setImageId} imageId={imageId}
+                              snapshotId={snapshotId}
                               setSnapshotId={setSnapshotId} setMinDisk={setMinDisk} setMinRam={setMinRam}/>
             </Grid>
             <br/>
@@ -97,13 +100,15 @@ export default function CreateMachinePage(props) {
                     <Grid item xs={12}>
                         <span className={'numbering'}>3</span>
                         &nbsp;
-                        <h3 style={{display:"inline"}}>انتخاب نوع سرور</h3>
+                        <h3 style={{display: "inline"}}>انتخاب نوع سرور</h3>
                     </Grid>
                 </Grid>
-                <Plans setPlanName={setPlanName} setPlanId={setPlanId} planId={planId} minRam={minRam} minDisk={minDisk}/>
+                <Plans setPlanName={setPlanName} setPlanId={setPlanId} planId={planId} minRam={minRam}
+                       minDisk={minDisk}/>
             </Grid>
             <Grid item xs={12}>
-                <MachineOptions setSshId={setSshId} setMachineName={setMachineName} machineName={machineName} sshId={sshId} />
+                <MachineOptions setSshId={setSshId} setMachineName={setMachineName} machineName={machineName}
+                                sshId={sshId} backup={backup} setBackup={setBackup}/>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>

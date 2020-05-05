@@ -59,7 +59,9 @@ import {grey, red} from "@material-ui/core/colors";
 const theme = createMuiTheme({
     direction: 'rtl', // Both here and <body dir="rtl">
     palette: {
-        primary: red,
+        primary: {
+            main: '#e53935',
+        },
         secondary: grey,
     },
 

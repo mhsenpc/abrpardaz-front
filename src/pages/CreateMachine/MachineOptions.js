@@ -7,7 +7,7 @@ import {api_base, sshKeysList} from "../../Api";
 import SimpleModal from "../SimpleModal";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/AddBox";
-import {ListItemIcon, Paper} from "@material-ui/core";
+import {Checkbox, FormControlLabel, ListItemIcon, Paper} from "@material-ui/core";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -32,7 +32,7 @@ export default function MachineOptions(props) {
             })
     }, []);
 
-    function selectKey(id,name){
+    function selectKey(id, name) {
         props.setSshId(id)
         setKeyName(name)
         setOpen(false)
@@ -71,13 +71,28 @@ export default function MachineOptions(props) {
                 <br/>
                 <span className={'numbering'}>5</span>
                 &nbsp;
+                <h3 style={{display: "inline"}}>امکانات بیشتر</h3>
+            </Grid>
+
+            <Grid item xs={12}>
+                <FormControlLabel
+                    control={<Checkbox checked={props.backup}
+                                       onChange={event => props.setBackup(event.target.checked)}/>}
+                    label="تهیه اتوماتیک نسخه پشتیبان"
+                />
+            </Grid>
+
+            <Grid item xs={12}>
+                <br/>
+                <span className={'numbering'}>6</span>
+                &nbsp;
                 <h3 style={{display: "inline"}}>نام سرور</h3>
             </Grid>
 
             <Grid item xs={12}>
                 <TextField
                     required
-                    style={{direction:"ltr"}}
+                    style={{direction: "ltr"}}
                     placeholder="Server1"
                     value={props.machineName}
                     fullWidth
@@ -86,11 +101,11 @@ export default function MachineOptions(props) {
             </Grid>
             <br/>
             <SimpleModal open={open} setOpen={setOpen}>
-                <List component="nav" >
+                <List component="nav">
                     {sshkeyItems.map(row => (
-                        <ListItem button onClick={() => (selectKey(row.id,row.name) ) }>
+                        <ListItem button onClick={() => (selectKey(row.id, row.name))}>
                             <ListItemIcon>
-                                <VpnKeyIcon />
+                                <VpnKeyIcon/>
                             </ListItemIcon>
                             <ListItemText primary={row.name}/>
                         </ListItem>
