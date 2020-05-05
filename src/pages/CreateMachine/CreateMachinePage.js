@@ -67,11 +67,12 @@ export default function CreateMachinePage(props) {
                     <br/>
 
                     <Grid container>
-                        <Grid item xs={2}>
-                            <Paper className={"boxItem location active"}>
-                                <img src={"/images/iran_flag.png"} width={25}/>
-                                &nbsp;
-                                Tehran
+                        <Grid item xs={4}>
+                            <Paper className={"boxItem active"}>
+                                    <Box p={1}>
+                                        <img src={"/images/iran_flag.png"} width={128}/>
+                                        <h3>Tehran</h3>
+                                    </Box>
                             </Paper>
                         </Grid>
                     </Grid>

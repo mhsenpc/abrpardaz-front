@@ -156,7 +156,7 @@ function Plans(props) {
                             <TableCell component="th" scope="row" >
                                 {row.hourly_price} Tomans
                             </TableCell>
-                            <TableCell component="th" scope="row"  style={{color:"red"}}>
+                            <TableCell component="th" scope="row" >
                                 {row.hourly_price * 24 * 30 } T / Monthly
                             </TableCell>
                         </TableRow>

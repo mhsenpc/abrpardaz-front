@@ -94,7 +94,7 @@ export default function ServerList(props) {
                     }
                 >
                     <Paper className={"boxItem serverItem"} onClick={() => showDetails(props.row.id)}>
-                        <CloudIcon width={50} color={"primary"} fontSize={"large"}/>
+                        <img width={64} src={"/images/os/"+ props.row.image.name.toLowerCase() + '.png'} />
 
                         <Typography>
                             {props.row.name}
