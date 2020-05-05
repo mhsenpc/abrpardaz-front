@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import axios from "axios";
 import {api_base, imagesList, snapshotsList} from "../../Api";
-
+import Alert from "@material-ui/lab/Alert/Alert";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -57,6 +57,7 @@ export default function SelectSource(props) {
                     props.setImageId(list[0].id)
                     props.setMinRam(list[0].min_ram)
                     props.setMinDisk(list[0].min_disk)
+                    props.setSourceName(list[0].name)
                 }
             });
 
@@ -94,14 +95,18 @@ export default function SelectSource(props) {
         }
     };
 
-    const selectImage = (id , minRam ,minDisk) => {
+    const selectImage = (id, name , minRam ,minDisk) => {
         props.setImageId(id);
         props.setMinDisk(minDisk);
         props.setMinRam(minRam)
+        props.setSourceName(name);
     };
 
-    const selectSnapshot = id => {
+    const selectSnapshot = (id, name , minRam ,minDisk) => {
         props.setSnapshotId(id)
+        props.setMinDisk(minDisk);
+        props.setMinRam(minRam)
+        props.setSourceName(name);
     };
 
     return (
@@ -127,13 +132,16 @@ export default function SelectSource(props) {
                         <Grid item xs={12} md={4} style={{padding: 2}}>
                             <Paper>
                                 <Box className={"boxItem osItem " + isImageActive(row.id)} key={row.id}
-                                     onClick ={() => selectImage(row.id ,row.min_ram , row.min_disk)}>
-                                    <Save/>
-                                    <h3>{row.name}{row.version}</h3>
+                                     onClick ={() => selectImage(row.id,row.name ,row.min_ram , row.min_disk)}>
+                                    <img width={64} src={"/images/os/"+ row.name.toLowerCase() + '.png'} />
+                                    <h3>{row.name} {row.version}</h3>
                                 </Box>
                             </Paper>
                         </Grid>
                     ))}
+                    {osItems.length === 0 &&
+                        <Alert severity="warning">متاسفانه سیستم عاملی برای انتخاب وجود ندارد</Alert>
+                     }
                 </Grid>
             </TabPanel>
 
@@ -146,13 +154,16 @@ export default function SelectSource(props) {
                         <Grid item xs={12} md={4} style={{padding: 2}}>
                             <Paper>
                                 <Box className={"boxItem snapshotItem " + isSnapshotActive(row.id)} key={row.id}
-                                     onClick={() => selectSnapshot(row.id)}>
-                                    <Save/>
+                                     onClick={() => selectSnapshot(row.id,row.name,row.image.min_ram,row.image.min_disk)}>
+                                    <img width={64} src={"/images/snapshot.webp"} />
                                     <h3>{row.name}</h3>
                                 </Box>
                             </Paper>
                         </Grid>
                     ))}
+                    {snapshotItems.length === 0 &&
+                    <Alert severity="warning">متاسفانه هیچ تصویر آنی برای انتخاب وجود ندارد</Alert>
+                    }
                 </Grid>
             </TabPanel>
 

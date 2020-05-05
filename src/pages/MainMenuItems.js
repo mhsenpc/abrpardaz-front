@@ -7,7 +7,6 @@ import DnsIcon from '@material-ui/icons/Dns';
 import BackupIcon from '@material-ui/icons/Backup';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import HelpIcon from '@material-ui/icons/Help';
 import Divider from "@material-ui/core/Divider";
 import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 import ImageIcon from '@material-ui/icons/Image';

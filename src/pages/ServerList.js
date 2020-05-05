@@ -147,7 +147,7 @@ export default function ServerList(props) {
                         </React.Fragment>
                     }
                 >
-                <Paper className={"boxItem addItem"} onClick={() => window.location.href = '/createMachine'}>
+                <Paper className={"boxItem addItem"} onClick={() => window.location.href = '/'+ props.match.params.id.toString() + '/createMachine'}>
                     <Typography color="textSecondary">
                         <AddIcon/>
                     </Typography>

@@ -79,12 +79,30 @@ code {
     direction: rtl;
 }
 .disable {
-    background-color: #d5d9de;
-    border-radius: 5px;
-    border: black solid 2px;
-    cursor: not-allowed;
+    background-color: white;
+    color: #434959;;
+
+    opacity: 0.4;
 }
 
 .swal-text{
     text-align: right;
+}
+
+.numbering{
+    background-color:#fff;
+    border:1px solid #000000;
+    height:50px;
+    border-radius:50%;
+    width:50px;
+    padding: 10px;
+    display: inline-block;
+    font-size:2em;
+    font-weight:600;
+    text-align: center;
+}
+
+.location{
+    min-height: 2em;
+    padding: 1em;
 }

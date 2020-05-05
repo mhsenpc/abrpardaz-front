@@ -5,28 +5,30 @@ import Plans from "./Plans";
 import MachineOptions from "./MachineOptions";
 import MessageBox from "../MessageBox";
 import axios from "axios";
-import {api_base, createMachine} from "../../Api";
+import {api_base, createMachine, TransactionsListPath} from "../../Api";
 import Grid from '@material-ui/core/Grid';
 import {user_title_postfix} from "../../consts";
+import {Box, Paper} from "@material-ui/core";
 
 
-export default function CreateMachinePage() {
+export default function CreateMachinePage(props) {
     const [imageId, setImageId] = React.useState(null);
     const [snapshotId, setSnapshotId] = React.useState(null);
     const [planId, setPlanId] = React.useState(null);
     const [sshId, setSshId] = React.useState(null);
-    const [projectId, setProjectId] = React.useState(null);
     const [machineName, setMachineName] = React.useState(null);
     const [response, setResponse] = React.useState([]);
     const [minDisk, setMinDisk] = React.useState(0);
     const [minRam, setMinRam] = React.useState(0);
+    const [sourceName, setSourceName] = React.useState('');
+    const [planName, setPlanName] = React.useState('');
 
     function createMachineRequest() {
         axios.post(api_base + createMachine, {
             name: machineName,
             plan_id: planId,
             image_id: imageId,
-            project_id: projectId,
+            project_id: props.match.params.projectId,
             ssh_key_id: sshId,
             snapshot_id: snapshotId
         })
@@ -35,26 +37,73 @@ export default function CreateMachinePage() {
 
                 setTimeout(function () {
                     if (res.data.success) {
-                        window.location.href = '/servers/' + projectId.toString();
+                        window.location.href = '/servers/' + props.match.params.projectId.toString();
                     }
                 }, 2000);
             })
     }
 
-    return (
-        <Grid container item xs={12}>
-                <Grid item xs={12}>
-                <title>ساخت ماشین{user_title_postfix}</title>
+    React.useEffect(() => {
+        setMachineName('Tehran-' + sourceName + '-' + planName)
+    }, [sourceName,planName]);
 
-                <SelectSource setImageId={setImageId} imageId={imageId} snapshotId={snapshotId}
+    return (
+        <Grid container>
+            <Grid item xs={12}>
+                <title>ساخت ماشین{user_title_postfix}</title>
+                <h1>ایجاد سرور</h1>
+            </Grid>
+            <Grid item xs={12}>
+                <Box p={1}>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <span className={'numbering'}>1</span>
+                            &nbsp;
+                            <h3 style={{display:"inline"}}>محل سرور</h3>
+                        </Grid>
+                    </Grid>
+                    <br/>
+
+                    <Grid container>
+                        <Grid item xs={2}>
+                            <Paper className={"boxItem location active"}>
+                                <img src={"/images/iran_flag.png"} width={25}/>
+                                &nbsp;
+                                Tehran
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Grid>
+            <br/>
+            <br/>
+            <br/>
+
+            <Grid item xs={12}>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <span className={'numbering'}>2</span>
+                        &nbsp;
+                        <h3 style={{display:"inline"}}>انتخاب سیستم عامل</h3>
+                    </Grid>
+                </Grid>
+
+                <SelectSource setSourceName={setSourceName} setImageId={setImageId} imageId={imageId} snapshotId={snapshotId}
                               setSnapshotId={setSnapshotId} setMinDisk={setMinDisk} setMinRam={setMinRam}/>
             </Grid>
+            <br/>
             <Grid item xs={12}>
-                <Plans setPlanId={setPlanId} planId={planId}  minRam={minRam} minDisk={minDisk} />
+                <Grid container>
+                    <Grid item xs={12}>
+                        <span className={'numbering'}>3</span>
+                        &nbsp;
+                        <h3 style={{display:"inline"}}>انتخاب نوع سرور</h3>
+                    </Grid>
+                </Grid>
+                <Plans setPlanName={setPlanName} setPlanId={setPlanId} planId={planId} minRam={minRam} minDisk={minDisk}/>
             </Grid>
             <Grid item xs={12}>
-                <MachineOptions setSshId={setSshId} setMachineName={setMachineName} setProjectId={setProjectId}
-                                projectId={projectId} />
+                <MachineOptions setSshId={setSshId} setMachineName={setMachineName} machineName={machineName} sshId={sshId} />
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
