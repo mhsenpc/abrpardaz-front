@@ -30,6 +30,7 @@ export const requestSetMobilePath = 'profile/requestSetMobile';
 export const setMobileFinalPath = 'profile/setMobile';
 export const snapshotsList = 'snapshots/list';
 export const machineSnapshotsList = 'snapshots/ofMachine';
+export const backupsList = 'backups/list';
 export const machineBackupsList = 'backups/ofMachine';
 export const sshKeysList = 'sshKeys/list';
 export const sshKeysAdd = 'sshKeys/add';

@@ -14,6 +14,7 @@ import {Box, Paper} from "@material-ui/core";
 export default function CreateMachinePage(props) {
     const [imageId, setImageId] = React.useState(null);
     const [snapshotId, setSnapshotId] = React.useState(null);
+    const [backupId, setBackupId] = React.useState(null);
     const [planId, setPlanId] = React.useState(null);
     const [sshId, setSshId] = React.useState(null);
     const [machineName, setMachineName] = React.useState(null);
@@ -32,6 +33,7 @@ export default function CreateMachinePage(props) {
             project_id: props.match.params.projectId,
             ssh_key_id: sshId,
             snapshot_id: snapshotId,
+            backup_id: backupId,
             auto_backup: backup
         })
             .then(res => {
@@ -70,6 +72,7 @@ export default function CreateMachinePage(props) {
                         <Grid item xs={4}>
                             <Paper className={"boxItem active"}>
                                     <Box p={1}>
+                                        <br/>
                                         <img src={"/images/iran_flag.png"} width={128}/>
                                         <h3>Tehran</h3>
                                     </Box>
@@ -91,9 +94,16 @@ export default function CreateMachinePage(props) {
                     </Grid>
                 </Grid>
 
-                <SelectSource setSourceName={setSourceName} setImageId={setImageId} imageId={imageId}
+                <SelectSource setSourceName={setSourceName}
+                              setImageId={setImageId}
+                              imageId={imageId}
                               snapshotId={snapshotId}
-                              setSnapshotId={setSnapshotId} setMinDisk={setMinDisk} setMinRam={setMinRam}/>
+                              setSnapshotId={setSnapshotId}
+                              setMinDisk={setMinDisk}
+                              setMinRam={setMinRam}
+                              backupId = {backupId}
+                              setBackupId={setBackupId}
+                />
             </Grid>
             <br/>
             <Grid item xs={12}>
@@ -112,7 +122,7 @@ export default function CreateMachinePage(props) {
                                 sshId={sshId} backup={backup} setBackup={setBackup}/>
             </Grid>
             <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={createMachineRequest}>ساخت ماشین</Button>
+                <Button variant="contained" color="primary" onClick={createMachineRequest}>ایجاد سرور</Button>
             </Grid>
 
             <MessageBox response={response}/>
