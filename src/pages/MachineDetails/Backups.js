@@ -14,14 +14,29 @@ import TableBody from "@material-ui/core/TableBody";
 import DeleteIcon from "@material-ui/icons/Delete";
 import TableContainer from "@material-ui/core/TableContainer";
 import swal from "sweetalert";
+import {TextField} from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SimpleModal from "../SimpleModal";
 
 export default function Backups(props) {
     const [backupsItems, setBackupItems] = React.useState([]);
     const JDate = require('jalali-date');
-
+    const [disabled, setDisabled] = React.useState(false);
+    const [backupName, setBackupName] = React.useState('');
+    const [backupDescription, setBackupDescription] = React.useState('');
+    const [backupId, setBackupId] = React.useState(-1);
+    const [open, setOpen] = React.useState(false);
     React.useEffect(() => {
         loadBackups();
     }, []);
+
+    function showUpdateInfo(row) {
+        setDisabled(false)
+        setOpen(true);
+        setBackupId(row.id)
+        setBackupName(row.name)
+        setBackupDescription(row.description)
+    }
 
     function loadBackups() {
         axios.get(api_base + machineBackupsList + '?machine_id=' + props.id.toString())
@@ -80,15 +95,29 @@ export default function Backups(props) {
             })
     }
 
+    function requestUpdateBackupsInfo(id) {
+        setDisabled(true)
+        axios.post(api_base + "backups/" + id.toString() + "/updateInfo", {
+            name: backupName,
+            description: backupDescription
+        })
+            .then(res => {
+                props.setResponse(res.data)
+                setOpen(false)
+                loadBackups();
+            })
+    }
+
+
     return (
         <div>
-            <title>نسخه های پشتیبان{user_title_postfix}</title>
+            <title>نسخه پشتیبان{user_title_postfix}</title>
 
             <Grid item xs={12}>
                 <Box>
                     <Paper>
                         <Box p={1}>
-                            <h2>نسخه های پشتیبان</h2>
+                            <h2>نسخه  پشتیبان</h2>
                             <p>
                                 نسخه پشتیبان یک کپی از دیسک سرور شماست که بصورت اتوماتیک تهیه می گردد. به ازای هر سرور 7
                                 جایگاه نسخه پشتیبان وجود دارد.
@@ -125,26 +154,32 @@ export default function Backups(props) {
                                 <Table aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>#</TableCell>
-                                            <TableCell>نام</TableCell>
-                                            <TableCell>تاریخ ساخت</TableCell>
+                                            <TableCell align="right">#</TableCell>
+                                            <TableCell align="right">نام</TableCell>
+                                            <TableCell align="right">توضیحات</TableCell>
+                                            <TableCell align="right">تاریخ ساخت</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
+
+
                                         {backupsItems.map(row => (
                                             <TableRow key={row.name}>
-                                                <TableCell component="th" scope="row">
+                                                <TableCell component="th" scope="row"  align="right">
                                                     {row.id}
                                                 </TableCell>
-                                                <TableCell component="th" scope="row">
+                                                <TableCell component="th" scope="row" onClick={() => showUpdateInfo(row)} style={{cursor:"pointer"}} align="right">
                                                     {row.name}
                                                 </TableCell>
-                                                <TableCell component="th" scope="row">
+                                                <TableCell component="th" scope="row" onClick={() => showUpdateInfo(row)} style={{cursor:"pointer"}} align="right">
+                                                    {row.description}
+                                                </TableCell>
+                                                <TableCell component="th" scope="row" align="right">
                                                     {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}&nbsp;
                                                     {new Date(row.created_at).toLocaleTimeString()}
                                                 </TableCell>
 
-                                                <TableCell component="th" scope="row">
+                                                <TableCell component="th" scope="row" align="right">
                                                     <DeleteIcon onClick={() => requestRemoveBackup(row.id, row.name)}>حذف
                                                         پشتیبان</DeleteIcon>
                                                 </TableCell>
@@ -154,7 +189,41 @@ export default function Backups(props) {
                                         ))}
                                     </TableBody>
                                 </Table>
+
                             </TableContainer>
+                            <SimpleModal open={open} setOpen={setOpen}>
+                                <Box p={1}>
+                                    <TextField
+                                        id="outlined-full-width"
+                                        name="name"
+                                        label="نام"
+                                        placeholder=""
+                                        variant="outlined"
+                                        fullWidth
+                                        value={backupName}
+                                        onChange={event => setBackupName(event.target.value)}
+                                    />
+                                    <TextField
+                                        id="outlined-full-width"
+                                        name="description"
+                                        label="توضیحات"
+                                        multiline
+                                        placeholder=""
+                                        variant="outlined"
+                                        fullWidth
+                                        value={backupDescription}
+                                        onChange={event => setBackupDescription(event.target.value)}
+                                    />
+                                    <br/>
+                                    <Button disabled={disabled} variant="contained" color="primary" onClick={() => requestUpdateBackupsInfo(backupId)}>
+                                        ذخیره اطلاعات
+                                    </Button>
+                                    {disabled &&
+                                    <CircularProgress  color="inherit"/>
+                                    }
+                                </Box>
+                            </SimpleModal>
+
                         </Box>
                     </Paper>
                 </Box>
