@@ -1,5 +1,4 @@
 import React from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
@@ -10,21 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import {Box} from "@material-ui/core";
 import {user_title_postfix} from "../../consts";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            '& > *': {
-                margin: theme.spacing(1),
-                width: 900,
-
-            },
-        },
-    }),
-);
-
-
 export default function ChangePassword() {
-    const classes = useStyles();
     const [response, setResponse] = React.useState([]);
 
 

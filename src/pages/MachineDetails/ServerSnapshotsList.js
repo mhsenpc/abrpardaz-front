@@ -1,16 +1,6 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import axios from "axios";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {api_base, machineSnapshotsList} from "../../Api";
-import swal from "sweetalert";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {user_title_postfix} from "../../consts";
 import SnapshotItems from "../SnapshotList/SnapshotItems";
 
