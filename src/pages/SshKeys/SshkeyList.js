@@ -41,7 +41,6 @@ export default function SshkeyList() {
     const handleClose = (id, event) => {
         let newArr = [...anchorEls];
         newArr[id] = null;
-
         setAnchorEls(newArr);
     };
 
@@ -50,11 +49,18 @@ export default function SshkeyList() {
     }, [page])
 
     function loadKeys() {
+        let items = localStorage.getItem('sshKeyItems');
+        if (items) {
+            let item = JSON.parse(items);
+            setItems(item);
+        }
         axios.get(api_base + sshKeysList)
             .then(res => {
-                const items = res.data.pagination.data;
-
-                setItems(items)
+                if (res.data.pagination.data) {
+                    const items = res.data.pagination.data;
+                    localStorage.setItem('sshKeyItems', JSON.stringify(items));
+                    setItems(items)
+                }
                 setCount(res.data.pagination.last_page);
             })
     }
@@ -77,7 +83,6 @@ export default function SshkeyList() {
                     })
             }
         });
-
 
     }
 

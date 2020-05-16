@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {api_base, plansList} from "../../Api";
-import {Box} from "@material-ui/core";
 import {HtmlTooltip} from "../../Helpers";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -13,8 +11,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import Button from "@material-ui/core/Button";
-import CheckIcon from "@material-ui/icons/Check";
 
 
 const useStyles = makeStyles({
@@ -45,17 +41,16 @@ function Plans(props) {
             })
     }, []);
 
-    function isSelectable( ram, disk){
+    function isSelectable(ram, disk) {
         if (!checkRam(ram) && !checkDisk(disk)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    function selectPlan(id,name, ram, disk) {
-        if (isSelectable(ram,disk) ) {
+    function selectPlan(id, name, ram, disk) {
+        if (isSelectable(ram, disk)) {
             props.setPlanId(id);
             props.setPlanName(name);
             //props.updateMachineName();
@@ -93,19 +88,19 @@ function Plans(props) {
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell >Name</TableCell>
-                        <TableCell >VCPUS</TableCell>
-                        <TableCell >RAM</TableCell>
-                        <TableCell >SSD</TableCell>
-                        <TableCell >Traffic</TableCell>
-                        <TableCell >Price</TableCell>
-                        <TableCell >Price</TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell>VCPUS</TableCell>
+                        <TableCell>RAM</TableCell>
+                        <TableCell>SSD</TableCell>
+                        <TableCell>Traffic</TableCell>
+                        <TableCell>Price</TableCell>
+                        <TableCell>Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {items.map(row => (
                         <HtmlTooltip
-                            disableHoverListener={isSelectable(row.ram,row.disk)}
+                            disableHoverListener={isSelectable(row.ram, row.disk)}
                             title={
 
                                 <React.Fragment>
@@ -113,7 +108,8 @@ function Plans(props) {
                                     {(row.disk < props.minDisk && row.ram >= props.minRam) &&
                                     <div style={{direction: 'rtl'}}>
                                         <Typography color="textPrimary"> حداقل دیسک مورد نیاز </Typography>
-                                        <Typography color="textSecondary">حداقل دیسک مورد نیازشما {props.minDisk} گیگابایت
+                                        <Typography color="textSecondary">حداقل دیسک مورد
+                                            نیازشما {props.minDisk} گیگابایت
                                             میباشد</Typography>
                                     </div>
                                     }
@@ -135,31 +131,32 @@ function Plans(props) {
                                 </React.Fragment>
                             }
                         >
-                        <TableRow className={"boxItem " + isActive(row.id) + checkRam(row.ram) + checkDisk(row.disk)  }
-                                  key={row.id}
-                                  onClick={() => selectPlan(row.id, row.name, row.ram, row.disk)} >
-                            <TableCell component="th" scope="row" >
-                                {row.name}
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.vcpu}
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.ram}  GB
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.disk} GB
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.traffic} TB
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.hourly_price} Tomans
-                            </TableCell>
-                            <TableCell component="th" scope="row" >
-                                {row.hourly_price * 24 * 30 } T / Monthly
-                            </TableCell>
-                        </TableRow>
+                            <TableRow
+                                className={"boxItem " + isActive(row.id) + checkRam(row.ram) + checkDisk(row.disk)}
+                                key={row.id}
+                                onClick={() => selectPlan(row.id, row.name, row.ram, row.disk)}>
+                                <TableCell component="th" scope="row">
+                                    {row.name}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.vcpu}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.ram} GB
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.disk} GB
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.traffic} TB
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.hourly_price} Tomans
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {row.hourly_price * 24 * 30} T / Monthly
+                                </TableCell>
+                            </TableRow>
                         </HtmlTooltip>
 
                     ))}

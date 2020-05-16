@@ -30,20 +30,27 @@ export default function SnapshotItems(props) {
     const [snapshotDescription, setSnapshotDescription] = React.useState('');
 
     React.useEffect(() => {
-        if(props.machineId){
+        if (props.machineId) {
             loadSnapshotsOfSpecificServer(props.machineId)
-        }
-        else{
+        } else {
             loadSnapshots();
         }
     }, []);
 
     function loadSnapshots() {
+        let list = localStorage.getItem('snapShotItems');
+        if (list) {
+            let snapList = JSON.parse(list);
+            setSnapShotItems(snapList);
+        }
         axios.get(api_base + snapshotsList)
             .then(res => {
                 const list = res.data.list;
-                if (list)
+                if (list) {
+                    localStorage.setItem('snapShotItems', JSON.stringify(list))
                     setSnapShotItems(list);
+                }
+
             })
     }
 
@@ -116,11 +123,13 @@ export default function SnapshotItems(props) {
                     <TableBody>
                         {snapShotItems.map(row => (
                             <TableRow key={row.id}>
-                                <TableCell onClick={() => showUpdateInfo(row)} style={{cursor:"pointer"}} align="right" component="th" scope="row">
-                                    <span  >{row.name}</span>
+                                <TableCell onClick={() => showUpdateInfo(row)} style={{cursor: "pointer"}} align="right"
+                                           component="th" scope="row">
+                                    <span>{row.name}</span>
                                 </TableCell>
-                                <TableCell onClick={() => showUpdateInfo(row)} style={{cursor:"pointer"}} align="right" component="th" scope="row">
-                                    <span >{row.description}</span>
+                                <TableCell onClick={() => showUpdateInfo(row)} style={{cursor: "pointer"}} align="right"
+                                           component="th" scope="row">
+                                    <span>{row.description}</span>
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
                                     {row.remote_id === "0" &&
@@ -134,7 +143,8 @@ export default function SnapshotItems(props) {
                                     {(new JDate(new Date(row.created_at))).format('YYYY/MM/DD')}
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
-                                    <DeleteIcon style={{cursor:"pointer"}} onClick={() => requestRemoveSnapshot(row.id, row.name)}>حذف تصویر
+                                    <DeleteIcon style={{cursor: "pointer"}}
+                                                onClick={() => requestRemoveSnapshot(row.id, row.name)}>حذف تصویر
                                         آنی</DeleteIcon>
                                 </TableCell>
                             </TableRow>
@@ -168,11 +178,12 @@ export default function SnapshotItems(props) {
                         onChange={event => setSnapshotDescription(event.target.value)}
                     />
                     <br/>
-                    <Button disabled={disabled} variant="contained" color="primary" onClick={() => requestUpdateSnapshotInfo(snapshotId)}>
+                    <Button disabled={disabled} variant="contained" color="primary"
+                            onClick={() => requestUpdateSnapshotInfo(snapshotId)}>
                         ذخیره اطلاعات
                     </Button>
                     {disabled &&
-                    <CircularProgress  color="inherit"/>
+                    <CircularProgress color="inherit"/>
                     }
                 </Box>
             </SimpleModal>

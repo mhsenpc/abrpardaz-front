@@ -19,10 +19,16 @@ export default function CreateSnapshot(props) {
     };
 
     React.useEffect(() => {
+        let machine = localStorage.getItem('machineItems');
+        if (machine) {
+            let item = JSON.parse(machine);
+            setMachineItems(item);
+        }
         axios.get(api_base + machinesList)
             .then(res => {
                 const list = res.data.list;
                 if (list) {
+                    localStorage.setItem('machineItems', JSON.stringify(list));
                     setMachineItems(list);
                     if (list.length > 0)
                         setMachineId(list[0].id);

@@ -14,13 +14,6 @@ import BackupIcon from '@material-ui/icons/Backup';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import TreeView from '@material-ui/lab/TreeView';
 import {StyledTreeItem} from "../../StyledComponents";
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Label from '@material-ui/icons/Label';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import InfoIcon from '@material-ui/icons/Info';
-import ForumIcon from '@material-ui/icons/Forum';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import DnsIcon from '@material-ui/icons/Dns';
@@ -62,11 +55,20 @@ export default function SelectSource(props) {
     const [snapshotItems, setSnapshotItems] = React.useState([]);
     const [backupItems, setBackupItems] = React.useState([]);
 
+
     React.useEffect(() => {
+        let osItems = localStorage.getItem('osItems');
+        if (osItems) {
+            let osList = JSON.parse(osItems);
+            setOsItems(osList);
+        }
         axios.get(api_base + imagesList)
             .then(res => {
                 const list = res.data.pagination.data;
-                setOsItems(list);
+                if (list) {
+                    localStorage.setItem('osItems', JSON.stringify(list));
+                    setOsItems(list);
+                }
                 if (list.length > 0) {
                     props.setImageId(list[0].id)
                     props.setMinRam(list[0].min_ram)
@@ -75,6 +77,11 @@ export default function SelectSource(props) {
                 }
             });
 
+        let backup = localStorage.getItem('backupItems');
+        if (backup) {
+            let item = JSON.parse(backup);
+            setBackupItems(item);
+        }
         axios.get(api_base + snapshotsList)
             .then(res => {
                 const list = res.data.list;
@@ -85,10 +92,13 @@ export default function SelectSource(props) {
         axios.get(api_base + backupsList)
             .then(res => {
                 const list = res.data.list;
-                if (res.data.list)
+                if (res.data.list) {
+                    localStorage.setItem('backupItems', JSON.stringify(list));
                     setBackupItems(list);
+                }
             })
     }, []);
+
 
     function isImageActive(id) {
         if (id === props.imageId) {
@@ -215,31 +225,31 @@ export default function SelectSource(props) {
                 </p>
                 <Grid container>
 
-                        <Grid item xs={5} style={{padding: 2}}>
+                    <Grid item xs={5} style={{padding: 2}}>
 
-                            <TreeView
-                                defaultExpanded={['3']}
-                                defaultCollapseIcon={<ArrowDropDownIcon/>}
-                                defaultExpandIcon={<ArrowRightIcon/>}
-                                defaultEndIcon={<div style={{width: 24}}/>}
-                            >
-                                {backupItems.map(machine => (
+                        <TreeView
+                            defaultExpanded={['3']}
+                            defaultCollapseIcon={<ArrowDropDownIcon/>}
+                            defaultExpandIcon={<ArrowRightIcon/>}
+                            defaultEndIcon={<div style={{width: 24}}/>}
+                        >
+                            {backupItems.map(machine => (
                                 <StyledTreeItem nodeId="3" labelText={machine.name} labelIcon={DnsIcon}>
                                     {machine.backups.map(row => (
-                                    <StyledTreeItem
-                                        onClick={() => selectBackup(row.id, row.name, row.image.min_ram, row.image.min_disk)}
-                                        className={"backupItem " + isBackupActive(row.id)}
-                                        nodeId="5"
-                                        labelText={row.name}
-                                        labelIcon={SettingsBackupRestoreIcon}
-                                        color="#1a73e8"
-                                        bgColor="#e8f0fe"
-                                    />
+                                        <StyledTreeItem
+                                            onClick={() => selectBackup(row.id, row.name, row.image.min_ram, row.image.min_disk)}
+                                            className={"backupItem " + isBackupActive(row.id)}
+                                            nodeId="5"
+                                            labelText={row.name}
+                                            labelIcon={SettingsBackupRestoreIcon}
+                                            color="#1a73e8"
+                                            bgColor="#e8f0fe"
+                                        />
                                     ))}
                                 </StyledTreeItem>
-                                ))}
-                            </TreeView>
-                        </Grid>
+                            ))}
+                        </TreeView>
+                    </Grid>
                     {backupItems.length === 0 &&
                     <Alert severity="warning">متاسفانه هیچ نسخه پشیبان از هیچ کدام از سرورهای شما موجود نمی باشد</Alert>
                     }

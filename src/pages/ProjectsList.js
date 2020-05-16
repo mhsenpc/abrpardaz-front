@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -23,10 +23,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProjectsList() {
-    const [machines, setMachines] = React.useState([]);
-    const [response, setResponse] = React.useState([]);
-    const [name, setName] = React.useState('');
-    const [open, setOpen] = React.useState(false);
+    const [projects, setProjects] = useState([]);
+    const [response, setResponse] = useState([]);
+    const [name, setName] = useState('');
+    const [open, setOpen] = useState(false);
     const classes = useStyles();
     const [backDropOpen, setBackDropOpen] = React.useState(true);
 
@@ -34,17 +34,30 @@ export default function ProjectsList() {
         setBackDropOpen(false);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         loadProjects()
     }, []);
 
 
     function loadProjects() {
         setBackDropOpen(true)
+
+
+        let projects = localStorage.getItem('projects');
+        if (projects) {
+            let project = JSON.parse(projects);
+            setProjects(project);
+        }
+
+
         axios.get(api_base + ProjectsListPath)
             .then(res => {
-                if (res.data.list)
-                    setMachines(res.data.list)
+                const data = res.data.list;
+                if (data) {
+                    localStorage.setItem('projects', JSON.stringify(data));
+                    setProjects(data)
+                }
+
                 setBackDropOpen(false)
             })
     }
@@ -66,7 +79,7 @@ export default function ProjectsList() {
         <Grid container spacing={1}>
             <title>پروژه ها{user_title_postfix}</title>
 
-            {machines.map(row => (
+            {projects.map(row => (
                 <Grid item xs={12} sm={4} key={row.id}>
                     <HtmlTooltip
                         placement="top"
@@ -75,7 +88,8 @@ export default function ProjectsList() {
                             <React.Fragment>
                                 <div style={{direction: 'rtl'}}>
                                     <Typography color="textPrimary">دیدن سرورهای این پروژه</Typography>
-                                    <Typography color="textSecondary">با کلیک بر روی این گزینه، می توانید سرورهایی که مربوط به این پروژه هستند را مدیریت کنید</Typography>
+                                    <Typography color="textSecondary">با کلیک بر روی این گزینه، می توانید سرورهایی که
+                                        مربوط به این پروژه هستند را مدیریت کنید</Typography>
                                 </div>
                             </React.Fragment>
                         }
