@@ -26,7 +26,8 @@ export default function Rebuild(props) {
     function requestRebuild() {
         axios.post(api_base + 'machines/' + props.id.toString() + '/rebuild'  , {image_id : imageId})
             .then(res => {
-                props.setResponse(res.data)
+                props.setResponse(res.data);
+                window.location.href = '/servers/' + props.machine.project_id ;
             })
     }
 
@@ -37,7 +38,7 @@ export default function Rebuild(props) {
             <Grid item xs={12}>
                 <Paper>
                     <Box p={1}>
-                        <h2>نصب مجدد</h2>
+                        <h2>نصب مجدد سیستم عامل</h2>
                         <p>
                             در این بخش می توانید سیستم عامل سرور خود را مجددا نصب نمایید.
                         </p>
@@ -45,7 +46,7 @@ export default function Rebuild(props) {
                             توجه: تمامی اطلاعات قبلی سرور حذف می گردد!
 
                         </p>
-                        <Select value={imageId}>
+                        <Select value={imageId} onChange={(event)=> setImageId(event.target.value)}>
                             {imageItems.map(row=>(
                                 <MenuItem value={row.id} >{row.name} {row.version}</MenuItem>
                             ))}
