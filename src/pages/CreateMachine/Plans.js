@@ -53,7 +53,6 @@ function Plans(props) {
         if (isSelectable(ram, disk)) {
             props.setPlanId(id);
             props.setPlanName(name);
-            //props.updateMachineName();
         }
     }
 
