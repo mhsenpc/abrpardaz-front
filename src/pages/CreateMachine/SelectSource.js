@@ -214,7 +214,9 @@ export default function SelectSource(props) {
                         </Grid>
                     ))}
                     {snapshotItems.length === 0 &&
+                        <Grid item xs={12}>
                     <Alert severity="warning">متاسفانه هیچ تصویر آنی برای انتخاب وجود ندارد</Alert>
+                        </Grid>
                     }
                 </Grid>
             </TabPanel>
@@ -251,7 +253,9 @@ export default function SelectSource(props) {
                         </TreeView>
                     </Grid>
                     {backupItems.length === 0 &&
+                        <Grid item xs={12}>
                     <Alert severity="warning">متاسفانه هیچ نسخه پشیبان از هیچ کدام از سرورهای شما موجود نمی باشد</Alert>
+                        </Grid>
                     }
                 </Grid>
             </TabPanel>
