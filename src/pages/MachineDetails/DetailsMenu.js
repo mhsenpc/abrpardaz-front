@@ -181,6 +181,14 @@ export default function DetailsMenu(props) {
         setValue(parseInt(event.target.value));
     };
 
+    const handleConsole = () => {
+        axios.get(api_base + 'machines/' + id.toString() + '/console')
+            .then(res => {
+                let link = res.data.link;
+                link = "https://google.com";
+               window.open(link, "", "width=700,height=500");
+            })};
+
     const detailsmenuItems = [
         {id: 0, title: 'نمای کلی'},
         {id: 1, title: 'نمودار'},
@@ -198,8 +206,8 @@ export default function DetailsMenu(props) {
 
     return (
         <div>
-            <Grid container>
-                <Grid item xs={4}>
+            <Grid container spacing={2}>
+                <Grid item xs={6} md={3}>
                     <CreateIcon/>
                     {editMode === true &&
                     <span>
@@ -217,20 +225,25 @@ export default function DetailsMenu(props) {
                         <CancelIcon onClick={() => setEditMode(false)}/>
                     </Button>
                 </span>
-
                     }
 
                     {editMode === false &&
                     <span onClick={() => setEditMode(true)}>{name}</span>
                     }
                 </Grid>
-                <Grid item xs={4} sm={5}>
+                <Grid item xs={6} md={3}>
                     <div>
                         <DnsIcon/>
                         <span><b>IPv4:</b>{machine.public_ipv4}</span>
                     </div>
                 </Grid>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={6} md={3}>
+                    <div>
+                        <img src={'/images/console.png'} width={40} onClick={handleConsole}/>
+                    </div>
+                </Grid>
+
+                <Grid item xs={6} md={3}>
                     <FormControlLabel
                         control={
                             <div>
